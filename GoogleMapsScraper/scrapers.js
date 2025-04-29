@@ -10,7 +10,7 @@ const {
   normalizeUrl,
 } = require("./customHelpers.js");
 
-const { writeShopDetails } = require("./csvWriter");
+const { writeShopDetails } = require("./csvWriter.js");
 const { Messages } = require("./enums.js");
 const { METHODS } = require("http");
 const { fail } = require("assert");
