@@ -2,7 +2,7 @@ const { chromium } = require("playwright");
 const { readShopDetailCSV } = require("./csvReader");
 
 async function main() {
-  console.log(readShopDetailCSV());
+  console.log(await readShopDetailCSV());
 }
 
 main().catch((err) => {

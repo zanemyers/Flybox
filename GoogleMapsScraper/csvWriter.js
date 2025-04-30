@@ -1,7 +1,7 @@
 const fs = require("fs");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 
-const filePath = "shop_details.csv"; // Declare filePath here
+const filePath = "GoogleMapsScraper/shop_details.csv"; // Declare filePath here
 
 const csvWriter = createCsvWriter({
   path: filePath,
