@@ -88,7 +88,7 @@ async function addCustomElementSelectors(page) {
    */
   page.getShopName = async function () {
     try {
-      const name = await page.getTextContent("h1.DUwDvf.lfPIob");
+      const name = await page.getTextContent("h1");
       return name || Messages.ERROR_NAME;
     } catch (err) {
       return Messages.ERROR_NAME;

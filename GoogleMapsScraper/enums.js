@@ -32,6 +32,10 @@ const SocialMediaMap = [
 
 const Messages = {
   // ERROR MESSAGES
+  ERROR_SCROLL_TIMEOUT: (time) =>
+    `Scroll Timeout: Reached ${
+      time / 1000
+    } seconds without seeing end-of-list message.`,
   ERROR_BLOCKED_FORBIDDEN: (status) => `BLOCKED_OR_FORBIDDEN (HTTP ${status})`,
   ERROR_EMAIL: "ERROR_CHECKING_EMAIL",
   ERROR_LOAD_FAILED: "PAGE_LOAD_FAILED",

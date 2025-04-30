@@ -47,7 +47,15 @@ async function scrapeGoogleShopUrl(browserContext, url) {
     await page.waitForSelector('[role="feed"]', { timeout: 10000 });
 
     let endOfListText = false;
+    const maxScrollDuration = 30000; // 30 seconds in milliseconds
+    const scrollStart = Date.now();
+
     while (!endOfListText) {
+      // Throw an error if scrolling takes more than 30 secondes (probably hung)
+      if (Date.now() - scrollStart > maxScrollDuration) {
+        throw new Error(Messages.ERROR_SCROLL_TIMEOUT(maxScrollDuration));
+      }
+
       // Scroll to the bottom to load more items
       await page.evaluate(() => {
         const feed = document.querySelector('[role="feed"]');
@@ -80,10 +88,7 @@ async function scrapeGoogleShopUrl(browserContext, url) {
     return urls;
   } catch (error) {
     // Handle any unknown errors that occur during the process
-    console.error(
-      `FATAL_ERROR: An error occurred while scraping the URL: ${url}`
-    );
-    console.error(error);
+    console.error(`\n ${error}`);
     stopSpinner(spinner, "Stopping the process");
 
     // Exit the process with a failure code
