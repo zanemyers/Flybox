@@ -35,9 +35,9 @@ It should be double checked for data accuracy, but provides a good starting poin
   - const browser = await chromium.launch({ headless: false });
 - If you want to run a different Google Maps URL update main.js
   - const startingUrl = ....
-- If you want to increase or decrease batch size update scrapers.js/scrapeGoogleShopDetails
+- If you want to increase or decrease batch size update shopScraper.js/scrapeGoogleShopDetails
   - const BATCH_SIZE = ...
-- IF you need to increase the timeout to find the URLs update scrapers.js/scrapeGoogleShopUrl
+- IF you need to increase the timeout to find the URLs update shopScraper.js/scrapeGoogleShopUrl
   - const maxScrollDuration = (time in ms);
 
 ### Known Issues

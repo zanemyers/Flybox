@@ -1,4 +1,3 @@
-const { chromium } = require("playwright");
 const { extendPageSelectors } = require("../base/scrapingUtils.js");
 const {
   Messages,

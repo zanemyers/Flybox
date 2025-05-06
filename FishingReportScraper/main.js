@@ -1,7 +1,6 @@
 const { chromium } = require("playwright");
-// const { readShopDetailCSV } = require("./csvReader");
 const { CSVFileReader } = require("../base/csvHandler.js");
-const { fishingReportScraper } = require("./FRScrapers.js");
+const { fishingReportScraper } = require("./reportScrapers.js");
 
 async function main() {
   // Initialize the CSV file reader
