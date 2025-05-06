@@ -1,10 +1,10 @@
 const { chromium } = require("playwright");
 const { readShopDetailCSV } = require("./csvReader");
-const { fishingReportScraper } = require("./scrapers");
+const { fishingReportScraper } = require("./FRScrapers.js");
 
 async function main() {
-  //   console.log(await readShopDetailCSV());
-  await fishingReportScraper();
+  const urls = await readShopDetailCSV();
+  await fishingReportScraper(urls);
 }
 
 main().catch((err) => {
