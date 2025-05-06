@@ -3,7 +3,7 @@ const path = require("path");
 const { writeToPath } = require("@fast-csv/format");
 const { parse } = require("@fast-csv/parse");
 
-const { getUTCTimeStamp, getUTCYearMonth } = require("./timeHelpers.js");
+const { getUTCTimeStamp, getUTCYearMonth } = require("./dateTimeUtils.js");
 
 class CSVFileWriter {
   constructor(filePath, archiveFolderName) {
