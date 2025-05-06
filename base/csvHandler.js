@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const { writeToPath } = require("@fast-csv/format");
+const { parse } = require("@fast-csv/parse");
+
 const { getUTCTimeStamp, getUTCYearMonth } = require("./timeHelpers.js");
 
 class CSVFileWriter {
@@ -63,5 +65,36 @@ class CSVFileWriter {
   }
 }
 
-module.exports = CSVFileWriter;
+class CSVFileReader {
+  constructor(filePath, filter = () => true, rowMap = null) {
+    this.filePath = filePath;
+    this.filter = filter;
+    this.rowMap = rowMap;
+  }
+
+  async read() {
+    const results = [];
+
+    return new Promise((resolve, reject) => {
+      fs.createReadStream(this.filePath)
+        .pipe(parse({ headers: true }))
+        .on("error", reject)
+        .on("data", (row) => {
+          // Apply filter function (defaults to always true if empty)
+          if (this.filter(row)) {
+            // Apply rowMap if provided, else just return the row as-is
+            results.push(this.rowMap ? this.rowMap(row) : row);
+          }
+        })
+        .on("end", () => {
+          resolve(results);
+        });
+    });
+  }
+}
+
+module.exports = {
+  CSVFileWriter,
+  CSVFileReader,
+};
 // const fileHandler = new CSVFileHandler("resources/csv/shop_details.csv", "shopDetails");

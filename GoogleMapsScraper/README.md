@@ -22,7 +22,7 @@ It should be double checked for data accuracy, but provides a good starting poin
 ## Packages
 
 - Playwright
-- CSV-Writer
+- Fast-CSV
 
 ## Customizations
 

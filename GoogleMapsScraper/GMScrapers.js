@@ -7,7 +7,7 @@ const {
 } = require("../base/loadingIndicators.js");
 const { addCustomElementSelectors, normalizeUrl } = require("./GMSHelpers.js");
 
-const CSVFileWriter = require("../base/csvHandler.js");
+const { CSVFileWriter } = require("../base/csvHandler.js");
 const { Messages } = require("../base/enums.js");
 const { METHODS } = require("http");
 const { fail } = require("assert");
