@@ -14,7 +14,10 @@ async function main() {
     }) // row map function
   );
 
+  // Read the CSV to get website URLs that publish fishing reports
+  // Note: The CSV file should have a header row with "name", "publishesFishingReport" and "website" columns
   const urls = await reader.read();
+
   await fishingReportScraper(urls);
 }
 

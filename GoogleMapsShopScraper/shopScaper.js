@@ -5,7 +5,10 @@ const {
   startSpinner,
   stopSpinner,
 } = require("../base/loadingIndicators.js");
-const { addCustomElementSelectors, normalizeUrl } = require("./GMSHelpers.js");
+const {
+  addCustomElementSelectors,
+  normalizeUrl,
+} = require("./shopScrapingUtils.js");
 
 const { CSVFileWriter } = require("../base/csvHandler.js");
 const { Messages } = require("../base/enums.js");
