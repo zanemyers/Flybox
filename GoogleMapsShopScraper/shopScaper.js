@@ -1,19 +1,13 @@
-const fs = require("fs");
-const { chromium } = require("playwright");
 const {
   progressBar,
   startSpinner,
   stopSpinner,
 } = require("../base/loadingIndicators.js");
-const {
-  addCustomElementSelectors,
-  normalizeUrl,
-} = require("./shopScrapingUtils.js");
+const { addShopSelectors } = require("./shopScrapingUtils.js");
+const { normalizeUrl } = require("../base/scrapingUtils.js");
 
 const { CSVFileWriter } = require("../base/csvHandler.js");
 const { Messages } = require("../base/enums.js");
-const { METHODS } = require("http");
-const { fail } = require("assert");
 
 // Initialize CSV file writer
 const shopDetailCSV = new CSVFileWriter(
@@ -130,7 +124,7 @@ async function scrapeGoogleShopDetails(browserContext, urls) {
       batch.map(async (url, batchIndex) => {
         const index = i + batchIndex; // Calculates the global index of the current URL
         const page = await browserContext.newPage();
-        await addCustomElementSelectors(page); // Add custom selectors
+        await addShopSelectors(page); // Add custom selectors
 
         try {
           // Initialize the progress bar only on the first iteration
