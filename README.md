@@ -46,6 +46,7 @@ It should be double checked for data accuracy, but provides a good starting poin
 - Email doesn't always pull correctly
 - Some pages fail to load
 - Blocked or Forbidden pages
+- Must run headless with docker
 
 ## Fishing Report Scraper (In-Progress)
 
@@ -67,3 +68,5 @@ This tool takes takes a csv that must have the following 3 headers, Name, Websit
 ## Customizations
 
 ## Known Issues
+
+- Must run headless with docker
