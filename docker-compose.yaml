@@ -1,5 +1,5 @@
 services:
-  node:
+  web-scraper:
     container_name: node
     build:
       context: .
@@ -8,4 +8,4 @@ services:
       - .:/app
     environment:
       - NODE_ENV=development
-    tty: true  # Keeps the container running for interactive use
+    working_dir: /app

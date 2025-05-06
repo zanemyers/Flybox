@@ -1,9 +1,10 @@
 #!/usr/bin/env just --justfile
 
-# Runs the google maps scraper
+# Runs the Google Maps shop scraper
 @gss:
-    node GoogleMapsShopScraper/main.js
+    docker-compose run --rm web-scraper node GoogleMapsShopScraper/main.js
 
 # Runs the fishing report scraper
 @frs:
-    node FishingReportScraper/main.js
+    docker-compose run --rm web-scraper node FishingReportScraper/main.js
+
