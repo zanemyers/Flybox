@@ -2,22 +2,6 @@ const EmailRegEx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i;
 const PhoneRegEx = /\+[\d]+/;
 const StarsRegEx = /^[0-5]\.\d$/;
 const ReviewCountRegEx = /(\d+)/;
-const DateFormats = [];
-
-const MonthMap = [
-  { name: "January", short: "Jan", num: 1 },
-  { name: "February", short: "Feb", num: 2 },
-  { name: "March", short: "Mar", num: 3 },
-  { name: "April", short: "Apr", num: 4 },
-  { name: "May", short: "May", num: 5 },
-  { name: "June", short: "Jun", num: 6 },
-  { name: "July", short: "Jul", num: 7 },
-  { name: "August", short: "Aug", num: 8 },
-  { name: "September", short: "Sep", num: 9 },
-  { name: "October", short: "Oct", num: 10 },
-  { name: "November", short: "Nov", num: 11 },
-  { name: "December", short: "Dec", num: 12 },
-];
 
 const ShopKeywords = ["shop", "store", "buy", "products", "cart", "checkout"];
 
