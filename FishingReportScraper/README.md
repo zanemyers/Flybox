@@ -11,7 +11,7 @@ This tool takes takes a csv that must have the following 3 headers, Name, Websit
 ## Packages
 
 - Playwright
-- CSV-Writer
+- Fast-CSV
 
 ## Customizations
 
