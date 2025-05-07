@@ -1,0 +1,11 @@
+services:
+  web-scraper:
+    container_name: node
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=development
+    working_dir: /app

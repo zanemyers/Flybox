@@ -8,7 +8,7 @@ index,name,category,phone,email,hasWebsite,website,sellsOnline,stars,reviewCount
 7,Yellowstone Fly Fishing Co.,Fishing charter,+14069461930,yellowstonefishingco@gmail.com?,true,https://www.yellowstoneflyfishingco.com/?utm_source=google&utm_medium=gbp&utm_campaign=gbp,false,5,128,false,Instagram
 8,West Yellowstone Outfitters,Fishing charter,NO_PHONE_NUMBER_FOUND,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,5,2,NO_WEBSITE,NO_WEBSITE
 9,TRR Outfitters - Island Park Fly Shop,Fishing store,+12085587501,NO_EMAIL_FOUND,true,http://www.trroutfitters.com/,true,4.7,15,true,"Facebook,Instagram,Vimeo,X (Twitter)"
-10,Drift Lodge & Fly Shop,NO_CATEGORY_FOUND,+12085580152,PAGE_LOAD_FAILED,true,http://www.driftlodge.com/,PAGE_LOAD_FAILED,4,208,PAGE_LOAD_FAILED,PAGE_LOAD_FAILED
+10,Drift Lodge & Fly Shop,NO_CATEGORY_FOUND,+12085580152,driftlodge@gmail.com,true,http://www.driftlodge.com/,true,4,208,false,
 11,Jim's Fly Co. Fly Shop,Bait shop,+14066467258,PAGE_LOAD_FAILED,true,http://www.jimsflyco.com/,PAGE_LOAD_FAILED,5,9,PAGE_LOAD_FAILED,PAGE_LOAD_FAILED
 12,TRR Outfitters - Ashton Fly Shop,Fishing store,+12086523008,NO_EMAIL_FOUND,true,http://www.trroutfitters.com/,true,4.6,49,true,"Facebook,Instagram,Vimeo,X (Twitter)"
 13,Wild Trout Outfitters Inc.,Fishing store,+14069952975,fish@wildtroutoutfitters.com,true,http://www.wildtroutoutfitters.com/,true,4.7,111,false,"Facebook,Instagram"
@@ -17,7 +17,7 @@ index,name,category,phone,email,hasWebsite,website,sellsOnline,stars,reviewCount
 16,Gallatin River Guides,Fishing charter,+14069952290,info@gallatinriverguides.com,true,https://www.montanaflyfishing.com/,false,4.9,327,true,"Facebook,Instagram,TikTok,YouTube"
 17,Angler’s West Fly Fishing Outfitters,Fishing store,+14063334401,ERROR_CHECKING_EMAIL,true,https://www.montanaflyfishers.com/,true,4.7,68,true,"Facebook,Instagram"
 18,Galloup's Slide Inn,NO_CATEGORY_FOUND,+14066824804,slideinn@slideinn.com,true,http://www.slideinn.com/,true,4.9,170,true,"Facebook,Instagram,YouTube"
-19,Trout Stalkers - Outfitter and Fly Shop,Fishing store,NO_PHONE_NUMBER_FOUND,PAGE_LOAD_FAILED,true,http://www.montanatrout.com/,PAGE_LOAD_FAILED,4.7,78,PAGE_LOAD_FAILED,PAGE_LOAD_FAILED
+19,Trout Stalkers - Outfitter and Fly Shop,Fishing store,NO_PHONE_NUMBER_FOUND,flyshop@montanatrout.com,true,http://www.montanatrout.com/,true,4.7,78,true,"Facebook,Instagram,X (Twitter),YouTube"
 20,"II Fly, LLC",Bait shop,+18889830013,ERROR_CHECKING_EMAIL,true,http://henrysforkanglers.com/,true,4.5,2,true,"Facebook,Instagram"
 21,Beartooth Flyfishing,Fishing store,+14066827525,NO_EMAIL_FOUND,true,https://www.beartoothflyfishing.com/,true,5,64,true,
 22,Bozeman Fly Supply,Fishing store,+14064041662,info@bozemanflysupply.com,true,http://bozemanflysupply.com/,true,4.9,116,true,"Facebook,Instagram"
@@ -33,26 +33,26 @@ index,name,category,phone,email,hasWebsite,website,sellsOnline,stars,reviewCount
 32,Grand Teton Fly Fishing,Fishing charter,+13076900910,info@grandtetonflyfishing.com,true,https://grandtetonflyfishing.com/,false,4.5,51,false,"Facebook,Instagram,X (Twitter),YouTube"
 33,Yellowstone Big Gun Fun,Recreation center,+14066461093,joysshootingrange@gmail.com,true,http://biggunfunwys.com/,false,4.9,410,false,"Facebook,X (Twitter)"
 34,North Fork Anglers,Fishing store,+13075277274,northforkanglerscody@gmail.com,true,https://northforkanglers.com/,true,4.7,64,true,Instagram
-35,Cooke City Store,General store,+14068382234,PAGE_LOAD_FAILED,true,https://cookecitystore.com/,PAGE_LOAD_FAILED,4.5,83,PAGE_LOAD_FAILED,PAGE_LOAD_FAILED
-36,Hatch Finders Fly Shop,Fishing store,+14062220989,flyshop@hatchfinders.com,true,http://www.hatchfinders.com/,true,5,32,true,"Facebook,Instagram,YouTube"
-37,East Slope Outdoors,Ski shop,+14069954369,ERROR_CHECKING_EMAIL,true,http://www.eastslopeoutdoors.com/,false,4.8,186,false,"Facebook,Instagram"
-38,Yellow Dog Flyfishing - Fly Shop,Fishing store,+14065858667,info@yellowdogflyfishing.com,true,https://www.yellowdogflyfishing.com/yellow-dog-fly-shop/,true,4.7,139,true,"Facebook,Instagram,YouTube"
-39,Snake River Angler,Fishing charter,+13077333699,fish@snakeriverangler.com,true,https://snakeriverangler.com/,true,4.6,12,true,"Facebook,Instagram"
-40,House of Harrop,Fishing store,+12086243537,hoh@ida.net,true,http://www.houseofharrop.com/,false,3.5,2,false,"Facebook,Instagram,X (Twitter),YouTube"
-41,The Hatch fly shop,Fishing store,+18142432050,605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com,true,http://www.gradientmountainsports.net/,true,5,4,false,"Facebook,Instagram"
-42,WorldCast Anglers,Fishing store,+12087870082,GoFish@WorldCastAnglers.com,true,http://www.worldcastanglers.com/,true,4.8,154,true,"Facebook,Instagram,X (Twitter),YouTube"
+35,Hatch Finders Fly Shop,Fishing store,+14062220989,flyshop@hatchfinders.com,true,http://www.hatchfinders.com/,true,5,32,true,"Facebook,Instagram,YouTube"
+36,East Slope Outdoors,Ski shop,+14069954369,ERROR_CHECKING_EMAIL,true,http://www.eastslopeoutdoors.com/,false,4.8,186,false,"Facebook,Instagram"
+37,Yellow Dog Flyfishing - Fly Shop,Fishing store,+14065858667,info@yellowdogflyfishing.com,true,https://www.yellowdogflyfishing.com/yellow-dog-fly-shop/,true,4.7,139,true,"Facebook,Instagram,YouTube"
+38,Snake River Angler,Fishing charter,+13077333699,fish@snakeriverangler.com,true,https://snakeriverangler.com/,true,4.6,12,true,"Facebook,Instagram"
+39,House of Harrop,Fishing store,+12086243537,hoh@ida.net,true,http://www.houseofharrop.com/,false,3.5,2,false,"Facebook,Instagram,X (Twitter),YouTube"
+40,The Hatch fly shop,Fishing store,+18142432050,605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com,true,http://www.gradientmountainsports.net/,true,5,4,false,"Facebook,Instagram"
+41,WorldCast Anglers,Fishing store,+12087870082,GoFish@WorldCastAnglers.com,true,http://www.worldcastanglers.com/,true,4.8,154,true,"Facebook,Instagram,X (Twitter),YouTube"
+42,Cooke City Store,General store,+14068382234,PAGE_LOAD_FAILED,true,https://cookecitystore.com/,PAGE_LOAD_FAILED,4.5,83,PAGE_LOAD_FAILED,PAGE_LOAD_FAILED
 43,Fly Fishing Only Adventures,Fishing charter,+14064463819,user@domain.com,true,http://www.flyfishingonlyadventures.com/,false,5,4,false,
 44,Rusty Bison MT,Gift shop,+14066400333,example@gmail.com,true,https://therustybisonmt.com/,true,5,6,false,"Facebook,Instagram"
 45,Absarokee Fly Shop,Fishing store,+14063284966,NO_EMAIL_FOUND,true,https://www.absarokeeflyshop.com/,false,5,8,false,
 46,Back Cast Fly Co.,Fishing store,+12086561211,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,5,42,NO_WEBSITE,NO_WEBSITE
 47,Montana Angler,Fishing charter,+14065229854,ERROR_CHECKING_EMAIL,true,http://www.montanaangler.com/,false,4.9,380,true,Instagram
 48,Montana Troutfitters,Fishing store,+14065874707,NO_EMAIL_FOUND,true,http://www.troutfitters.com/,true,4.7,135,true,"Facebook,Instagram,YouTube"
-49,Westbank Anglers,Fishing store,+13077336483,ERROR_CHECKING_EMAIL,true,http://www.westbankanglers.com/,true,4.7,83,true,"Facebook,Instagram,YouTube"
-50,Grand Fishing Adventures,Fishing charter,+13077349684,ERROR_CHECKING_EMAIL,true,https://www.grandfishing.com/,true,4.7,12,false,"Facebook,Instagram"
-51,Grizzly Peak Outdoors,Outdoor sports store,+14064450751,info@redlodgemountain.com,true,https://www.redlodgemountain.com/shopgrizzlypeak/,true,4.2,15,false,"Facebook,Instagram,X (Twitter),YouTube"
-52,Spring Creek Specialists-Flies,Fishing store,+14062225664,basini@mcn.net,true,http://www.springcreekspecialists.com/,true,4.8,13,false,
-53,The Lodge At Palisades Creek Fly Shop,Fishing store,+12084832727,ERROR_CHECKING_EMAIL,true,https://www.tlapcflyshop.com/,true,4.3,13,true,Instagram
-54,FishWater Outfitters,Fishing charter,+14065314219,PAGE_LOAD_FAILED,true,http://www.fishwateroutfitters.com/ennis-fly-fishing-guides,PAGE_LOAD_FAILED,5,5,PAGE_LOAD_FAILED,PAGE_LOAD_FAILED
+49,Grand Fishing Adventures,Fishing charter,+13077349684,NO_EMAIL_FOUND,true,https://www.grandfishing.com/,true,4.7,12,false,"Facebook,Instagram"
+50,Grizzly Peak Outdoors,Outdoor sports store,+14064450751,info@redlodgemountain.com,true,https://www.redlodgemountain.com/shopgrizzlypeak/,true,4.2,15,false,"Facebook,Instagram,X (Twitter),YouTube"
+51,Spring Creek Specialists-Flies,Fishing store,+14062225664,BLOCKED_OR_FORBIDDEN (HTTP 403),true,http://www.springcreekspecialists.com/,BLOCKED_OR_FORBIDDEN (HTTP 403),4.8,13,BLOCKED_OR_FORBIDDEN (HTTP 403),BLOCKED_OR_FORBIDDEN (HTTP 403)
+52,The Lodge At Palisades Creek Fly Shop,Fishing store,+12084832727,ERROR_CHECKING_EMAIL,true,https://www.tlapcflyshop.com/,true,4.3,13,true,Instagram
+53,Westbank Anglers,Fishing store,+13077336483,ERROR_CHECKING_EMAIL,true,http://www.westbankanglers.com/,true,4.7,83,true,"Facebook,Instagram,YouTube"
+54,FishWater Outfitters,Fishing charter,+14065314219,NO_EMAIL_FOUND,true,http://www.fishwateroutfitters.com/ennis-fly-fishing-guides,false,5,5,false,
 55,Nelson's Guides & Flies LLC,Fishing store,+14065799982,Jacquie@NelsonsGuidesAndFlies.com,true,http://nelsonsguidesandflies.com/,true,5,4,false,"Facebook,Instagram"
 56,Dead Drift Fly Fishing,Outdoor clothing and equipment shop,+14062193413,grant@deaddriftfly.com,true,https://www.deaddriftfly.com/,true,4,4,false,"Facebook,Instagram,YouTube"
 57,TroutChasers Lodge & Fly Fishing Outfitters,NO_CATEGORY_FOUND,+14067639049,fish@montanatroutchasers.com?,true,https://www.montanatroutchasers.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp,false,5,14,false,"Facebook,Instagram"
@@ -66,12 +66,12 @@ index,name,category,phone,email,hasWebsite,website,sellsOnline,stars,reviewCount
 65,"Simms | The River's Edge West",Fishing store,+14062842401,info@theriversedge.com,true,https://www.theriversedge.com/,true,4.4,44,true,"Facebook,Instagram"
 66,Wind River Canyon Whitewater & Fly Fishing,Raft trip outfitter,+13078649343,trips@windrivercanyon.com,true,http://www.windrivercanyon.com/,true,4.6,202,false,"Facebook,Instagram"
 67,Skwala Fishing,Outdoor clothing and equipment shop,+18335231500,customerservice@skwalafishing.com,true,http://www.skwalafishing.com/,true,4.7,14,false,"Facebook,Instagram,YouTube"
-68,Bighorn Trout Shop & Lodge,Fishing camp,+14066662375,ERROR_CHECKING_EMAIL,true,http://www.bighorntroutshop.com/,true,4.8,52,false,
+68,Bighorn Trout Shop & Lodge,Fishing camp,+14066662375,NO_EMAIL_FOUND,true,http://www.bighorntroutshop.com/,true,4.8,52,false,
 69,Montana Troutwranglers,Fishing store,+14065806050,NO_EMAIL_FOUND,true,http://www.troutwranglers.com/,false,5,23,false,"Facebook,Instagram,YouTube"
 70,Dan Bailey's Outdoor Co,Outdoor sports store,+14062221673,ERROR_CHECKING_EMAIL,true,https://danbaileys.com/,true,4.6,166,true,"Facebook,Instagram"
-71,Jackson Cardinal Flies,Sporting goods store,+18006390913,PAGE_LOAD_FAILED,true,http://www.jacksoncardinal.com/,PAGE_LOAD_FAILED,5,3,PAGE_LOAD_FAILED,PAGE_LOAD_FAILED
-72,South Fork Lodge Fly Shop,Fishing store,+12084832112,ecom-swiper@11.css,true,https://shop.southforklodge.com/,true,4.4,7,false,"Facebook,Instagram"
-73,Orvis,Clothing store,+13077335407,NO_EMAIL_FOUND,true,https://stores.orvis.com/us/wyoming/jackson,true,4.3,98,false,"Facebook,Instagram,X (Twitter),YouTube"
+71,Jackson Cardinal Flies,Sporting goods store,+18006390913,NO_EMAIL_FOUND,true,http://www.jacksoncardinal.com/,false,5,3,false,
+72,South Fork Lodge Fly Shop,Fishing store,+12084832112,ecom-swiper@11.css,true,https://shop.southforklodge.com/,true,4.5,8,false,"Facebook,Instagram"
+73,Orvis,Clothing store,+13077335407,NO_EMAIL_FOUND,true,https://stores.orvis.com/us/wyoming/jackson,true,4.4,99,false,"Facebook,Instagram,X (Twitter),YouTube"
 74,Jackson Hole Fly Fishing School,Fishing charter,+13076993440,info@jhflyfishingschool.com,true,http://www.jhflyfishingschool.com/,true,5,38,false,"Facebook,Instagram,YouTube"
 75,Blue Ribbon Nets,Clothing store,+14065866387,info@blueribbonnets.net,true,https://blueribbonnets.net/,true,5,6,false,
 76,The StoneFly,Fishing store,+14064940707,ERROR_CHECKING_EMAIL,true,https://www.thestonefly.com/,true,4.9,84,true,"Facebook,Instagram,X (Twitter),YouTube"
@@ -86,36 +86,36 @@ index,name,category,phone,email,hasWebsite,website,sellsOnline,stars,reviewCount
 85,FishTales Outfitting LLC,Fishing charter,+14064512074,info@mtfishtales.com,true,http://www.mtfishtales.com/,false,5,20,false,"Facebook,Instagram,LinkedIn,X (Twitter),YouTube"
 86,Fins and Feathers,Fishing store,+14065862188,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,5,2,NO_WEBSITE,NO_WEBSITE
 87,Frontier Anglers Fly Shop,Fishing store,+14066835276,info@frontieranglers.com,true,http://www.frontieranglers.com/,true,4.7,51,true,"Facebook,Instagram"
-88,Anglers All,Fishing store,+13037941104,ERROR_CHECKING_EMAIL,true,https://www.anglersall.com/,true,4.9,270,false,"Facebook,Instagram,YouTube"
+88,Anglers All,Fishing store,+13037941104,PAGE_LOAD_FAILED,true,https://www.anglersall.com/,PAGE_LOAD_FAILED,4.9,270,PAGE_LOAD_FAILED,PAGE_LOAD_FAILED
 89,Dave McKee Fly Fishing,Fishing charter,+14065798116,dave@davemckeeflyfishing.com,true,http://davemckeeflyfishing.com/,true,5,2,false,
-90,Christy Sports Big Sky Town Center,Ski rental service,+14069952939,ERROR_CHECKING_EMAIL,true,https://www.christysports.com/store-locations/big-sky-town-center.html,true,4.6,321,false,"Facebook,Instagram,X (Twitter),YouTube"
+90,Christy Sports Big Sky Town Center,Ski rental service,+14069952939,help@christysports.com?  subject=Customer Service Inquiry,true,https://www.christysports.com/store-locations/big-sky-town-center.html,true,4.6,321,false,"Facebook,Instagram,X (Twitter),YouTube"
 91,Fly Fish Food Jimmy's,Fishing store,+12085247160,ERROR_CHECKING_EMAIL,true,http://www.flyfishfood.com/,true,4.7,136,true,"Facebook,Instagram,X (Twitter),YouTube"
 92,Anderson & Platt Outfitters,Fishing store,+14066832692,aandpoutfitters@gmail.com,true,https://anderson-platt-flyfishing.com/,true,4.8,95,false,"Facebook,Instagram"
 93,Greys River Sports,Outdoor sports store,+13076543474,NO_EMAIL_FOUND,true,http://www.greysriversports.com/,false,4.6,58,false,X (Twitter)
 94,The Lodge At Palisades Creek,NO_CATEGORY_FOUND,+12084832222,PAGE_LOAD_FAILED,true,http://www.tlapc.com/,PAGE_LOAD_FAILED,4.8,68,PAGE_LOAD_FAILED,PAGE_LOAD_FAILED
-95,KINGFISHER LLP,NO_CATEGORY_FOUND,NO_PHONE_NUMBER_FOUND,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,NO_STARS_FOUND,NO_REVIEWS_FOUND,NO_WEBSITE,NO_WEBSITE
-96,Sunlight Sports,Outdoor sports store,+13075879517,info@sunlightsports.com,true,https://sunlightsports.com/,true,4.8,212,false,Instagram
-97,Tom Morgan Rodsmiths,Fishing store,+13034754836,303-475-4836info@morganrods.com,true,http://www.tommorganrodsmiths.com/,true,4.6,9,false,"Facebook,Instagram"
+95,Sunlight Sports,Outdoor sports store,+13075879517,info@sunlightsports.com,true,https://sunlightsports.com/,true,4.8,212,false,Instagram
+96,Tom Morgan Rodsmiths,Fishing store,+13034754836,303-475-4836info@morganrods.com,true,http://www.tommorganrodsmiths.com/,true,4.6,9,false,"Facebook,Instagram"
+97,Blackfoot River Outfitters,Fishing store,+14065427411,orders@blackfootriver.com,true,http://www.blackfootriver.com/,true,4.9,261,true,"Facebook,Instagram,YouTube"
 98,Sportsman's Warehouse,Outdoor sports store,+14065860100,mailto:203-storemanager@sportsmans.com?subject=Store Inquiry,true,https://stores.sportsmans.com/sportsmans-warehouse/us/mt/bozeman/2214-tschache-lane?utm_source=google&utm_medium=organic&utm_campaign=GMB&y_source=1_OTg4MDE3My03MTUtbG9jYXRpb24ud2Vic2l0ZQ%3D%3D,true,4.1,912,true,"Facebook,Instagram,X (Twitter),YouTube"
 99,Flatline Outfitters,Fishing store,+14066845638,kingsflatline@yahoo.com,true,http://www.flatlineoutfitters.com/,true,5,3,false,
 100,Snake River Bait Co,Bait shop,+12085291845,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,4.9,16,NO_WEBSITE,NO_WEBSITE
 101,"Al Anderson, Fly Fishing Outfitter #173",Fishing charter,NO_PHONE_NUMBER_FOUND,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,5,5,NO_WEBSITE,NO_WEBSITE
-102,Fins and Feathers Guide Service,Fishing charter,+14064685019,info@flyfishingbozeman.com,true,https://flyfishingbozeman.com/,false,5,39,true,"Facebook,Instagram"
-103,Crayster,Fishing store,+12085573468,NO_EMAIL_FOUND,true,http://www.procrayster.com/,true,4.9,72,false,"Facebook,Instagram,YouTube"
-104,Bighorn Fly & Tackle Shop,NO_CATEGORY_FOUND,+18886651321,BLOCKED_OR_FORBIDDEN (HTTP 403),true,https://bighornfly.com/,BLOCKED_OR_FORBIDDEN (HTTP 403),4.8,22,BLOCKED_OR_FORBIDDEN (HTTP 403),BLOCKED_OR_FORBIDDEN (HTTP 403)
-105,"Fly Fishing Montana,Montana Trout Guides, Fly Fishing, Bozeman, Montana",Fishing charter,+14065703516,mttroutg@aol.com,true,https://www.montanatroutguides.com/contact-us,false,5,5,false,
-106,Rich's Tackle,Bait shop,+14062854540,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,5,19,NO_WEBSITE,NO_WEBSITE
-107,Backcountry Angler,NO_CATEGORY_FOUND,+14066833462,backcountry@backcountryangler.com,true,http://www.backcountryangler.com/,true,4.8,32,false,"Facebook,Instagram"
-108,Bozeman Flyworks,Fishing store,+14062198692,ERROR_CHECKING_EMAIL,true,https://bozemanflyworks.com/,true,3,2,false,"Facebook,Instagram"
-109,The Avid Angler,Fishing store,+12063624030,info@avidangler.com,true,https://www.avidangler.com/,true,4.8,92,true,"Facebook,Instagram,X (Twitter)"
-110,Troutana Outfitters,Fishing store,+14062239641,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,4.8,4,NO_WEBSITE,NO_WEBSITE
-111,"Wyoming Adventures, Bighorn Fly Fishing",Fishing charter,+13072726792,anglingadv@gmail.com,true,http://www.flyfishbighorn.com/,false,5,43,false,
-112,East Rosebud Fly & Tackle,Fishing store,+14064453032,Info@eastrosebudflyandtackle.com,true,http://eastrosebudflyandtackle.com/,true,4.8,12,false,
-113,Doctor Slick Instruments,Fishing store,+14063888109,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,5,10,NO_WEBSITE,NO_WEBSITE
-114,Smith & Chandler,Gift shop,+14066467841,info@ventureswestinc.com,true,https://ventureswestinc.com/retail/,true,4.6,65,false,Facebook
-115,Big Sky Rod Box,Outdoor clothing and equipment shop,+14065855355,user@domain.com,true,http://www.flyrodbox.com/,true,5,4,false,"Facebook,Instagram,Vimeo,X (Twitter),YouTube"
-116,American Fly Fishing Trade Association,Non-profit organization,+14066307069,info@affta.org,true,https://www.affta.org/,false,5,5,false,"Facebook,Instagram,LinkedIn,YouTube"
-117,Snake River Fly,Fishing store,+12089043900,208-904-3900snakeriverfly@gmail.comsnakeriverfly.comClosed,true,http://snakeriverfly.com/,true,4.9,109,true,"Facebook,Instagram,YouTube"
-118,Stonefly Inn & Flyshop,NO_CATEGORY_FOUND,+14066845648,holly@stoneflyoutfitters.com,true,http://www.stoneflyoutfitters.com/,true,5,31,false,"Facebook,Instagram,X (Twitter)"
-119,Thermopolis Fly Shop Big Horn River Guide Service Wyoming,Fishing store,+13078643499,thermopolisflyshop@gmail.com?subject=Question,true,http://www.thermopolisflyshop.com/,true,4.5,11,false,"Facebook,Instagram"
-120,Bighorn Angler,Fishing store,+18669793231,info@bighornangler.com,true,https://bighornangler.com/,true,4.8,91,true,"Facebook,Instagram,YouTube"
+102,Crayster,Fishing store,+12085573468,NO_EMAIL_FOUND,true,http://www.procrayster.com/,true,4.9,72,false,"Facebook,Instagram,YouTube"
+103,Bighorn Fly & Tackle Shop,NO_CATEGORY_FOUND,+18886651321,BLOCKED_OR_FORBIDDEN (HTTP 403),true,https://bighornfly.com/,BLOCKED_OR_FORBIDDEN (HTTP 403),4.8,22,BLOCKED_OR_FORBIDDEN (HTTP 403),BLOCKED_OR_FORBIDDEN (HTTP 403)
+104,"Fly Fishing Montana,Montana Trout Guides, Fly Fishing, Bozeman, Montana",Fishing charter,+14065703516,mttroutg@aol.com,true,https://www.montanatroutguides.com/contact-us,false,5,5,false,
+105,Rich's Tackle,Bait shop,+14062854540,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,5,19,NO_WEBSITE,NO_WEBSITE
+106,Backcountry Angler,NO_CATEGORY_FOUND,+14066833462,backcountry@backcountryangler.com,true,http://www.backcountryangler.com/,true,4.8,32,false,"Facebook,Instagram"
+107,Bozeman Flyworks,Fishing store,+14062198692,ERROR_CHECKING_EMAIL,true,https://bozemanflyworks.com/,true,3,2,false,"Facebook,Instagram"
+108,The Avid Angler,Fishing store,+12063624030,BLOCKED_OR_FORBIDDEN (HTTP 403),true,https://www.avidangler.com/,BLOCKED_OR_FORBIDDEN (HTTP 403),4.8,92,BLOCKED_OR_FORBIDDEN (HTTP 403),BLOCKED_OR_FORBIDDEN (HTTP 403)
+109,Troutana Outfitters,Fishing store,+14062239641,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,4.8,4,NO_WEBSITE,NO_WEBSITE
+110,"Wyoming Adventures, Bighorn Fly Fishing",Fishing charter,+13072726792,anglingadv@gmail.com,true,http://www.flyfishbighorn.com/,false,5,43,false,
+111,East Rosebud Fly & Tackle,Fishing store,+14064453032,Info@eastrosebudflyandtackle.com,true,http://eastrosebudflyandtackle.com/,true,4.8,12,false,
+112,Doctor Slick Instruments,Fishing store,+14063888109,NO_WEBSITE,false,NO_WEBSITE,NO_WEBSITE,5,10,NO_WEBSITE,NO_WEBSITE
+113,Smith & Chandler,Gift shop,+14066467841,info@ventureswestinc.com,true,https://ventureswestinc.com/retail/,true,4.6,65,false,Facebook
+114,Big Sky Rod Box,Outdoor clothing and equipment shop,+14065855355,user@domain.com,true,http://www.flyrodbox.com/,true,5,4,false,"Facebook,Instagram,Vimeo,X (Twitter),YouTube"
+115,American Fly Fishing Trade Association,Non-profit organization,+14066307069,info@affta.org,true,https://www.affta.org/,false,5,5,false,"Facebook,Instagram,LinkedIn,YouTube"
+116,Snake River Fly,Fishing store,+12089043900,208-904-3900snakeriverfly@gmail.comsnakeriverfly.comClosed,true,http://snakeriverfly.com/,true,4.9,109,true,"Facebook,Instagram,YouTube"
+117,Stonefly Inn & Flyshop,NO_CATEGORY_FOUND,+14066845648,holly@stoneflyoutfitters.com,true,http://www.stoneflyoutfitters.com/,true,5,31,false,"Facebook,Instagram,X (Twitter)"
+118,Thermopolis Fly Shop Big Horn River Guide Service Wyoming,Fishing store,+13078643499,thermopolisflyshop@gmail.com?subject=Question,true,http://www.thermopolisflyshop.com/,true,4.5,11,false,"Facebook,Instagram"
+119,Bighorn Angler,Fishing store,+18669793231,info@bighornangler.com,true,https://bighornangler.com/,true,4.8,91,true,"Facebook,Instagram,YouTube"
+120,Stonefly Studio,Outdoor sports store,+14066566326,ss@stoneflystudio.com,true,http://www.stoneflystudio.com/,true,5,115,false,"Facebook,Instagram,LinkedIn,X (Twitter)"
