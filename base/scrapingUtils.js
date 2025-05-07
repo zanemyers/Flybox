@@ -1,3 +1,18 @@
+/**
+ * Utility functions to enhance Playwright page interactions and normalize URLs.
+ *
+ * This module includes:
+ * - `extendPageSelectors(page)`: Augments the given Playwright `page` object with custom helper methods for
+ *   selecting and extracting data from elements more easily.
+ *   - getAttByLocator: Gets an attribute from the first matching element.
+ *   - getAttByLabel: Gets an attribute from an element by aria-label text.
+ *   - getTextContent: Retrieves text content of the first matching element.
+ *   - hasElementWithKeyword: Checks for the presence of an element containing specific text.
+ *
+ * - `normalizeUrl(url)`: Cleans up a URL by removing query strings, hashes, 'www.', and trailing slashes,
+ *   returning a consistent and canonical form.
+ */
+
 async function extendPageSelectors(page) {
   /**
    * Retrieves the value of a specified attribute from the first matching element located by the given selector,
