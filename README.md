@@ -2,6 +2,19 @@
 
 This is a repository containg work done for Rescue River, it currently includes 1 functional app, and 1 in progress app.
 
+## SETUP
+
+### Docker
+
+- Install Docker Desktop
+- In the terminal run `docker-compose build`
+
+### Local
+
+- Install node.js `https://nodejs.org/en/download` (Recommend using LTS)
+  - You can check if it's installed by running `node -v` and/or `npm -v` in the terminal
+- In the terminal run `npm install` to install the necessary packages locally
+
 ## Google Maps Shop Scraper (Functional)
 
 This tool scapes a Google Maps URL and returns a csv with details on the listed items.
@@ -19,10 +32,14 @@ It should be double checked for data accuracy, but provides a good starting poin
 - Prints a list of list items without a website to the console
 - Prints a list of the errors that occurred in the process to the console
 
-### How to run locally in the console
+### Run with Docker
 
-- `just gss`
-- If you are in the GoogleMapsShopScraper directory you may also run `node main`
+- In the terminal run `just gss`
+
+### Run Locally
+
+- In the terminal run `just gss -l`
+- If you are in the GoogleMapsShopScraper directory you may also run `node main` in the terminal
 
 ### Packages
 
@@ -52,21 +69,25 @@ It should be double checked for data accuracy, but provides a good starting poin
 
 This tool takes takes a csv that must have the following 3 headers, Name, Website and, Publishes Fishing Report (You can use the Google Maps Scraper to generate one). Then compiles and generates data based off of common patterns in the reports for a given river.
 
-## How it Works
+### How it Works
 
-## How to run locally
+### Run with Docker
 
-- `just frs`
-- If you are in the GoogleMapsShopScraper directory you may also run `node main`
+- In the terminal run `just frs`
 
-## Packages
+### Run Locally
+
+- In the terminal run `just frs -l`
+- If you are in the FishingReportScraper directory you may also run `node main` in the terminal
+
+### Packages
 
 - Playwright
 - Fast-CSV
 - (Possibly) Cheerio
 
-## Customizations
+### Customizations
 
-## Known Issues
+### Known Issues
 
 - Must run headless with docker
