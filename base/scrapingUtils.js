@@ -123,7 +123,4 @@ function normalizeUrl(url) {
   }
 }
 
-module.exports = {
-  extendPageSelectors,
-  normalizeUrl,
-};
+export { extendPageSelectors, normalizeUrl };

@@ -56,8 +56,4 @@ function stopSpinner(spinner, doneText) {
   process.stdout.write(`\r${doneText}      \n`);
 }
 
-module.exports = {
-  progressBar,
-  startSpinner,
-  stopSpinner,
-};
+export { progressBar, startSpinner, stopSpinner };

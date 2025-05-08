@@ -1,9 +1,9 @@
-const fs = require("fs");
-const path = require("path");
-const { writeToPath } = require("@fast-csv/format");
-const { parse } = require("@fast-csv/parse");
+import fs from "fs";
+import path from "path";
+import { writeToPath } from "@fast-csv/format";
+import { parse } from "@fast-csv/parse";
 
-const { getUTCTimeStamp, getUTCYearMonth } = require("./dateUtils.js");
+import { getUTCTimeStamp, getUTCYearMonth } from "./dateUtils.js";
 
 /**
  * Utility class to handle CSV file writing and reading.
@@ -127,8 +127,5 @@ class CSVFileReader {
   }
 }
 
-module.exports = {
-  CSVFileWriter,
-  CSVFileReader,
-};
+export { CSVFileWriter, CSVFileReader };
 // const fileHandler = new CSVFileHandler("resources/csv/shop_details.csv", "shopDetails");

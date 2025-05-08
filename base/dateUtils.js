@@ -35,7 +35,4 @@ function getUTCTimeStamp(date) {
   return `${year}-${month}-${day}_T${hours}-${minutes}-${seconds}Z`;
 }
 
-module.exports = {
-  getUTCTimeStamp,
-  getUTCYearMonth,
-};
+export { getUTCTimeStamp, getUTCYearMonth };

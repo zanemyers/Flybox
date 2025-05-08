@@ -70,7 +70,7 @@ const Messages = {
 };
 
 // Export all constants for use in other modules
-module.exports = {
+export {
   Messages,
   EmailRegEx,
   PhoneRegEx,
