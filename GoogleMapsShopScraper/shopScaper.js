@@ -1,13 +1,12 @@
-const {
+import { CSVFileWriter } from "../base/csvHandler.js";
+import { Messages } from "../base/enums.js";
+import { addShopSelectors } from "./shopScrapingUtils.js";
+import { normalizeUrl } from "../base/scrapingUtils.js";
+import {
   progressBar,
   startSpinner,
   stopSpinner,
-} = require("../base/loadingIndicators.js");
-const { addShopSelectors } = require("./shopScrapingUtils.js");
-const { normalizeUrl } = require("../base/scrapingUtils.js");
-
-const { CSVFileWriter } = require("../base/csvHandler.js");
-const { Messages } = require("../base/enums.js");
+} from "../base/loadingIndicators.js";
 
 // Initialize CSV file writer
 const shopDetailCSV = new CSVFileWriter(
@@ -309,7 +308,4 @@ function printMissingDetails(noWebsite, failedGoogleShops, failedWebsites) {
   }
 }
 
-module.exports = {
-  scrapeGoogleShopUrl,
-  scrapeGoogleShopDetails,
-};
+export { scrapeGoogleShopUrl, scrapeGoogleShopDetails };

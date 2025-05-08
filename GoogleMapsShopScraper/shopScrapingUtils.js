@@ -1,5 +1,5 @@
-const { extendPageSelectors } = require("../base/scrapingUtils.js");
-const {
+import { extendPageSelectors } from "../base/scrapingUtils.js";
+import {
   Messages,
   EmailRegEx,
   PhoneRegEx,
@@ -7,7 +7,7 @@ const {
   ShopKeywords,
   SocialMediaMap,
   StarsRegEx,
-} = require("../base/enums.js");
+} from "../base/enums.js";
 
 async function addShopSelectors(page) {
   // Add base scraping utils
@@ -273,6 +273,4 @@ async function addShopSelectors(page) {
   };
 }
 
-module.exports = {
-  addShopSelectors,
-};
+export { addShopSelectors };
