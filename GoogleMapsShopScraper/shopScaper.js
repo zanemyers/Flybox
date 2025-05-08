@@ -1,4 +1,4 @@
-import { CSVFileWriter } from "../base/fileHandler.js";
+import { CSVFileWriter } from "../base/fileUtils.js";
 import { Messages } from "../base/enums.js";
 import { addShopSelectors } from "./shopScrapingUtils.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";

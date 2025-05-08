@@ -35,7 +35,6 @@ This is a repository containg work done for Rescue River, it currently includes 
 - (Possibly) Cheerio
 - Dotenv
 - Fast-CSV
-- HuggingFace/Inference
 - Playwright
 
 ## Google Maps Shop Scraper (Functional)

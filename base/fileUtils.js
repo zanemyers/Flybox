@@ -1,3 +1,11 @@
+/**
+ * Utility classes to handle file writing and reading.
+ * It provides methods for CSV and TXT file writing and reading.
+ * The CSVFileWriter class ensures that the output directory exists and archives existing files with timestamps.
+ * The CSVFileReader class allows filtering and transforming rows while reading.
+ * The TXTFileWriter class provides a simple way to write data to a text file.
+ */
+
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -5,14 +13,6 @@ import { parse } from "@fast-csv/parse";
 import { writeToPath } from "@fast-csv/format";
 
 import { getUTCTimeStamp, getUTCYearMonth } from "./dateUtils.js";
-
-/**
- * Utility class to handle file writing and reading.
- * It provides methods for CSV and TXT file writing and reading.
- * The CSVFileWriter class ensures that the output directory exists and archives existing files with timestamps.
- * The CSVFileReader class allows filtering and transforming rows while reading.
- * The TXTFileWriter class provides a simple way to write data to a text file.
- */
 
 // Get the directory name of the current module
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -210,6 +210,21 @@ class TXTFileWriter extends FileWriter {
   }
 
   /**
+   * Writes data to the TXT file.
+   */
+  async write(data) {
+    try {
+      // Convert the data to a string and write it to the file
+      await fs.promises.write.writeFile(this.filePath, data, "utf8");
+    } catch (error) {
+      // Log any errors that occur during the write operation
+      console.error("Error writing file:", error);
+      // Re-throw the error to allow further handling if needed
+      throw error;
+    }
+  }
+
+  /**
    * Writes an array of objects to a text file in JSON format.
    *
    * This method serializes the provided data into a JSON string with indentation
@@ -236,4 +251,4 @@ class TXTFileWriter extends FileWriter {
 }
 
 export { CSVFileWriter, CSVFileReader, TXTFileWriter };
-// const fileHandler = new CSVFileHandler("resources/csv/shop_details.csv", "shopDetails");
+// const csvWriter = new CSVFileWriter("resources/csv/shop_details.csv", "shopDetails");
