@@ -1,4 +1,4 @@
-import { CSVFileWriter } from "../base/csvHandler.js";
+import { CSVFileWriter } from "../base/fileHandler.js";
 import { Messages } from "../base/enums.js";
 import { addShopSelectors } from "./shopScrapingUtils.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
@@ -200,7 +200,7 @@ async function scrapeGoogleShopDetails(browserContext, urls) {
   }
 
   // Write all successfully scraped shop details to a CSV file
-  await shopDetailCSV.bulkWriteCSVData(allShopDetails);
+  await shopDetailCSV.bulkWrite(allShopDetails);
 
   // Print out details of shops with missing website or failed to scrape
   printMissingDetails(noWebsite, failedGoogleShops, failedWebsites);
