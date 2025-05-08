@@ -3,12 +3,7 @@ import * as cheerio from "cheerio";
 import fs from "fs";
 import path from "path";
 
-import { CSVFileReader, TXTFileWriter } from "../base/fileHandler.js";
-
-const summaryWriter = new TXTFileWriter(
-  "resources/txt/summary.txt",
-  "reportSummaries"
-);
+import { CSVFileReader, TXTFileWriter } from "../base/fileUtils.js";
 
 // Example URLs for testing
 const urls = [
@@ -18,11 +13,20 @@ const urls = [
 ];
 
 async function getReportSummary() {
+  // Initialize the TXTFileWriter for saving the summary
+  const summaryWriter = new TXTFileWriter(
+    "resources/txt/summary.txt",
+    "reportSummaries"
+  );
+
   // Initialize the Hugging Face Inference client
   const client = new InferenceClient(process.env.HF_API_KEY);
 
   // Read the text file containing fishing reports
-  const fileText = fs.readFileSync("resources/text/fishingReport.txt", "utf-8");
+  const fileText = fs.readFileSync(
+    "resources/txt/fishing_reports.txt",
+    "utf-8"
+  );
 
   // Prepare the input for the summarization model
   const inputWithPrompt = `
@@ -39,12 +43,12 @@ async function getReportSummary() {
 
   // Call the summarization model
   const result = await client.summarization({
-    model: "pszemraj/long-t5-tglobal-base-16384-book-summary",
+    model: "facebook/bart-large-cnn",
     inputs: inputWithPrompt,
   });
 
   // Save the summary to a text file
-  summaryWriter.write(result[0].summary_text);
+  await summaryWriter.write(result[0].summary_text);
 }
 
 /**
@@ -148,6 +152,8 @@ async function fishingReportScraper(context) {
   // After collecting all reports, write them to the specified text file.
   // The bulkWrite method serializes the data into JSON format and writes it to the file.
   await reportWriter.bulkWrite(allReports);
+
+  await getReportSummary(); // Call the function to generate a summary of the reports.
 }
 
 async function findFishingReports() {}
