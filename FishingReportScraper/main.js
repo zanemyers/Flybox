@@ -1,23 +1,17 @@
-const { chromium } = require("playwright");
-const { CSVFileReader } = require("../base/csvHandler.js");
-const { fishingReportScraper } = require("./reportScrapers.js");
+import "dotenv/config";
+import { chromium } from "playwright";
+import { fishingReportScraper, getUrlsFromCSV } from "./reportScrapers.js";
 
 async function main() {
-  // Initialize the CSV file reader
-  const reader = new CSVFileReader(
-    "resources/csv/shop_details.csv",
-    (row) => row["publishesFishingReport"] === "true", // filter function
-    (row) => ({
-      name: row["name"],
-      website: row["website"],
-    }) // row map function
-  );
+  const urls = await getUrlsFromCSV();
 
-  // Read the CSV to get website URLs that publish fishing reports
-  // Note: The CSV file should have a header row with "name", "publishesFishingReport" and "website" columns
-  const urls = await reader.read();
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({ ignoreHTTPSErrors: true });
 
-  await fishingReportScraper(urls);
+  // await fishingReportScraper(context, urls);
+  await fishingReportScraper(context);
+
+  browser.close();
 }
 
 main().catch((err) => {
