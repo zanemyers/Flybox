@@ -8,6 +8,11 @@
 gss *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-l"* ]]; then  # Check for local flag (-l)
+        if [[ "{{FLAGS}}" == *"-d"* ]]; then  # Check for debug flag (-d)
+            node --inspect GoogleMapsShopScraper/main.js
+        else
+            node GoogleMapsShopScraper/main.js
+        fi
         node GoogleMapsShopScraper/main.js
     else
         just dcrr web-scraper node GoogleMapsShopScraper/main.js
@@ -18,6 +23,11 @@ gss *FLAGS:
 frs *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-l"* ]]; then  # Check for local flag (-l)
+        if [[ "{{FLAGS}}" == *"-d"* ]]; then  # Check for debug flag (-d)
+            node --inspect FishingReportScraper/main.js
+        else
+            node FishingReportScraper/main.js
+        fi
         node FishingReportScraper/main.js
     else
         just dcrr web-scraper node FishingReportScraper/main.js
