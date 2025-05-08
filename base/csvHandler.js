@@ -1,9 +1,15 @@
 import fs from "fs";
 import path from "path";
-import { writeToPath } from "@fast-csv/format";
+import { fileURLToPath } from "url";
 import { parse } from "@fast-csv/parse";
+import { writeToPath } from "@fast-csv/format";
 
 import { getUTCTimeStamp, getUTCYearMonth } from "./dateUtils.js";
+
+// Get the directory name of the current module
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Resolve the project directory path
+const projectDir = path.resolve(__dirname, "..");
 
 /**
  * Utility class to handle CSV file writing and reading.
@@ -21,7 +27,7 @@ class CSVFileWriter {
    * @param {string} archiveFolderName - Folder name (inside resources/csv/) where old versions will be archived.
    */
   constructor(filePath, archiveFolderName) {
-    this.filePath = filePath; // Path to the CSV file
+    this.filePath = path.resolve(projectDir, filePath); // Path to the CSV file
     this.archiveFolderName = archiveFolderName; // Name of the folder to store archived files
 
     // Ensure the directory exists before writing
@@ -49,6 +55,7 @@ class CSVFileWriter {
 
     // Create the archive directory structure (resources/csv/{archiveFolderName}/{year}/{month})
     const archiveDir = path.join(
+      projectDir,
       "resources",
       "csv",
       this.archiveFolderName,
@@ -95,7 +102,7 @@ class CSVFileReader {
    * @param {function(Object): any} [rowMap] - Optional function to transform each included row before returning.
    */
   constructor(filePath, filter = () => true, rowMap = null) {
-    this.filePath = filePath;
+    this.filePath = path.resolve(projectDir, filePath);
     this.filter = filter;
     this.rowMap = rowMap;
   }

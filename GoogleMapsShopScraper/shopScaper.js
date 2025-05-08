@@ -6,7 +6,7 @@ import {
   progressBar,
   startSpinner,
   stopSpinner,
-} from "../base/loadingIndicators.js";
+} from "../base/terminalUtils.js";
 
 // Initialize CSV file writer
 const shopDetailCSV = new CSVFileWriter(

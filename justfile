@@ -13,7 +13,6 @@ gss *FLAGS:
         else
             node GoogleMapsShopScraper/main.js
         fi
-        node GoogleMapsShopScraper/main.js
     else
         just dcrr web-scraper node GoogleMapsShopScraper/main.js
     fi
@@ -28,7 +27,6 @@ frs *FLAGS:
         else
             node FishingReportScraper/main.js
         fi
-        node FishingReportScraper/main.js
     else
         just dcrr web-scraper node FishingReportScraper/main.js
     fi

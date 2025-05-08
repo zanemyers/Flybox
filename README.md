@@ -4,6 +4,21 @@ This is a repository containg work done for Rescue River, it currently includes 
 
 ## SETUP
 
+### VS Code Settings
+
+#### Debugging
+
+- On MacOS press `cmd + shift +p` to open the command palette
+- Search `Debug: Toggle Auto Attach` and set it to `Only With Flag`
+
+#### Recommended Extensions
+
+- CSV by ReprEng
+- Docker by Microsoft
+- Docker DX by Docker
+- GitHub Copilot by GitHub
+- Prettier - Code formatter by Prettier
+
 ### Docker
 
 - Install Docker Desktop
@@ -14,6 +29,14 @@ This is a repository containg work done for Rescue River, it currently includes 
 - Install node.js `https://nodejs.org/en/download` (Recommend using LTS)
   - You can check if it's installed by running `node -v` and/or `npm -v` in the terminal
 - In the terminal run `npm install` to install the necessary packages locally
+
+### Packages
+
+- (Possibly) Cheerio
+- Dotenv
+- Fast-CSV
+- HuggingFace/Inference
+- Playwright
 
 ## Google Maps Shop Scraper (Functional)
 
@@ -41,10 +64,11 @@ It should be double checked for data accuracy, but provides a good starting poin
 - In the terminal run `just gss -l`
 - If you are in the GoogleMapsShopScraper directory you may also run `node main` in the terminal
 
-### Packages
+### Debugging
 
-- Playwright
-- Fast-CSV
+- Docker debuggin is currently unavailable
+- In the terminal run `just gss -l -d` for local debugging
+- If you are in the GoogleMapsShopScraper directory you may also run `node --inspect main` in the terminal
 
 ### Customizations
 
@@ -63,7 +87,8 @@ It should be double checked for data accuracy, but provides a good starting poin
 - Email doesn't always pull correctly
 - Some pages fail to load
 - Blocked or Forbidden pages
-- Must run headless with docker
+- Must run headless with Docker
+- Cannot debug with Docker
 
 ## Fishing Report Scraper (In-Progress)
 
@@ -80,11 +105,11 @@ This tool takes takes a csv that must have the following 3 headers, Name, Websit
 - In the terminal run `just frs -l`
 - If you are in the FishingReportScraper directory you may also run `node main` in the terminal
 
-### Packages
+### Debugging
 
-- Playwright
-- Fast-CSV
-- (Possibly) Cheerio
+- Docker debuggin is currently unavailable
+- In the terminal run `just frs -l -d` for local debugging
+- If you are in the FishingReportScraper directory you may also run `node --inspect main` in the terminal
 
 ### Customizations
 
