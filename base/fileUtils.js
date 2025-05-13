@@ -11,6 +11,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { parse } from "@fast-csv/parse";
 import { writeToPath } from "@fast-csv/format";
+import { writeFile } from "fs/promises";
 
 import { getUTCTimeStamp, getUTCYearMonth } from "./dateUtils.js";
 
@@ -214,12 +215,9 @@ class TXTFileWriter extends FileWriter {
    */
   async write(data) {
     try {
-      // Convert the data to a string and write it to the file
-      await fs.promises.write.writeFile(this.filePath, data, "utf8");
+      await writeFile(this.filePath, data, "utf8");
     } catch (error) {
-      // Log any errors that occur during the write operation
       console.error("Error writing file:", error);
-      // Re-throw the error to allow further handling if needed
       throw error;
     }
   }

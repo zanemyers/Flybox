@@ -1,7 +1,6 @@
-import { InferenceClient } from "@huggingface/inference";
+import axios from "axios";
 import * as cheerio from "cheerio";
 import fs from "fs";
-import path from "path";
 
 import { CSVFileReader, TXTFileWriter } from "../base/fileUtils.js";
 
@@ -20,8 +19,6 @@ async function getReportSummary() {
   );
 
   // Initialize the Hugging Face Inference client
-  const client = new InferenceClient(process.env.HF_API_KEY);
-
   // Read the text file containing fishing reports
   const fileText = fs.readFileSync(
     "resources/txt/fishing_reports.txt",
@@ -29,26 +26,27 @@ async function getReportSummary() {
   );
 
   // Prepare the input for the summarization model
-  const inputWithPrompt = `
-    Summarize the following fishing reports. For each report, extract:
-    - River name
-    - Date
-    - Fly type (if mentioned)
-    - Fly color (if mentioned)
-    - Any patterns, conditions, or notable results
+  const prompt = `
+    For Each River or body of water mentioned list the following:
+    - River or body of water name
+    - Date of report
+    - Fly fishing fly types (if mentioned)
+    - Fly colors (if mentioned)
+
+    If a river is mentioned more than once, summarize the information for that river into single entry.
 
     Fishing Reports:
     ${fileText}
   `;
 
-  // Call the summarization model
-  const result = await client.summarization({
-    model: "facebook/bart-large-cnn",
-    inputs: inputWithPrompt,
+  const result = await axios.post(`http://localhost:11434/api/generate`, {
+    model: "llama3",
+    prompt,
+    stream: false,
   });
 
   // Save the summary to a text file
-  await summaryWriter.write(result[0].summary_text);
+  await summaryWriter.write(result.data.response.trim());
 }
 
 /**
