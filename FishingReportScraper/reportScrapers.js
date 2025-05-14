@@ -1,123 +1,15 @@
 import axios from "axios";
-import * as cheerio from "cheerio";
 import fs from "fs";
+import tokenizer from "gpt-tokenizer";
 
-import { CSVFileReader, TXTFileWriter } from "../base/fileUtils.js";
+import { TXTFileWriter } from "../base/fileUtils.js";
+import { scrapeAndGroup } from "./reportScrapingUtils.js";
 
 // Example URLs for testing
 const urls = [
   "https://northforkanglers.com/fishing-reports",
   "https://www.hatchfinders.com/post/april-1-spring-report",
-  "https://theriversedge.com/pages/spring-creeks-fishing-report",
 ];
-
-async function getReportSummary() {
-  // Initialize the TXTFileWriter for saving the summary
-  const summaryWriter = new TXTFileWriter(
-    "resources/txt/summary.txt",
-    "reportSummaries"
-  );
-
-  // Initialize the Hugging Face Inference client
-  // Read the text file containing fishing reports
-  const fileText = fs.readFileSync(
-    "resources/txt/fishing_reports.txt",
-    "utf-8"
-  );
-
-  // Prepare the input for the summarization model
-  const prompt = `
-    For Each River or body of water mentioned list the following:
-    - River or body of water name
-    - Date of report
-    - Fly fishing fly types (if mentioned)
-    - Fly colors (if mentioned)
-
-    If a river is mentioned more than once, summarize the information for that river into single entry.
-
-    Fishing Reports:
-    ${fileText}
-  `;
-
-  const result = await axios.post(`http://localhost:11434/api/generate`, {
-    model: "llama3",
-    prompt,
-    stream: false,
-  });
-
-  // Save the summary to a text file
-  await summaryWriter.write(result.data.response.trim());
-}
-
-/**
- * Reads a CSV file containing shop details and returns a filtered list of shops
- * that publish fishing reports. Each result includes the shop's name and website.
- *
- * The CSV file is expected to have at least the following columns:
- * - "name": Name of the shop
- * - "website": Website URL of the shop
- * - "publishesFishingReport": Boolean string ("true"/"false") indicating if reports are published
- *
- * @returns {Promise<Array<{ name: string, website: string }>>} List of filtered shop info
- */
-async function getUrlsFromCSV() {
-  // Initialize the CSV file reader
-  const reader = new CSVFileReader(
-    "resources/csv/shop_details.csv", // Path to the CSV file
-    (row) => row["publishesFishingReport"] === "true", // filter function
-    (row) => ({
-      name: row["name"],
-      website: row["website"],
-    }) // row map function
-  );
-
-  // Read the CSV to get website URLs that publish fishing reports
-  return await reader.read();
-}
-
-async function scrapeAndGroup(page, url) {
-  try {
-    await page.goto(url, { timeout: 10000 });
-  } catch (error) {
-    console.error(`Error navigating to ${url}:`, error);
-    return null;
-  }
-
-  // 1) grab full HTML
-  const html = await page.content();
-
-  // 2) load into Cheerio
-  const $ = cheerio.load(html);
-
-  // 3) pick the wrapper elements for each “card” or report block
-  //    (you’ll need to inspect a few pages to find the right selector)
-  const wrappers = $("li.list-item, div.report-card, section.post, article");
-
-  // 4) map over them and pull out title / date / body / image, etc.
-  const reports = [];
-  wrappers.each((_, el) => {
-    const $el = $(el);
-
-    // Example heuristics—adjust selectors to your page’s actual classes/tags:
-    const title =
-      $el.find("h2, .title, .post-title").first().text().trim() || null;
-    const date =
-      $el.find("time, .date, .post-date").first().text().trim() || null;
-    const body = $el
-      .find("p")
-      .map((_, p) => $(p).text().trim())
-      .get()
-      .join("\n\n");
-    const img = $el.find("img").first().attr("src") || null;
-
-    // Only include if we actually found meaningful content
-    if (title || body) {
-      reports.push({ title, date, body, img });
-    }
-  });
-
-  return reports;
-}
 
 // async function fishingReportScraper(context, urls) {
 /**
@@ -147,13 +39,66 @@ async function fishingReportScraper(context) {
     allReports.push(data);
   }
 
+  let compiledReports = "";
+  for (const report of allReports) {
+    for (const entry of report) {
+      compiledReports += `Title: ${entry.title}\nDate: ${entry.date}\nBody: ${entry.body}\nSource: ${entry.source}\n---------------------\n`;
+    }
+  }
+
   // After collecting all reports, write them to the specified text file.
   // The bulkWrite method serializes the data into JSON format and writes it to the file.
-  await reportWriter.bulkWrite(allReports);
+  await reportWriter.write(compiledReports);
 
-  await getReportSummary(); // Call the function to generate a summary of the reports.
+  await makeReportSummary(); // Call the function to generate a summary of the reports.
 }
 
-async function findFishingReports() {}
+async function makeReportSummary() {
+  // Read the text file containing fishing reports
+  const fileText = fs.readFileSync(
+    "resources/txt/fishing_reports.txt",
+    "utf-8"
+  );
 
-export { fishingReportScraper, getUrlsFromCSV };
+  // Prepare the input for the summarization model
+  const prompt = `
+    For each river or body of water mentioned create a bulleted list that follows the template below.
+    - If you cannot find information for a bullet leave it blank.
+    - If the body of water is mentioned more than once, summarize the info into a single entry.
+    - If the date is in the body and not in the date field, add it to the date field.
+    - If an article contains multiple reports break them into separate entries based on the body of water.
+
+    # 1. Mississippi River
+    (River Specifics)
+    * Date: (Date of report)
+    * Water Type: (river, lake, stream, fork, tailwater, creek, reservoir, etc.)
+    (Fly Fishing Specifics)
+    * Fly Patterns: (list of fly fishing fly patterns mentioned)
+    * Colors: (list of colors for fly fishing flies that were mentioned)
+    * Hook Sizes: (list of hook sizes mentioned)
+
+    ${fileText}
+  `;
+
+  // Tokenize the prompt
+  const tokens = tokenizer.encode(prompt); // .encode() should work directly
+  console.log(`🔢 Prompt uses ${tokens.length} tokens.`);
+
+  // Send the prompt to local LLM api for summarization
+  const result = await axios.post(`http://localhost:11434/api/generate`, {
+    model: "dolphin-llama3:8b",
+    prompt,
+    stream: false,
+  });
+
+  // Initialize a new TXTFileWriter
+  const summaryWriter = new TXTFileWriter(
+    "resources/txt/summary.txt",
+    "reportSummaries"
+  );
+
+  // Write the summary to a textfile
+  await summaryWriter.write(result.data.response.trim());
+}
+
+export { fishingReportScraper };

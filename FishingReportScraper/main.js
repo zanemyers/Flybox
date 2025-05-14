@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { chromium } from "playwright";
-import { fishingReportScraper, getUrlsFromCSV } from "./reportScrapers.js";
+import { fishingReportScraper } from "./reportScrapers.js";
+import { getUrlsFromCSV } from "./reportScrapingUtils.js";
 
 async function main() {
   const urls = await getUrlsFromCSV();

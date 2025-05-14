@@ -109,16 +109,6 @@ class FileWriter {
       throw err;
     }
   }
-
-  /**
-   * Placeholder method to be overridden by subclasses.
-   * Throws an error if not implemented in the subclass.
-   */
-  bulkWrite() {
-    throw new Error(
-      "bulkWrite() must be implemented by subclasses of FileWriter."
-    );
-  }
 }
 
 /**
@@ -218,31 +208,6 @@ class TXTFileWriter extends FileWriter {
       await writeFile(this.filePath, data, "utf8");
     } catch (error) {
       console.error("Error writing file:", error);
-      throw error;
-    }
-  }
-
-  /**
-   * Writes an array of objects to a text file in JSON format.
-   *
-   * This method serializes the provided data into a JSON string with indentation
-   * for readability and writes it to the specified file path. If the file already
-   * exists, its contents will be overwritten.
-   *
-   * @param {Array<Object>} data - An array of objects representing the content to be written to the file.
-   * @returns {Promise<void>} - A promise that resolves when the write operation is complete.
-   */
-  async bulkWrite(data) {
-    try {
-      // Convert the data array into a JSON string with 2-space indentation for readability
-      const jsonData = JSON.stringify(data, null, 2);
-
-      // Asynchronously write the JSON string to the file using UTF-8 encoding
-      await fs.promises.writeFile(this.filePath, jsonData, "utf8");
-    } catch (error) {
-      // Log any errors that occur during the write operation
-      console.error("Error writing file:", error);
-      // Re-throw the error to allow further handling if needed
       throw error;
     }
   }
