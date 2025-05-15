@@ -1,12 +1,12 @@
 import { extendPageSelectors } from "../base/scrapingUtils.js";
 import {
-  Messages,
-  EmailRegEx,
-  PhoneRegEx,
-  ReviewCountRegEx,
-  ShopKeywords,
-  SocialMediaMap,
-  StarsRegEx,
+  MESSAGES,
+  EMAIL_REGEX,
+  PHONE_REGEX,
+  REVIEW_COUNT_REGEX,
+  SHOP_KEYWORDS,
+  SOCIAL_MEDIA_MAP,
+  STARS_REGEX,
 } from "../base/enums.js";
 
 async function addShopSelectors(page) {
@@ -21,9 +21,9 @@ async function addShopSelectors(page) {
   page.getShopName = async function () {
     try {
       const name = await page.getTextContent("h1");
-      return name || Messages.ERROR_NAME;
+      return name || MESSAGES.ERROR_NAME;
     } catch (err) {
-      return Messages.ERROR_NAME;
+      return MESSAGES.ERROR_NAME;
     }
   };
 
@@ -36,9 +36,9 @@ async function addShopSelectors(page) {
   page.getShopCategory = async function () {
     try {
       const category = await page.getTextContent('[jsaction*="category"]');
-      return category || Messages.NO_CATEGORY;
+      return category || MESSAGES.NO_CATEGORY;
     } catch (err) {
-      return Messages.NO_CATEGORY;
+      return MESSAGES.NO_CATEGORY;
     }
   };
 
@@ -51,11 +51,11 @@ async function addShopSelectors(page) {
   page.getShopPhone = async function () {
     try {
       const phoneId = await page.getAttByLabel("Phone: ", "data-item-id");
-      const phoneNumber = phoneId ? phoneId.match(PhoneRegEx) : null;
+      const phoneNumber = phoneId ? phoneId.match(PHONE_REGEX) : null;
 
-      return phoneNumber ? phoneNumber[0] : Messages.NO_PHONE;
+      return phoneNumber ? phoneNumber[0] : MESSAGES.NO_PHONE;
     } catch (err) {
-      return Messages.NO_PHONE;
+      return MESSAGES.NO_PHONE;
     }
   };
 
@@ -68,41 +68,41 @@ async function addShopSelectors(page) {
   page.getShopWebsite = async function () {
     try {
       const website = await page.getAttByLabel("Website: ", "href");
-      return website || Messages.NO_WEB;
+      return website || MESSAGES.NO_WEB;
     } catch (err) {
-      return Messages.NO_WEB;
+      return MESSAGES.NO_WEB;
     }
   };
 
   /**
    * Retrieves the number of stars from the page by extracting text content from a `span` element
-   * that matches the provided `StarsRegEx` pattern.
+   * that matches the provided `STARS_REGEX` pattern.
    *
    * @returns {Promise<number|null>} - The number of stars as a float, or null if not found or invalid.
    */
   page.getShopStars = async function () {
     try {
-      const stars = await page.getTextContent("span", { hasText: StarsRegEx });
-      return stars ? parseFloat(stars) : Messages.NO_STARS;
+      const stars = await page.getTextContent("span", { hasText: STARS_REGEX });
+      return stars ? parseFloat(stars) : MESSAGES.NO_STARS;
     } catch (err) {
-      return Messages.NO_STARS;
+      return MESSAGES.NO_STARS;
     }
   };
 
   /**
    * Retrieves the number of reviews from the page by extracting the `aria-label` attribute
-   * from an element whose `aria-label` contains the word "reviews", then matching it against the `ReviewCountRegEx` pattern.
+   * from an element whose `aria-label` contains the word "reviews", then matching it against the `REVIEW_COUNT_REGEX` pattern.
    *
    * @returns {Promise<number|null>} - The number of reviews as an integer, or null if not found or invalid.
    */
   page.getShopReviewCount = async function () {
     try {
       const label = await page.getAttByLabel("reviews", "aria-label");
-      const reviewCount = label?.trim().match(ReviewCountRegEx);
+      const reviewCount = label?.trim().match(REVIEW_COUNT_REGEX);
 
-      return reviewCount ? parseInt(reviewCount[1], 10) : Messages.NO_REVIEWS;
+      return reviewCount ? parseInt(reviewCount[1], 10) : MESSAGES.NO_REVIEWS;
     } catch (err) {
-      return Messages.NO_REVIEWS;
+      return MESSAGES.NO_REVIEWS;
     }
   };
 
@@ -117,13 +117,13 @@ async function addShopSelectors(page) {
         (await page.locator("text=/fishing reports|reports/i").count()) > 0
       );
     } catch {
-      return Messages.ERROR_REPORT;
+      return MESSAGES.ERROR_REPORT;
     }
   };
 
   /**
    * Retrieves a list of social media platforms linked on the page by checking all anchor (`<a>`) elements
-   * for hrefs that match domains defined in the `SocialMediaMap`.
+   * for hrefs that match domains defined in the `SOCIAL_MEDIA_MAP`.
    *
    * @returns {Promise<string[]>} - A list of social media platform names found on the page,
    *                               or an empty array if none are found.
@@ -135,7 +135,7 @@ async function addShopSelectors(page) {
       );
 
       const foundSocials = [];
-      for (const { domain, name } of SocialMediaMap) {
+      for (const { domain, name } of SOCIAL_MEDIA_MAP) {
         if (
           hrefs.some((href) => href.includes(domain)) &&
           !foundSocials.includes(name)
@@ -146,7 +146,7 @@ async function addShopSelectors(page) {
 
       return foundSocials;
     } catch {
-      return Messages.ERROR_SOCIAL;
+      return MESSAGES.ERROR_SOCIAL;
     }
   };
 
@@ -192,7 +192,7 @@ async function addShopSelectors(page) {
   page.getEmailFromText = async function () {
     try {
       const bodyText = await page.getTextContent("body");
-      const match = bodyText?.match(EmailRegEx);
+      const match = bodyText?.match(EMAIL_REGEX);
       return match ? match[0] : null;
     } catch {
       return null;
@@ -232,9 +232,9 @@ async function addShopSelectors(page) {
       }
 
       // If all methods failed, return no email message
-      return Messages.NO_EMAIL;
+      return MESSAGES.NO_EMAIL;
     } catch {
-      return Messages.ERROR_EMAIL;
+      return MESSAGES.ERROR_EMAIL;
     }
   };
 
@@ -242,7 +242,7 @@ async function addShopSelectors(page) {
    * Checks if the page contains links or buttons related to an online shop
    * by searching for specific keywords in anchor (`<a>`) and button (`<button>`) elements.
    *
-   * The function iterates over the `ShopKeywords` list (e.g., "shop", "store", "buy", etc.)
+   * The function iterates over the `SHOP_KEYWORDS` list (e.g., "shop", "store", "buy", etc.)
    * and uses the helper function `hasElementWithKeyword` to check if any of the keywords
    * are found in anchor links (`<a>`) or buttons (`<button>`) on the page.
    * If any matching element is found, the function returns `true`, indicating the presence
@@ -253,8 +253,8 @@ async function addShopSelectors(page) {
    */
   page.hasOnlineShop = async function () {
     try {
-      // Loop through each keyword in the ShopKeywords array to check for matching links or buttons
-      for (const keyword of ShopKeywords) {
+      // Loop through each keyword in the SHOP_KEYWORDS array to check for matching links or buttons
+      for (const keyword of SHOP_KEYWORDS) {
         // Check if any anchor link contains the keyword text
         const hasLink = await page.hasElementWithKeyword("a", keyword);
 
@@ -268,7 +268,7 @@ async function addShopSelectors(page) {
       // If no matching links or buttons are found, return false
       return false;
     } catch {
-      return Messages.ERROR_SHOP;
+      return MESSAGES.ERROR_SHOP;
     }
   };
 }

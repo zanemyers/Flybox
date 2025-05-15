@@ -1,5 +1,5 @@
-import * as cheerio from "cheerio";
-import { CSVFileReader } from "../base/fileUtils.js";
+import { CSVFileReader, TXTFileWriter } from "../base/fileUtils.js";
+import { REPORT_SELECTORS, REPORT_URL_KEYWORDS } from "../base/enums.js";
 
 /**
  * Reads a CSV file containing shop details and returns a filtered list of shops
@@ -17,10 +17,7 @@ async function getUrlsFromCSV() {
   const reader = new CSVFileReader(
     "resources/csv/shop_details.csv", // Path to the CSV file
     (row) => row["publishesFishingReport"] === "true", // filter function
-    (row) => ({
-      name: row["name"],
-      website: row["website"],
-    }) // row map function
+    (row) => row["website"]
   );
 
   // Read the CSV to get website URLs that publish fishing reports
@@ -28,78 +25,64 @@ async function getUrlsFromCSV() {
 }
 
 /**
- * Given a Cheerio instance $ and a selector for potential wrappers,
- * returns either all wrappers (if none are nested) or only the innermost
- * (nested) ones when there is nesting.
+ * Compiles an array of fishing report texts into a single formatted file.
  *
- * @param {CheerioStatic} $      — the cheerio root
- * @param {string} selector      — e.g. "li.list-item, div.report-card, section.post, article"
- * @returns {CheerioElement[]}   — an array of the chosen wrapper elements
+ * @param {string[]} reports - An array of report texts, each already tagged with a source.
  */
-function checkWrappers($, selector) {
-  // 1) collect all matching elements as an array
-  const allWrappers = $(selector).toArray();
-
-  // 2) detect if any wrapper contains another
-  const hasNested = allWrappers.some((el, i) =>
-    allWrappers.some((other, j) => i !== j && $(el).find(other).length > 0)
+async function compileFishingReports(reports) {
+  // Create a TXTFileWriter instance for writing and archiving reports
+  const reportWriter = new TXTFileWriter(
+    "resources/txt/fishing_reports.txt", // Output file path
+    "fishingReports" // Archive folder name
   );
 
-  // 3) filter accordingly
-  return hasNested
-    ? // keep only the inner (nested) elements
-      allWrappers.filter((el, i) =>
-        allWrappers.some((other, j) => i !== j && $(other).find(el).length > 0)
-      )
-    : // no nesting? keep them all
-      allWrappers;
+  // Divider between individual reports for readability
+  const divider = "\n" + "-".repeat(50) + "\n";
+
+  // Combine all report entries into a single string
+  const compiledReports = reports.join(divider);
+
+  // Write the final compiled content to the file
+  await reportWriter.write(compiledReports);
 }
 
-async function scrapeAndGroup(page, url) {
+/**
+ * Scrapes only visible text from the first matching wrapper element per selector.
+ *
+ * @param {object} page - Playwright Page object
+ * @returns {Array<{ text: string, source: string }>} - Array of visible text blocks
+ */
+async function scrapeVisibleText(page, link) {
   try {
-    await page.goto(url, { timeout: 10000 });
+    await page.goto(link, { timeout: 10000, waitUntil: "domcontentloaded" });
   } catch (error) {
-    console.error(`Error navigating to ${url}:`, error);
-    return null;
+    console.error(`Error navigating to ${link}:`, error);
   }
 
-  // 1) grab full HTML
-  const html = await page.content();
+  for (const selector of REPORT_SELECTORS) {
+    // Find the first element matching this selector
+    const element = await page.$(selector);
+    if (!element) continue; // No match, try next selector
 
-  // 2) load into Cheerio
-  const $ = cheerio.load(html);
+    // Evaluate visible text on the outer element only
+    const text = await element.evaluate((node) => {
+      const style = window.getComputedStyle(node);
+      const isVisible =
+        style.display !== "none" &&
+        style.visibility !== "hidden" &&
+        node.offsetParent !== null;
 
-  // 3) pick the wrapper elements for each “card” or report block
-  //    (you’ll need to inspect a few pages to find the right selector)
-  const wrappers = checkWrappers(
-    $,
-    "li.list-item, div.report-card, section.post, article"
-  );
+      return isVisible ? node.innerText.trim().replace(/\n{2,}/g, "\n") : null;
+    });
 
-  // 4) map over them and pull out title / date / body / source, etc.
-  return wrappers
-    .map((el) => {
-      const $el = $(el);
+    if (text) {
+      // Return immediately once found first visible block of text
+      return text;
+    }
+  }
 
-      const title =
-        $el.find("h1, h2, h3, .title, .post-title").first().text().trim() ||
-        null;
-      const date =
-        $el.find("time, .date, .post-date").first().text().trim() || null;
-      const body = $el
-        .find("p")
-        .map((_, p) => $(p).text().trim())
-        .get()
-        .filter(Boolean)
-        .join("\n\n");
-
-      if (title || body) {
-        return { title, date, body, source: url };
-      }
-    })
-    .filter(Boolean);
+  // If no visible text found on any selector
+  return null;
 }
 
-async function findFishingReports() {}
-
-export { getUrlsFromCSV, scrapeAndGroup };
+export { getUrlsFromCSV, scrapeVisibleText, compileFishingReports };
