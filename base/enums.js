@@ -4,22 +4,22 @@
  */
 
 // Regex pattern to match email addresses
-const EmailRegEx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i;
+const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i;
 
 // Regex pattern to match phone numbers in international format (e.g., +1234567890)
-const PhoneRegEx = /\+[\d]+/;
+const PHONE_REGEX = /\+[\d]+/;
 
 // Regex pattern to match star ratings formatted as a decimal between 0.0 and 5.9 (e.g., "4.8")
-const StarsRegEx = /^[0-5]\.\d$/;
+const STARS_REGEX = /^[0-5]\.\d$/;
 
 // Regex pattern to extract a number (used for review counts)
-const ReviewCountRegEx = /(\d+)/;
+const REVIEW_COUNT_REGEX = /(\d+)/;
 
 // Common e-commerce-related keywords used to detect if a website is a shop
-const ShopKeywords = ["shop", "store", "buy", "products", "cart", "checkout"];
+const SHOP_KEYWORDS = ["shop", "store", "buy", "products", "cart", "checkout"];
 
 // Canonical names for known social media platforms
-const SocialMedia = {
+const SOCIAL_MEDIA = {
   FACEBOOK: "Facebook",
   INSTAGRAM: "Instagram",
   LINKEDIN: "LinkedIn",
@@ -32,21 +32,21 @@ const SocialMedia = {
 
 // Mapping of domain names to social media platform names
 // Includes aliases (e.g., wa.me → WhatsApp, twitter.com → X)
-const SocialMediaMap = [
-  { domain: "facebook.com", name: SocialMedia.FACEBOOK },
-  { domain: "instagram.com", name: SocialMedia.INSTAGRAM },
-  { domain: "linkedin.com", name: SocialMedia.LINKEDIN },
-  { domain: "tiktok.com", name: SocialMedia.TIKTOK },
-  { domain: "vimeo.com", name: SocialMedia.VIMEO },
-  { domain: "whatsapp.com", name: SocialMedia.WHATSAPP },
-  { domain: "wa.me", name: SocialMedia.WHATSAPP },
-  { domain: "x.com", name: SocialMedia.X },
-  { domain: "twitter.com", name: SocialMedia.X },
-  { domain: "youtube.com", name: SocialMedia.YOUTUBE },
+const SOCIAL_MEDIA_MAP = [
+  { domain: "facebook.com", name: SOCIAL_MEDIA.FACEBOOK },
+  { domain: "instagram.com", name: SOCIAL_MEDIA.INSTAGRAM },
+  { domain: "linkedin.com", name: SOCIAL_MEDIA.LINKEDIN },
+  { domain: "tiktok.com", name: SOCIAL_MEDIA.TIKTOK },
+  { domain: "vimeo.com", name: SOCIAL_MEDIA.VIMEO },
+  { domain: "whatsapp.com", name: SOCIAL_MEDIA.WHATSAPP },
+  { domain: "wa.me", name: SOCIAL_MEDIA.WHATSAPP },
+  { domain: "x.com", name: SOCIAL_MEDIA.X },
+  { domain: "twitter.com", name: SOCIAL_MEDIA.X },
+  { domain: "youtube.com", name: SOCIAL_MEDIA.YOUTUBE },
 ];
 
 // Standardized error and not-found messages for consistency in logging and reporting
-const Messages = {
+const MESSAGES = {
   // ERROR MESSAGES
   ERROR_SCROLL_TIMEOUT: (time) =>
     `Scroll Timeout: Reached ${
@@ -69,14 +69,35 @@ const Messages = {
   NO_WEB: "NO_WEBSITE",
 };
 
+const REPORT_URL_KEYWORDS = [
+  "fishing-reports",
+  "fishing_reports",
+  "fishing-report",
+  "fishing_report",
+  "river-reports",
+  "river-report",
+  "stream-reports",
+  "report",
+  "post",
+  // if it doesn't have report coud we check for links with Read More?
+];
+
+const LOW_PRIORITY_URL_KEYWORDS = ["tags", "hashtags", "categories", "page"];
+
+// IMPORTANT - Order Matters, priority selectors should come first
+const REPORT_SELECTORS = ["article", "div.user-item-list"];
+
 // Export all constants for use in other modules
 export {
-  Messages,
-  EmailRegEx,
-  PhoneRegEx,
-  ReviewCountRegEx,
-  ShopKeywords,
-  SocialMedia,
-  SocialMediaMap,
-  StarsRegEx,
+  MESSAGES,
+  EMAIL_REGEX,
+  LOW_PRIORITY_URL_KEYWORDS,
+  PHONE_REGEX,
+  REPORT_URL_KEYWORDS,
+  REPORT_SELECTORS,
+  REVIEW_COUNT_REGEX,
+  SHOP_KEYWORDS,
+  SOCIAL_MEDIA,
+  SOCIAL_MEDIA_MAP,
+  STARS_REGEX,
 };
