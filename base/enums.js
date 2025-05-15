@@ -69,6 +69,7 @@ const MESSAGES = {
   NO_WEB: "NO_WEBSITE",
 };
 
+// IMPORTANT - Order Matters! Priority is based on index
 const REPORT_URL_KEYWORDS = [
   "fishing-reports",
   "fishing_reports",
@@ -79,12 +80,17 @@ const REPORT_URL_KEYWORDS = [
   "stream-reports",
   "report",
   "post",
-  // if it doesn't have report coud we check for links with Read More?
 ];
 
-const LOW_PRIORITY_URL_KEYWORDS = ["tags", "hashtags", "categories", "page"];
+const LOW_PRIORITY_URL_KEYWORDS = [
+  "tags",
+  "hashtags",
+  "categories",
+  "page",
+  "trip-report", // world cast angler goes all over the place
+];
 
-// IMPORTANT - Order Matters, priority selectors should come first
+// IMPORTANT - Order Matters! Priority is based on index
 const REPORT_SELECTORS = ["article", "div.user-item-list"];
 
 // Export all constants for use in other modules

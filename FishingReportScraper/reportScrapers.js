@@ -2,14 +2,8 @@ import axios from "axios";
 import fs from "fs";
 import tokenizer from "gpt-tokenizer";
 
-import { normalizeUrl } from "../base/scrapingUtils.js";
 import {
-  REPORT_URL_KEYWORDS,
-  LOW_PRIORITY_URL_KEYWORDS,
-} from "../base/enums.js";
-
-import {
-  scrapeVisibleText,
+  findFishingReports,
   compileFishingReports,
 } from "./reportScrapingUtils.js";
 
@@ -40,119 +34,22 @@ const urls = [
  * @param {object} context - The Playwright browser context used to create isolated pages.
  */
 async function fishingReportScraper(context) {
-  // Create a new page instance within the provided browser context
-  const page = await context.newPage();
-
-  // Array to hold all compiled fishing report texts
-  const report_links = new Set();
   const reports = [];
 
-  // Loop through each URL to find fishing reports
   for (const url of urls) {
-    const foundLinks = await findFishingReports(page, url);
-    for (const link of foundLinks) {
-      if (link !== url) {
-        // exclude the main page url itself
-        report_links.add(link);
-      }
-    }
-  }
-
-  // Loop through all found links and scrape the text if possible
-  for (const link of report_links) {
-    // Extract the visible text content from the page
-    const text = await scrapeVisibleText(page, link);
-
-    if (text) {
-      // Store the report text along with its source URL
-      reports.push(text + `\nSource: ${link}`);
-    }
-  }
-
-  // Compile and write the reports to a file
-  await compileFishingReports(reports);
-
-  // Generate a high-level summary of all reports
-  await makeReportSummary();
-}
-
-/**
- * Look through the website provided to find fishing reports within the last year and a half.
- * Looks for URLs with keywords in REPORT_URL_KEYWORDS.
- * If it finds any, adds them to a set of URLs.
- * Once all URLs with a matching keyword on a page have been added to a set,
- * navigate to each URL in the set recursively until all URLs have been visited.
- *
- * @param {object} page - Playwright page instance
- * @param {string} startUrl - URL to start scraping from
- * @returns {Set<string>} Set of all found fishing report URLs
- */
-async function findFishingReports(page, startUrl, maxVisits = 25) {
-  const visited = new Set();
-  const toVisit = [startUrl];
-  const baseHostname = new URL(startUrl).hostname;
-
-  while (toVisit.length > 0) {
-    if (visited.size >= maxVisits) {
-      console.log(`Reached max visits limit for site: ${maxVisits}`);
-      break;
-    }
-    const url = toVisit.shift();
-
-    if (visited.has(url)) {
-      continue; // Skip if already visited
-    }
-    visited.add(url);
-
+    const page = await context.newPage();
     try {
-      await page.goto(url, { timeout: 10000, waitUntil: "domcontentloaded" });
+      const foundReports = await findFishingReports(page, url);
+      reports.push(...foundReports);
     } catch (error) {
-      console.error(`Error navigating to ${url}:`, error);
-      continue; // skip to next url in queue
-    }
-
-    // Extract all <a> hrefs from the page
-    const links = await page.$$eval("a[href]", (anchors) =>
-      anchors.map((a) => a.href)
-    );
-
-    // Filter links containing any keyword from REPORT_URL_KEYWORDS AND on the same domain
-    const reportLinks = links.filter((link) => {
-      try {
-        const linkUrl = new URL(link);
-        // Check same domain
-        if (linkUrl.hostname !== baseHostname) {
-          return false;
-        }
-        // Check for keywords in the URL
-        return REPORT_URL_KEYWORDS.some((keyword) =>
-          linkUrl.href.toLowerCase().includes(keyword)
-        );
-      } catch {
-        return false; // invalid URL
-      }
-    });
-
-    // Normalize and add new URLs to the toVisit queue if not visited
-    for (const link of reportLinks) {
-      const normalizedLink = normalizeUrl(link);
-      if (!visited.has(normalizedLink) && !toVisit.includes(normalizedLink)) {
-        const isLowPriority = IGNORE_URL_KEYWORDS.some((keyword) =>
-          normalizedLink.toLowerCase().includes(keyword)
-        );
-
-        // Add to end if low-priority, else to front (or beginning)
-        if (isLowPriority) {
-          toVisit.push(normalizedLink); // deprioritized
-        } else {
-          toVisit.unshift(normalizedLink); // prioritize
-        }
-      }
-      }
+      console.error(`Error scraping ${url}:`, error);
+    } finally {
+      await page.close();
     }
   }
 
-  return visited;
+  await compileFishingReports(reports);
+  await makeReportSummary();
 }
 
 async function makeReportSummary() {
