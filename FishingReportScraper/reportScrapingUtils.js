@@ -3,8 +3,10 @@ import {
   REPORT_SELECTORS,
   REPORT_URL_KEYWORDS,
   LOW_PRIORITY_URL_KEYWORDS,
+  TWO_YEARS_MS,
 } from "../base/enums.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
+import { getDateFromText } from "../base/dateUtils.js";
 
 /**
  * Reads a CSV file containing shop details and returns a filtered list of shops
@@ -48,6 +50,8 @@ async function findFishingReports(page, startUrl, maxVisits = 25) {
   const baseHostname = new URL(startUrl).hostname;
   const reports = []; // Collected report texts
 
+  const report_urls = [];
+
   while (toVisit.length > 0) {
     if (visited.size >= maxVisits) {
       console.log(`Reached max visits limit for site: ${maxVisits}`);
@@ -71,14 +75,18 @@ async function findFishingReports(page, startUrl, maxVisits = 25) {
       anchors.map((a) => a.href)
     );
 
-    // Scrape visible text and save it with the source URL
-    const text = await scrapeVisibleText(page);
-    if (text) {
-      reports.push(text + `\nSource: ${url}`);
+    // dont scrape the startURL
+    if (url !== startUrl) {
+      // Scrape visible text and save it with the source URL
+      const text = await scrapeVisibleText(page);
+      if (text) {
+        reports.push(text + `\nSource: ${url}`);
+        report_urls.push(url);
+      }
     }
 
     // Filter and prioritize links on the same domain that match report keywords
-    const prioritizedLinks = links
+    let prioritizedLinks = links
       .filter((link) => {
         try {
           const linkUrl = new URL(link);
@@ -98,6 +106,31 @@ async function findFishingReports(page, startUrl, maxVisits = 25) {
       })
       .filter(({ priority }) => priority !== Infinity) // Keep only matching links
       .sort((a, b) => a.priority - b.priority); // Sort by keyword priority
+
+    // Fallback: If no prioritized links, look for "read more"-style anchor texts
+    if (prioritizedLinks.length === 0) {
+      const readMoreLinks = await page.$$eval("a", (anchors) =>
+        anchors
+          .filter((a) => {
+            const text = a.textContent?.toLowerCase().trim() || "";
+            return ["read more", "continue reading", "full report"].some(
+              (phrase) => text.includes(phrase)
+            );
+          })
+          .map((a) => a.href)
+      );
+
+      prioritizedLinks = readMoreLinks
+        .filter((link) => {
+          try {
+            const linkUrl = new URL(link);
+            return linkUrl.hostname === baseHostname;
+          } catch {
+            return false;
+          }
+        })
+        .map((link) => ({ link, priority: 99 }));
+    }
 
     // Add prioritized links to visit queue
     for (const { link } of prioritizedLinks) {
@@ -158,17 +191,49 @@ async function scrapeVisibleText(page) {
  * @param {string[]} reports - An array of report texts, each already tagged with a source.
  */
 async function compileFishingReports(reports) {
+  const now = Date.now();
+  const report_urls = [];
+
   // Create a TXTFileWriter instance for writing and archiving reports
   const reportWriter = new TXTFileWriter(
     "resources/txt/fishing_reports.txt", // Output file path
     "fishingReports" // Archive folder name
   );
 
+  // Filter reports based on date and keywords
+  const filteredReports = reports.filter((report) => {
+    // 1. Extract date
+    const reportDate = getDateFromText(report);
+
+    if (reportDate) {
+      // Exclude if older than 2 years
+      if (now - reportDate.getTime() > TWO_YEARS_MS) return false;
+    }
+
+    // 2. Check if contains relevant keywords (case-insensitive)
+    // const lowerText = report.toLowerCase();
+    // const hasRelevantKeyword = relevantKeywords.some((kw) =>
+    //   lowerText.includes(kw)
+    // );
+    // if (!hasRelevantKeyword) return false;
+
+    // Passed all filters: keep this report
+    const match = report.match(/Source\s+(https?:\/\/\S+)$/i);
+    const url = match ? match[1] : null;
+    report_urls.push(url);
+
+    return true;
+  });
+
+  console.log(`Old Reports: ${reports.length - filteredReports.length}`);
+
+  console.log("urls in reports");
+
   // Divider between individual reports for readability
   const divider = "\n" + "-".repeat(50) + "\n";
 
-  // Combine all report entries into a single string
-  const compiledReports = reports.join(divider);
+  // Combine all filtered report entries into a single string
+  const compiledReports = filteredReports.join(divider);
 
   // Write the final compiled content to the file
   await reportWriter.write(compiledReports);

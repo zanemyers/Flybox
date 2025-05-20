@@ -16,7 +16,7 @@ async function main() {
   const context = await browser.newContext({ ignoreHTTPSErrors: true });
 
   // // await fishingReportScraper(context, urls);
-  await fishingReportScraper(context);
+  await fishingReportScraper(context, Array.from(normalizedURLs));
 
   browser.close();
 }

@@ -115,7 +115,8 @@ function normalizeUrl(url) {
     }
 
     // Remove 'www.' from the hostname if it exists
-    u.hostname = u.hostname.replace(/^www\./, "");
+    // CAN'T always do this :(
+    // u.hostname = u.hostname.replace(/^www\./, "");
 
     return u.href; // Use href to ensure a consistent absolute URL
   } catch {
