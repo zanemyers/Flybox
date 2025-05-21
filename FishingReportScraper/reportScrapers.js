@@ -28,53 +28,49 @@ import { normalizeUrl } from "../base/scrapingUtils.js";
 async function fishingReportScraper(context, sites) {
   const reports = [];
 
-  // Sets batch size to 10
-  const BATCH_SIZE = 5;
-
-  for (let i = 0; i < sites.length; i += BATCH_SIZE) {
-    const batch = sites.slice(i, i + BATCH_SIZE);
-
-    const batchReports = await Promise.all(
-      batch.map(async (site) => {
-        const page = await context.newPage();
-        try {
-          return await findFishingReports(page, site); // returns array of reports
-        } catch (error) {
-          console.error(`Error scraping ${site.url}:`, error);
-          return []; // fallback to empty array on error
-        } finally {
-          await page.close();
-        }
-      })
-    );
-
-    // Flatten batch results and append
-    for (const result of batchReports) {
-      reports.push(...result);
+  // FOR 1 SITE AT A TIME
+  for (const site of sites) {
+    const page = await context.newPage();
+    try {
+      const siteReports = await findFishingReports(page, site); // returns array of reports
+      reports.push(...siteReports);
+    } catch (error) {
+      console.error(`Error scraping ${site.url}:`, error);
+    } finally {
+      await page.close();
     }
   }
+
+  // FOR BATCHING TOGETHER
+  // Sets batch size to 3
+  // const BATCH_SIZE = 3;
+
+  // for (let i = 0; i < sites.length; i += BATCH_SIZE) {
+  //   const batch = sites.slice(i, i + BATCH_SIZE);
+
+  //   const batchReports = await Promise.all(
+  //     batch.map(async (site) => {
+  //       const page = await context.newPage();
+  //       try {
+  //         return await findFishingReports(page, site); // returns array of reports
+  //       } catch (error) {
+  //         console.error(`Error scraping ${site.url}:`, error);
+  //         return []; // fallback to empty array on error
+  //       } finally {
+  //         await page.close();
+  //       }
+  //     })
+  //   );
+
+  //   // Flatten batch results and append
+  //   for (const result of batchReports) {
+  //     reports.push(...result);
+  //   }
+  // }
 
   await compileFishingReports(reports);
   await makeReportSummary();
 }
-// async function fishingReportScraper(context, sites) {
-//   const reports = [];
-
-//   for (const site of sites) {
-//     const page = await context.newPage();
-//     try {
-//       const siteReports = await findFishingReports(page, site); // returns array of reports
-//       reports.push(...siteReports);
-//     } catch (error) {
-//       console.error(`Error scraping ${site.url}:`, error);
-//     } finally {
-//       await page.close();
-//     }
-//   }
-
-//   await compileFishingReports(reports);
-//   await makeReportSummary();
-// }
 
 /**
  * Crawls a fishing shop website starting from a given URL,
@@ -164,6 +160,12 @@ async function findFishingReports(page, site, maxVisits = 25) {
   if (visited.size >= maxVisits) {
     console.log(`Reached max visits limit for site: ${maxVisits}`);
   }
+
+  // FOR TESTING TO OPTIMIZE SITE KEYWORDS
+  // console.log("VISITED:");
+  // console.log(visited);
+  // console.log("TO VISIT");
+  // console.log(toVisit);
 
   return reports;
 }
