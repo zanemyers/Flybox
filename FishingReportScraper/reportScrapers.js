@@ -1,35 +1,47 @@
-import axios from "axios";
+// import axios from "axios";
 import fs from "fs";
 import tokenizer from "gpt-tokenizer";
 
+import { TXTFileWriter } from "../base/fileUtils.js";
 import {
-  findFishingReports,
-  compileFishingReports,
+  scrapeVisibleText,
+  extractAnchors,
+  filterReports,
+  getPriority,
+  isLowPriority,
+  isSameDomain,
 } from "./reportScrapingUtils.js";
 
+import { normalizeUrl } from "../base/scrapingUtils.js";
+
 /**
- * Scrapes fishing reports from a list of URLs and writes them to a text file.
+ * Scrapes fishing reports from a list of site objects and writes them to a text file.
+ *
+ * Each site object should include:
+ *   - `url` (string): The base URL of the fishing shop to crawl.
+ *   - `selector` (string): The CSS selector to extract the report content.
+ *   - `lastUpdated` (string): A human-readable date string for when the report was last confirmed.
  *
  * @param {import('playwright').BrowserContext} context - Playwright browser context to isolate each page.
- * @param {string[]} urls - List of base URLs for fishing shops to crawl.
+ * @param {{ url: string, selector: string, lastUpdated: string }[]} sites - List of site objects to crawl.
  * @returns {Promise<void>} - Resolves when all reports are gathered and written.
  */
-async function fishingReportScraper(context, urls) {
+async function fishingReportScraper(context, sites) {
   const reports = [];
 
   // Sets batch size to 10
   const BATCH_SIZE = 10;
 
-  for (let i = 0; i < urls.length; i += BATCH_SIZE) {
-    const batch = urls.slice(i, i + BATCH_SIZE);
+  for (let i = 0; i < sites.length; i += BATCH_SIZE) {
+    const batch = sites.slice(i, i + BATCH_SIZE);
 
     const batchReports = await Promise.all(
-      batch.map(async (url) => {
+      batch.map(async (site) => {
         const page = await context.newPage();
         try {
-          return await findFishingReports(page, url); // returns array of reports
+          return await findFishingReports(page, site); // returns array of reports
         } catch (error) {
-          console.error(`Error scraping ${url}:`, error);
+          console.error(`Error scraping ${site.url}:`, error);
           return []; // fallback to empty array on error
         } finally {
           await page.close();
@@ -45,6 +57,134 @@ async function fishingReportScraper(context, urls) {
 
   await compileFishingReports(reports);
   await makeReportSummary();
+}
+
+/**
+ * Crawls a fishing shop website starting from a given URL,
+ * prioritizing internal links that are more likely to contain fishing reports
+ * based on a list of prioritized keywords.
+ *
+ * Navigates the site up to `maxVisits` pages, collects visible text content,
+ * and returns an array of reports with their source URLs.
+ *
+ * @param {import('playwright').Page} page - The Playwright page object.
+ * @param {string} startUrl - The starting URL to begin crawling from.
+ * @param {number} maxVisits - Maximum number of pages to visit.
+ * @returns {Promise<string[]>} - A list of report texts with source URLs.
+ */
+async function findFishingReports(page, site, maxVisits = 25) {
+  const visited = new Set(); // Keep track of visited URLs
+  const toVisit = [{ url: site.url, priority: -1 }]; // Queue of URLs to visit
+  const baseHostname = new URL(site.url).hostname; // pull hostname to restrict crawling domains
+  const reports = []; // Array to store fishing reports
+
+  // Continue crawling as long as there are URLs to visit and we haven't reached the visit limit
+  while (toVisit.length > 0 && visited.size < maxVisits) {
+    const { url } = toVisit.shift(); // Take the next URL to visit
+    if (visited.has(url)) continue; // Skip if visited
+    visited.add(url); // Mark this URL as visited
+
+    // Try to navigate to the page; skip if navigation fails
+    try {
+      await page.goto(url, { timeout: 10000, waitUntil: "domcontentloaded" });
+    } catch (error) {
+      console.error(`Error navigating to ${url}:`, error);
+      continue;
+    }
+
+    // Scrape visible text only if the URL is not the base site URL
+    if (url !== site.url) {
+      const text = await scrapeVisibleText(page, site.selector);
+      if (text) {
+        // Store the scraped text with the source URL for reference
+        reports.push(`${text}\nSource: ${url}`);
+      }
+    }
+
+    const pageLinks = await extractAnchors(page); // Extract all anchor links (href + visible text)
+    const currentUrlHasKeyword = getPriority(url) < 8; // check current url has report keyword
+
+    // Process each link on the page to evaluate if it should be queued
+    for (const { href, text } of pageLinks) {
+      if (!isSameDomain(href, baseHostname)) continue; // Ignore links to different domains
+
+      const normLink = normalizeUrl(href); // normalize for consistent comparison
+
+      // Skip if we've already visited or queued the url
+      if (
+        visited.has(normLink) ||
+        toVisit.some((item) => item.url === normLink)
+      )
+        continue;
+
+      const linkPriority = getPriority(normLink); // Check priority based on keywords
+      const lowPriority = isLowPriority(normLink); // Check for low priority keywords
+      const hasReportKeyword = linkPriority !== Infinity; // infinity = no keywords
+
+      // Initialize priority to Infinity (do not queue by default)
+      let priority = Infinity;
+
+      if (hasReportKeyword && !lowPriority) {
+        // Best case: link contains a report keyword and is not low priority
+        priority = linkPriority; // Use the index from keyword list as priority
+      } else if (
+        currentUrlHasKeyword &&
+        ["read more", "continue reading", "full report"].some((phrase) =>
+          text.includes(phrase)
+        )
+      ) {
+        // Current page is report-related and link text contains phrases that imply more content
+        priority = 50;
+      } else if (hasReportKeyword && lowPriority) {
+        // Link contains report keywords but is marked low priority due to other keywords
+        priority = 100;
+      }
+
+      // Only add the link to the queue if it has a valid priority
+      if (priority !== Infinity) {
+        toVisit.push({ url: normLink, priority });
+      }
+    }
+
+    // resort the queue so that highest priority URLs come first
+    toVisit.sort((a, b) => a.priority - b.priority);
+  }
+
+  // Log if we stopped crawling because we reached the max visit limit
+  if (visited.size >= maxVisits) {
+    console.log(`Reached max visits limit for site: ${maxVisits}`);
+  }
+
+  return reports;
+}
+
+/**
+ * Compiles an array of fishing report texts into a single formatted file.
+ *
+ * @param {string[]} reports - An array of report texts, each already tagged with a source.
+ */
+async function compileFishingReports(reports) {
+  // Create a TXTFileWriter instance for writing and archiving reports
+  const reportWriter = new TXTFileWriter(
+    "resources/txt/fishing_reports.txt", // Output file path
+    "fishingReports" // Archive folder name
+  );
+
+  // Filter reports based on date and keywords
+  const { filteredReports, report_urls } = filterReports(reports);
+
+  console.log(`Old Reports: ${reports.length - filteredReports.length}`);
+  console.log("URLs in reports:");
+  console.log(report_urls);
+
+  // Divider between individual reports for readability
+  const divider = "\n" + "-".repeat(50) + "\n";
+
+  // Combine all filtered report entries into a single string
+  const compiledReports = filteredReports.join(divider);
+
+  // Write the final compiled content to the file
+  await reportWriter.write(compiledReports);
 }
 
 async function makeReportSummary() {

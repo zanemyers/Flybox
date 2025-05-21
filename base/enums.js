@@ -133,6 +133,7 @@ const REPORT_URL_KEYWORDS = [
 
 // Url keywords to de-prioritize
 const LOW_PRIORITY_URL_KEYWORDS = [
+  "tag",
   "tags",
   "tagged",
   "hashtags",
@@ -140,29 +141,6 @@ const LOW_PRIORITY_URL_KEYWORDS = [
   "collections",
   "page",
   "trip-report", // world cast angler goes all over the place
-];
-
-// IMPORTANT - Order Matters! Priority is based on list index
-const REPORT_SELECTORS = [
-  "article",
-  "div.article",
-  "div.post",
-  "div.reportContent",
-  "div.full-report",
-  "div.user-item-list",
-  "div.main-sidebar",
-  "div.entry-content",
-  "div.page-blocks",
-  "div.gecko-page__content",
-  "ul.wp-block-latest-posts__list",
-  // Specific checks for frustrating sites
-  'div._1140-w-wrapper:has(h1:has-text("fishing report"))',
-  'div.container:has(h2:has-text("river fishing report"))',
-  'div.mb-5:has(h2:has-text("Fly Pattern Suggestions"))',
-  // Large Contexts, check last
-  "div.container.main.content",
-  "main.main-content",
-  "div#main-content",
 ];
 
 // Export all constants for use in other modules
@@ -174,7 +152,6 @@ export {
   MONTHS,
   PHONE_REGEX,
   REPORT_URL_KEYWORDS,
-  REPORT_SELECTORS,
   REVIEW_COUNT_REGEX,
   SHOP_KEYWORDS,
   SOCIAL_MEDIA,

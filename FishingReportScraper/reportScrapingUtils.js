@@ -1,8 +1,7 @@
-import { CSVFileReader, TXTFileWriter } from "../base/fileUtils.js";
+import { CSVFileReader } from "../base/fileUtils.js";
 import {
-  REPORT_SELECTORS,
-  REPORT_URL_KEYWORDS,
   LOW_PRIORITY_URL_KEYWORDS,
+  REPORT_URL_KEYWORDS,
   TWO_YEARS_MS,
 } from "../base/enums.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
@@ -32,211 +31,168 @@ async function getUrlsFromCSV() {
 }
 
 /**
- * Crawls a fishing shop website starting from a given URL,
- * prioritizing internal links that are more likely to contain fishing reports
- * based on a list of prioritized keywords.
+ * Normalize site URLs and remove duplicates.
  *
- * Navigates the site up to `maxVisits` pages, collects visible text content,
- * and returns an array of reports with their source URLs.
+ * This function ensures each site object has a normalized URL and
+ * that only unique URLs are included in the returned array.
+ * Duplicate URLs are detected and logged.
  *
- * @param {import('playwright').Page} page - The Playwright page object.
- * @param {string} startUrl - The starting URL to begin crawling from.
- * @param {number} maxVisits - Maximum number of pages to visit.
- * @returns {Promise<string[]>} - A list of report texts with source URLs.
+ * @param {Array} sites - Array of site objects with a `url` property.
+ * @returns {Array} A new array of site objects with normalized, unique URLs.
  */
-async function findFishingReports(page, startUrl, maxVisits = 25) {
-  const visited = new Set(); // Track visited URLs
-  const toVisit = [startUrl]; // Queue of URLs to crawl
-  const baseHostname = new URL(startUrl).hostname;
-  const reports = []; // Collected report texts
+async function checkDuplicateUrls(sites) {
+  const urlsSet = new Set(); // Track normalized URLs to detect duplicates
+  const normalizedSites = []; // Store unique, normalized site objects
 
-  const report_urls = [];
+  for (const site of sites) {
+    const normalized = await normalizeUrl(site.url); // Normalize the URL
 
-  while (toVisit.length > 0) {
-    if (visited.size >= maxVisits) {
-      console.log(`Reached max visits limit for site: ${maxVisits}`);
-      break;
-    }
+    if (!urlsSet.has(normalized)) {
+      urlsSet.add(normalized);
 
-    const url = toVisit.shift();
-    if (visited.has(url)) continue;
-    visited.add(url);
-
-    // Navigate to the page
-    try {
-      await page.goto(url, { timeout: 10000, waitUntil: "domcontentloaded" });
-    } catch (error) {
-      console.error(`Error navigating to ${url}:`, error);
-      continue;
-    }
-
-    // Get all anchor tag hrefs from the page
-    const links = await page.$$eval("a[href]", (anchors) =>
-      anchors.map((a) => a.href)
-    );
-
-    // dont scrape the startURL
-    if (url !== startUrl) {
-      // Scrape visible text and save it with the source URL
-      const text = await scrapeVisibleText(page);
-      if (text) {
-        reports.push(text + `\nSource: ${url}`);
-        report_urls.push(url);
-      }
-    }
-
-    // Filter and prioritize links on the same domain that match report keywords
-    let prioritizedLinks = links
-      .filter((link) => {
-        try {
-          const linkUrl = new URL(link);
-          return linkUrl.hostname === baseHostname;
-        } catch {
-          return false; // Skip malformed URLs
-        }
-      })
-      .map((link) => {
-        const priority = REPORT_URL_KEYWORDS.findIndex((keyword) =>
-          link.toLowerCase().includes(keyword)
-        );
-        return {
-          link,
-          priority: priority === -1 ? Infinity : priority, // Lower = higher priority
-        };
-      })
-      .filter(({ priority }) => priority !== Infinity) // Keep only matching links
-      .sort((a, b) => a.priority - b.priority); // Sort by keyword priority
-
-    // Fallback: If no prioritized links, look for "read more"-style anchor texts
-    if (prioritizedLinks.length === 0) {
-      const readMoreLinks = await page.$$eval("a", (anchors) =>
-        anchors
-          .filter((a) => {
-            const text = a.textContent?.toLowerCase().trim() || "";
-            return ["read more", "continue reading", "full report"].some(
-              (phrase) => text.includes(phrase)
-            );
-          })
-          .map((a) => a.href)
-      );
-
-      prioritizedLinks = readMoreLinks
-        .filter((link) => {
-          try {
-            const linkUrl = new URL(link);
-            return linkUrl.hostname === baseHostname;
-          } catch {
-            return false;
-          }
-        })
-        .map((link) => ({ link, priority: 99 }));
-    }
-
-    // Add prioritized links to visit queue
-    for (const { link } of prioritizedLinks) {
-      const normalizedLink = normalizeUrl(link);
-      if (!visited.has(normalizedLink) && !toVisit.includes(normalizedLink)) {
-        const isLowPriority = LOW_PRIORITY_URL_KEYWORDS.some((keyword) =>
-          normalizedLink.toLowerCase().includes(keyword)
-        );
-
-        if (isLowPriority) {
-          toVisit.push(normalizedLink); // Deprioritized: go to end of queue
-        } else {
-          toVisit.unshift(normalizedLink); // Prioritized: go to front of queue
-        }
-      }
+      // Add a new site object with the normalized URL
+      normalizedSites.push({
+        ...site,
+        url: normalized,
+      });
+    } else {
+      // Log a warning if the normalized URL was already seen
+      console.warn("Duplicate found:", normalized);
     }
   }
 
-  return reports;
+  return normalizedSites;
+}
+
+/**
+ * Checks whether a given URL belongs to the same domain as the base hostname.
+ *
+ * @param {string} url - The URL to check.
+ * @param {string} hostname - The hostname to compare against (e.g., "example.com").
+ * @returns {boolean} True if the url's hostname matches the base hostname, false otherwise.
+ */
+function isSameDomain(url, hostname) {
+  try {
+    return new URL(url).hostname === hostname;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Determines the priority of a URL based on the presence of predefined keywords.
+ * Returns the index of the first matching keyword in REPORT_URL_KEYWORDS,
+ * or Infinity if none match (meaning lowest priority).
+ *
+ * @param {string} url - The URL string to check.
+ * @returns {number} Priority value, lower means higher priority; Infinity if no keywords matched.
+ */
+function getPriority(url) {
+  const index = REPORT_URL_KEYWORDS.findIndex((kw) =>
+    url.toLowerCase().includes(kw)
+  );
+  return index === -1 ? Infinity : index;
+}
+
+/**
+ * Checks if a given URL contains any low priority keywords.
+ *
+ * @param {string} url - The URL string to check.
+ * @returns {boolean} True if any low priority keyword is found, otherwise false.
+ */
+function isLowPriority(url) {
+  return LOW_PRIORITY_URL_KEYWORDS.some((kw) => url.toLowerCase().includes(kw));
+}
+
+/**
+ * Extract all anchor tags with href and normalized text content from the page.
+ *
+ * @param {import('playwright').Page} page - The Playwright page object.
+ * @returns {Promise<{href: string, text: string}[]>} - Array of objects with href and text.
+ */
+async function extractAnchors(page) {
+  return await page.$$eval("a[href]", (anchors) =>
+    anchors.map((a) => ({
+      href: a.href,
+      text: a.textContent?.toLowerCase().trim() || "",
+    }))
+  );
 }
 
 /**
  * Scrapes only visible text from the first matching wrapper element per selector.
  *
  * @param {object} page - Playwright Page object
- * @returns {Array<{ text: string, source: string }>} - Array of visible text blocks
+ * @param {string} selector - CSS selector to match
+ * @returns {Promise<string|null>} - Visible text if found, otherwise null
  */
-async function scrapeVisibleText(page) {
-  for (const selector of REPORT_SELECTORS) {
-    // Find the first element matching this selector
-    const element = await page.$(selector);
-    if (!element) continue; // No match, try next selector
+async function scrapeVisibleText(page, selector) {
+  // Find the first element on the page that matches the selector
+  const element = await page.$(selector);
+  if (!element) return null; // No matching element found
 
-    // Evaluate visible text on the outer element only
-    const text = await element.evaluate((node) => {
-      const style = window.getComputedStyle(node);
-      const isVisible =
-        style.display !== "none" &&
-        style.visibility !== "hidden" &&
-        node.offsetParent !== null;
+  // Evaluate the matched element in the browser context
+  return await element.evaluate((node) => {
+    // Get computed styles to determine visibility
+    const style = window.getComputedStyle(node);
+    const isVisible =
+      style.display !== "none" && // not display: none
+      style.visibility !== "hidden" && // not visibility: hidden
+      node.offsetParent !== null; // not detached or invisible due to layout
 
-      return isVisible ? node.innerText.trim().replace(/\n{2,}/g, "\n") : null;
-    });
-
-    if (text) {
-      // Return immediately once found first visible block of text
-      return text;
-    }
-  }
-
-  // If no visible text found on any selector
-  return null;
+    // If visible, return cleaned-up inner text (remove extra blank lines)
+    return isVisible
+      ? node.innerText.trim().replace(/\n{2,}/g, "\n") // condense multiple newlines
+      : null; // otherwise return null
+  });
 }
 
 /**
- * Compiles an array of fishing report texts into a single formatted file.
+ * Filters fishing reports based on date and keywords,
+ * and extracts source URLs into the provided array.
  *
- * @param {string[]} reports - An array of report texts, each already tagged with a source.
+ * @param {string[]} reports - Array of report texts.
+ * @returns {string[]} Filtered reports that pass the criteria.
  */
-async function compileFishingReports(reports) {
+function filterReports(reports) {
   const now = Date.now();
   const report_urls = [];
 
-  // Create a TXTFileWriter instance for writing and archiving reports
-  const reportWriter = new TXTFileWriter(
-    "resources/txt/fishing_reports.txt", // Output file path
-    "fishingReports" // Archive folder name
+  return (
+    reports.filter((report) => {
+      // Extract date from report text
+      const reportDate = getDateFromText(report);
+
+      // Exclude reports older than 2 years
+      if (reportDate && now - reportDate.getTime() > TWO_YEARS_MS) {
+        return false;
+      }
+
+      // Uncomment if you want to filter by relevant keywords:
+      // const lowerText = report.toLowerCase();
+      // const hasRelevantKeyword = relevantKeywords.some((kw) =>
+      //   lowerText.includes(kw)
+      // );
+      // if (!hasRelevantKeyword) return false;
+
+      // Extract source URL from the report text and save it
+      const match = report.match(/Source\s+(https?:\/\/\S+)$/i);
+      const url = match ? match[1] : null;
+      if (url) report_urls.push(url);
+
+      return true; // keep the report
+    }),
+    report_urls
   );
-
-  // Filter reports based on date and keywords
-  const filteredReports = reports.filter((report) => {
-    // 1. Extract date
-    const reportDate = getDateFromText(report);
-
-    if (reportDate) {
-      // Exclude if older than 2 years
-      if (now - reportDate.getTime() > TWO_YEARS_MS) return false;
-    }
-
-    // 2. Check if contains relevant keywords (case-insensitive)
-    // const lowerText = report.toLowerCase();
-    // const hasRelevantKeyword = relevantKeywords.some((kw) =>
-    //   lowerText.includes(kw)
-    // );
-    // if (!hasRelevantKeyword) return false;
-
-    // Passed all filters: keep this report
-    const match = report.match(/Source\s+(https?:\/\/\S+)$/i);
-    const url = match ? match[1] : null;
-    report_urls.push(url);
-
-    return true;
-  });
-
-  console.log(`Old Reports: ${reports.length - filteredReports.length}`);
-
-  console.log("urls in reports");
-
-  // Divider between individual reports for readability
-  const divider = "\n" + "-".repeat(50) + "\n";
-
-  // Combine all filtered report entries into a single string
-  const compiledReports = filteredReports.join(divider);
-
-  // Write the final compiled content to the file
-  await reportWriter.write(compiledReports);
 }
 
-export { compileFishingReports, findFishingReports, getUrlsFromCSV };
+export {
+  checkDuplicateUrls,
+  extractAnchors,
+  filterReports,
+  getPriority,
+  getUrlsFromCSV,
+  isLowPriority,
+  isSameDomain,
+  scrapeVisibleText,
+};
