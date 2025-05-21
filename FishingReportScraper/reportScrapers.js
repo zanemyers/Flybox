@@ -7,32 +7,6 @@ import {
   compileFishingReports,
 } from "./reportScrapingUtils.js";
 
-// Example URLs for testing
-// const urls = [
-//   "https://bigskyanglers.com/",
-//   "http://arricks.com/",
-//   "http://henrysforkanglers.com/",
-//   "http://slideinn.com/",
-//   "https://thetackleshop.com/",
-//   "https://northforkanglers.com/",
-//   "http://hatchfinders.com/",
-//   "https://snakeriverangler.com/",
-//   "http://worldcastanglers.com/",
-//   "http://montanaangler.com/",
-//   "http://snakeriverangler.com/",
-//   "https://danbaileys.com/",
-//   "https://bozemanflyfishing.com/",
-//   "http://frontieranglers.com/",
-//   "http://flyfishfood.com/",
-//   "https://bighornangler.com/",
-//   "https://4riversmontana.com/",
-//   "http://montanafishman.com/",
-//   "http://trroutfitters.com/",
-//   "http://snakeriverfly.com/",
-//   "https://cutthroatflyshop.com/", // Doesn't have reports (test)
-//   "https://tlapcflyshop.com/", // Doesn't have reports (test)
-// ];
-
 /**
  * Scrapes fishing reports from a list of URLs and writes them to a text file.
  *
@@ -43,8 +17,8 @@ import {
 async function fishingReportScraper(context, urls) {
   const reports = [];
 
-  // Sets batch size to 25% of total URLs, ensuring it's at least 1
-  const BATCH_SIZE = Math.max(1, Math.floor(urls.length * 0.25));
+  // Sets batch size to 10
+  const BATCH_SIZE = 10;
 
   for (let i = 0; i < urls.length; i += BATCH_SIZE) {
     const batch = urls.slice(i, i + BATCH_SIZE);
