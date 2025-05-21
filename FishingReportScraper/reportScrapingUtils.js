@@ -1,5 +1,6 @@
+import { differenceInDays, differenceInYears } from "date-fns";
+
 import { CSVFileReader } from "../base/fileUtils.js";
-import { TWO_YEARS_MS } from "../base/enums.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
 import { getDateFromText } from "../base/dateUtils.js";
 
@@ -141,24 +142,21 @@ async function scrapeVisibleText(page, selector) {
  * @returns {string[]} Filtered reports that pass the criteria.
  */
 function filterReports(reports) {
-  const now = Date.now();
   const report_urls = [];
 
   return reports.filter((report) => {
     // Extract date from report text
     const reportDate = getDateFromText(report);
 
-    // Exclude reports older than 2 years
-    if (reportDate && now - reportDate.getTime() > TWO_YEARS_MS) {
+    // Exclude reports older than 100 days
+    // can do years with differenceInYears(new Date(), reportDate) > 2)
+    if (reportDate && differenceInDays(new Date(), reportDate) > 100) {
       return false;
     }
 
     // Uncomment if you want to filter by relevant keywords:
-    // const lowerText = report.toLowerCase();
-    // const hasRelevantKeyword = relevantKeywords.some((kw) =>
-    //   lowerText.includes(kw)
-    // );
-    // if (!hasRelevantKeyword) return false;
+    // Maybe river names?
+    // if (!includesAny(report, IMPORTANT_RIVERS)) return false;
 
     return true; // keep the report
   });

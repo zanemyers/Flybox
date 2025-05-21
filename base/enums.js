@@ -18,9 +18,6 @@ const REVIEW_COUNT_REGEX = /(\d+)/;
 // Common e-commerce-related keywords used to detect if a website is a shop
 const SHOP_KEYWORDS = ["shop", "store", "buy", "products", "cart", "checkout"];
 
-// Two years in Milliseconds for filtering out old reports
-const TWO_YEARS_MS = 2 * 365 * 24 * 60 * 60 * 1000;
-
 // Common date patterns for filtering
 const DATE_REGEX_PATTERNS = [
   // 1. "May 25, 2020" or "May 25th, 2020"
@@ -130,5 +127,4 @@ export {
   SOCIAL_MEDIA,
   SOCIAL_MEDIA_MAP,
   STARS_REGEX,
-  TWO_YEARS_MS,
 };
