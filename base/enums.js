@@ -118,31 +118,6 @@ const MESSAGES = {
   NO_WEB: "NO_WEBSITE",
 };
 
-// IMPORTANT - Order Matters! Priority is based on list index
-const REPORT_URL_KEYWORDS = [
-  "fishing-reports",
-  "fishing_reports",
-  "fishing-report",
-  "fishing_report",
-  "river-reports",
-  "river-report",
-  "stream-reports",
-  "report",
-  "post",
-];
-
-// Url keywords to de-prioritize
-const LOW_PRIORITY_URL_KEYWORDS = [
-  "tag",
-  "tags",
-  "tagged",
-  "hashtags",
-  "categories",
-  "collections",
-  "page",
-  "trip-report", // world cast angler goes all over the place
-];
-
 // Export all constants for use in other modules
 export {
   DATE_REGEX_PATTERNS,

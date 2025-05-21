@@ -80,28 +80,15 @@ function isSameDomain(url, hostname) {
 }
 
 /**
- * Determines the priority of a URL based on the presence of predefined keywords.
- * Returns the index of the first matching keyword in REPORT_URL_KEYWORDS,
- * or Infinity if none match (meaning lowest priority).
+ * Checks if any term in the list is included in the target string (case-insensitive).
  *
- * @param {string} url - The URL string to check.
- * @returns {number} Priority value, lower means higher priority; Infinity if no keywords matched.
+ * @param {string} target - The string to search in.
+ * @param {string[]} terms - List of keywords/phrases/junk words to search for.
+ * @returns {boolean} True if any term is found, otherwise false.
  */
-function getPriority(url) {
-  const index = REPORT_URL_KEYWORDS.findIndex((kw) =>
-    url.toLowerCase().includes(kw)
-  );
-  return index === -1 ? Infinity : index;
-}
-
-/**
- * Checks if a given URL contains any low priority keywords.
- *
- * @param {string} url - The URL string to check.
- * @returns {boolean} True if any low priority keyword is found, otherwise false.
- */
-function isLowPriority(url) {
-  return LOW_PRIORITY_URL_KEYWORDS.some((kw) => url.toLowerCase().includes(kw));
+function includesAny(target, terms) {
+  const lower = target.toLowerCase();
+  return terms.some((term) => lower.includes(term.toLowerCase()));
 }
 
 /**
@@ -190,9 +177,8 @@ export {
   checkDuplicateUrls,
   extractAnchors,
   filterReports,
-  getPriority,
   getUrlsFromCSV,
-  isLowPriority,
+  includesAny,
   isSameDomain,
   scrapeVisibleText,
 };

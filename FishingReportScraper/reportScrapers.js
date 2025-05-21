@@ -7,8 +7,7 @@ import {
   scrapeVisibleText,
   extractAnchors,
   filterReports,
-  getPriority,
-  isLowPriority,
+  includesAny,
   isSameDomain,
 } from "./reportScrapingUtils.js";
 
@@ -102,10 +101,10 @@ async function findFishingReports(page, site, maxVisits = 25) {
     }
 
     const pageLinks = await extractAnchors(page); // Extract all anchor links (href + visible text)
-    const currentUrlHasKeyword = getPriority(url) < 8; // check current url has report keyword
+    const currentUrlHasKeyword = includesAny(url, site.keywords); // check current url has report keyword
 
     // Process each link on the page to evaluate if it should be queued
-    for (const { href, text } of pageLinks) {
+    for (const { href, linkText } of pageLinks) {
       if (!isSameDomain(href, baseHostname)) continue; // Ignore links to different domains
 
       const normLink = normalizeUrl(href); // normalize for consistent comparison
@@ -117,27 +116,20 @@ async function findFishingReports(page, site, maxVisits = 25) {
       )
         continue;
 
-      const linkPriority = getPriority(normLink); // Check priority based on keywords
-      const lowPriority = isLowPriority(normLink); // Check for low priority keywords
-      const hasReportKeyword = linkPriority !== Infinity; // infinity = no keywords
+      const hasKeyword = includesAny(normLink, site.keywords); // Check priority based on keywords
+      const hasJunkWord = includesAny(normLink, site.junkWords); // Check for low priority keywords
+      const hasClickPhrase = includesAny(linkText, site.clickPhrases);
 
-      // Initialize priority to Infinity (do not queue by default)
-      let priority = Infinity;
-
-      if (hasReportKeyword && !lowPriority) {
-        // Best case: link contains a report keyword and is not low priority
-        priority = linkPriority; // Use the index from keyword list as priority
-      } else if (
-        currentUrlHasKeyword &&
-        ["read more", "continue reading", "full report"].some((phrase) =>
-          text.includes(phrase)
-        )
-      ) {
-        // Current page is report-related and link text contains phrases that imply more content
-        priority = 50;
-      } else if (hasReportKeyword && lowPriority) {
-        // Link contains report keywords but is marked low priority due to other keywords
-        priority = 100;
+      let priority = Infinity; // do not queue by default
+      if (hasKeyword && !hasJunkWord) {
+        // Best case: link contains a report keyword and no junk words
+        priority = 0;
+      } else if (currentUrlHasKeyword && hasClickPhrase) {
+        // Current page has a keyword and the link text contains a phrase that implies more content
+        priority = 1;
+      } else if (hasKeyword && hasJunkWord) {
+        // Link contains a report keywords and a junk word
+        priority = 2;
       }
 
       // Only add the link to the queue if it has a valid priority
