@@ -29,7 +29,7 @@ async function fishingReportScraper(context, sites) {
   const reports = [];
 
   // Sets batch size to 10
-  const BATCH_SIZE = 10;
+  const BATCH_SIZE = 5;
 
   for (let i = 0; i < sites.length; i += BATCH_SIZE) {
     const batch = sites.slice(i, i + BATCH_SIZE);
@@ -57,6 +57,24 @@ async function fishingReportScraper(context, sites) {
   await compileFishingReports(reports);
   await makeReportSummary();
 }
+// async function fishingReportScraper(context, sites) {
+//   const reports = [];
+
+//   for (const site of sites) {
+//     const page = await context.newPage();
+//     try {
+//       const siteReports = await findFishingReports(page, site); // returns array of reports
+//       reports.push(...siteReports);
+//     } catch (error) {
+//       console.error(`Error scraping ${site.url}:`, error);
+//     } finally {
+//       await page.close();
+//     }
+//   }
+
+//   await compileFishingReports(reports);
+//   await makeReportSummary();
+// }
 
 /**
  * Crawls a fishing shop website starting from a given URL,
@@ -163,11 +181,8 @@ async function compileFishingReports(reports) {
   );
 
   // Filter reports based on date and keywords
-  const { filteredReports, report_urls } = filterReports(reports);
-
+  const filteredReports = filterReports(reports);
   console.log(`Old Reports: ${reports.length - filteredReports.length}`);
-  console.log("URLs in reports:");
-  console.log(report_urls);
 
   // Divider between individual reports for readability
   const divider = "\n" + "-".repeat(50) + "\n";

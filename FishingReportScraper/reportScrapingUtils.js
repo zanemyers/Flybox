@@ -1,9 +1,5 @@
 import { CSVFileReader } from "../base/fileUtils.js";
-import {
-  LOW_PRIORITY_URL_KEYWORDS,
-  REPORT_URL_KEYWORDS,
-  TWO_YEARS_MS,
-} from "../base/enums.js";
+import { TWO_YEARS_MS } from "../base/enums.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
 import { getDateFromText } from "../base/dateUtils.js";
 
@@ -87,6 +83,9 @@ function isSameDomain(url, hostname) {
  * @returns {boolean} True if any term is found, otherwise false.
  */
 function includesAny(target, terms) {
+  // if target isn't a string or terms is not an array return false
+  if (typeof target !== "string" || !Array.isArray(terms)) return false;
+
   const lower = target.toLowerCase();
   return terms.some((term) => lower.includes(term.toLowerCase()));
 }
@@ -145,32 +144,24 @@ function filterReports(reports) {
   const now = Date.now();
   const report_urls = [];
 
-  return (
-    reports.filter((report) => {
-      // Extract date from report text
-      const reportDate = getDateFromText(report);
+  return reports.filter((report) => {
+    // Extract date from report text
+    const reportDate = getDateFromText(report);
 
-      // Exclude reports older than 2 years
-      if (reportDate && now - reportDate.getTime() > TWO_YEARS_MS) {
-        return false;
-      }
+    // Exclude reports older than 2 years
+    if (reportDate && now - reportDate.getTime() > TWO_YEARS_MS) {
+      return false;
+    }
 
-      // Uncomment if you want to filter by relevant keywords:
-      // const lowerText = report.toLowerCase();
-      // const hasRelevantKeyword = relevantKeywords.some((kw) =>
-      //   lowerText.includes(kw)
-      // );
-      // if (!hasRelevantKeyword) return false;
+    // Uncomment if you want to filter by relevant keywords:
+    // const lowerText = report.toLowerCase();
+    // const hasRelevantKeyword = relevantKeywords.some((kw) =>
+    //   lowerText.includes(kw)
+    // );
+    // if (!hasRelevantKeyword) return false;
 
-      // Extract source URL from the report text and save it
-      const match = report.match(/Source\s+(https?:\/\/\S+)$/i);
-      const url = match ? match[1] : null;
-      if (url) report_urls.push(url);
-
-      return true; // keep the report
-    }),
-    report_urls
-  );
+    return true; // keep the report
+  });
 }
 
 export {

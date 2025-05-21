@@ -25,7 +25,7 @@ const sites = [
       "fishing-report",
       "fishing_report",
     ],
-    junkWords: [],
+    junkWords: ["page"],
     clickPhrases: [],
   },
   {
@@ -33,7 +33,7 @@ const sites = [
     selector: "article",
     lastUpdated: "APR 2025",
     keywords: ["fishing-reports", "post"],
-    junkWords: ["news"],
+    junkWords: ["news", "tags", "hashtags"],
     clickPhrases: [],
   },
   {
@@ -45,7 +45,7 @@ const sites = [
       "fishing-report",
       // "snake-river-angler-fly-fishing-report"
     ],
-    junkWords: [],
+    junkWords: ["page"],
     clickPhrases: ["READ MORE"],
   },
   {
@@ -53,7 +53,7 @@ const sites = [
     selector: "article",
     lastUpdated: "MAY 2025",
     keywords: ["jackson-hole-fishing-report", "fishing-report"],
-    junkWords: ["trip-report"],
+    junkWords: ["trip-report", "tag"],
     clickPhrases: ["Read more"],
   },
   {
@@ -85,7 +85,7 @@ const sites = [
     selector: "article",
     lastUpdated: "MAY 2025",
     keywords: ["fishing-reports", "fishing-report"],
-    junkWords: [],
+    junkWords: ["page"],
     clickPhrases: ["Read More"],
   },
   {
@@ -93,7 +93,7 @@ const sites = [
     selector: "article",
     lastUpdated: "MAY 2025",
     keywords: ["idaho-yellowstone-fly-fishing-reports"],
-    junkWords: [],
+    junkWords: ["tagged"],
     clickPhrases: [],
   },
   {
@@ -101,7 +101,7 @@ const sites = [
     selector: "article",
     lastUpdated: "MAY 2025",
     keywords: ["reports", "fishing-report"],
-    junkWords: [],
+    junkWords: ["page"],
     clickPhrases: ["Read more"],
   },
   {
@@ -109,7 +109,7 @@ const sites = [
     selector: "article",
     lastUpdated: "APR 2025",
     keywords: ["fishing-reports", "fishing-report"],
-    junkWords: [],
+    junkWords: ["uploads", "page"],
     clickPhrases: [],
   },
   {
@@ -117,7 +117,7 @@ const sites = [
     selector: "div.post",
     lastUpdated: "MAY 2025",
     keywords: ["fishing-reports-tips", "fishing-reports", "fishing-report"],
-    junkWords: [],
+    junkWords: ["page", "tag"],
     clickPhrases: ["Continue reading"],
   },
   {
@@ -125,7 +125,7 @@ const sites = [
     selector: "div.post",
     lastUpdated: "MAY 2025",
     keywords: ["fishing-reports"],
-    junkWords: [],
+    junkWords: ["page"],
     clickPhrases: ["Read More"],
   },
   {
@@ -145,6 +145,7 @@ const sites = [
     clickPhrases: [],
   },
   {
+    // TODO - this site needs to be checked
     url: "https://www.yellowdogflyfishing.com/",
     selector: "div.reportContent",
     lastUpdated: "MAY 2025",
@@ -173,7 +174,7 @@ const sites = [
     selector: "main.page-blocks",
     lastUpdated: "MAY 2025",
     keywords: ["madison-river-fishing-report"],
-    junkWords: [],
+    junkWords: ["tagged"],
     clickPhrases: [],
   },
   {
@@ -237,7 +238,7 @@ const sites = [
     selector: "main.main-content",
     lastUpdated: "MAY 2025",
     keywords: ["madison-river-fishing-report"],
-    junkWords: [],
+    junkWords: ["tagged"],
     clickPhrases: [],
   },
 ];
