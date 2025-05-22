@@ -1,4 +1,4 @@
-import { DATE_REGEX_PATTERNS, MONTHS } from "../base/enums.js";
+import * as chrono from "chrono-node";
 
 /**
  * Utility functions for handling UTC date formatting.
@@ -38,117 +38,27 @@ function getUTCTimeStamp(date) {
 }
 
 /**
- * Parses a date from a given text string by matching multiple common date formats.
-
- * The function uses regex patterns to detect date strings, extracts year, month, and day,
- * converts month names to month indices, validates date components, and returns a Date object.
- * It avoids locale-dependent Date parsing by manually constructing the Date.
+ * Extracts the most recent valid date from a block of text.
  *
- * @param {string} text - Input text possibly containing a date.
- * @returns {Date|null} A valid Date object if a date is found and valid; otherwise, null.
+ * @param {string} text - The text to search for date expressions.
+ * @returns {Date|null} The most recent valid Date object, or null if none found.
  */
-function getDateFromText(text) {
-  for (const regex of DATE_REGEX_PATTERNS) {
-    const match = text.match(regex);
-    if (match) {
-      let year, month, day;
+function extractMostRecentDate(text) {
+  const currentYear = new Date().getFullYear();
 
-      switch (regex) {
-        // 1. "May 25, 2020" or "May 25th, 2020"
-        case DATE_REGEX_PATTERNS[0]: {
-          // match: [full, monthName, day, year]
-          month = MONTHS[match[1].toLowerCase()];
-          day = parseInt(match[2], 10);
-          year = parseInt(match[3], 10);
-          break;
-        }
+  // Parse all date expressions using chrono-node
+  const results = chrono.parse(text);
 
-        // 2. "25 May 2020" or "25th May 2020"
-        case DATE_REGEX_PATTERNS[1]: {
-          // match: [full, day, monthName, year]
-          day = parseInt(match[1], 10);
-          month = MONTHS[match[2].toLowerCase()];
-          year = parseInt(match[3], 10);
-          break;
-        }
+  // Convert, filter, sort, and return the most recent date
+  const validDates = results
+    .map((result) => result.start.date())
+    .filter((date) => {
+      const year = date.getFullYear();
+      return year >= 2020 && year <= currentYear;
+    })
+    .sort((a, b) => b - a); // Sort most recent first
 
-        // 3. ISO "2020-05-25"
-        case DATE_REGEX_PATTERNS[2]: {
-          year = parseInt(match[1], 10);
-          month = parseInt(match[2], 10) - 1; // months 0-indexed
-          day = parseInt(match[3], 10);
-          break;
-        }
-
-        // 4. US style "05/25/2020" (MM/DD/YYYY)
-        case DATE_REGEX_PATTERNS[3]: {
-          month = parseInt(match[1], 10) - 1;
-          day = parseInt(match[2], 10);
-          year = parseInt(match[3], 10);
-          break;
-        }
-
-        // 5. US style with dashes MM-DD-YYYY
-        case DATE_REGEX_PATTERNS[4]: {
-          month = parseInt(match[1], 10) - 1;
-          day = parseInt(match[2], 10);
-          year = parseInt(match[3], 10);
-          break;
-        }
-
-        // 6. "25-May-2020"
-        case DATE_REGEX_PATTERNS[5]: {
-          day = parseInt(match[1], 10);
-          month = MONTHS[match[2].toLowerCase()];
-          year = parseInt(match[3], 10);
-          break;
-        }
-
-        // 7. "Tue, May 25, 2020"
-        case DATE_REGEX_PATTERNS[6]: {
-          month = MONTHS[match[1].toLowerCase()];
-          day = parseInt(match[2], 10);
-          year = parseInt(match[3], 10);
-          break;
-        }
-
-        // 8. "Jan, 2, 2020"
-        case DATE_REGEX_PATTERNS[7]: {
-          month = MONTHS[match[1].toLowerCase()];
-          day = parseInt(match[2], 10);
-          year = parseInt(match[3], 10);
-          break;
-        }
-
-        default:
-          continue; // unknown pattern, try next
-      }
-
-      // Validate parsed values
-      if (
-        typeof year === "number" &&
-        year > 0 &&
-        typeof month === "number" &&
-        month >= 0 &&
-        month <= 11 &&
-        typeof day === "number" &&
-        day >= 1 &&
-        day <= 31
-      ) {
-        const date = new Date(year, month, day);
-
-        // Extra check: ensure date components match (to avoid JS auto-correct e.g. Feb 30 -> Mar 2)
-        if (
-          date.getFullYear() === year &&
-          date.getMonth() === month &&
-          date.getDate() === day
-        ) {
-          return date;
-        }
-      }
-    }
-  }
-  return null;
+  return validDates[0] || null;
 }
 
-export { getDateFromText, getUTCTimeStamp, getUTCYearMonth };
+export { extractMostRecentDate, getUTCTimeStamp, getUTCYearMonth };

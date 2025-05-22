@@ -163,11 +163,12 @@ const sites = [
   },
   {
     url: "http://parksflyshop.com/",
-    selector: "div.entry-content",
+    selector:
+      'div.entry-content:has(p:has-text("Fishing Report")):has(p:has-text("River Descriptions"))',
     lastUpdated: "2025",
     keywords: ["fishing-reports", "fishing_report"],
     junkWords: [],
-    clickPhrases: [],
+    clickPhrases: ["View Report"],
   },
   {
     url: "http://www.montanatrout.com/",

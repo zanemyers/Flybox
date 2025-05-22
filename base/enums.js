@@ -18,52 +18,6 @@ const REVIEW_COUNT_REGEX = /(\d+)/;
 // Common e-commerce-related keywords used to detect if a website is a shop
 const SHOP_KEYWORDS = ["shop", "store", "buy", "products", "cart", "checkout"];
 
-// Common date patterns for filtering
-const DATE_REGEX_PATTERNS = [
-  // 1. "May 25, 2020" or "May 25th, 2020"
-  /\b([A-Za-z]+)\s(\d{1,2})(?:st|nd|rd|th)?,?\s(\d{4})\b/i,
-  // 2. "25 May 2020" or "25th May 2020"
-  /\b(\d{1,2})(?:st|nd|rd|th)?\s([A-Za-z]+),?\s(\d{4})\b/i,
-  // 3. ISO "2020-05-25"
-  /\b(\d{4})-(\d{2})-(\d{2})\b/,
-  // 4. US style "05/25/2020" (MM/DD/YYYY)
-  /\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/,
-  // 5. US style with dashes "05-25-2020" (MM-DD-YYYY)
-  /\b(\d{1,2})-(\d{1,2})-(\d{4})\b/,
-  // 6. "25-May-2020"
-  /\b(\d{1,2})-([A-Za-z]+)-(\d{4})\b/i,
-  // 7. "Tue, May 25, 2020"
-  /\b[A-Za-z]{3},\s([A-Za-z]+)\s(\d{1,2}),\s(\d{4})\b/i,
-  // 8. "Jan, 2, 2020"
-  /\b([A-Za-z]{3}),\s(\d{1,2}),\s(\d{4})\b/,
-];
-
-const MONTHS = {
-  january: 0,
-  jan: 0,
-  february: 1,
-  feb: 1,
-  march: 2,
-  mar: 2,
-  april: 3,
-  apr: 3,
-  may: 4,
-  june: 5,
-  jun: 5,
-  july: 6,
-  jul: 6,
-  august: 7,
-  aug: 7,
-  september: 8,
-  sep: 8,
-  october: 9,
-  oct: 9,
-  november: 10,
-  nov: 10,
-  december: 11,
-  dec: 11,
-};
-
 // Canonical names for known social media platforms
 const SOCIAL_MEDIA = {
   FACEBOOK: "Facebook",
@@ -117,10 +71,8 @@ const MESSAGES = {
 
 // Export all constants for use in other modules
 export {
-  DATE_REGEX_PATTERNS,
   EMAIL_REGEX,
   MESSAGES,
-  MONTHS,
   PHONE_REGEX,
   REVIEW_COUNT_REGEX,
   SHOP_KEYWORDS,

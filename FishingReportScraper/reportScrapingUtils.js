@@ -1,8 +1,8 @@
-import { differenceInDays, differenceInYears } from "date-fns";
+import { differenceInDays } from "date-fns";
 
 import { CSVFileReader } from "../base/fileUtils.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
-import { getDateFromText } from "../base/dateUtils.js";
+import { extractMostRecentDate } from "../base/dateUtils.js";
 
 /**
  * Reads a CSV file containing shop details and returns a filtered list of shops
@@ -141,24 +141,22 @@ async function scrapeVisibleText(page, selector) {
  * @param {string[]} reports - Array of report texts.
  * @returns {string[]} Filtered reports that pass the criteria.
  */
-function filterReports(reports) {
-  const report_urls = [];
-
+function filterReports(reports, maxDaysOld = 100) {
   return reports.filter((report) => {
-    // Extract date from report text
-    const reportDate = getDateFromText(report);
+    // Get all dates from the report text
+    const reportDate = extractMostRecentDate(report);
 
-    // Exclude reports older than 100 days
-    // can do years with differenceInYears(new Date(), reportDate) > 2)
-    if (reportDate && differenceInDays(new Date(), reportDate) > 100) {
-      return false;
-    }
+    // If no dates found exclude it
+    if (!reportDate) return false;
 
-    // Uncomment if you want to filter by relevant keywords:
-    // Maybe river names?
+    // Exclude reports older than specified days
+    const daysDifference = differenceInDays(new Date(), reportDate);
+    if (daysDifference > maxDaysOld) return false;
+
+    // Additional filtering logic can go here
     // if (!includesAny(report, IMPORTANT_RIVERS)) return false;
 
-    return true; // keep the report
+    return true;
   });
 }
 
