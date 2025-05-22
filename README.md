@@ -8,7 +8,7 @@ This is a repository containg work done for Rescue River, it currently includes 
 
 #### Debugging
 
-- On MacOS press `cmd + shift +p` to open the command palette
+- On MacOS press `cmd + shift + p` to open the command palette
 - Search `Debug: Toggle Auto Attach` and set it to `Only With Flag`
 
 #### Recommended Extensions
@@ -26,22 +26,14 @@ This is a repository containg work done for Rescue River, it currently includes 
 
 ### Local
 
-<!-- - On Mac/Linux install Homebrew by running `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` in the terminal
-  - You can check if it's installed by running `brew -v` in the terminal
-  - You can update it by running `brew update` in the terminal -->
-
 - Install node.js from `https://nodejs.org/en/download` (Recommend using LTS)
   - You can check if it's installed by running `node -v` and/or `npm -v` in the terminal
-  <!-- - Install Ollama from `https://ollama.com/download` to run AI models locally
-  - You can check if it's installed by running `ollama -v` in the terminal
-  - On MacOS/Linux you may use the `just ollama_update` to check that it's up to date and pull the `Llama3` model
-  - On Windows pull the `Llama3` model by running `ollama pull llama3`
-  - Run `just ollama_test` in the terminal to quickly test that it is working -->
 - In the terminal run `npm install` to install the necessary packages locally
 
 ### Packages
 
 - Axios (Possibly to send requests to ChatGPT)
+- Date-FNS
 - Dotenv
 - Fast-CSV
 - GPT-Tokenizer
@@ -75,7 +67,7 @@ It should be double checked for data accuracy, but provides a good starting poin
 
 ### Debugging
 
-- Docker debuggin is currently unavailable
+- Docker debugging is currently unavailable
 - In the terminal run `just gss -l -d` for local debugging
 - If you are in the GoogleMapsShopScraper directory you may also run `node --inspect main` in the terminal
 
