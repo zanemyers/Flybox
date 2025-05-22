@@ -118,7 +118,7 @@ const sites = [
   },
   {
     url: "http://www.sweetwaterflyshop.com/",
-    selector: 'div.post:not(:has(a:text-matches("read more", "i")))',
+    selector: "div.post:not(:has(a.readmore))",
     lastUpdated: "MAY 2025",
     keywords: ["fishing-reports"],
     junkWords: ["page"],
@@ -159,8 +159,7 @@ const sites = [
   },
   {
     url: "http://parksflyshop.com/",
-    selector:
-      'div.entry-content:has(p:text-matches("Fishing Report", "i")):has(p:text-matches("River Descriptions", "i"))',
+    selector: 'div.entry-content:has(p:text-matches("Fishing Report", "i"))',
     lastUpdated: "2025",
     keywords: ["fishing-reports", "fishing_report"],
     junkWords: [],
