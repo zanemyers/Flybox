@@ -19,7 +19,7 @@ gss *FLAGS:
 
 
 # Runs the Fishing Report Scraper, either locally or inside Docker.
-frs *FLAGS: ollama_start && ollama_stop
+frs *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-l"* ]]; then  # Check for local flag (-l)
         if [[ "{{FLAGS}}" == *"-d"* ]]; then  # Check for debug flag (-d)

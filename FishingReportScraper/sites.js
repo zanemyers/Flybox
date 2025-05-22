@@ -38,13 +38,9 @@ const sites = [
   },
   {
     url: "https://snakeriverangler.com/",
-    selector: "article",
+    selector: 'article:not(:has(a:text-matches("read more", "i")))',
     lastUpdated: "MAY 2025",
-    keywords: [
-      "fishing-reports",
-      "fishing-report",
-      // "snake-river-angler-fly-fishing-report"
-    ],
+    keywords: ["fishing-reports", "fishing-report"],
     junkWords: ["page"],
     clickPhrases: ["READ MORE"],
   },
@@ -122,7 +118,7 @@ const sites = [
   },
   {
     url: "http://www.sweetwaterflyshop.com/",
-    selector: "div.post",
+    selector: 'div.post:not(:has(a:text-matches("read more", "i")))',
     lastUpdated: "MAY 2025",
     keywords: ["fishing-reports"],
     junkWords: ["page"],
@@ -164,7 +160,7 @@ const sites = [
   {
     url: "http://parksflyshop.com/",
     selector:
-      'div.entry-content:has(p:has-text("Fishing Report")):has(p:has-text("River Descriptions"))',
+      'div.entry-content:has(p:text-matches("Fishing Report", "i")):has(p:text-matches("River Descriptions", "i"))',
     lastUpdated: "2025",
     keywords: ["fishing-reports", "fishing_report"],
     junkWords: [],
@@ -188,7 +184,7 @@ const sites = [
   },
   {
     url: "http://www.bozemanflysupply.com/",
-    selector: 'div._1140-w-wrapper:has(h1:has-text("fishing report"))',
+    selector: 'div._1140-w-wrapper:has(h1:text-matches("fishing report", "i"))',
     lastUpdated: "MAY 2025",
     keywords: ["fishing-report", "river-report"],
     junkWords: [],
@@ -196,7 +192,7 @@ const sites = [
   },
   {
     url: "https://theriversedge.com/",
-    selector: 'div.container:has(h2:has-text("river fishing report"))',
+    selector: 'div.container:has(h2:text-matches("river fishing report", "i"))',
     lastUpdated: "MAY 2025",
     keywords: ["montana-fishing-reports", "fishing-report"],
     junkWords: [],
@@ -204,7 +200,7 @@ const sites = [
   },
   {
     url: "http://troutfitters.com/",
-    selector: 'div.mb-5:has(h2:has-text("Fly Pattern Suggestions"))',
+    selector: 'div.mb-5:has(h2:text-matches("Fly Pattern Suggestions", "i"))',
     lastUpdated: "MAY 2025",
     keywords: ["river-reports", "reports"],
     junkWords: [],

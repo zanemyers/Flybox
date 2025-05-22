@@ -51,6 +51,7 @@ function extractMostRecentDate(text) {
 
   // Convert, filter, sort, and return the most recent date
   const validDates = results
+    .filter((result) => result.start.knownValues.year) // filters vague dates like "next week"
     .map((result) => result.start.date())
     .filter((date) => {
       const year = date.getFullYear();
