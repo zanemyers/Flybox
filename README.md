@@ -32,11 +32,9 @@ This is a repository containg work done for Rescue River, it currently includes 
 
 ### Packages
 
-- Axios (Possibly to send requests to ChatGPT)
 - Date-FNS
 - Dotenv
 - Fast-CSV
-- GPT-Tokenizer
 - Playwright
 
 ## Google Maps Shop Scraper (Functional)

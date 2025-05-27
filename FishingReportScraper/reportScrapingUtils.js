@@ -135,35 +135,70 @@ async function scrapeVisibleText(page, selector) {
 }
 
 /**
+ * Determines the priority of a link for scraping based on keywords, junk words, and link text.
+ *
+ * @param {string} currentUrl - The URL of the current page being scraped.
+ * @param {string} link - The href value of the link to evaluate.
+ * @param {string} linkText - The visible text of the link.
+ * @param {Object} siteInfo - Metadata about the site, including keywords and junk words.
+ * @returns {number} A numeric priority (lower is higher priority); Infinity means do not follow.
+ */
+async function getPriority(currentUrl, link, linkText, siteInfo) {
+  const currentUrlHasKeyword = includesAny(currentUrl, siteInfo.keywords); // Does the current URL contain a keyword?
+  const hasKeyword = includesAny(link, siteInfo.keywords); // Does the link contain a keyword?
+  const hasJunkWord = includesAny(link, siteInfo.junkWords); // Does the link contain any junk words?
+  const hasClickPhrase = includesAny(linkText, site.clickPhrases); // Does the link text suggest deeper content?
+
+  let priority = Infinity; // Default: do not queue the link
+
+  if (hasKeyword && !hasJunkWord) {
+    priority = 0; // Best case: relevant link with no junk
+  } else if (currentUrlHasKeyword && hasClickPhrase) {
+    priority = 1; // Next best: current page is relevant and link suggests more info
+  } else if (hasKeyword && hasJunkWord) {
+    priority = 2; // Link is relevant but possibly misleading or lower value
+  }
+
+  return priority;
+}
+
+/**
  * Filters fishing reports based on date and keywords,
  * and extracts source URLs into the provided array.
  *
  * @param {string[]} reports - Array of report texts.
  * @returns {string[]} Filtered reports that pass the criteria.
  */
-function filterReports(reports, maxDaysOld = 100) {
+function filterReports(reports) {
   return reports.filter((report) => {
-    // Get all dates from the report text
+    // Get the most recent date from the report text
     const reportDate = extractMostRecentDate(report);
 
     // If no dates found exclude it
     if (!reportDate) return false;
 
-    // Exclude reports older than specified days
+    // Exclude reports older than specified number of days
     const daysDifference = differenceInDays(new Date(), reportDate);
-    if (daysDifference > maxDaysOld) return false;
+    if (daysDifference > process.env.MAX_REPORT_AGE_DAYS) return false;
 
-    // Additional filtering logic can go here
-    // if (!includesAny(report, IMPORTANT_RIVERS)) return false;
+    // Exclude if no important rivers mentioned
+    // if (!includesAny(report, process.env.IMPORTANT_RIVERS)) return false;
 
     return true;
   });
 }
 
+function estimateTokenCount(text) {
+  const words = text.trim().split(/\s+/).length;
+  return Math.ceil(words * 1.3); // ~1.3 tokens per word
+}
+
 export {
   checkDuplicateUrls,
+  estimateTokenCount,
   extractAnchors,
   filterReports,
+  getPriority,
   getUrlsFromCSV,
   includesAny,
   isSameDomain,

@@ -69,6 +69,23 @@ const MESSAGES = {
   NO_WEB: "NO_WEBSITE",
 };
 
+const SUMMARY_PROMPT = `
+    For each river or body of water mentioned create a bulleted list that follows the template below.
+    - If you cannot find information for a bullet leave it blank.
+    - If the body of water is mentioned more than once, summarize the info into a single entry and break down data by the date if possible
+    - If the date is in the body and not in the date field, add it to the date field.
+    - If an article contains reports for mulitple bodies of water break them into separate entries based on the body of water.
+
+    # 1. Mississippi River
+    (River Specifics)
+    * Date: (Date of report)
+    * Water Type: (river, lake, stream, fork, tailwater, creek, reservoir, etc.)
+    (Fly Fishing Specifics)
+    * Fly Patterns: (list of fly fishing fly patterns mentioned)
+    * Colors: (list of colors for fly fishing flies that were mentioned)
+    * Hook Sizes: (list of hook sizes mentioned)
+  `;
+
 // Export all constants for use in other modules
 export {
   EMAIL_REGEX,
@@ -79,4 +96,5 @@ export {
   SOCIAL_MEDIA,
   SOCIAL_MEDIA_MAP,
   STARS_REGEX,
+  SUMMARY_PROMPT,
 };
