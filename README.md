@@ -32,9 +32,11 @@ This is a repository containg work done for Rescue River, it currently includes 
 
 ### Packages
 
+- Chrono-Node
 - Date-FNS
 - Dotenv
 - Fast-CSV
+- Google/Genai
 - Playwright
 
 ## Google Maps Shop Scraper (Functional)
@@ -71,6 +73,8 @@ It should be double checked for data accuracy, but provides a good starting poin
 
 ### Customizations
 
+- In your .env file
+  -
 - If you want to see the run update main.js
   - const browser = await chromium.launch({ headless: false });
 - If you want to run a different Google Maps URL update main.js

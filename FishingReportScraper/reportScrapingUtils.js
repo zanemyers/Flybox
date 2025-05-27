@@ -1,5 +1,6 @@
 import { differenceInDays } from "date-fns";
 
+import { REPORT_DIVIDER } from "../base/enums.js";
 import { CSVFileReader } from "../base/fileUtils.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
 import { extractMostRecentDate } from "../base/dateUtils.js";
@@ -193,8 +194,50 @@ function estimateTokenCount(text) {
   return Math.ceil(words * 1.3); // ~1.3 tokens per word
 }
 
+/**
+ * Splits the full report text into smaller chunks that stay under the max token limit.
+ *
+ * Chunks are formed by grouping sections separated by REPORT_DIVIDER.
+ * Each chunk will contain as many full sections as possible without exceeding
+ * the MAX_TOKENS_PER_CHUNK environment variable.
+ *
+ * @param {string} text - Full fishing report text to be chunked.
+ * @returns {string[]} Array of text chunks, each under the token limit.
+ */
+function chunkReportText(text) {
+  const reports = text.split(REPORT_DIVIDER); // Split the text into individual reports
+  const chunks = []; // Array to store the final chunks
+
+  let currentChunk = ""; // Current chunk being built
+  let currentTokens = 0; // Estimated token count for the current chunk
+
+  for (const report of reports) {
+    const section = report + REPORT_DIVIDER; // Re-add the divider to each section
+    const tokens = estimateTokenCount(section); // Estimate tokens in this section
+
+    if (currentTokens + tokens > process.env.MAX_TOKENS_PER_CHUNK) {
+      // If adding this section exceeds the token limit, finalize the current chunk
+      chunks.push(currentChunk.trim());
+      currentChunk = section; // Start a new chunk with this section
+      currentTokens = tokens;
+    } else {
+      // Add the section to the current chunk
+      currentChunk += section;
+      currentTokens += tokens;
+    }
+  }
+
+  // Push the final chunk if there's any content left
+  if (currentChunk) {
+    chunks.push(currentChunk.trim());
+  }
+
+  return chunks;
+}
+
 export {
   checkDuplicateUrls,
+  chunkReportText,
   estimateTokenCount,
   extractAnchors,
   filterReports,

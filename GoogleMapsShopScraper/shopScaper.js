@@ -46,13 +46,14 @@ async function scrapeGoogleShopUrl(browserContext, url) {
     await page.waitForSelector('[role="feed"]', { timeout: 10000 });
 
     let endOfListText = false;
-    const maxScrollDuration = 30000; // 30 seconds in milliseconds
     const scrollStart = Date.now();
 
     while (!endOfListText) {
       // Throw an error if scrolling takes more than 30 secondes (probably hung)
-      if (Date.now() - scrollStart > maxScrollDuration) {
-        throw new Error(MESSAGES.ERROR_SCROLL_TIMEOUT(maxScrollDuration));
+      if (Date.now() - scrollStart > process.env.MAX_SCROLL_DURATION) {
+        throw new Error(
+          MESSAGES.ERROR_SCROLL_TIMEOUT(process.env.MAX_SCROLL_DURATION)
+        );
       }
 
       // Scroll to the bottom to load more items
@@ -111,12 +112,15 @@ async function scrapeGoogleShopDetails(browserContext, urls) {
   const allShopDetails = []; // Shop details collected from scraping
   const failedGoogleShops = []; // Failed Google shop URLs and details
 
-  // Sets batch size to 10% of total URLs, ensuring it's at least 1
-  const BATCH_SIZE = Math.max(1, Math.floor(urls.length * 0.1));
+  // Ensure batch size is at least 1
+  const batchSize = Math.max(
+    1,
+    Math.floor(urls.length * process.env.BATCH_PERCENT)
+  );
 
   // Loops over all URLs, processing them in batches
-  for (let i = 0; i < urls.length; i += BATCH_SIZE) {
-    const batch = urls.slice(i, i + BATCH_SIZE); // Get a slice of URLs for the current batch
+  for (let i = 0; i < urls.length; i += batchSize) {
+    const batch = urls.slice(i, i + batchSize); // Get a slice of URLs for the current batch
 
     // Runs scraping for each URL in the batch using Promise.all
     const results = await Promise.all(

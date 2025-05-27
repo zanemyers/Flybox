@@ -1,11 +1,11 @@
 import fs from "fs";
 import { GoogleGenAI } from "@google/genai";
 
-import { SUMMARY_PROMPT } from "../base/enums.js";
+import { MERGE_PROMPT, REPORT_DIVIDER, SUMMARY_PROMPT } from "../base/enums.js";
 import { TXTFileWriter } from "../base/fileUtils.js";
 import {
   scrapeVisibleText,
-  estimateTokenCount,
+  chunkReportText,
   extractAnchors,
   filterReports,
   getPriority,
@@ -140,11 +140,8 @@ async function compileFishingReports(reports) {
   // Filter reports based on date and keywords
   const filteredReports = filterReports(reports);
 
-  // Divider between individual reports for readability
-  const divider = "\n" + "-".repeat(50) + "\n";
-
   // Combine all filtered report entries into a single string
-  const compiledReports = filteredReports.join(divider);
+  const compiledReports = filteredReports.join(REPORT_DIVIDER);
 
   // Write the final compiled content to the file
   await reportWriter.write(compiledReports);
@@ -172,22 +169,29 @@ async function makeReportSummary() {
     "utf-8"
   );
 
-  // Estimate and log the approximate token count for the fishing report text
-  console.log(`Estimated token count: ${estimateTokenCount(fileText)}`);
+  const chunks = chunkReportText(fileText); // Split the text into manageable chunks
 
-  // Send the fishing report text along with the summary prompt to the Gemini model
-  const response = await ai.models.generateContent({
-    model: process.env.GOOGLE_GENAI_MODEL, // IMPORTANT: Set in environment variables
-    contents: [
-      {
-        role: "user",
-        parts: [{ text: fileText }, { text: SUMMARY_PROMPT }],
-      },
-    ],
+  const summaries = [];
+  for (const chunk of chunks) {
+    const summary = await ai.models.generateContent({
+      model: process.env.GOOGLE_GENAI_MODEL,
+      contents: `${chunk}\n\n ${SUMMARY_PROMPT}`,
+    });
+    summaries.push(summary.text.trim());
+  }
+
+  const mergedPrompt = `${MERGE_PROMPT}\n\n${summaries.join("\n\n")}`;
+
+  const finalResponse = await ai.models.generateContent({
+    model: process.env.GOOGLE_GENAI_MODEL,
+    contents: mergedPrompt,
   });
 
+  console.log("AI Summary Generated:\n", finalResponse.text);
+
   // Write the AI-generated summary text to the output file
-  await summaryWriter.write(response.text.trim());
+  await summaryWriter.write(finalResponse.text);
+  console.log("Finished.");
 }
 
-export { fishingReportScraper };
+export { fishingReportScraper, makeReportSummary };
