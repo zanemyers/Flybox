@@ -112,15 +112,9 @@ async function scrapeGoogleShopDetails(browserContext, urls) {
   const allShopDetails = []; // Shop details collected from scraping
   const failedGoogleShops = []; // Failed Google shop URLs and details
 
-  // Ensure batch size is at least 1
-  const batchSize = Math.max(
-    1,
-    Math.floor(urls.length * process.env.BATCH_PERCENT)
-  );
-
   // Loops over all URLs, processing them in batches
-  for (let i = 0; i < urls.length; i += batchSize) {
-    const batch = urls.slice(i, i + batchSize); // Get a slice of URLs for the current batch
+  for (let i = 0; i < urls.length; i += process.env.BATCH_SIZE) {
+    const batch = urls.slice(i, i + process.env.BATCH_SIZE); // Get a slice of URLs for the current batch
 
     // Runs scraping for each URL in the batch using Promise.all
     const results = await Promise.all(

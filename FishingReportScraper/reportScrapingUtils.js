@@ -180,7 +180,7 @@ function filterReports(reports) {
 
     // Exclude reports older than specified number of days
     const daysDifference = differenceInDays(new Date(), reportDate);
-    if (daysDifference > process.env.MAX_REPORT_AGE_DAYS) return false;
+    if (daysDifference > process.env.MAX_REPORT_AGE) return false;
 
     // Exclude if no important rivers mentioned
     // if (!includesAny(report, process.env.IMPORTANT_RIVERS)) return false;
