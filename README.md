@@ -1,30 +1,34 @@
-# RescueRiver
+# ![RescueRiver logo](assets/images/RescueRiverLogo.png) RescueRiver
 
-This repository contains work done for **Rescue River**, currently including:
+This repository contains work done for **[Rescue River](https://rescueriver.com/)**, currently including:
 
 - ✅ **Google Maps Shop Scraper** – Fully functional
 - ⚠️ **Fishing Report Scraper** – In progress
 
 These tools are designed to gather and summarize data from fishing-related sources online.  
-They support both **local** and **Docker-based** development, with flexible configuration via environment variables
+They support both **local** and **Docker-based** development, with flexible configuration via environment variables.
 
-## Table of Contents
+## 📑 Table of Contents
 
-- [Setup](#setup)
-- [Google Maps Shop Scraper](#google-maps-shop-scraper)
-- [Fishing Report Scraper](#fishing-report-scraper-in-progress)
-- [Known Issues](#known-issues)
+- [📋 Setup](#-setup)
+- [🚀 Usage](#-usage)
+- [⚙️ Configuration](#-configuration)
+- [🗺️ Google Maps Shop Scraper](#-google-maps-shop-scraper)
+- [🎣 Fishing Report Scraper](#-fishing-report-scraper-in-progress)
+- [🐞 Known Issues](#-known-issues)
 
-## Setup
+---
 
-### VS Code Settings
+## 📋 Setup
 
-#### Debugging
+### ⚙️ Visual Studio Code Settings
+
+#### 🐞 Debugging
 
 - On MacOS press `cmd + shift + p` to open the command palette
 - Search `Debug: Toggle Auto Attach` and set it to `Only With Flag`
 
-#### Recommended Extensions
+#### 🧰 Recommended Extensions
 
 - CSV by ReprEng
 - Docker by Microsoft
@@ -32,120 +36,131 @@ They support both **local** and **Docker-based** development, with flexible conf
 - GitHub Copilot by GitHub
 - Prettier - Code formatter by Prettier
 
-### Docker
+### 🐳 Docker
 
-- Install Docker Desktop from `https://docs.docker.com/get-started/get-docker/`
-- In the terminal run `docker-compose build`
+- Install [Docker Desktop](https://docs.docker.com/get-started/get-docker/)
+- Run `docker-compose build` in the terminal
 
-### Local (Recommended for development only)
+### 🏠 Local
 
-- Install Node.js from `https://nodejs.org/en/download` (Recommend using LTS)
-  - You can check if it's installed by running `node -v` and/or `npm -v` in the terminal
-- In the terminal run `npm install` to install the necessary packages locally
+- Install [Node.js](https://nodejs.org/en/download) (recommend using LTS)
+- Run `npm install` in the terminal
 
-### Environment
+### 🌳 Environment
 
-- In the terminal run `just setup_env` to setup your .env file
-  - The .env file is essential for summarizing reports and making customizations
-  - Follow the prompts in the terminal
-  - You can always make changes manually or re-run the command to recreate your .env file
+- Run `just setup_env` in the terminal to create your `.env` file
+  - Follow the prompts
+  - You can re-run the command or edit the file manually anytime
 
-### Packages
+### 📦 Key Packages
 
-- Chrono-Node
-- Date-FNS
-- Dotenv
-- Enquirer
-- Fast-CSV
-- Google/Genai
-- Playwright
+- **Parsing & Dates:** Chrono-Node, Date-FNS
+- **CLI & Environment:** Enquirer, Dotenv
+- **Scraping:** Playwright
+- **CSV Handling:** Fast-CSV
+- **AI Integration:** Google/Genai
 
-## Google Maps Shop Scraper
+---
 
-This tool scrapes a Google Maps URL and returns a CSV with details on the listed items.
-It should be double checked for data accuracy, but provides a good starting point.
+## 🚀 Usage
 
-### How it Works
+All run/debug commands use [`just`](https://just.systems/man/en/) task runner.
 
-- Takes a Google Maps URL
-- Scrolls to the bottom of the list
-- Pulls the individual URLs for each listed item
-- Batches the found URLs
-- Looks for details on list items (i.e. Name, Phone, Website, Ratings)
-- Looks for more details on website (i.e. Email, Online Shop, Fishing Reports)
-- Compiles found details into a CSV
-- Prints a list of list items without a website to the console
-- Prints a list of the errors that occurred in the process to the console
+### 🏃 Run Commands
 
-### Run with Docker
+| Tool                   | Docker     | Local                        |
+| ---------------------- | ---------- | ---------------------------- |
+| Google Maps Scraper    | `just gss` | `just gss -l` or `node main` |
+| Fishing Report Scraper | `just frs` | `just frs -l` or `node main` |
 
-- In the terminal run `just gss`
+> For local runs with `node main`, first navigate into the app directory.
 
-### Run Locally
+### 🐞 Debugging Locally
 
-- In the terminal run `just gss -l`
-- If you are in the GoogleMapsShopScraper directory you may also run `node main` in the terminal
+| Tool                   | Debug Command                             |
+| ---------------------- | ----------------------------------------- |
+| Google Maps Scraper    | `just gss -l -d` or `node --inspect main` |
+| Fishing Report Scraper | `just frs -l -d` or `node --inspect main` |
 
-### Debugging
+> Docker-based debugging is currently **not available**.
 
-- Docker debugging is currently unavailable
-- In the terminal run `just gss -l -d` for local debugging
-- If you are in the GoogleMapsShopScraper directory you may also run `node --inspect main` in the terminal
+---
 
-### Customizations
+## ⚙️ Configuration
 
-- In your .env file
-  - Set `RUN_HEADLESS` to false to see the scraper run in a browser.
-  - Adjust `BATCH_SIZE` to control how many URLs are processed at once.
-    - NOTE: It’s recommended to batch only 3–5 URLs at a time.
-    - WARNING: Larger batches may affect results due to rate limiting, blocking, resource contention, timeouts, session issues, or data inconsistencies.
-  - Update `STARTING_URL` to change the starting point for scraping.
-  - Modify `MAX_SCROLL_DURATION` to adjust how long the scraper waits for Google Maps to load.
-    - NOTE: Value should be in milliseconds (e.g., 30000 = 30 seconds).
+Set these in your `.env` file.
 
-### Known Issues
+### 🛠️ Shared Settings
 
-- It can hang while looking for the URLs
-  - `MAX_SCROLL_DURATION` causes timeout after 30s (default)
-- Email doesn't always pull correctly
-- Some pages fail to load
-- Blocked or Forbidden pages
-- Must run headless with Docker
-- Cannot debug with Docker
+| Variable       | Description                                            |
+| -------------- | ------------------------------------------------------ |
+| `RUN_HEADLESS` | Run browser headless or visibly (`true` or `false`)    |
+| `BATCH_SIZE`   | Number of URLs to process per batch (recommended: 3–5) |
 
-## Fishing Report Scraper (In-Progress)
+### 🗺️ Google Maps Shop Scraper
 
-This tool takes a CSV that must have the following 3 headers, Name, Website and, Publishes Fishing Report (You can use the Google Maps Scraper to generate one). Then compiles and generates data based off of common patterns in the reports for a given river.
+| Variable              | Description                                               |
+| --------------------- | --------------------------------------------------------- |
+| `STARTING_URL`        | Google Maps list URL to begin scraping                    |
+| `MAX_SCROLL_DURATION` | Time to scroll and load results (ms, e.g., `30000` = 30s) |
 
-### How it Works
+### 🎣 Fishing Report Scraper
 
-### Run with Docker
+| Variable               | Description                                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| `GOOGLE_GENAI_API_KEY` | [API key](https://aistudio.google.com/app/apikey) for accessing Google's GenAI              |
+| `GOOGLE_GENAI_MODEL`   | The [GenAI model](https://ai.google.dev/gemini-api/docs/models) to use (e.g., `gemini-pro`) |
+| `MAX_TOKENS_PER_CHUNK` | Token limit per chunk when summarizing reports                                              |
+| `MAX_REPORT_AGE`       | Max age of reports to include (in days)                                                     |
+| `FILTER_BY_RIVER`      | Enable or disable river filtering (`true` or `false`)                                       |
+| `IMPORTANT_RIVERS`     | Comma-separated list of river names to prioritize (e.g. `'Snake','Colorado'`)               |
 
-- In the terminal run `just frs`
+---
 
-### Run Locally
+## 🗺️ Google Maps Shop Scraper
 
-- In the terminal run `just frs -l`
-- If you are in the FishingReportScraper directory you may also run `node main` in the terminal
+Pulls business data from Google Maps and associated websites, compiling the results into a structured CSV.
 
-### Debugging
+### 🔍 Features
 
-- Docker debugging is currently unavailable
-- In the terminal run `just frs -l -d` for local debugging
-- If you are in the FishingReportScraper directory you may also run `node --inspect main` in the terminal
+- Scrolls and collects all visible shops from a given Google Maps URL
+- Extracts contact info, links, and ratings from the Google listing
+- Follows websites to gather additional data (email, fishing reports, shop links)
+- Exports structured data to a CSV
+- Logs missing websites and failed loads
 
-### Customizations
+---
 
-- In your .env file
-  - Set `RUN_HEADLESS` to false to see the scraper run in a browser.
-  - Adjust `BATCH_SIZE` to control how many URLs are processed at once.
-    - NOTE: It’s recommended to batch only 3–5 URLs at a time.
-    - WARNING: Larger batches may affect results due to rate limiting, blocking, resource contention, timeouts, session issues, or data inconsistencies.
-  - Adjust `MAX_REPORT_AGE` to change the report age limit.
-    - NOTE: Value should be in days
-  - Toggle `FILTER_BY_RIVER` to enable or disable river filtering.
-  - Update `IMPORTANT_RIVERS` to specify which rivers to filter by.
+## 🎣 Fishing Report Scraper (In-Progress)
 
-### Known Issues
+Analyzes fishing reports from websites. Uses a CSV with these headers:
 
-- Must run headless with Docker
+- `URL`
+- `Last Updated`
+- `Selector`
+- `Keywords`
+- `Junk Words`
+- `Click Phrases`
+
+### 🧠 Intended Features
+
+- Detect and summarize river conditions and activity from fishing reports
+- Filter by river name
+- Track report freshness based on publication dates
+
+---
+
+## 🐞 Known Issues
+
+### 🗺️ Google Maps Shop Scraper
+
+- May hang while scrolling (controlled by `MAX_SCROLL_DURATION`)
+- Email scraping is unreliable
+- Some business pages are blocked or fail to load
+- Requires headless mode in Docker
+- Cannot be debugged in Docker
+
+### 🎣 Fishing Report Scraper
+
+- Must run headless in Docker
+- Still under development
