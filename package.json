@@ -1,6 +1,11 @@
 {
+  "type": "module",
   "dependencies": {
-    "cheerio": "^1.0.0",
+    "@google/genai": "^1.1.0",
+    "chrono-node": "^2.8.0",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "enquirer": "^2.4.1",
     "fast-csv": "^5.0.2",
     "playwright": "^1.51.1"
   }

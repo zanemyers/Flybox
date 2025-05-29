@@ -1,11 +1,25 @@
-const EmailRegEx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i;
-const PhoneRegEx = /\+[\d]+/;
-const StarsRegEx = /^[0-5]\.\d$/;
-const ReviewCountRegEx = /(\d+)/;
+/**
+ * Constants and utilities used across scraping logic, including patterns for matching data,
+ * standardized messages, keyword lists, and known social media mappings.
+ */
 
-const ShopKeywords = ["shop", "store", "buy", "products", "cart", "checkout"];
+// Regex pattern to match email addresses
+const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i;
 
-const SocialMedia = {
+// Regex pattern to match phone numbers in international format (e.g., +1234567890)
+const PHONE_REGEX = /\+[\d]+/;
+
+// Regex pattern to match star ratings formatted as a decimal between 0.0 and 5.9 (e.g., "4.8")
+const STARS_REGEX = /^[0-5]\.\d$/;
+
+// Regex pattern to extract a number (used for review counts)
+const REVIEW_COUNT_REGEX = /(\d+)/;
+
+// Common e-commerce-related keywords used to detect if a website is a shop
+const SHOP_KEYWORDS = ["shop", "store", "buy", "products", "cart", "checkout"];
+
+// Canonical names for known social media platforms
+const SOCIAL_MEDIA = {
   FACEBOOK: "Facebook",
   INSTAGRAM: "Instagram",
   LINKEDIN: "LinkedIn",
@@ -16,21 +30,23 @@ const SocialMedia = {
   YOUTUBE: "YouTube",
 };
 
-const SocialMediaMap = [
-  { domain: "facebook.com", name: SocialMedia.FACEBOOK },
-  { domain: "instagram.com", name: SocialMedia.INSTAGRAM },
-  { domain: "linkedin.com", name: SocialMedia.LINKEDIN },
-  { domain: "tiktok.com", name: SocialMedia.TIKTOK },
-  { domain: "vimeo.com", name: SocialMedia.VIMEO },
-  { domain: "whatsapp.com", name: SocialMedia.WHATSAPP },
-  { domain: "wa.me", name: SocialMedia.WHATSAPP }, // optional alias
-  { domain: "wa.me", name: SocialMedia.WHATSAPP },
-  { domain: "x.com", name: SocialMedia.X },
-  { domain: "twitter.com", name: SocialMedia.X }, // optional alias
-  { domain: "youtube.com", name: SocialMedia.YOUTUBE },
+// Mapping of domain names to social media platform names
+// Includes aliases (e.g., wa.me → WhatsApp, twitter.com → X)
+const SOCIAL_MEDIA_MAP = [
+  { domain: "facebook.com", name: SOCIAL_MEDIA.FACEBOOK },
+  { domain: "instagram.com", name: SOCIAL_MEDIA.INSTAGRAM },
+  { domain: "linkedin.com", name: SOCIAL_MEDIA.LINKEDIN },
+  { domain: "tiktok.com", name: SOCIAL_MEDIA.TIKTOK },
+  { domain: "vimeo.com", name: SOCIAL_MEDIA.VIMEO },
+  { domain: "whatsapp.com", name: SOCIAL_MEDIA.WHATSAPP },
+  { domain: "wa.me", name: SOCIAL_MEDIA.WHATSAPP },
+  { domain: "x.com", name: SOCIAL_MEDIA.X },
+  { domain: "twitter.com", name: SOCIAL_MEDIA.X },
+  { domain: "youtube.com", name: SOCIAL_MEDIA.YOUTUBE },
 ];
 
-const Messages = {
+// Standardized error and not-found messages for consistency in logging and reporting
+const MESSAGES = {
   // ERROR MESSAGES
   ERROR_SCROLL_TIMEOUT: (time) =>
     `Scroll Timeout: Reached ${
@@ -43,6 +59,7 @@ const Messages = {
   ERROR_REPORT: "ERROR_CHECKING_REPORT",
   ERROR_SHOP: "ERROR_CHECKING_SHOP",
   ERROR_SOCIAL: "ERROR_CHECKING_SOCIAL",
+
   // NOT FOUND MESSAGES
   NO_CATEGORY: "NO_CATEGORY_FOUND",
   NO_EMAIL: "NO_EMAIL_FOUND",
@@ -52,13 +69,41 @@ const Messages = {
   NO_WEB: "NO_WEBSITE",
 };
 
-module.exports = {
-  Messages,
-  EmailRegEx,
-  PhoneRegEx,
-  ReviewCountRegEx,
-  ShopKeywords,
-  SocialMedia,
-  SocialMediaMap,
-  StarsRegEx,
+// Divider between individual reports for readability
+const REPORT_DIVIDER = "\n" + "-".repeat(50) + "\n";
+
+const SUMMARY_PROMPT = `
+    For each river or body of water mentioned create a bulleted list that follows the template below.
+    - If you cannot find information for a bullet leave it blank.
+    - If the body of water is mentioned more than once, summarize the info into a single entry and break down data by the date (up to the 3 most recent dates) if possible
+    - If the date is in the body and not in the date field, add it to the date field.
+    - If an article contains reports for mulitple bodies of water break them into separate entries based on the body of water.
+
+    # 1. Mississippi River
+    (River Specifics)
+    * Date: (Date of report)
+    (Fly Fishing Specifics)
+    * Fly Patterns: (list of fly fishing fly patterns mentioned)
+    * Colors: (list of colors for fly fishing flies that were mentioned)
+    * Hook Sizes: (list of hook sizes mentioned)
+  `;
+
+const MERGE_PROMPT = `
+    The following are summaries of fishing reports broken into sections.
+    Please consolidate the information into a single summary using the same format (up to the 3 most recent dates):
+  `;
+
+// Export all constants for use in other modules
+export {
+  EMAIL_REGEX,
+  MERGE_PROMPT,
+  MESSAGES,
+  PHONE_REGEX,
+  REPORT_DIVIDER,
+  REVIEW_COUNT_REGEX,
+  SHOP_KEYWORDS,
+  SOCIAL_MEDIA,
+  SOCIAL_MEDIA_MAP,
+  STARS_REGEX,
+  SUMMARY_PROMPT,
 };

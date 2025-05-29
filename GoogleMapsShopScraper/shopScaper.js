@@ -1,13 +1,12 @@
-const {
+import { CSVFileWriter } from "../base/fileUtils.js";
+import { MESSAGES } from "../base/enums.js";
+import { addShopSelectors } from "./shopScrapingUtils.js";
+import { normalizeUrl } from "../base/scrapingUtils.js";
+import {
   progressBar,
   startSpinner,
   stopSpinner,
-} = require("../base/loadingIndicators.js");
-const { addShopSelectors } = require("./shopScrapingUtils.js");
-const { normalizeUrl } = require("../base/scrapingUtils.js");
-
-const { CSVFileWriter } = require("../base/csvHandler.js");
-const { Messages } = require("../base/enums.js");
+} from "../base/terminalUtils.js";
 
 // Initialize CSV file writer
 const shopDetailCSV = new CSVFileWriter(
@@ -47,13 +46,14 @@ async function scrapeGoogleShopUrl(browserContext, url) {
     await page.waitForSelector('[role="feed"]', { timeout: 10000 });
 
     let endOfListText = false;
-    const maxScrollDuration = 30000; // 30 seconds in milliseconds
     const scrollStart = Date.now();
 
     while (!endOfListText) {
       // Throw an error if scrolling takes more than 30 secondes (probably hung)
-      if (Date.now() - scrollStart > maxScrollDuration) {
-        throw new Error(Messages.ERROR_SCROLL_TIMEOUT(maxScrollDuration));
+      if (Date.now() - scrollStart > process.env.MAX_SCROLL_DURATION) {
+        throw new Error(
+          MESSAGES.ERROR_SCROLL_TIMEOUT(process.env.MAX_SCROLL_DURATION)
+        );
       }
 
       // Scroll to the bottom to load more items
@@ -112,12 +112,9 @@ async function scrapeGoogleShopDetails(browserContext, urls) {
   const allShopDetails = []; // Shop details collected from scraping
   const failedGoogleShops = []; // Failed Google shop URLs and details
 
-  // Sets batch size to 10% of total URLs, ensuring it's at least 1
-  const BATCH_SIZE = Math.max(1, Math.floor(urls.length * 0.1));
-
   // Loops over all URLs, processing them in batches
-  for (let i = 0; i < urls.length; i += BATCH_SIZE) {
-    const batch = urls.slice(i, i + BATCH_SIZE); // Get a slice of URLs for the current batch
+  for (let i = 0; i < urls.length; i += process.env.BATCH_SIZE) {
+    const batch = urls.slice(i, i + process.env.BATCH_SIZE); // Get a slice of URLs for the current batch
 
     // Runs scraping for each URL in the batch using Promise.all
     const results = await Promise.all(
@@ -145,14 +142,14 @@ async function scrapeGoogleShopDetails(browserContext, urls) {
 
           // Default extra details if no website is found
           let extraDetails = {
-            email: Messages.NO_WEB,
-            sellsOnline: Messages.NO_WEB,
-            fishingReport: Messages.NO_WEB,
-            socialMedia: Messages.NO_WEB,
+            email: MESSAGES.NO_WEB,
+            sellsOnline: MESSAGES.NO_WEB,
+            fishingReport: MESSAGES.NO_WEB,
+            socialMedia: MESSAGES.NO_WEB,
           };
 
           // If a website is found, scrape additional details from it
-          if (website === Messages.NO_WEB) {
+          if (website === MESSAGES.NO_WEB) {
             noWebsite.push(name); // Add shop name to noWebsite list if no website is available
           } else {
             extraDetails = await scrapeWebsite(page, website); // Scrape details from the shop's website
@@ -165,7 +162,7 @@ async function scrapeGoogleShopDetails(browserContext, urls) {
             category,
             phone,
             email: extraDetails.email,
-            hasWebsite: website !== Messages.NO_WEB,
+            hasWebsite: website !== MESSAGES.NO_WEB,
             website,
             sellsOnline: extraDetails.sellsOnline,
             stars,
@@ -201,7 +198,7 @@ async function scrapeGoogleShopDetails(browserContext, urls) {
   }
 
   // Write all successfully scraped shop details to a CSV file
-  await shopDetailCSV.bulkWriteCSVData(allShopDetails);
+  await shopDetailCSV.bulkWrite(allShopDetails);
 
   // Print out details of shops with missing website or failed to scrape
   printMissingDetails(noWebsite, failedGoogleShops, failedWebsites);
@@ -237,15 +234,15 @@ async function scrapeWebsite(page, url) {
     // Check if response is blocked or forbidden and return early
     const status = response?.status();
     if (status === 403 || status === 429) {
-      details.email = Messages.ERROR_BLOCKED_FORBIDDEN(status);
-      details.sellsOnline = Messages.ERROR_BLOCKED_FORBIDDEN(status);
-      details.fishingReport = Messages.ERROR_BLOCKED_FORBIDDEN(status);
-      details.socialMedia = Messages.ERROR_BLOCKED_FORBIDDEN(status);
+      details.email = MESSAGES.ERROR_BLOCKED_FORBIDDEN(status);
+      details.sellsOnline = MESSAGES.ERROR_BLOCKED_FORBIDDEN(status);
+      details.fishingReport = MESSAGES.ERROR_BLOCKED_FORBIDDEN(status);
+      details.socialMedia = MESSAGES.ERROR_BLOCKED_FORBIDDEN(status);
       scrapedWebsiteCache.set(normalizedUrl, details);
 
       failedWebsites.push({
         normalizedUrl,
-        error: Messages.ERROR_BLOCKED_FORBIDDEN(status),
+        error: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
       });
       return details;
     }
@@ -260,10 +257,10 @@ async function scrapeWebsite(page, url) {
     details.email = await page.getEmail();
   } catch (err) {
     // Log the failed attempt for further inspection
-    details.sellsOnline = Messages.ERROR_LOAD_FAILED;
-    details.fishingReport = Messages.ERROR_LOAD_FAILED;
-    details.socialMedia = Messages.ERROR_LOAD_FAILED;
-    details.email = Messages.ERROR_LOAD_FAILED;
+    details.sellsOnline = MESSAGES.ERROR_LOAD_FAILED;
+    details.fishingReport = MESSAGES.ERROR_LOAD_FAILED;
+    details.socialMedia = MESSAGES.ERROR_LOAD_FAILED;
+    details.email = MESSAGES.ERROR_LOAD_FAILED;
 
     failedWebsites.push({ normalizedUrl, error: err.message });
   }
@@ -309,7 +306,4 @@ function printMissingDetails(noWebsite, failedGoogleShops, failedWebsites) {
   }
 }
 
-module.exports = {
-  scrapeGoogleShopUrl,
-  scrapeGoogleShopDetails,
-};
+export { scrapeGoogleShopUrl, scrapeGoogleShopDetails };

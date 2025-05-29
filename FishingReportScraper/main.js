@@ -1,23 +1,25 @@
-const { chromium } = require("playwright");
-const { CSVFileReader } = require("../base/csvHandler.js");
-const { fishingReportScraper } = require("./reportScrapers.js");
+import "dotenv/config";
+import { chromium } from "playwright";
+import { fishingReportScraper, makeReportSummary } from "./reportScrapers.js";
+import { getUrlsFromCSV, checkDuplicateUrls } from "./reportScrapingUtils.js";
+import { sites } from "./sites.js";
 
 async function main() {
-  // Initialize the CSV file reader
-  const reader = new CSVFileReader(
-    "resources/csv/shop_details.csv",
-    (row) => row["publishesFishingReport"] === "true", // filter function
-    (row) => ({
-      name: row["name"],
-      website: row["website"],
-    }) // row map function
-  );
+  // TODO: we should run this occassionally and use chatGPT to see if there are new urls,
+  // check those to see if they've updated recently and add them to the sites list of dictionaries
+  // const urls = await getUrlsFromCSV();
 
-  // Read the CSV to get website URLs that publish fishing reports
-  // Note: The CSV file should have a header row with "name", "publishesFishingReport" and "website" columns
-  const urls = await reader.read();
+  //   const normalizedSites = await checkDuplicateUrls(sites);
 
-  await fishingReportScraper(urls);
+  //   const browser = await chromium.launch({ headless: false });
+  //   const context = await browser.newContext({ ignoreHTTPSErrors: true });
+
+  //   // // await fishingReportScraper(context, urls);
+  //   await fishingReportScraper(context, normalizedSites);
+
+  //   browser.close();
+
+  makeReportSummary();
 }
 
 main().catch((err) => {
