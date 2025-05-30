@@ -2,11 +2,13 @@
   "type": "module",
   "dependencies": {
     "@google/genai": "^1.1.0",
+    "axios": "^1.9.0",
     "chrono-node": "^2.8.0",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
     "enquirer": "^2.4.1",
     "exceljs": "^4.4.0",
+    "p-limit": "^6.2.0",
     "playwright": "^1.51.1"
   }
 }

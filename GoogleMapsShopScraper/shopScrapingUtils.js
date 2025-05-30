@@ -14,99 +14,6 @@ async function addShopSelectors(page) {
   await extendPageSelectors(page);
 
   /**
-   * Retrieves the shop name from the page by extracting text content from the header element.
-   *
-   * @returns {Promise<string|null>} - The shop name text, or null if not found.
-   */
-  page.getShopName = async function () {
-    try {
-      const name = await page.getTextContent("h1");
-      return name || MESSAGES.ERROR_NAME;
-    } catch (err) {
-      return MESSAGES.ERROR_NAME;
-    }
-  };
-
-  /**
-   * Retrieves the shop category from the page by extracting text content from the element
-   * with a `jsaction` attribute containing "category".
-   *
-   * @returns {Promise<string|null>} - The shop category text, or null if not found.
-   */
-  page.getShopCategory = async function () {
-    try {
-      const category = await page.getTextContent('[jsaction*="category"]');
-      return category || MESSAGES.NO_CATEGORY;
-    } catch (err) {
-      return MESSAGES.NO_CATEGORY;
-    }
-  };
-
-  /**
-   * Retrieves the shop's phone number by extracting the `data-item-id` attribute
-   * from an element whose `aria-label` contains "Phone: ", then matching it against a phone number pattern.
-   *
-   * @returns {Promise<string|null>} - The extracted phone number, or null if not found or invalid.
-   */
-  page.getShopPhone = async function () {
-    try {
-      const phoneId = await page.getAttByLabel("Phone: ", "data-item-id");
-      const phoneNumber = phoneId ? phoneId.match(PHONE_REGEX) : null;
-
-      return phoneNumber ? phoneNumber[0] : MESSAGES.NO_PHONE;
-    } catch (err) {
-      return MESSAGES.NO_PHONE;
-    }
-  };
-
-  /**
-   * Retrieves the shop's website URL by locating an element whose `aria-label` starts with "Website: ",
-   * and extracting its `href` attribute.
-   *
-   * @returns {Promise<string|null>} - The website URL, or null if not found.
-   */
-  page.getShopWebsite = async function () {
-    try {
-      const website = await page.getAttByLabel("Website: ", "href");
-      return website || MESSAGES.NO_WEB;
-    } catch (err) {
-      return MESSAGES.NO_WEB;
-    }
-  };
-
-  /**
-   * Retrieves the number of stars from the page by extracting text content from a `span` element
-   * that matches the provided `STARS_REGEX` pattern.
-   *
-   * @returns {Promise<number|null>} - The number of stars as a float, or null if not found or invalid.
-   */
-  page.getShopStars = async function () {
-    try {
-      const stars = await page.getTextContent("span", { hasText: STARS_REGEX });
-      return stars ? parseFloat(stars) : MESSAGES.NO_STARS;
-    } catch (err) {
-      return MESSAGES.NO_STARS;
-    }
-  };
-
-  /**
-   * Retrieves the number of reviews from the page by extracting the `aria-label` attribute
-   * from an element whose `aria-label` contains the word "reviews", then matching it against the `REVIEW_COUNT_REGEX` pattern.
-   *
-   * @returns {Promise<number|null>} - The number of reviews as an integer, or null if not found or invalid.
-   */
-  page.getShopReviewCount = async function () {
-    try {
-      const label = await page.getAttByLabel("reviews", "aria-label");
-      const reviewCount = label?.trim().match(REVIEW_COUNT_REGEX);
-
-      return reviewCount ? parseInt(reviewCount[1], 10) : MESSAGES.NO_REVIEWS;
-    } catch (err) {
-      return MESSAGES.NO_REVIEWS;
-    }
-  };
-
-  /**
    * Checks if the page contains any text matching "fishing reports" or "reports" (case-insensitive).
    *
    * @returns {Promise<boolean>} - `true` if the page contains the text, otherwise `false`.
@@ -240,20 +147,12 @@ async function addShopSelectors(page) {
 
   /**
    * Checks if the page contains links or buttons related to an online shop
-   * by searching for specific keywords in anchor (`<a>`) and button (`<button>`) elements.
-   *
-   * The function iterates over the `SHOP_KEYWORDS` list (e.g., "shop", "store", "buy", etc.)
-   * and uses the helper function `hasElementWithKeyword` to check if any of the keywords
-   * are found in anchor links (`<a>`) or buttons (`<button>`) on the page.
-   * If any matching element is found, the function returns `true`, indicating the presence
-   * of an online shop on the page. Otherwise, it returns `false`.
    *
    * @returns {Promise<boolean>} - `true` if the page contains a link or button related to an online shop,
    *                               `false` otherwise.
    */
   page.hasOnlineShop = async function () {
     try {
-      // Loop through each keyword in the SHOP_KEYWORDS array to check for matching links or buttons
       for (const keyword of SHOP_KEYWORDS) {
         // Check if any anchor link contains the keyword text
         const hasLink = await page.hasElementWithKeyword("a", keyword);
