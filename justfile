@@ -16,7 +16,7 @@ setup_env:
     docker-compose run --rm {{ARGS}}
 
 # Runs the Shop Scraper, either locally or inside Docker.
-gss *FLAGS:
+ss *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-l"* ]]; then  # Check for local flag (-l)
         if [[ "{{FLAGS}}" == *"-d"* ]]; then  # Check for debug flag (-d)
@@ -30,7 +30,7 @@ gss *FLAGS:
 
 
 # Runs the Report Scraper, either locally or inside Docker.
-frs *FLAGS:
+rs *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-l"* ]]; then  # Check for local flag (-l)
         if [[ "{{FLAGS}}" == *"-d"* ]]; then  # Check for debug flag (-d)

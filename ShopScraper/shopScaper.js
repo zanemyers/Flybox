@@ -1,13 +1,12 @@
-import { getJson } from "serpapi";
-import pLimit from "p-limit";
 import fs from "fs/promises";
+import { getJson } from "serpapi";
+import { PromisePool } from "@supercharge/promise-pool";
 
 import { MESSAGES } from "../base/enums.js";
 import { addShopSelectors, loadCachedShops } from "./shopUtils.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
 import { progressBar } from "../base/terminalUtils.js";
 
-const limit = pLimit(5);
 const scrapedWebsiteCache = new Map();
 const SHOPS_FILE = "./shops.json";
 
@@ -64,58 +63,60 @@ async function fetchShops() {
 async function getDetails(shops, context) {
   const total = shops.length;
   let complete = 0;
-
-  console.log("Scraping Extra Details");
   progressBar(complete, total);
 
-  // Map each shop to a limited concurrency async task
-  const tasks = shops.map((shop) =>
-    limit(async () => {
+  const results = [];
+
+  // Use PromisePool to process shops with concurrency of 5
+  await PromisePool.withConcurrency(5)
+    .for(shops)
+    .process(async (shop) => {
+      // Get the website URL or fallback to a "no website" message
       const website = shop.website || MESSAGES.NO_WEB;
 
       // Skip scraping if no website is available
       if (website === MESSAGES.NO_WEB) {
         complete++;
         progressBar(complete, total);
-        return {
+
+        results.push({
           email: "",
           sellsOnline: false,
           fishingReport: false,
           socialMedia: "",
-        };
+        });
+        return;
       }
 
+      // Open a new browser page for scraping
       const page = await context.newPage();
-      addShopSelectors(page); // Attach additional scraping helpers
+      addShopSelectors(page); // attach custom helper selector
 
       try {
-        // Scrape detailed info from the shop's website
-        return await scrapeWebsite(page, website);
+        // Attempt to scrape detailed info from the shop's website
+        const details = await scrapeWebsite(page, website);
+        results.push(details);
+      } catch (err) {
+        // Log any scraping errors and add fallback error values
+        console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
+        results.push({
+          email: MESSAGES.ERROR_EMAIL,
+          sellsOnline: MESSAGES.ERROR_SHOP,
+          fishingReport: MESSAGES.ERROR_REPORT,
+          socialMedia: MESSAGES.ERROR_SOCIAL,
+        });
       } finally {
-        // Always close the page when done (success or failure)
+        // Always close the page to free up resources
         await page.close();
+
+        // Update progress after each shop is processed
         complete++;
         progressBar(complete, total);
       }
-    })
-  );
+    });
 
-  // Wait for all scraping tasks to complete (some may fail)
-  const results = await Promise.allSettled(tasks);
-
-  // Normalize the result list by handling any rejected promises
-  return results.map((result, index) => {
-    if (result.status === "fulfilled") return result.value;
-
-    // Log and return fallback values for failed attempts
-    console.warn(`⚠️ Failed to get details for ${shops[index].title}`);
-    return {
-      email: MESSAGES.ERROR_EMAIL,
-      sellsOnline: MESSAGES.ERROR_SHOP,
-      fishingReport: MESSAGES.ERROR_REPORT,
-      socialMedia: MESSAGES.ERROR_SOCIAL,
-    };
-  });
+  // Return the array containing details for all shops
+  return results;
 }
 
 /**

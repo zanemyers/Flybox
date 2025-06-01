@@ -17,17 +17,17 @@ async function main() {
   // If RUN_HEADLESS is not set, default to true, otherwise use the environment variable value
   const runHeadless = (process.env.RUN_HEADLESS ?? "true") === "true";
   const browser = await chromium.launch({ headless: runHeadless });
-  const context = browser.newContext();
+  const context = await browser.newContext();
 
   try {
     searchSpinner.start("Searching for shops...");
     const shops = await fetchShops();
     searchSpinner.stop(`🌐 Found ${shops.length} shops.`);
 
-    const extraDetails = await getDetails(shops, context);
+    const details = await getDetails(shops, context);
 
     const rows = shops.map((shop, i) => {
-      const extra = extraDetails[i];
+      const extra = details[i];
       const name = shop.title || "";
       const category = shop.type || "";
       const phone = shop.phone || "";
@@ -40,14 +40,14 @@ async function main() {
         Name: name,
         Category: category,
         Phone: phone,
-        Email: extra.email,
+        Email: details.email,
         "Has Website": website !== MESSAGES.NO_WEB,
         Website: website,
-        "Sells Online": extra.sellsOnline,
+        "Sells Online": details.sellsOnline,
         Rating: `${stars}/5`,
         Reviews: reviewCount,
-        "Has Report": extra.fishingReport,
-        Socials: extra.socialMedia,
+        "Has Report": details.fishingReport,
+        Socials: details.socialMedia,
       };
     });
 
