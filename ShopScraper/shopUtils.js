@@ -1,12 +1,11 @@
+import fs from "fs/promises";
+
 import { extendPageSelectors } from "../base/scrapingUtils.js";
 import {
   MESSAGES,
   EMAIL_REGEX,
-  PHONE_REGEX,
-  REVIEW_COUNT_REGEX,
   SHOP_KEYWORDS,
   SOCIAL_MEDIA_MAP,
-  STARS_REGEX,
 } from "../base/enums.js";
 
 async function addShopSelectors(page) {
@@ -20,8 +19,9 @@ async function addShopSelectors(page) {
    */
   page.publishesFishingReport = async function () {
     try {
-      return (
-        (await page.locator("text=/fishing reports|reports/i").count()) > 0
+      return await page.hasElementWithKeyword(
+        "a",
+        "/fishing reports|reports/i"
       );
     } catch {
       return MESSAGES.ERROR_REPORT;
@@ -51,7 +51,7 @@ async function addShopSelectors(page) {
         }
       }
 
-      return foundSocials;
+      return foundSocials.join(", ");
     } catch {
       return MESSAGES.ERROR_SOCIAL;
     }
@@ -172,4 +172,22 @@ async function addShopSelectors(page) {
   };
 }
 
-export { addShopSelectors };
+/**
+ * Tries to load cached shop data from disk.
+ *
+ * @param {string} filePath - Path to the cache file.
+ * @returns {Promise<object[]|null>} - Parsed JSON data if found, otherwise null.
+ */
+async function loadCachedShops(filePath) {
+  try {
+    const data = await fs.readFile(filePath, "utf-8");
+    return JSON.parse(data);
+  } catch (err) {
+    if (err.code !== "ENOENT") {
+      throw err; // Rethrow unexpected errors
+    }
+    return null; // File not found, signal to fetch from API
+  }
+}
+
+export { addShopSelectors, loadCachedShops };

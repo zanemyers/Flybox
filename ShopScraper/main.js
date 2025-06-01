@@ -1,25 +1,30 @@
 import { chromium } from "playwright";
 import { ExcelFileHandler } from "../base/fileUtils.js";
 
-import { fetchShopsFromSerpAPI, getExtraDetails } from "./shopScaper.js";
+import { fetchShops, getDetails } from "./shopScaper.js";
+import { MESSAGES } from "../base/enums.js";
 import dotenv from "dotenv";
+import { Spinner } from "../base/terminalUtils.js";
 
 // Load environment variables from .env file
 dotenv.config();
 
 // Initialize CSV file writer
 const shopWriter = new ExcelFileHandler("resources/csv/shop_details.csv");
+const searchSpinner = new Spinner(["🔍", "🔎", "🔍", "🔎"]);
 
 async function main() {
-  try {
-    console.log("🔍 Searching for shops...");
-    const shops = await fetchShopsFromSerpAPI();
+  // If RUN_HEADLESS is not set, default to true, otherwise use the environment variable value
+  const runHeadless = (process.env.RUN_HEADLESS ?? "true") === "true";
+  const browser = await chromium.launch({ headless: runHeadless });
+  const context = browser.newContext();
 
-    console.log(`🌐 Found ${shops.length} shops. Scraping websites...`);
-    // If RUN_HEADLESS is not set, default to true, otherwise use the environment variable value
-    const runHeadless = (process.env.RUN_HEADLESS ?? "true") === "true";
-    const browser = await chromium.launch({ headless: runHeadless });
-    const extraDetails = await getExtraDetails(shops, browser);
+  try {
+    searchSpinner.start("Searching for shops...");
+    const shops = await fetchShops();
+    searchSpinner.stop(`🌐 Found ${shops.length} shops.`);
+
+    const extraDetails = await getDetails(shops, context);
 
     const rows = shops.map((shop, i) => {
       const extra = extraDetails[i];
@@ -46,8 +51,7 @@ async function main() {
       };
     });
 
-    exportToExcel(rows);
-    console.log(`✅ Finished. Output written to ${OUTPUT_FILE}`);
+    shopWriter.write(rows);
   } catch (err) {
     console.error("❌ Error:", err);
   } finally {

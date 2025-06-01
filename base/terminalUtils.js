@@ -3,11 +3,8 @@
  *
  * This module includes:
  * - `progressBar(current, total, barWidth)`: Displays a progress bar in the terminal.
- * - `startSpinner(text)`: Starts a spinner animation in the terminal.
- * - `stopSpinner(spinner, doneText)`: Stops the spinner and prints a completion message.
+ * - `Spinner`: A class to create and manage a spinner animation in the terminal.
  */
-
-const spinnerFrames = ["-", "\\", "|", "/"];
 
 /**
  * Displays a progress bar in the terminal.
@@ -31,29 +28,51 @@ function progressBar(current, total, barWidth = 30) {
 }
 
 /**
- * Starts a terminal spinner animation with the provided text.
- *
- * @param {string} text - The text to display next to the spinner.
- * @returns {NodeJS.Timeout} - A timer reference that can be passed to `stopSpinner`.
+ * Class to display a terminal spinner animation.
+ * Useful for indicating progress in long-running CLI operations.
  */
-function startSpinner(text) {
-  let i = 0;
-  return setInterval(() => {
-    process.stdout.write(
-      `\r${spinnerFrames[i++ % spinnerFrames.length]} ${text}`
-    );
-  }, 100);
+class Spinner {
+  /**
+   * Creates a new TerminalSpinner instance.
+   *
+   * @param {string[]} frames - An array of characters used to animate the spinner.
+   * @param {number} intervalMs - The time in milliseconds between frame updates.
+   */
+  constructor(frames = ["-", "\\", "|", "/"], intervalMs = 100) {
+    this.frames = frames; // Spinner animation frames
+    this.intervalMs = intervalMs; // Time between frame updates
+    this.index = 0; // Current frame index
+    this.timer = null; // Reference to the active interval timer
+  }
+
+  /**
+   * Starts the spinner animation.
+   *
+   * * @param {string} text - The text to display while the spinner is running.
+   */
+  start(text = "Loading...") {
+    if (this.timer) return; // Avoid starting multiple spinners
+
+    this.timer = setInterval(() => {
+      // Print the current frame with the spinner text
+      process.stdout.write(
+        `\r${this.frames[this.index++ % this.frames.length]} ${this.text}`
+      );
+    }, this.intervalMs);
+  }
+
+  /**
+   * Stops the spinner animation and displays a final message.
+   *
+   * @param {string} text - The text to display after the spinner stops.
+   */
+  stop(text = "Finished!") {
+    if (!this.timer) return; // Spinner is not running
+
+    clearInterval(this.timer); // Stop the animation interval
+    this.timer = null; // Reset the timer reference
+    process.stdout.write(`'\r\x1b[2K${text}\n`); // Clear the line and print the done message
+  }
 }
 
-/**
- * Stops the terminal spinner and prints a completion message.
- *
- * @param {NodeJS.Timeout} spinner - The spinner timer returned by `startSpinner`.
- * @param {string} doneText - The text to display when the spinner is stopped.
- */
-function stopSpinner(spinner, doneText) {
-  clearInterval(spinner);
-  process.stdout.write(`\r${doneText}      \n`);
-}
-
-export { progressBar, startSpinner, stopSpinner };
+export { progressBar, Spinner };

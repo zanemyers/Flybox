@@ -1,14 +1,15 @@
-const axios = require("axios");
-const pLimit = require("p-limit");
-const normalizeUrl = require("normalize-url");
+import { getJson } from "serpapi";
+import pLimit from "p-limit";
+import fs from "fs/promises";
 
 import { MESSAGES } from "../base/enums.js";
-import { addShopSelectors } from "./shopScrapingUtils.js";
+import { addShopSelectors, loadCachedShops } from "./shopUtils.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
+import { progressBar } from "../base/terminalUtils.js";
 
 const limit = pLimit(5);
-const failedWebsites = [];
 const scrapedWebsiteCache = new Map();
+const SHOPS_FILE = "./shops.json";
 
 /**
  * Fetches a list of fly fishing shops near Yellowstone National Park
@@ -16,18 +17,37 @@ const scrapedWebsiteCache = new Map();
  *
  * @returns {Promise<Array>} A list of local results (shops), or an empty array if none found.
  */
-async function fetchShopsFromSerpAPI() {
-  const response = await axios.get("https://serpapi.com/search.json", {
-    params: {
+async function fetchShops() {
+  // Try to load cached shops first
+  const cachedShops = await loadCachedShops(SHOPS_FILE);
+  if (cachedShops) return cachedShops;
+
+  let allResults = [];
+  let maxResults = 100; // Set to 100 or whatever you want
+
+  for (let start = 0; start < maxResults; start += 20) {
+    const response = await getJson({
       engine: "google_maps",
       q: "Fly Fishing Shops",
-      ll: "@44.4280,-110.5885,3z", // Coordinates for Yellowstone, max zoom out
+      ll: "@44.4280,-110.5885,10z", // Coordinates for Yellowstone NP
+      start: start,
       type: "search",
       api_key: process.env.SERP_API_KEY,
-    },
-  });
+    });
 
-  return response.data.local_results || [];
+    const results = response.data.local_results || [];
+    allResults.push(...results);
+
+    if (results.length < 20) {
+      // No more results, stop pagination
+      break;
+    }
+  }
+
+  // Save results to file
+  await fs.writeFile(SHOPS_FILE, JSON.stringify(allResults, null, 2), "utf-8");
+
+  return allResults;
 }
 
 /**
@@ -38,10 +58,16 @@ async function fetchShopsFromSerpAPI() {
  * system resources or triggering anti-bot protections. Shops without websites are skipped.
  *
  * @param {Array} shops - The list of shops to scrape extra details from.
- * @param {Browser} browser - The Playwright browser instance used to create new pages.
+ * @param {BrowserContext} context - The browser context used to create new pages.
  * @returns {Promise<Array>} - A list of detail objects (one per shop), with fallback values on failure.
  */
-async function getExtraDetails(shops, browser) {
+async function getDetails(shops, context) {
+  const total = shops.length;
+  let complete = 0;
+
+  console.log("Scraping Extra Details");
+  progressBar(complete, total);
+
   // Map each shop to a limited concurrency async task
   const tasks = shops.map((shop) =>
     limit(async () => {
@@ -49,6 +75,8 @@ async function getExtraDetails(shops, browser) {
 
       // Skip scraping if no website is available
       if (website === MESSAGES.NO_WEB) {
+        complete++;
+        progressBar(complete, total);
         return {
           email: "",
           sellsOnline: false,
@@ -57,7 +85,7 @@ async function getExtraDetails(shops, browser) {
         };
       }
 
-      const page = await browser.newPage();
+      const page = await context.newPage();
       addShopSelectors(page); // Attach additional scraping helpers
 
       try {
@@ -66,6 +94,8 @@ async function getExtraDetails(shops, browser) {
       } finally {
         // Always close the page when done (success or failure)
         await page.close();
+        complete++;
+        progressBar(complete, total);
       }
     })
   );
@@ -90,8 +120,6 @@ async function getExtraDetails(shops, browser) {
 
 /**
  * Scrapes useful business-related data from a given website using Playwright.
- * Extracts whether the site sells online, publishes a fishing report,
- * contains links to social media platforms, and displays an email address.
  *
  * @param {Page} page - A Playwright page instance used to navigate and scrape the website.
  * @param {string} url - The raw URL of the shop’s website to be scraped.
@@ -105,7 +133,7 @@ async function scrapeWebsite(page, url) {
     return scrapedWebsiteCache.get(normalizedUrl);
   }
 
-  const details = {}; // Initialize the result object
+  const details = {};
   try {
     // Attempt to navigate to the site (with a 10s timeout)
     const response = await page.goto(normalizedUrl, {
@@ -117,7 +145,6 @@ async function scrapeWebsite(page, url) {
     const status = response?.status();
     if (status === 403 || status === 429) {
       const error = MESSAGES.ERROR_BLOCKED_FORBIDDEN(status);
-      failedWebsites.push({ normalizedUrl, error });
 
       // Store and return uniform error values for all fields
       const fallback = {
@@ -138,7 +165,6 @@ async function scrapeWebsite(page, url) {
     details.email = await page.getEmail();
   } catch (err) {
     // Log errors and return fallback error messages
-    failedWebsites.push({ normalizedUrl, error: err.message });
     details.sellsOnline = MESSAGES.ERROR_LOAD_FAILED;
     details.fishingReport = MESSAGES.ERROR_LOAD_FAILED;
     details.socialMedia = MESSAGES.ERROR_LOAD_FAILED;
@@ -150,4 +176,4 @@ async function scrapeWebsite(page, url) {
   return details;
 }
 
-export { fetchShopsFromSerpAPI, getExtraDetails, scrapeWebsite };
+export { fetchShops, getDetails };
