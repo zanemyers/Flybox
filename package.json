@@ -4,10 +4,12 @@
     "@google/genai": "^1.1.0",
     "@supercharge/promise-pool": "^3.2.0",
     "chrono-node": "^2.8.0",
+    "cli-progress": "^3.12.0",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
     "enquirer": "^2.4.1",
     "exceljs": "^4.4.0",
+    "ora": "^8.2.0",
     "playwright": "^1.51.1",
     "serpapi": "^2.1.0"
   }
