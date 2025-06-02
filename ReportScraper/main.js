@@ -1,13 +1,16 @@
 import "dotenv/config";
 import { chromium } from "playwright";
 import { fishingReportScraper, makeReportSummary } from "./reportScrapers.js";
-import { getUrlsFromCSV, checkDuplicateUrls } from "./reportScrapingUtils.js";
+import { getUrlsFromXLSX, checkDuplicateUrls } from "./reportScrapingUtils.js";
 import { sites } from "./sites.js";
 
 async function main() {
   // TODO: we should run this occassionally and use chatGPT to see if there are new urls,
   // check those to see if they've updated recently and add them to the sites list of dictionaries
-  // const urls = await getUrlsFromCSV();
+  // const urls = await getUrlsFromXLSX();
+
+  // If RUN_HEADLESS is not set, default to true, otherwise use the environment variable value
+  const runHeadless = (process.env.RUN_HEADLESS ?? "true") === "true";
 
   //   const normalizedSites = await checkDuplicateUrls(sites);
 

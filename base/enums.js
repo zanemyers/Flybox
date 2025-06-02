@@ -6,43 +6,22 @@
 // Regex pattern to match email addresses
 const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i;
 
-// Regex pattern to match phone numbers in international format (e.g., +1234567890)
-const PHONE_REGEX = /\+[\d]+/;
-
-// Regex pattern to match star ratings formatted as a decimal between 0.0 and 5.9 (e.g., "4.8")
-const STARS_REGEX = /^[0-5]\.\d$/;
-
-// Regex pattern to extract a number (used for review counts)
-const REVIEW_COUNT_REGEX = /(\d+)/;
-
 // Common e-commerce-related keywords used to detect if a website is a shop
 const SHOP_KEYWORDS = ["shop", "store", "buy", "products", "cart", "checkout"];
-
-// Canonical names for known social media platforms
-const SOCIAL_MEDIA = {
-  FACEBOOK: "Facebook",
-  INSTAGRAM: "Instagram",
-  LINKEDIN: "LinkedIn",
-  TIKTOK: "TikTok",
-  VIMEO: "Vimeo",
-  WHATSAPP: "WhatsApp",
-  X: "X (Twitter)",
-  YOUTUBE: "YouTube",
-};
 
 // Mapping of domain names to social media platform names
 // Includes aliases (e.g., wa.me → WhatsApp, twitter.com → X)
 const SOCIAL_MEDIA_MAP = [
-  { domain: "facebook.com", name: SOCIAL_MEDIA.FACEBOOK },
-  { domain: "instagram.com", name: SOCIAL_MEDIA.INSTAGRAM },
-  { domain: "linkedin.com", name: SOCIAL_MEDIA.LINKEDIN },
-  { domain: "tiktok.com", name: SOCIAL_MEDIA.TIKTOK },
-  { domain: "vimeo.com", name: SOCIAL_MEDIA.VIMEO },
-  { domain: "whatsapp.com", name: SOCIAL_MEDIA.WHATSAPP },
-  { domain: "wa.me", name: SOCIAL_MEDIA.WHATSAPP },
-  { domain: "x.com", name: SOCIAL_MEDIA.X },
-  { domain: "twitter.com", name: SOCIAL_MEDIA.X },
-  { domain: "youtube.com", name: SOCIAL_MEDIA.YOUTUBE },
+  { domain: "facebook.com", name: "Facebook" },
+  { domain: "instagram.com", name: "Instagram" },
+  { domain: "linkedin.com", name: "LinkedIn" },
+  { domain: "tiktok.com", name: "TikTok" },
+  { domain: "vimeo.com", name: "Vimeo" },
+  { domain: "whatsapp.com", name: "WhatsApp" },
+  { domain: "wa.me", name: "WhatsApp" },
+  { domain: "x.com", name: "X (Twitter)" },
+  { domain: "twitter.com", name: "X (Twitter)" },
+  { domain: "youtube.com", name: "YouTube" },
 ];
 
 // Standardized error and not-found messages for consistency in logging and reporting
@@ -67,6 +46,34 @@ const MESSAGES = {
   NO_REVIEWS: "NO_REVIEWS_FOUND",
   NO_STARS: "NO_STARS_FOUND",
   NO_WEB: "NO_WEBSITE",
+};
+
+// Fallback details object for shops that do not have any information
+const FALLBACK_DETAILS = {
+  BLOCKED: (status) => ({
+    email: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
+    sellsOnline: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
+    fishingReport: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
+    socialMedia: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
+  }),
+  ERROR: {
+    email: MESSAGES.ERROR_EMAIL,
+    sellsOnline: MESSAGES.ERROR_SHOP,
+    fishingReport: MESSAGES.ERROR_REPORT,
+    socialMedia: MESSAGES.ERROR_SOCIAL,
+  },
+  NONE: {
+    email: "",
+    sellsOnline: false,
+    fishingReport: false,
+    socialMedia: "",
+  },
+  TIMEOUT: {
+    email: MESSAGES.ERROR_LOAD_FAILED,
+    sellsOnline: MESSAGES.ERROR_LOAD_FAILED,
+    fishingReport: MESSAGES.ERROR_LOAD_FAILED,
+    socialMedia: MESSAGES.ERROR_LOAD_FAILED,
+  },
 };
 
 // Divider between individual reports for readability
@@ -96,14 +103,11 @@ const MERGE_PROMPT = `
 // Export all constants for use in other modules
 export {
   EMAIL_REGEX,
+  FALLBACK_DETAILS,
   MERGE_PROMPT,
   MESSAGES,
-  PHONE_REGEX,
   REPORT_DIVIDER,
-  REVIEW_COUNT_REGEX,
   SHOP_KEYWORDS,
-  SOCIAL_MEDIA,
   SOCIAL_MEDIA_MAP,
-  STARS_REGEX,
   SUMMARY_PROMPT,
 };

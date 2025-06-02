@@ -1,18 +1,23 @@
 ## 🛒 Shop Scraper
 
-Pulls business data from Google Maps and associated websites, compiling the results into a structured CSV.
+Pulls business data using SerpAPI and associated websites, compiling the results into a structured Excel file.
 
 ### 🔍 Features
 
-- Scrolls and collects all visible shops from a given Google Maps URL
-- Extracts contact info, links, and ratings from the Google listing
-- Follows websites to gather additional data (email, fishing reports, shop links)
-- Exports structured data to a CSV
-- Logs missing websites and failed loads
+- Fetches local business listings using SerpAPI's Google Maps engine
+- Supports caching of fetched shop data to reduce redundant API usage
+- Launches a Playwright browser to extract additional data from each shop's website:
+  - Email Address
+  - Online Store
+  - Fishing Report
+  - Social Media
+- Writes all results to an Excel (.xlsx) file
+- Provides progress indicators in the terminal
+- Supports customizations via `.env` settings
+- Handles request errors gracefully with fallback data
 
 ### 🐞 Known Issues
 
-- May hang while scrolling (controlled by `MAX_SCROLL_DURATION`)
 - Email scraping is unreliable
 - Some business pages are blocked or fail to load
 - Requires headless mode in Docker

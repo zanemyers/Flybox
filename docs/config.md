@@ -7,14 +7,16 @@ Set these in your `.env` file.
 | Variable       | Description                                            |
 | -------------- | ------------------------------------------------------ |
 | `RUN_HEADLESS` | Run browser headless or visibly (`true` or `false`)    |
-| `BATCH_SIZE`   | Number of URLs to process per batch (recommended: 3–5) |
+| `CONCURRENCY`  | Number of URLs to process at a time (recommended: 3–5) |
 
 ### 🛒 Shop Scraper
 
-| Variable              | Description                                               |
-| --------------------- | --------------------------------------------------------- |
-| `STARTING_URL`        | Google Maps list URL to begin scraping                    |
-| `MAX_SCROLL_DURATION` | Time to scroll and load results (ms, e.g., `30000` = 30s) |
+| Variable             | Description                                                   |
+| -------------------- | ------------------------------------------------------------- |
+| `SERP_API_KEY`       | SerpAPI key for Google Maps search                            |
+| `SEARCH_QUERY`       | Search query term (e.g., "Fly Fishing Shops")                 |
+| `SEARCH_COORDINATES` | Latitude and longitude for search (e.g., "44.4280,-110.5885") |
+| `MAX_RESULTS`        | Maximum number of results to retrieve                         |
 
 ### 📈 Report Scraper
 
