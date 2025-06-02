@@ -8,6 +8,12 @@ import {
   SOCIAL_MEDIA_MAP,
 } from "../base/enums.js";
 
+/**
+ * Adds custome scraper methods directly on the page instance for convenient use during scraping.
+ *
+ * @param {import('playwright').Page} page - The Playwright page to extend.
+ * @returns {Promise<import('playwright').Page>} - The same page instance with added helper methods.
+ */
 async function addShopSelectors(page) {
   // Add base scraping utils
   await extendPageSelectors(page);
@@ -170,24 +176,63 @@ async function addShopSelectors(page) {
       return MESSAGES.ERROR_SHOP;
     }
   };
+
+  return page;
 }
 
 /**
- * Tries to load cached shop data from disk.
+ * Tries to load cached shop data from a file.
+ * If the metadata in the file matches the expected metadata, returns the cached results.
  *
  * @param {string} filePath - Path to the cache file.
- * @returns {Promise<object[]|null>} - Parsed JSON data if found, otherwise null.
+ * @param {object} expectedMeta - Metadata to validate against the cached data.
+ * @returns {Promise<object[]|null>} - Cached shop results if valid, otherwise null.
  */
-async function loadCachedShops(filePath) {
+async function loadCachedShops(filePath, expectedMeta) {
   try {
     const data = await fs.readFile(filePath, "utf-8");
-    return JSON.parse(data);
+    const { meta, results } = JSON.parse(data);
+
+    const isMatch = Object.entries(expectedMeta).every(
+      ([key, val]) => meta?.[key] === val
+    );
+
+    return isMatch ? results : null;
   } catch (err) {
-    if (err.code !== "ENOENT") {
-      throw err; // Rethrow unexpected errors
-    }
-    return null; // File not found, signal to fetch from API
+    if (err.code !== "ENOENT") throw err;
+    return null;
   }
 }
 
-export { addShopSelectors, loadCachedShops };
+/**
+ * Converts shops and their corresponding details into exportable row objects.
+ *
+ * @param {Array<object>} shops - The original list of shop objects.
+ * @param {Array<object>} shopDetails - The list of additional detail objects.
+ * @returns {Array<object>} - An array of row objects for export.
+ */
+function buildShopRows(shops, shopDetails) {
+  if (shops.length !== shopDetails.length)
+    throw new Error(
+      `Shop count - ${shops.length} ≠ details count - ${shopDetails.length}`
+    );
+
+  return shops.map((shop, i) => {
+    return {
+      Index: i + 1,
+      Name: shop.title || "",
+      Category: shop.type || "",
+      Phone: shop.phone || "",
+      Email: shopDetails[i].email,
+      "Has Website": !!shop.website,
+      Website: shop.website || MESSAGES.NO_WEB,
+      "Sells Online": shopDetails[i].sellsOnline,
+      Rating: shop.rating != null ? `${shop.rating}/5` : "N/A",
+      Reviews: shop.reviews || 0,
+      "Has Report": shopDetails[i].fishingReport,
+      Socials: shopDetails[i].socialMedia,
+    };
+  });
+}
+
+export { addShopSelectors, buildShopRows, loadCachedShops };

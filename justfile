@@ -20,12 +20,12 @@ ss *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-l"* ]]; then  # Check for local flag (-l)
         if [[ "{{FLAGS}}" == *"-d"* ]]; then  # Check for debug flag (-d)
-            node --inspect ShopScraper/main.js
+            node --inspect ShopScraper/shopScraper.js
         else
-            node ShopScraper/main.js
+            node ShopScraper/shopScraper.js
         fi
     else
-        just dcrr web-scraper node ShopScraper/main.js
+        just dcrr web-scraper node ShopScraper/shopScraper.js
     fi
 
 

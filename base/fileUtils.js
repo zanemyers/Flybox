@@ -185,7 +185,6 @@ class ExcelFileHandler extends FileHandler {
 
   /**
    * Writes an array of JSON objects to the Excel file.
-   * The first row will be written as headers.
    * Optionally archives the existing file before overwriting.
    *
    * @param {Array<Object>} data - Array of objects to write as rows
@@ -197,21 +196,14 @@ class ExcelFileHandler extends FileHandler {
       throw new Error("Data must be a non-empty array.");
     }
 
-    // If enabled and file exists, archive the old file first
-    if (archive && fs.existsSync(this.filePath)) {
-      this.archiveFile();
-    }
+    if (archive && fs.existsSync(this.filePath)) this.archiveFile();
 
-    // Add a new worksheet to the workbook
-    const worksheet = this.workbook.addWorksheet();
-
-    // Extract headers from the keys of the first data object
-    const headers = Object.keys(data[0]);
+    const headers = Object.keys(data[0]); // Use the keys of the first object as headers
     if (headers.length === 0) {
       throw new Error("Data objects must have at least one key.");
     }
 
-    // Add the headers and data to the worksheet
+    const worksheet = this.workbook.addWorksheet();
     worksheet.addRow(headers);
     data.forEach((item) => {
       const row = headers.map((key) => item[key]);
@@ -223,4 +215,3 @@ class ExcelFileHandler extends FileHandler {
 }
 
 export { TXTFileWriter, ExcelFileHandler };
-// const csvWriter = new CSVFileWriter("resources/csv/shop_details.csv", "shopDetails");

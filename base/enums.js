@@ -48,6 +48,34 @@ const MESSAGES = {
   NO_WEB: "NO_WEBSITE",
 };
 
+// Fallback details object for shops that do not have any information
+const FALLBACK_DETAILS = {
+  BLOCKED: (status) => ({
+    email: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
+    sellsOnline: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
+    fishingReport: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
+    socialMedia: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
+  }),
+  ERROR: {
+    email: MESSAGES.ERROR_EMAIL,
+    sellsOnline: MESSAGES.ERROR_SHOP,
+    fishingReport: MESSAGES.ERROR_REPORT,
+    socialMedia: MESSAGES.ERROR_SOCIAL,
+  },
+  NONE: {
+    email: "",
+    sellsOnline: false,
+    fishingReport: false,
+    socialMedia: "",
+  },
+  TIMEOUT: {
+    email: MESSAGES.ERROR_LOAD_FAILED,
+    sellsOnline: MESSAGES.ERROR_LOAD_FAILED,
+    fishingReport: MESSAGES.ERROR_LOAD_FAILED,
+    socialMedia: MESSAGES.ERROR_LOAD_FAILED,
+  },
+};
+
 // Divider between individual reports for readability
 const REPORT_DIVIDER = "\n" + "-".repeat(50) + "\n";
 
@@ -75,6 +103,7 @@ const MERGE_PROMPT = `
 // Export all constants for use in other modules
 export {
   EMAIL_REGEX,
+  FALLBACK_DETAILS,
   MERGE_PROMPT,
   MESSAGES,
   REPORT_DIVIDER,
