@@ -13,14 +13,13 @@ import {
 import { normalizeUrl } from "../base/scrapingUtils.js";
 import { progressBar, Spinner } from "../base/terminalUtils.js";
 import { ExcelFileHandler } from "../base/fileUtils.js";
-import { parse } from "path";
 
 // Load environment variables from .env file
 dotenv.config();
 
 // Initialize class variables
 const shopWriter = new ExcelFileHandler("resources/xlsx/shop_details.xlsx");
-const spinner = new Spinner(["🔍", "🔎", "🔍", "🔎"]);
+const spinner = new Spinner(["🔍", "🔎"], 500);
 const websiteCache = new Map();
 
 async function main() {
@@ -38,9 +37,9 @@ async function main() {
     const shopDetails = await getDetails(shops, context);
     const rows = buildShopRows(shops, shopDetails);
 
-    console.log(`Writing ${rows.length} shops to Excel...`);
+    process.stdout.write(`Writing shop data to Excel...`);
     shopWriter.write(rows);
-    console.log("✅ Finished!");
+    process.stdout.write("✅ Finished!\n");
   } catch (err) {
     console.error("❌ Error:", err);
   } finally {
@@ -65,10 +64,10 @@ async function fetchShops() {
   if (cached) return cached;
 
   const max = parseInt(process.env.MAX_RESULTS, 10) || 100;
-  const allResults = [];
+  const results = [];
 
   for (let start = 0; start < max; start += 20) {
-    const { data } = await getJson({
+    const data = await getJson({
       engine: "google_maps",
       q: meta.query,
       ll: `@${meta.coordinates},10z`,
@@ -77,20 +76,22 @@ async function fetchShops() {
       api_key: process.env.SERP_API_KEY,
     });
 
-    const pageResults = data.local_results || [];
+    const pageResults = data?.local_results || [];
     results.push(...pageResults);
 
     if (pageResults.length < 20) break; // Last page reached
   }
 
   // TODO: Export this to a user so they can import it as their cache file later
-  await fs.writeFile(
-    cacheFile,
-    JSON.stringify({ meta, results }, null, 2),
-    "utf-8"
-  );
+  if (results.length > 0) {
+    await fs.writeFile(
+      cacheFile,
+      JSON.stringify({ meta, results }, null, 2),
+      "utf-8"
+    );
+  }
 
-  return allResults;
+  return results;
 }
 
 /**

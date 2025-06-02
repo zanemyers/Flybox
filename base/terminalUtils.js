@@ -21,7 +21,7 @@ function progressBar(current, total, barWidth = 30) {
 
   let text = `${current}/${total}`;
   if (current === total) {
-    text = "Finished!\n";
+    text = "✅ Finished!\n";
   }
 
   process.stdout.write(`\r[${bar}] ${text}`);
@@ -56,7 +56,7 @@ class Spinner {
     this.timer = setInterval(() => {
       // Print the current frame with the spinner text
       process.stdout.write(
-        `\r${this.frames[this.index++ % this.frames.length]} ${this.text}`
+        `\r${this.frames[this.index++ % this.frames.length]} ${text}`
       );
     }, this.intervalMs);
   }

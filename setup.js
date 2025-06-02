@@ -62,11 +62,13 @@ const questions = [
     type: "input",
     name: "MAX_RESULTS",
     message: "Enter the maximum number of results to return:",
+    hint: "Value should be a multiple of 20.",
     float: false,
     min: 20,
     initial: 100,
     validate(value) {
       if (value < 20) return "Value must be at least 20.";
+      if (value % 20 !== 0) return "Value must be a multiple of 20.";
       return true;
     },
   },
