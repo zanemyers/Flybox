@@ -1,4 +1,3 @@
-import cliProgress from "cli-progress";
 import dotenv from "dotenv";
 import fs from "fs/promises";
 import ora from "ora";
@@ -36,16 +35,16 @@ async function main() {
   try {
     spinner.start("Searching for shops...");
     const shops = await fetchShops();
-    spinner.succeed(`🌐 Found ${shops.length} shops.`);
+    spinner.succeed(`Found ${shops.length} shops.`);
 
     const shopDetails = await getDetails(shops, context);
     const rows = buildShopRows(shops, shopDetails);
 
     spinner.start(`Writing shop data to Excel...`);
     shopWriter.write(rows);
-    spinner.succeed("✅ Finished!\n");
+    spinner.succeed("Finished!\n");
   } catch (err) {
-    console.error("❌ Error:", err);
+    spinner.fail(`Error: ${err}`);
   } finally {
     await browser.close();
   }
@@ -111,37 +110,32 @@ async function fetchShops() {
 async function getDetails(shops, context) {
   const total = shops.length;
   const results = new Array(total);
+  let completed = 0;
 
-  const bar = new cliProgress.SingleBar({
-    format: "{bar} Scraping {value}/{total}",
-    barCompleteChar: "\u2588", // Full block ▇
-    barIncompleteChar: "\u2591", // Light shade ░
-    hideCursor: true,
-    stopOnComplete: true,
-  });
-
-  bar.start(total, 0);
+  const messageTemplate = (done) => `Scraping shops (${done}/${total})`;
+  const spinner = ora(messageTemplate(completed)).start();
 
   await PromisePool.withConcurrency(parseInt(process.env.CONCURRENCY, 10) || 5)
     .for(shops)
     .process(async (shop, index) => {
       if (!shop.website) {
         results[index] = FALLBACK_DETAILS.NONE;
-        bar.increment();
-        return;
+      } else {
+        const page = await addShopSelectors(await context.newPage());
+        try {
+          results[index] = await scrapeWebsite(page, shop.website);
+        } catch (err) {
+          console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
+          results[index] = FALLBACK_DETAILS.ERROR;
+        } finally {
+          await page.close();
+        }
       }
 
-      const page = await addShopSelectors(await context.newPage());
-      try {
-        results[index] = await scrapeWebsite(page, shop.website);
-      } catch (err) {
-        console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
-        results[index] = FALLBACK_DETAILS.ERROR;
-      } finally {
-        await page.close();
-        bar.increment();
-      }
+      spinner.text = messageTemplate(++completed);
     });
+
+  spinner.succeed(`Scraping Complete`);
 
   return results;
 }

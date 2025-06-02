@@ -219,7 +219,6 @@ function buildShopRows(shops, shopDetails) {
 
   return shops.map((shop, i) => {
     return {
-      Index: i + 1,
       Name: shop.title || "",
       Category: shop.type || "",
       Phone: shop.phone || "",

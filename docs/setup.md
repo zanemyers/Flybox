@@ -36,7 +36,7 @@
 ### 📦 Packages
 
 - **Parsing & Dates:** [Chrono-Node](https://www.npmjs.com/package/chrono-node), [Date-FNS](https://www.npmjs.com/package/date-fns)
-- **CLI & Environment:** [Enquirer](https://www.npmjs.com/package/enquirer), [Dotenv](https://www.npmjs.com/package/dotenv)
+- **CLI & Environment:** [Dotenv](https://www.npmjs.com/package/dotenv), [Enquirer](https://www.npmjs.com/package/enquirer), [Ora](https://www.npmjs.com/package/ora)
 - **Scraping:** [Playwright](https://www.npmjs.com/package/playwright)
 - **Excel Handling:** [ExcelJS](https://www.npmjs.com/package/exceljs)
 - **AI Integration:** [@google/genai](https://www.npmjs.com/package/@google/genai)

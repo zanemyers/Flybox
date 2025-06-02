@@ -4,7 +4,6 @@
     "@google/genai": "^1.1.0",
     "@supercharge/promise-pool": "^3.2.0",
     "chrono-node": "^2.8.0",
-    "cli-progress": "^3.12.0",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
     "enquirer": "^2.4.1",

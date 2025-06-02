@@ -1,6 +1,16 @@
 ### Changelog
 
-All notable changes to this project will be documented in this file. Dates are displayed in UTC.
+All notable changes to this project will be documented in this file.
+
+### [unreleased](https://github.com/zanemyers/RescueRiver/compare/v2.0...head)
+
+#### Added
+
+#### Updated
+
+#### Deprecated
+
+-
 
 ### [v2.0](https://github.com/zanemyers/RescueRiver/compare/v1.1...v2.0)
 
