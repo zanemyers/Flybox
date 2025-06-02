@@ -12,7 +12,6 @@ import {
   loadCachedShops,
 } from "./shopUtils.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
-import { progressBar } from "../base/terminalUtils.js";
 import { ExcelFileHandler } from "../base/fileUtils.js";
 
 // Load environment variables from .env file
