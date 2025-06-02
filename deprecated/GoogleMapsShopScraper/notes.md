@@ -1,34 +1,34 @@
-# 🗒️ Deprecation Notes – Google Maps Shop Scraper
+# 🗒️ Deprecation Notes – Google Maps Shop Scraper (v2.0)
 
 ## 🧾 Summary
 
-This tool was designed to scrape business listings from a specified Google Maps URL. It:
+This tool was designed to scrape business listings directly from a specified Google Maps URL. It:
 
 - Loaded local search results from Google Maps
 - Extracted business data directly from those listings
 - Visited each shop’s website to gather additional information such as emails, fishing reports, and other contact details
 
-## ❌ Why It's Being Deprecated
+## ❌ Why It Was Deprecated
 
-Directly scraping Google Maps is a violation of [Google's Terms of Service](https://mapsplatform.google.com/terms/). After learning this, we decided to phase out this approach to remain compliant and reduce the risk of service disruption or legal issues.
+Directly scraping Google Maps violates [Google's Terms of Service](https://mapsplatform.google.com/terms/). To remain compliant and avoid legal risk, this approach has been fully discontinued.
 
 ## 🔄 Replacement
 
 The new **Shop Scraper** tool replaces this functionality by:
 
-- Using [SerpAPI](https://serpapi.com/) to retrieve business listing data in a compliant manner
-- Reusing much of the website-parsing logic from this tool (e.g. scraping emails and fishing report links)
+- Using [SerpAPI](https://serpapi.com/) to retrieve business listing data in a compliant way
+- Reusing much of the website-parsing logic from the original tool (e.g., scraping emails and fishing report links)
 
 ## 🕓 Status
 
-This tool is **not yet deprecated**, but is scheduled for deprecation once the SerpAPI-based solution reaches full parity in terms of functionality.
+This tool was **fully deprecated in v2.0**. It has been removed from the codebase and is no longer maintained.
 
 ## 🗂️ Files Worth Preserving
 
-If anything from this tool needs to be salvaged:
+For historical reference or migration purposes, the following logic may still be useful:
 
-- Logic for crawling and parsing shop websites
+- Shop website crawling and parsing logic
 - Email detection heuristics
 - Fishing report keyword matching
 
-Once fully deprecated, this folder will remain here for historical reference but should not be updated further.
+The folder may remain in the repository for archival purposes but should not be updated.

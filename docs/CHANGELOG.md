@@ -2,7 +2,28 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
-#### [Unreleased](https://github.com/zanemyers/RescueRiver/compare/v1.0...HEAD)
+### [v2.0](https://github.com/zanemyers/RescueRiver/compare/v1.1...v2.0)
+
+#### Added
+
+- Added `ShopScraper` application and new packages: `exceljs`, `serpapi`, and `@supercharge/promise-pool`
+- Introduced `ExcelFileHandler` class (extends `FileHandler`) with `read` and `write` support
+- Added `FALLBACK_DETAILS` to project constants
+- Added example files under `assets/`
+- Added `loadCachedShops` and `buildShopRows` to `shopUtils`
+
+#### Updated
+
+- Refactored `startSpinner` and `stopSpinner` into unified `Spinner` class
+- Renamed `FileWriter` to `FileHandler`; it now uses the file path's base name for archiving
+- Renamed `FishingReportScraper` to `ReportScraper`
+- Updated ReportScraper to use `.env` variables and `ExcelFileHandler`
+- Updated setup script and documentation (setup, config, overview) to reflect scraper changes
+
+#### Deprecated
+
+- Deprecated `CSVFileWriter`, `CSVFileReader`, and `GoogleMapsShopScraper`
+- Removed unnecessary constants and page selectors from `shopUtils`
 
 ### [v1.1](https://github.com/zanemyers/RescueRiver/compare/v1.0...v1.1)
 
