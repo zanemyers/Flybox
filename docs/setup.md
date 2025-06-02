@@ -9,10 +9,12 @@
 
 #### 🧰 Recommended Extensions
 
-- CSV by ReprEng
+- Container Tools by Microsoft
 - Docker by Microsoft
 - Docker DX by Docker
+- Excel Viewer by MESCIUS
 - GitHub Copilot by GitHub
+- Github Copilot Chat by Github
 - Prettier - Code formatter by Prettier
 
 ### 🐳 Docker
@@ -33,8 +35,10 @@
 
 ### 📦 Packages
 
-- **Parsing & Dates:** Chrono-Node, Date-FNS
-- **CLI & Environment:** Enquirer, Dotenv
-- **Scraping:** Playwright
-- **CSV Handling:** Fast-CSV
-- **AI Integration:** Google/Genai
+- **Parsing & Dates:** [Chrono-Node](https://www.npmjs.com/package/chrono-node), [Date-FNS](https://www.npmjs.com/package/date-fns)
+- **CLI & Environment:** [Enquirer](https://www.npmjs.com/package/enquirer), [Dotenv](https://www.npmjs.com/package/dotenv)
+- **Scraping:** [Playwright](https://www.npmjs.com/package/playwright)
+- **Excel Handling:** [ExcelJS](https://www.npmjs.com/package/exceljs)
+- **AI Integration:** [@google/genai](https://www.npmjs.com/package/@google/genai)
+- **Async Control:** [@supercharge/promise-pool](https://www.npmjs.com/package/@supercharge/promise-pool)
+- **Search API:** [SerpAPI](https://www.npmjs.com/package/serpapi)

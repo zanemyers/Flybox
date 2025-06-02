@@ -8,6 +8,69 @@ const __dirname = path.dirname(__filename);
 
 const questions = [
   {
+    type: "confirm",
+    name: "RUN_HEADLESS",
+    message: "Run headless?",
+    hint: "Runs the scrapers without a UI.",
+    initial: true,
+  },
+  {
+    type: "numeral",
+    name: "CONCURRENCY",
+    message: "Enter batch size:",
+    hint: "How many sites to scrape at once.",
+    float: false,
+    min: 1,
+    max: 10,
+    initial: 5,
+    validate(value) {
+      if (value < 1 || value > 10) return "Value must be between 1 and 10.";
+      return true;
+    },
+  },
+  {
+    type: "input",
+    name: "SERP_API_KEY",
+    message: "Enter your SerpAPI API Key:",
+    hint: "Generate a key at https://serpapi.com/manage-api-key.",
+    required: true,
+    validate(value) {
+      return value.trim() !== "" ? true : "API Key cannot be empty.";
+    },
+  },
+  {
+    type: "input",
+    name: "SEARCH_QUERY",
+    message: "Enter your search query:",
+    hint: "What to search for (e.g. 'Fly Fishing Shops').",
+    required: true,
+    validate(value) {
+      return value.trim() !== "" ? true : "Search query cannot be empty.";
+    },
+  },
+  {
+    type: "input",
+    name: "SEARCH_COORDINATES",
+    message: "Enter search coordinates:",
+    hint: "Coordinates to search around (e.g. '45.5236,-122.6750').",
+    required: true,
+    validate(value) {
+      return value.trim() !== "" ? true : "Search query cannot be empty.";
+    },
+  },
+  {
+    type: "input",
+    name: "MAX_RESULTS",
+    message: "Enter the maximum number of results to return:",
+    float: false,
+    min: 20,
+    initial: 100,
+    validate(value) {
+      if (value < 20) return "Value must be at least 20.";
+      return true;
+    },
+  },
+  {
     type: "input",
     name: "GOOGLE_GENAI_API_KEY",
     message: "Enter your Google GenAI API Key:",
@@ -39,50 +102,6 @@ const questions = [
     validate(value) {
       if (value < 10000 || value > 50000)
         return "Value must be between 10000 and 50000.";
-      return true;
-    },
-  },
-  {
-    type: "confirm",
-    name: "RUN_HEADLESS",
-    message: "Run headless?",
-    hint: "Runs the scrapers without a UI.",
-    initial: true,
-  },
-  {
-    type: "numeral",
-    name: "BATCH_SIZE",
-    message: "Enter the batch size:",
-    hint: "How many sites to scrape at once.",
-    float: false,
-    min: 1,
-    max: 10,
-    initial: 5,
-    validate(value) {
-      if (value < 1 || value > 10) return "Value must be between 1 and 10.";
-      return true;
-    },
-  },
-  {
-    type: "input",
-    name: "STARTING_URL",
-    message: "Enter a starting URL:",
-    hint: "Your Google Maps starting url.",
-    required: true,
-    validate(value) {
-      return value.trim() !== "" ? true : "URL cannot be empty.";
-    },
-  },
-  {
-    type: "numeral",
-    name: "SCROLL_DURATION",
-    message: "Enter the max scroll duration (ms):",
-    hint: "How long to wait for Google Maps before timing out.",
-    float: false,
-    min: 10000,
-    initial: 30000,
-    validate(value) {
-      if (value < 10000) return "Value must be at least 10000.";
       return true;
     },
   },
@@ -138,18 +157,19 @@ const questions = [
     }
 
     const envContent =
-      `# Google GenAI API configuration\n` +
-      `GOOGLE_GENAI_API_KEY="${answers.GOOGLE_GENAI_API_KEY}"\n` +
-      `GOOGLE_GENAI_MODEL="${answers.GOOGLE_GENAI_MODEL}"\n` +
-      `TOKEN_LIMIT=${answers.TOKEN_LIMIT}\n\n` +
       `# General Scraper configuration\n` +
       `RUN_HEADLESS=${answers.RUN_HEADLESS}\n` +
-      `BATCH_SIZE=${answers.BATCH_SIZE}\n\n` +
-      `# Google Maps Shop Scraper configuration\n` +
-      `STARTING_URL="${answers.STARTING_URL}"\n` +
-      `SCROLL_DURATION=${answers.SCROLL_DURATION}\n\n` +
-      `# Fishing report filtering configuration\n` +
-      `MAX_REPORT_AGE=${answers.MAX_REPORT_AGE_DAYS}\n` +
+      `CONCURRENCY=${answers.CONCURRENCY}\n\n` +
+      `# Shop Scraper configuration\n` +
+      `SERP_API_KEY=${answers.SERP_API_KEY}\n` +
+      `SEARCH_QUERY=${answers.SEARCH_QUERY}\n` +
+      `SEARCH_COORDINATES=${answers.SEARCH_COORDINATES}\n` +
+      `MAX_RESULTS=${answers.MAX_RESULTS}\n\n` +
+      `# Fishing Report configuration\n` +
+      `GOOGLE_GENAI_API_KEY="${answers.GOOGLE_GENAI_API_KEY}"\n` +
+      `GOOGLE_GENAI_MODEL="${answers.GOOGLE_GENAI_MODEL}"\n` +
+      `TOKEN_LIMIT=${answers.TOKEN_LIMIT}\n` +
+      `MAX_REPORT_AGE=${answers.MAX_REPORT_AGE}\n` +
       `FILTER_BY_RIVER=${answers.FILTER_BY_RIVER}\n` +
       `IMPORTANT_RIVERS=[${riverList}]\n`;
 
