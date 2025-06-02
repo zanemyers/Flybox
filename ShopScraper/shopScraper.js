@@ -1,8 +1,9 @@
-import fs from "fs/promises";
 import dotenv from "dotenv";
+import fs from "fs/promises";
+import ora from "ora";
+import { chromium } from "playwright";
 import { getJson } from "serpapi";
 import { PromisePool } from "@supercharge/promise-pool";
-import { chromium } from "playwright";
 
 import { FALLBACK_DETAILS } from "../base/enums.js";
 import {
@@ -11,7 +12,6 @@ import {
   loadCachedShops,
 } from "./shopUtils.js";
 import { normalizeUrl } from "../base/scrapingUtils.js";
-import { progressBar, Spinner } from "../base/terminalUtils.js";
 import { ExcelFileHandler } from "../base/fileUtils.js";
 
 // Load environment variables from .env file
@@ -19,10 +19,12 @@ dotenv.config();
 
 // Initialize class variables
 const shopWriter = new ExcelFileHandler("resources/xlsx/shop_details.xlsx");
-const spinner = new Spinner(["🔍", "🔎"], 500);
 const websiteCache = new Map();
 
 async function main() {
+  // Initalize spinner instance
+  const spinner = ora();
+
   // Initialize Playwright browser context
   const browser = await chromium.launch({
     headless: process.env.RUN_HEADLESS !== "false",
@@ -32,16 +34,16 @@ async function main() {
   try {
     spinner.start("Searching for shops...");
     const shops = await fetchShops();
-    spinner.stop(`🌐 Found ${shops.length} shops.`);
+    spinner.succeed(`Found ${shops.length} shops.`);
 
     const shopDetails = await getDetails(shops, context);
     const rows = buildShopRows(shops, shopDetails);
 
-    process.stdout.write(`Writing shop data to Excel...`);
+    spinner.start(`Writing shop data to Excel...`);
     shopWriter.write(rows);
-    process.stdout.write("✅ Finished!\n");
+    spinner.succeed("Finished!\n");
   } catch (err) {
-    console.error("❌ Error:", err);
+    spinner.fail(`Error: ${err}`);
   } finally {
     await browser.close();
   }
@@ -106,31 +108,33 @@ async function fetchShops() {
  */
 async function getDetails(shops, context) {
   const total = shops.length;
-  let complete = 0;
-  progressBar(complete, total);
-
   const results = new Array(total);
+  let completed = 0;
+
+  const messageTemplate = (done) => `Scraping shops (${done}/${total})`;
+  const spinner = ora(messageTemplate(completed)).start();
 
   await PromisePool.withConcurrency(parseInt(process.env.CONCURRENCY, 10) || 5)
     .for(shops)
     .process(async (shop, index) => {
       if (!shop.website) {
         results[index] = FALLBACK_DETAILS.NONE;
-        progressBar(++complete, total);
-        return;
+      } else {
+        const page = await addShopSelectors(await context.newPage());
+        try {
+          results[index] = await scrapeWebsite(page, shop.website);
+        } catch (err) {
+          console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
+          results[index] = FALLBACK_DETAILS.ERROR;
+        } finally {
+          await page.close();
+        }
       }
 
-      const page = await addShopSelectors(await context.newPage());
-      try {
-        results[index] = await scrapeWebsite(page, shop.website);
-      } catch (err) {
-        console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
-        results[index] = FALLBACK_DETAILS.ERROR;
-      } finally {
-        await page.close();
-        progressBar(++complete, total);
-      }
+      spinner.text = messageTemplate(++completed);
     });
+
+  spinner.succeed(`Scraping Complete`);
 
   return results;
 }

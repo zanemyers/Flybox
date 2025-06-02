@@ -1,3 +1,27 @@
+# 🗒️ Deprecation Notes – base (v2.1)
+
+## 🧾 Summary
+
+The `base` module previously included general-purpose terminal utilities. As of **v2.1**, the following were deprecated and removed:
+
+- `Spinner` class
+- `progressBar` function
+
+## ❌ Why These Were Deprecated
+
+These utilities were replaced by the more reliable and actively maintained [`ora`](https://www.npmjs.com/package/ora) package:
+
+- `Spinner` and `progressBar` offered limited customization.
+- `ora` provides a consistent, flexible API for spinners with support for live updates, color, and status handling.
+
+## 🔄 Replacement
+
+Use [`ora`](https://www.npmjs.com/package/ora) for all terminal spinner needs. It supports dynamic text updates and integrates well with modern async workflows.
+
+## 🕓 Status
+
+These utilities were **fully removed in v2.1**. Existing code should be migrated to use `ora`, and no new code should reference the deprecated items.
+
 # 🗒️ Deprecation Notes – base (v2.0)
 
 ## 🧾 Summary
