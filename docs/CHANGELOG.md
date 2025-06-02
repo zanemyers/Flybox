@@ -2,15 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
-### [unreleased](https://github.com/zanemyers/RescueRiver/compare/v2.0...head)
+### [Unreleased](https://github.com/zanemyers/RescueRiver/compare/v2.0...HEAD)
 
 #### Added
 
-#### Updated
+- Added `ora` package for terminal spinner functionality
+- Added `.vscode/settings.json` to exclude folders from search results
+
+#### Changed
+
+- Replaced `terminalUtils` spinner and progress bar with `ora`-based implementation
+- Updated setup documentation packages to include `ora`
+- Updated base deprecation notes for v2.1
 
 #### Deprecated
 
--
+- Deprecated `Spinner` class and `progressBar` function from `base/terminalUtils`
+- Removed Excel index column from `shop_details.xlsx`
 
 ### [v2.0](https://github.com/zanemyers/RescueRiver/compare/v1.1...v2.0)
 
