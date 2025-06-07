@@ -59,7 +59,7 @@ async function fetchShops() {
   const cacheFile = "./assets/exampleFiles/shops.json"; // TODO: Allow user to pass this in
   const meta = {
     query: process.env.SEARCH_QUERY,
-    coordinates: process.env.SEARCH_COORDINATES,
+    coordinates: `${process.env.SEARCH_LAT},${process.env.SEARCH_LONG}`,
   };
 
   const cached = await loadCachedShops(cacheFile, meta);
