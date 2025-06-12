@@ -74,7 +74,7 @@ const questions = [
   },
   {
     type: "input",
-    name: "GOOGLE_GENAI_API_KEY",
+    name: "GEMINI_API_KEY",
     message: "Enter your Google GenAI API Key:",
     hint: "Generate a key at https://aistudio.google.com/app/apikey.",
     required: true,
@@ -84,7 +84,7 @@ const questions = [
   },
   {
     type: "input",
-    name: "GOOGLE_GENAI_MODEL",
+    name: "GEMINI_MODEL",
     message: "Enter your Google GenAI Model name:",
     hint: "See models & pricing at https://ai.google.dev/gemini-api/docs/pricing.",
     required: true,
@@ -168,8 +168,8 @@ const questions = [
       `SEARCH_COORDINATES=${answers.SEARCH_COORDINATES}\n` +
       `MAX_RESULTS=${answers.MAX_RESULTS}\n\n` +
       `# Fishing Report configuration\n` +
-      `GOOGLE_GENAI_API_KEY="${answers.GOOGLE_GENAI_API_KEY}"\n` +
-      `GOOGLE_GENAI_MODEL="${answers.GOOGLE_GENAI_MODEL}"\n` +
+      `GEMINI_API_KEY="${answers.GEMINI_API_KEY}"\n` +
+      `GEMINI_MODEL="${answers.GEMINI_MODEL}"\n` +
       `TOKEN_LIMIT=${answers.TOKEN_LIMIT}\n` +
       `MAX_REPORT_AGE=${answers.MAX_REPORT_AGE}\n` +
       `FILTER_BY_RIVER=${answers.FILTER_BY_RIVER}\n` +

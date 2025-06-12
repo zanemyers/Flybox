@@ -154,7 +154,7 @@ async function compileFishingReports(reports) {
 async function makeReportSummary() {
   // Initialize the Google GenAI client with your API key
   const ai = new GoogleGenAI({
-    apiKey: process.env.GOOGLE_GENAI_API_KEY, // IMPORTANT: Set in environment variables
+    apiKey: process.env.GEMINI_API_KEY, // IMPORTANT: Set in environment variables
   });
 
   // Initialize a TXTFileWriter to write the AI-generated summary
@@ -174,7 +174,7 @@ async function makeReportSummary() {
   const summaries = [];
   for (const chunk of chunks) {
     const summary = await ai.models.generateContent({
-      model: process.env.GOOGLE_GENAI_MODEL,
+      model: process.env.GEMINI_MODEL,
       contents: `${chunk}\n\n ${SUMMARY_PROMPT}`,
     });
     summaries.push(summary.text.trim());
@@ -183,7 +183,7 @@ async function makeReportSummary() {
   const mergedPrompt = `${MERGE_PROMPT}\n\n${summaries.join("\n\n")}`;
 
   const finalResponse = await ai.models.generateContent({
-    model: process.env.GOOGLE_GENAI_MODEL,
+    model: process.env.GEMINI_MODEL,
     contents: mergedPrompt,
   });
 
