@@ -1,6 +1,5 @@
 import fs from "fs/promises";
 
-import { extendPageSelectors } from "../base/scrapingUtils.js";
 import {
   MESSAGES,
   EMAIL_REGEX,
@@ -15,20 +14,14 @@ import {
  * @returns {Promise<import('playwright').Page>} - The same page instance with added helper methods.
  */
 async function addShopSelectors(page) {
-  // Add base scraping utils
-  await extendPageSelectors(page);
-
   /**
-   * Checks if the page contains any text matching "fishing reports" or "reports" (case-insensitive).
+   * Checks if the page contains a link with "report" in it (case-insensitive).
    *
    * @returns {Promise<boolean>} - `true` if the page contains the text, otherwise `false`.
    */
   page.publishesFishingReport = async function () {
     try {
-      return await page.hasElementWithKeyword(
-        "a",
-        "/fishing reports|reports/i"
-      );
+      return await page.hasElementWithKeyword("a", "report");
     } catch {
       return MESSAGES.ERROR_REPORT;
     }
@@ -104,10 +97,8 @@ async function addShopSelectors(page) {
    */
   page.getEmailFromText = async function () {
     try {
-      const bodyText = await page.getTextContent("body");
-      const match = bodyText
-        .replace(/([a-zA-Z])(?=[A-Z])/g, "$1 ")
-        .match(EMAIL_REGEX); // insert spaces between mashed-together words
+      const fullText = await page.locator("body").innerText();
+      const match = fullText.match(EMAIL_REGEX);
       return match ? match[0] : null;
     } catch {
       return null;

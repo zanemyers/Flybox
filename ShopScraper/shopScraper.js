@@ -18,7 +18,7 @@ dotenv.config();
 
 // Initialize class variables
 const browser = new StealthBrowser({
-  headless: process.env.HEADLESS !== "false",
+  headless: process.env.RUN_HEADLESS !== "false",
 });
 const shopWriter = new ExcelFileHandler("resources/xlsx/shop_details.xlsx");
 const websiteCache = new Map();

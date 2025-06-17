@@ -165,6 +165,7 @@ class StealthBrowser {
   async newPage() {
     const page = await this.context.newPage();
     await this._customActions(page);
+    await extendPageSelectors(page);
     return page;
   }
 
