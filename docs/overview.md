@@ -16,6 +16,11 @@ Pulls business data using SerpAPI and associated websites, compiling the results
 - Supports customizations via `.env` settings
 - Handles request errors gracefully with fallback data
 
+### 📅 Future Plans
+
+- Add option to choose between SerpAPI and Google’s new Places API (`places:searchText`)
+  - Places API support currently limited to 20 results per query (see `google-places-api` branch)
+
 ### 🐞 Known Issues
 
 - Email scraping is unreliable
