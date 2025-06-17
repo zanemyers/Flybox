@@ -2,8 +2,8 @@
   "type": "module",
   "dependencies": {
     "@google/genai": "^1.1.0",
-    "@googlemaps/places": "^2.0.1",
     "@supercharge/promise-pool": "^3.2.0",
+    "axios": "^1.10.0",
     "chrono-node": "^2.8.0",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",

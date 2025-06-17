@@ -41,3 +41,6 @@ rs *FLAGS:
     else
         just dcrr web-scraper node ReportScraper/main.js
     fi
+
+@pt:
+    node ShopScraper/placesAPItesting.js
