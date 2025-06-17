@@ -1,17 +1,24 @@
 /**
- * Utility functions to enhance Playwright page interactions and normalize URLs.
+ * Utility functions and classes to enhance Playwright interactions and browsing stealthiness.
  *
  * This module includes:
+ *
+ * - `StealthBrowser` class: A wrapper around Playwright's Chromium browser to provide stealthy browsing capabilities.
+ *   It randomizes user agent, viewport, locale, and timezone, and injects simulated user interactions to
+ *   help evade bot detection.
+ *
  * - `extendPageSelectors(page)`: Augments the given Playwright `page` object with custom helper methods for
  *   selecting and extracting data from elements more easily.
- *   - getAttByLocator: Gets an attribute from the first matching element.
- *   - getAttByLabel: Gets an attribute from an element by aria-label text.
- *   - getTextContent: Retrieves text content of the first matching element.
- *   - hasElementWithKeyword: Checks for the presence of an element containing specific text.
+ *     - getAttByLocator: Gets an attribute from the first matching element.
+ *     - getAttByLabel: Gets an attribute from an element by aria-label text.
+ *     - getTextContent: Retrieves text content of the first matching element.
+ *     - hasElementWithKeyword: Checks for the presence of an element containing specific text.
  *
- * - `normalizeUrl(url)`: Cleans up a URL by removing query strings, hashes, 'www.', and trailing slashes,
+ * - `normalizeUrl(url)`: Cleans up a URL by removing query strings, hashes, and trailing slashes,
  *   returning a consistent and canonical form.
+ *
  */
+
 import { chromium } from "playwright-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
@@ -19,10 +26,22 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 chromium.use(StealthPlugin());
 
 class StealthBrowser {
+  /**
+   * Creates an instance of StealthBrowser with configurable options.
+   * Sets defaults for headless mode, browser args, user agent, locale, and timezone.
+   * If userAgent, locale, or timezoneId are not provided, selects a random profile.
+   * @param {object} options - Optional config options.
+   * @param {boolean} [options.headless=true] - Run browser in headless mode or not.
+   * @param {string[]} [options.args] - Chromium launch arguments.
+   * @param {string} [options.userAgent] - Override user agent string.
+   * @param {string} [options.locale] - Override browser locale (e.g., "en-US").
+   * @param {string} [options.timezoneId] - Override browser timezone (e.g., "America/New_York").
+   */
   constructor(options = {}) {
     this.headless = options.headless ?? true;
     this.args = options.args ?? ["--start-maximized", "--no-sandbox"];
 
+    // Select random agent profile if not provided
     const agentProfile = this._getAgentProfile();
     this.userAgent = options.userAgent ?? agentProfile.userAgent;
     this.locale = options.locale ?? agentProfile.locale;
@@ -32,6 +51,11 @@ class StealthBrowser {
     this.context = null;
   }
 
+  /**
+   * Launches the Chromium browser and creates a new browser context.
+   * The context uses the configured viewport, user agent, locale, and timezone.
+   * @returns {Promise<this>} Returns the instance for chaining.
+   */
   async launch() {
     this.browser = await chromium.launch({
       headless: this.headless,
@@ -39,7 +63,7 @@ class StealthBrowser {
     });
 
     this.context = await this.browser.newContext({
-      viewport: this._getViewport(),
+      viewport: this._getViewport(), // Random viewport size to mimic real user
       userAgent: this.userAgent,
       locale: this.locale,
       timezoneId: this.timezoneId,
@@ -48,15 +72,29 @@ class StealthBrowser {
     return this;
   }
 
+  /**
+   * Adds custom helper functions to a Playwright page object:
+   * - simulateUserInteraction: simulates mouse moves and click.
+   * - load: navigates to a URL and then simulates user interaction.
+   * @param {import('playwright').Page} page - Playwright Page instance.
+   */
   async _customActions(page) {
-    // Simulate user interaction
+    /**
+     * Simulate user interaction with mouse movements and a click.
+     * Helps reduce bot detection by mimicking human activity.
+     */
     page.simulateUserInteraction = async function () {
       await page.mouse.move(100, 100);
       await page.mouse.move(200, 300);
       await page.mouse.click(200, 300);
     };
 
-    // Add load method to page
+    /**
+     * Navigate to a given URL, wait until DOM content is loaded,
+     * then perform simulated user interaction.
+     * @param {string} url - URL to navigate to.
+     * @returns {Promise<import('playwright').Response>} Navigation response.
+     */
     page.load = async function (url) {
       const response = await page.goto(url, {
         waitUntil: "domcontentloaded",
@@ -67,6 +105,11 @@ class StealthBrowser {
     };
   }
 
+  /**
+   * Returns a random user agent profile with userAgent string, locale, and timezone.
+   * Used for stealth to mimic requests from various browsers and regions.
+   * @returns {object} Random user agent profile.
+   */
   _getAgentProfile() {
     const agentProfiles = [
       {
@@ -98,6 +141,11 @@ class StealthBrowser {
     return agentProfiles[Math.floor(Math.random() * agentProfiles.length)];
   }
 
+  /**
+   * Returns a random viewport size from a list of common screen sizes.
+   * Helps simulate different user devices for stealth.
+   * @returns {{width: number, height: number}} Viewport size object.
+   */
   _getViewport() {
     const viewports = [
       { width: 1366, height: 768 },
@@ -110,12 +158,20 @@ class StealthBrowser {
     return viewports[Math.floor(Math.random() * viewports.length)];
   }
 
+  /**
+   * Creates a new page in the current browser context and applies custom helpers.
+   * @returns {Promise<import('playwright').Page>} The new page with custom actions attached.
+   */
   async newPage() {
     const page = await this.context.newPage();
     await this._customActions(page);
     return page;
   }
 
+  /**
+   * Closes the browser instance if it has been launched.
+   * @returns {Promise<void>}
+   */
   async close() {
     if (this.browser) {
       await this.browser.close();
