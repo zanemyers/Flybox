@@ -152,7 +152,7 @@ async function scrapeWebsite(page, url) {
 
   let details;
   try {
-    const response = await page.goAndWiggle(normalizedUrl); // Open the page and wiggle the mouse
+    const response = await page.load(normalizedUrl); // Open the page and wiggle the mouse
 
     // Check if the request was blocked or rate-limited
     const status = response?.status();

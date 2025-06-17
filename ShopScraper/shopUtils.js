@@ -141,7 +141,7 @@ async function addShopSelectors(page) {
       if (!onContactPage) {
         const contactLink = await this.getContactLink();
         if (contactLink) {
-          await page.goAndWiggle(contactLink);
+          await page.load(contactLink);
           return await this.getEmail(true); // Try again on contact page
         }
       }

@@ -56,8 +56,8 @@ class StealthBrowser {
       await page.mouse.click(200, 300);
     };
 
-    // Add goAndWiggle method to page
-    page.goAndWiggle = async function (url) {
+    // Add load method to page
+    page.load = async function (url) {
       const response = await page.goto(url, {
         waitUntil: "domcontentloaded",
         timeout: 10000,
