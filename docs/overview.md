@@ -19,11 +19,11 @@ Pulls business data using SerpAPI and associated websites, compiling the results
 ### 📅 Future Plans
 
 - Add option to choose between SerpAPI and Google’s new Places API (`places:searchText`)
-  - Places API support currently limited to 20 results per query (see `google-places-api` branch)
+  - The new Places API is currently limited to 20 results per query (see `google-places-api` branch), so it won't be useful until the update the limit or add pagination.
 
 ### 🐞 Known Issues
 
-- Email scraping is unreliable
+- Email scraping is probably about 70% accurate
 - Some business pages are blocked or fail to load
 - Requires headless mode in Docker
 - Cannot be debugged in Docker

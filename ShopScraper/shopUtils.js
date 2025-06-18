@@ -64,11 +64,12 @@ async function addShopSelectors(page) {
    */
   page.getContactLink = async function () {
     try {
-      const contactLink = await page.getAttByLocator(
-        'a[href*="contact"]',
-        "href"
-      );
-      return contactLink || null;
+      const href = await page.getAttByLocator('a[href*="contact"]', "href");
+      if (!href) return null;
+
+      // Convert to absolute URL if needed
+      const contactUrl = new URL(href, page.url()).toString();
+      return contactUrl;
     } catch {
       return null;
     }
