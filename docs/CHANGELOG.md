@@ -2,13 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
-### [unreleased](https://github.com/zanemyers/RescueRiver/compare/v2.0...HEAD)
+### [2.2](https://github.com/zanemyers/RescueRiver/compare/v2.1...2.2)
 
 #### Added
 
+- Integrated `playwright-extra` and `puppeteer-extra-plugin-stealth` packages.
+- Introduced `StealthBrowser` class in `scrapingUtils.js` for more human-like scraping behavior.
+
 #### Changed
 
-#### Deprecated
+- Upgraded `playwright` package.
+- Moved `deprecated/` directory into `docs/` for better organization.
+- Simplified fishing report detection logic.
+- Fixed contact link extraction to resolve full (absolute) URLs.
+- Improved email scraping accuracy and robustness.
+- Switched shop scraper to use `StealthBrowser` instead of default Playwright browser.
 
 ### [2.1](https://github.com/zanemyers/RescueRiver/compare/v2.0...v2.1)
 
