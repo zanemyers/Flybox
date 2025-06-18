@@ -1,6 +1,5 @@
 import fs from "fs/promises";
 
-import { extendPageSelectors } from "../base/scrapingUtils.js";
 import {
   MESSAGES,
   EMAIL_REGEX,
@@ -15,20 +14,14 @@ import {
  * @returns {Promise<import('playwright').Page>} - The same page instance with added helper methods.
  */
 async function addShopSelectors(page) {
-  // Add base scraping utils
-  await extendPageSelectors(page);
-
   /**
-   * Checks if the page contains any text matching "fishing reports" or "reports" (case-insensitive).
+   * Checks if the page contains a link with "report" in it (case-insensitive).
    *
    * @returns {Promise<boolean>} - `true` if the page contains the text, otherwise `false`.
    */
   page.publishesFishingReport = async function () {
     try {
-      return await page.hasElementWithKeyword(
-        "a",
-        "/fishing reports|reports/i"
-      );
+      return await page.hasElementWithKeyword("a", "report");
     } catch {
       return MESSAGES.ERROR_REPORT;
     }
@@ -71,11 +64,12 @@ async function addShopSelectors(page) {
    */
   page.getContactLink = async function () {
     try {
-      const contactLink = await page.getAttByLocator(
-        'a[href*="contact"]',
-        "href"
-      );
-      return contactLink || null;
+      const href = await page.getAttByLocator('a[href*="contact"]', "href");
+      if (!href) return null;
+
+      // Convert to absolute URL if needed
+      const contactUrl = new URL(href, page.url()).toString();
+      return contactUrl;
     } catch {
       return null;
     }
@@ -91,7 +85,7 @@ async function addShopSelectors(page) {
   page.getEmailFromHref = async function () {
     try {
       const email = await page.getAttByLocator('a[href^="mailto:"]', "href");
-      return email ? email.replace("mailto:", "") : null;
+      return email ? email.replace("mailto:", "").split("?")[0] : null;
     } catch {
       return null;
     }
@@ -104,8 +98,8 @@ async function addShopSelectors(page) {
    */
   page.getEmailFromText = async function () {
     try {
-      const bodyText = await page.getTextContent("body");
-      const match = bodyText?.match(EMAIL_REGEX);
+      const fullText = await page.locator("body").innerText();
+      const match = fullText.match(EMAIL_REGEX);
       return match ? match[0] : null;
     } catch {
       return null;
@@ -139,7 +133,7 @@ async function addShopSelectors(page) {
       if (!onContactPage) {
         const contactLink = await this.getContactLink();
         if (contactLink) {
-          await page.goto(contactLink);
+          await page.load(contactLink);
           return await this.getEmail(true); // Try again on contact page
         }
       }
