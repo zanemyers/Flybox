@@ -1,9 +1,9 @@
 {
-    "search.exclude": {
-      "**/assets": true,
-      "**/docs": true,
-      "**/node_modules": true,
-      "**/media": true,
-    }
+  "search.exclude": {
+    "**/assets": true,
+    "**/docs": true,
+    "**/node_modules": true,
+    "**/media": true,
   }
+}
   
