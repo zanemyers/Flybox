@@ -86,22 +86,43 @@ class StealthBrowser {
     page.simulateUserInteraction = async function () {
       await page.mouse.move(100, 100);
       await page.mouse.move(200, 300);
-      await page.mouse.click(200, 300);
+      await page.mouse.move(50, 175);
     };
 
     /**
-     * Navigate to a given URL, wait until DOM content is loaded,
-     * then perform simulated user interaction.
-     * @param {string} url - URL to navigate to.
-     * @returns {Promise<import('playwright').Response>} Navigation response.
+     * Navigates to the given URL with retry support.
+     * Waits for the network to become idle, simulates basic user interaction,
+     *
+     * @param {string} url - The URL to visit.
+     * @param {number} [retries=2] - Maximum number of retry attempts.
+     * @returns {Promise<import('playwright').Response>} The response object from navigation.
+     * @throws {Error} If navigation fails after all retries or receives a blocked status.
      */
-    page.load = async function (url) {
-      const response = await page.goto(url, {
-        waitUntil: "domcontentloaded",
-        timeout: 10000,
-      });
-      await page.simulateUserInteraction();
-      return response;
+    page.load = async function (url, retries = 2) {
+      while (retries--) {
+        try {
+          const response = await page.goto(url, {
+            waitUntil: "domcontentloaded",
+            timeout: 15000,
+          });
+
+          // Check for blocked responses
+          const status = response?.status();
+          if ([401, 403, 429].includes(status)) {
+            throw new Error(`Blocked or forbidden (HTTP ${status})`);
+          }
+
+          await page.simulateUserInteraction();
+          return response;
+        } catch (err) {
+          if (retries === 0 || /HTTP (401|403|429)/.test(err.message)) {
+            throw new Error(`Failed to load ${url}: ${err.message}`);
+          }
+
+          console.warn(`Retrying load for ${url}: ${err.message}`);
+          await new Promise((res) => setTimeout(res, 1000)); // delay before retry
+        }
+      }
     };
   }
 

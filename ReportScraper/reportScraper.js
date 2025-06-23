@@ -56,7 +56,7 @@ async function main() {
 
       // STEP 4: Generate a summary using Gemini
       spinner.start("Generating report summary...");
-      await generateSummary(compiledReports);
+      // await generateSummary(compiledReports);
       spinner.succeed("Finished!");
     } else {
       console.log("No reports found."); // Handle empty result set
@@ -153,6 +153,7 @@ async function findReports(page, site) {
 
     // Scrape visible content from subpages (not the homepage)
     if (url !== site.url) {
+      await page.waitForSelector("body", { timeout: 10000 }).catch(() => {});
       const text = await scrapeVisibleText(page, site.selector);
       if (text) {
         reports.push(`${text}\nSource: ${url}`);

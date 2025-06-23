@@ -80,27 +80,36 @@ const FALLBACK_DETAILS = {
 const REPORT_DIVIDER = "\n" + "-".repeat(50) + "\n";
 
 const SUMMARY_PROMPT = `
-    For each river or body of water mentioned create a bulleted list that follows the template below.
-    - If you cannot find information for a bullet leave it blank.
-    - If the body of water is mentioned more than once, summarize the info into a single entry and break down data by the date (up to the 3 most recent dates) if possible
-    - If the date is in the body and not in the date field, add it to the date field.
-    - If an article contains reports for mulitple bodies of water break them into separate entries based on the body of water.
-    - If a river has multiple water types, list all of them next to the body of waters name
+  For each river or body of water mentioned, create a bulleted list that follows the template below.
+  - If you cannot find information for a bullet, leave it blank.
+  - If the body of water is mentioned more than once, summarize the info into a single entry, with each of the 3 most recent dates broken out separately.
+  - If a date is in the body of the text and not in the date field, move it to the date field.
+  - If an article contains reports for multiple bodies of water, break them into separate entries based on the body of water.
+  - If a river has multiple water types, list all of them next to the body of water's name.
 
-    # 1. Mississippi River (Water Type/s, ex: river, lake, resevoir, creek, fork)
-      * Date: (Date of report)
-        * Fly Patterns: (list of fly fishing fly patterns mentioned)
-        * Colors: (list of colors for fly fishing flies that were mentioned)
-        * Hook Sizes: (list of hook sizes mentioned)
-      * Date: ....
-        * Fly Patterns: ...
-        * Colors:
-        * Hook Sizes: ...
+  # 1. Madison River (Water Type/s, e.g., river, lake, reservoir, creek, fork)
+    * Date: June 19, 2025
+      * Fly Patterns: ...
+      * Colors: ...
+      * Hook Sizes: ...
+    * Date: June 13, 2025
+      * Fly Patterns: ...
+      * Colors: ...
+      * Hook Sizes: ...
+    * Date: June 12, 2025
+      * Fly Patterns: ...
+      * Colors: ...
+      * Hook Sizes: ...
+  # 2. Snake River (river)
+    * Date:...
+      * Fly Patterns: ...
+      * Colors: ...
+      * Hook Sizes: ...
   `;
 
 const MERGE_PROMPT = `
-    The following are summaries of fishing reports broken into sections.
-    Please consolidate the information into a single summary using the same format (up to the 3 most recent dates):
+  The following are summaries of fishing reports broken into sections.
+  Please consolidate the information into a single summary using the same format, listing up to the 3 most recent dates separately for each body of water:
   `;
 
 // Export all constants for use in other modules
