@@ -1,6 +1,6 @@
 # ![RescueRiver logo](assets/images/RescueRiverLogo.png) RescueRiver
 
-This repository contains work done for **[Rescue River](https://rescueriver.com/)**, including:
+This repository contains voluntary work done for **[Rescue River](https://rescueriver.com/)**, including:
 
 - ✅ Shop Scraper (fully functional)
 - ⚠️ Fishing Report Scraper (in progress)
