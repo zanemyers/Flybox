@@ -1,37 +1,25 @@
 ## 📋 Setup
 
-### ⚙️ Visual Studio Code Settings
+### 🔧 Tooling
+> Download and Install the following
 
-#### 🐞 Debugging
+- [Just](https://just.systems/man/en/)
+- [Docker Desktop](https://docs.docker.com/get-started/get-docker/)
+- [Node.js](https://nodejs.org/en/download) (LTS recommended)
 
-- On MacOS press `cmd + shift + p` to open the command palette
-- Search `Debug: Toggle Auto Attach` and set it to `Only With Flag`
+### 🧱 Building
 
-#### 🧰 Recommended Extensions
+- #### 🐳 Docker
+  - Run `docker-compose build` in the terminal
 
-- Container Tools by Microsoft
-- Docker by Microsoft
-- Docker DX by Docker
-- Excel Viewer by MESCIUS
-- GitHub Copilot by GitHub
-- Github Copilot Chat by Github
-- Prettier - Code formatter by Prettier
-
-### 🐳 Docker
-
-- Install [Docker Desktop](https://docs.docker.com/get-started/get-docker/)
-- Run `docker-compose build` in the terminal
-
-### 🏠 Local
-
-- Install [Node.js](https://nodejs.org/en/download) (recommend using LTS)
-- Run `npm install` in the terminal
+- #### 🏠 Local
+  - Run `npm install` in the terminal
 
 ### 🌳 Environment
 
 - Run `just setup_env` in the terminal to create your `.env` file
   - Follow the prompts
-  - You can re-run the command or edit the file manually anytime
+  - You can edit the file manually anytime to change variables
 
 ### 📦 Packages
 
