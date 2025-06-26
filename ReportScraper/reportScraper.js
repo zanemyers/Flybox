@@ -13,7 +13,7 @@ import {
   getPriority,
   isSameDomain,
   scrapeVisibleText,
-} from "./reportScrapingUtils.js";
+} from "./reportUtils.js";
 
 import { normalizeUrl, StealthBrowser } from "../base/scrapingUtils.js";
 
