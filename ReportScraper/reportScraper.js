@@ -71,11 +71,12 @@ async function main() {
  * visible report-like text, and compiles all results into a flat array.
  *
  * @param {Array<Object>} sites - List of site objects to crawl.
- * @returns {Promise<string[]>} - All collected report texts from the provided sites.
+ * @returns {Promise<{reports: *, failedDomains: *[]}>} - A list of reports and sites that failed to load
  */
 async function scrapeReports(sites) {
   // Initialize the stealth browser (headless unless overridden by env)
   const browser = new StealthBrowser({ headless: runHeadless });
+  const failedDomains = [];
 
   try {
     await browser.launch(); // Start the browser session
@@ -92,11 +93,12 @@ async function scrapeReports(sites) {
       .process(async (site) => {
         const page = await browser.newPage(); // Open a new tab for the site
         try {
-          const reports = await findReports(page, site); // Crawl and collect reports
+          const { reports, pageErrors } = await findReports(page, site); // Crawl and collect reports
           spinner.text = messageTemplate(++completed); // Update progress
+          failedDomains.push(...pageErrors);
           return reports;
         } catch (error) {
-          console.error(`Error scraping ${site.url}:`, error);
+          failedDomains.push(`Error scraping ${site.url}:`, error);
           return [];
         } finally {
           await page.close(); // Always close the tab to prevent leaks
@@ -108,7 +110,7 @@ async function scrapeReports(sites) {
 
     spinner.succeed(`Found ${reports.length} total reports!`);
 
-    return reports;
+    return { reports, failedDomains };
   } catch (err) {
     spinner.fail(`Error: ${err}`);
     return [];
@@ -126,13 +128,14 @@ async function scrapeReports(sites) {
  *
  * @param {Object} page - The Playwright page instance used for navigation.
  * @param {Object} site - An object representing the site to crawl. Includes `url` and optional `selector`.
- * @returns {Promise<string[]>} - A list of strings containing report content and their source URLs.
+ * @returns {Promise<{ reports: string[], pageErrors: string[] }>} - A list of reports and siteFailures
  */
 async function findReports(page, site) {
   const visited = new Set(); // Tracks URLs that have already been visited
   const toVisit = [{ url: site.url, priority: -1 }]; // URLs queued for crawling
   const baseHostname = new URL(site.url).hostname; // Restrict to same domain
   const reports = []; // Collected report texts
+  const pageErrors = [];
 
   // Crawl loop: continue while there are URLs to visit and we haven't hit the crawl limit
   while (toVisit.length > 0 && visited.size < crawlDepth) {
@@ -144,7 +147,7 @@ async function findReports(page, site) {
     try {
       await page.load(url);
     } catch (error) {
-      console.error(`Error navigating to ${url}:`, error);
+      pageErrors.push(`Error navigating to ${url}:`, error);
       continue;
     }
 
@@ -190,7 +193,7 @@ async function findReports(page, site) {
     console.log("TO VISIT:", toVisit);
   }
 
-  return reports;
+  return { reports, pageErrors };
 }
 
 /**
