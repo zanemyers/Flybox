@@ -3,7 +3,7 @@
 ### 🏃 Run Commands
 
 | Tool           | Docker    | VS Code                     | WebStorm                     |
-|----------------|-----------|-----------------------------|------------------------------|
+| -------------- | --------- | --------------------------- | ---------------------------- |
 | Shop Scraper   | `just ss` | `just ss -l` or `node main` | Use the `▷` Run/Debug config |
 | Report Scraper | `just rs` | `just rs -l` or `node main` | Use the `▷` Run/Debug config |
 
@@ -14,7 +14,7 @@
 ### 🐞 Debugging Locally
 
 | Tool           | VS Code                                  | WebStorm                      |
-|----------------|------------------------------------------|-------------------------------|
+| -------------- | ---------------------------------------- | ----------------------------- |
 | Shop Scraper   | `just ss -l -d` or `node --inspect main` | Use the `🐞` Run/Debug config |
 | Report Scraper | `just rs -l -d` or `node --inspect main` | Use the `🐞` Run/Debug config |
 

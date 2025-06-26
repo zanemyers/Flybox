@@ -43,3 +43,8 @@ rs *FLAGS:
 debug_rs:
     node --inspect ReportScraper/reportScraper.js
 
+@lint:
+    eslint . --fix
+
+@format:
+    prettier --write . --log-level silent
