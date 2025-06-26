@@ -126,8 +126,7 @@ const questions = [
 
 function validateRange(min = 0, max = 100, label = "Value") {
   return (value) => {
-    if (value < min || value > max)
-      return `${label} must be between ${min} and ${max}.`;
+    if (value < min || value > max) return `${label} must be between ${min} and ${max}.`;
     return true;
   };
 }
@@ -155,10 +154,7 @@ function validateRange(min = 0, max = 100, label = "Value") {
         .filter(Boolean)
         .map((r) => `"${r}"`);
 
-      riverList =
-        rivers.length > 2
-          ? "\n\t" + rivers.join(",\n\t") + "\n"
-          : rivers.join(", ");
+      riverList = rivers.length > 2 ? "\n\t" + rivers.join(",\n\t") + "\n" : rivers.join(", ");
     }
 
     const envContent =
