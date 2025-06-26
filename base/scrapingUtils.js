@@ -108,6 +108,7 @@ class StealthBrowser {
             timeout: 15000,
           });
 
+          // Don't retry blocked or forbidden sites
           const status = response?.status();
           if ([401, 403, 429].includes(status)) {
             const content = await page.content();
