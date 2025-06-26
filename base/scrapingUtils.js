@@ -124,7 +124,6 @@ class StealthBrowser {
             throw new Error(`Failed to load ${url}: ${err.message}`);
           }
 
-          console.warn(`Retrying load for ${url}: ${err.message}`);
           await new Promise((res) => setTimeout(res, 1000)); // delay before retry
         }
       }
