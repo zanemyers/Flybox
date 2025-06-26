@@ -1,10 +1,9 @@
-import { differenceInDays } from "date-fns";
-import { GoogleGenAI } from "@google/genai";
+import {differenceInDays} from "date-fns";
+import {GoogleGenAI} from "@google/genai";
 
-import { REPORT_DIVIDER } from "../base/enums.js";
-import { ExcelFileHandler } from "../base/fileUtils.js";
-import { normalizeUrl } from "../base/scrapingUtils.js";
-import { extractDate } from "../base/dateUtils.js";
+import {REPORT_DIVIDER} from "../base/enums.js";
+import {normalizeUrl} from "../base/scrapingUtils.js";
+import {extractDate} from "../base/dateUtils.js";
 
 // Initialize .env variables
 const ageLimit = Math.max(1, parseInt(process.env.MAX_REPORT_AGE, 10) || 30);
@@ -15,7 +14,7 @@ const aiKey = process.env.GEMINI_API_KEY;
 const aiModel = process.env.GEMINI_MODEL;
 
 if (!aiKey || !aiModel) {
-  throw new Error("Missing GEMINI_API_KEY or GEMINI_MODEL in .env file");
+    throw new Error("Missing GEMINI_API_KEY or GEMINI_MODEL in .env file");
 }
 
 /**
@@ -27,21 +26,21 @@ if (!aiKey || !aiModel) {
  * @returns {Promise<Array>} A Promise resolving to a new array containing site objects with unique, normalized URLs.
  */
 async function checkDuplicateSites(sites) {
-  const urlsSet = new Set(); // To keep track of normalized URLs already encountered
-  const siteList = []; // Array to accumulate unique sites with normalized URLs
+    const urlsSet = new Set(); // To keep track of normalized URLs already encountered
+    const siteList = []; // Array to accumulate unique sites with normalized URLs
 
-  for (const site of sites) {
-    const url = await normalizeUrl(site.url);
+    for (const site of sites) {
+        const url = await normalizeUrl(site.url);
 
-    if (!urlsSet.has(url)) {
-      // If URL not seen before, add it to the set and push the site with normalized URL to the list
-      urlsSet.add(url);
-      siteList.push({ ...site, url });
-    } else {
-      console.warn("Duplicate found:", url);
+        if (!urlsSet.has(url)) {
+            // If URL not seen before, add it to the set and push the site with normalized URL to the list
+            urlsSet.add(url);
+            siteList.push({...site, url});
+        } else {
+            console.warn("Duplicate found:", url);
+        }
     }
-  }
-  return siteList;
+    return siteList;
 }
 
 /**
@@ -52,12 +51,12 @@ async function checkDuplicateSites(sites) {
  * @returns {boolean} Returns true if the URL's hostname exactly matches the given hostname; otherwise, false.
  */
 function isSameDomain(url, hostname) {
-  try {
-    // Parse the URL and compare its hostname to the target hostname
-    return new URL(url).hostname === hostname;
-  } catch {
-    return false;
-  }
+    try {
+        // Parse the URL and compare its hostname to the target hostname
+        return new URL(url).hostname === hostname;
+    } catch {
+        return false;
+    }
 }
 
 /**
@@ -68,14 +67,14 @@ function isSameDomain(url, hostname) {
  * @returns {boolean} Returns `true` if at least one term is found in the target; otherwise, `false`.
  */
 function includesAny(target, terms) {
-  // Validate inputs: return false if target is not a string or terms is not an array
-  if (typeof target !== "string" || !Array.isArray(terms)) return false;
+    // Validate inputs: return false if target is not a string or terms is not an array
+    if (typeof target !== "string" || !Array.isArray(terms)) return false;
 
-  // Convert the target string to lowercase for case-insensitive matching
-  const lower = target.toLowerCase();
+    // Convert the target string to lowercase for case-insensitive matching
+    const lower = target.toLowerCase();
 
-  // Check if any term in the list appears in the target string
-  return terms.some((term) => lower.includes(term.toLowerCase()));
+    // Check if any term in the list appears in the target string
+    return terms.some((term) => lower.includes(term.toLowerCase()));
 }
 
 /**
@@ -89,12 +88,12 @@ function includesAny(target, terms) {
  *   - `text`: The anchor's visible text content
  */
 async function extractAnchors(page) {
-  return await page.$$eval("a[href]", (anchors) =>
-    anchors.map((a) => ({
-      href: a.href,
-      text: a.textContent?.toLowerCase().trim() || "",
-    }))
-  );
+    return await page.$$eval("a[href]", (anchors) =>
+        anchors.map((a) => ({
+            href: a.href,
+            text: a.textContent?.toLowerCase().trim() || "",
+        }))
+    );
 }
 
 /**
@@ -105,24 +104,24 @@ async function extractAnchors(page) {
  * @returns {Promise<string|null>} - The cleaned visible text if found; otherwise null.
  */
 async function scrapeVisibleText(page, selector) {
-  // Attempt to find the first element matching the selector on the page
-  const element = await page.$(selector);
+    // Attempt to find the first element matching the selector on the page
+    const element = await page.$(selector);
 
-  // If no element matches the selector, return null immediately
-  if (!element) return null;
+    // If no element matches the selector, return null immediately
+    if (!element) return null;
 
-  // Evaluate the element within the browser context to check visibility and extract text
-  return await element.evaluate((node) => {
-    // Retrieve computed CSS styles of the element to determine visibility
-    const style = window.getComputedStyle(node);
-    const isVisible =
-      style.display !== "none" &&
-      style.visibility !== "hidden" &&
-      node.offsetParent !== null;
+    // Evaluate the element within the browser context to check visibility and extract text
+    return await element.evaluate((node) => {
+        // Retrieve computed CSS styles of the element to determine visibility
+        const style = window.getComputedStyle(node);
+        const isVisible =
+            style.display !== "none" &&
+            style.visibility !== "hidden" &&
+            node.offsetParent !== null;
 
-    // If the element is visible, return its trimmed inner text
-    return isVisible ? node.innerText.trim().replace(/\n{2,}/g, "\n") : null;
-  });
+        // If the element is visible, return its trimmed inner text
+        return isVisible ? node.innerText.trim().replace(/\n{2,}/g, "\n") : null;
+    });
 }
 
 /**
@@ -139,28 +138,28 @@ async function scrapeVisibleText(page, selector) {
  * @returns {number} Priority score: 0 (highest), 1, 2, or Infinity (do not follow).
  */
 function getPriority(currentUrl, link, linkText, siteInfo) {
-  const currentUrlHasKeyword = includesAny(currentUrl, siteInfo.keywords); // Check the current URL for relevant keywords
-  const hasKeyword = includesAny(link, siteInfo.keywords); // Check the candidate link for relevant keywords
-  const hasJunkWord = includesAny(link, siteInfo.junkWords); // Check the candidate link for junk words
-  const hasClickPhrase = includesAny(linkText, siteInfo.clickPhrases); // Check the link text for phrases suggesting more content
+    const currentUrlHasKeyword = includesAny(currentUrl, siteInfo.keywords); // Check the current URL for relevant keywords
+    const hasKeyword = includesAny(link, siteInfo.keywords); // Check the candidate link for relevant keywords
+    const hasJunkWord = includesAny(link, siteInfo.junkWords); // Check the candidate link for junk words
+    const hasClickPhrase = includesAny(linkText, siteInfo.clickPhrases); // Check the link text for phrases suggesting more content
 
-  // Default priority: do not follow (infinite priority)
-  let priority = Infinity;
+    // Default priority: do not follow (infinite priority)
+    let priority = Infinity;
 
-  // Highest priority: link is relevant and not junk
-  if (hasKeyword && !hasJunkWord) {
-    priority = 0;
-  }
-  // Next priority: current page is relevant and link text suggests more content
-  else if (currentUrlHasKeyword && hasClickPhrase) {
-    priority = 1;
-  }
-  // Lower priority: link is relevant but also contains junk terms
-  else if (hasKeyword && hasJunkWord) {
-    priority = 2;
-  }
+    // Highest priority: link is relevant and not junk
+    if (hasKeyword && !hasJunkWord) {
+        priority = 0;
+    }
+    // Next priority: current page is relevant and link text suggests more content
+    else if (currentUrlHasKeyword && hasClickPhrase) {
+        priority = 1;
+    }
+    // Lower priority: link is relevant but also contains junk terms
+    else if (hasKeyword && hasJunkWord) {
+        priority = 2;
+    }
 
-  return priority;
+    return priority;
 }
 
 /**
@@ -175,24 +174,24 @@ function getPriority(currentUrl, link, linkText, siteInfo) {
  * @returns {string[]} Array of reports that meet the filtering criteria.
  */
 function filterReports(reports) {
-  const today = new Date();
+    const today = new Date();
 
-  return reports.filter((report) => {
-    // Extract the most recent date found in the report text
-    const reportDate = extractDate(report);
+    return reports.filter((report) => {
+        // Extract the most recent date found in the report text
+        const reportDate = extractDate(report);
 
-    // Skip reports without a valid date
-    if (!reportDate) return false;
+        // Skip reports without a valid date
+        if (!reportDate) return false;
 
-    // Exclude reports older than the allowed age limit
-    if (differenceInDays(today, reportDate) > ageLimit) return false;
+        // Exclude reports older than the allowed age limit
+        if (differenceInDays(today, reportDate) > ageLimit) return false;
 
-    // If filtering by river is enabled, exclude reports that do not mention any important rivers
-    if (filterByRiver && !includesAny(report, importantRivers)) return false;
+        // If filtering by river is enabled, exclude reports that do not mention any important rivers
+        if (filterByRiver && !includesAny(report, importantRivers)) return false;
 
-    // If the report passed all filters, include it
-    return true;
-  });
+        // If the report passed all filters, include it
+        return true;
+    });
 }
 
 /**
@@ -204,11 +203,11 @@ function filterReports(reports) {
  * @returns {number} Estimated number of tokens.
  */
 function estimateTokenCount(text) {
-  // Count words by splitting on whitespace after trimming
-  const words = text?.trim()?.split(/\s+/).length || 0;
+    // Count words by splitting on whitespace after trimming
+    const words = text?.trim()?.split(/\s+/).length || 0;
 
-  // Multiply by 1.3 and round up
-  return Math.ceil(words * 1.3);
+    // Multiply by 1.3 and round up
+    return Math.ceil(words * 1.3);
 }
 
 /**
@@ -222,45 +221,45 @@ function estimateTokenCount(text) {
  * @returns {string[]} An array of text chunks, each under the token limit.
  */
 function chunkReportText(text) {
-  // Split the text on the REPORT_DIVIDER
-  const reports = text.split(REPORT_DIVIDER);
-  const chunks = []; // Array to store the final text chunks
+    // Split the text on the REPORT_DIVIDER
+    const reports = text.split(REPORT_DIVIDER);
+    const chunks = []; // Array to store the final text chunks
 
-  let currentChunk = ""; // Accumulates the current chunk's text
-  let currentTokens = 0; // Tracks the estimated token count of currentChunk
+    let currentChunk = ""; // Accumulates the current chunk's text
+    let currentTokens = 0; // Tracks the estimated token count of currentChunk
 
-  for (const report of reports) {
-    // Re-add the REPORT_DIVIDER to preserve section separation in each chunk
-    const section = report + REPORT_DIVIDER;
+    for (const report of reports) {
+        // Re-add the REPORT_DIVIDER to preserve section separation in each chunk
+        const section = report + REPORT_DIVIDER;
 
-    // Estimate the token count for this section of text
-    const tokens = estimateTokenCount(section);
+        // Estimate the token count for this section of text
+        const tokens = estimateTokenCount(section);
 
-    // If adding this section would exceed the token limit,
-    // finalize the current chunk and start a new one
-    if (currentTokens + tokens > tokenLimit) {
-      if (currentChunk) {
-        chunks.push(currentChunk.trim());
-      }
-      currentChunk = section; // Start a new chunk with the current section
-      currentTokens = tokens;
-    } else {
-      // Otherwise, add this section to the current chunk
-      currentChunk += section;
-      currentTokens += tokens;
+        // If adding this section would exceed the token limit,
+        // finalize the current chunk and start a new one
+        if (currentTokens + tokens > tokenLimit) {
+            if (currentChunk) {
+                chunks.push(currentChunk.trim());
+            }
+            currentChunk = section; // Start a new chunk with the current section
+            currentTokens = tokens;
+        } else {
+            // Otherwise, add this section to the current chunk
+            currentChunk += section;
+            currentTokens += tokens;
+        }
     }
-  }
 
-  // Add the last chunk if it contains any content
-  if (currentChunk) {
-    chunks.push(currentChunk.trim());
-  }
+    // Add the last chunk if it contains any content
+    if (currentChunk) {
+        chunks.push(currentChunk.trim());
+    }
 
-  return chunks;
+    return chunks;
 }
 
 // Initialize the Google GenAI client with your API key
-const ai = new GoogleGenAI({ apiKey: aiKey });
+const ai = new GoogleGenAI({apiKey: aiKey});
 
 /**
  * Generates content using the Google GenAI model.
@@ -269,29 +268,29 @@ const ai = new GoogleGenAI({ apiKey: aiKey });
  * @returns {Promise<string>} The generated text content, or an empty string on failure.
  */
 async function generateContent(prompt) {
-  try {
-    // Send the request to the AI model with the provided prompt
-    const response = await ai.models.generateContent({
-      model: aiModel,
-      contents: prompt,
-    });
-    // Return the trimmed text response or an empty string if undefined
-    return response?.text?.trim() || "";
-  } catch (error) {
-    console.error("AI content generation failed:", error);
-    return "";
-  }
+    try {
+        // Send the request to the AI model with the provided prompt
+        const response = await ai.models.generateContent({
+            model: aiModel,
+            contents: prompt,
+        });
+        // Return the trimmed text response or an empty string if undefined
+        return response?.text?.trim() || "";
+    } catch (error) {
+        console.error("AI content generation failed:", error);
+        return "";
+    }
 }
 
 export {
-  checkDuplicateSites,
-  chunkReportText,
-  estimateTokenCount,
-  extractAnchors,
-  filterReports,
-  generateContent,
-  getPriority,
-  includesAny,
-  isSameDomain,
-  scrapeVisibleText,
+    checkDuplicateSites,
+    chunkReportText,
+    estimateTokenCount,
+    extractAnchors,
+    filterReports,
+    generateContent,
+    getPriority,
+    includesAny,
+    isSameDomain,
+    scrapeVisibleText,
 };
