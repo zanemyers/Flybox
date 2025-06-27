@@ -28,7 +28,6 @@ const projectDir = path.resolve(__dirname, "..");
 class FileHandler {
   /**
    * @param {string} filePath - The path to the file.
-   * @param {string} archiveFolderName - Folder name to store archived versions.
    * @param {string} fileType - Type of file (e.g., 'csv', 'txt').
    */
   constructor(filePath, fileType) {
@@ -159,6 +158,7 @@ class ExcelFileHandler extends FileHandler {
    * Reads the Excel file and returns an array of JSON objects,
    * with optional filtering and row mapping.
    *
+   * @param listCols - A list of columns that can have multiple values
    * @param {Function} filter - A function to filter rows (default: include all rows).
    * @param {Function|null} rowMap - A function to map/transform each row (default: null).
    * @returns {Promise<Array<Object>>} JSON array of filtered/mapped rows.
@@ -208,24 +208,25 @@ class ExcelFileHandler extends FileHandler {
    * Optionally archives the existing file before overwriting.
    *
    * @param {Array<Object>} data - Array of objects to write as rows
-   * @param {boolean} archive - Whether to archive the existing file before writing
+   * @param {boolean} archive - Whether to archive the file or append data to the current file
    */
   async write(data, archive = true) {
-    // Call archiving logic from base class
-    super.write(archive);
-
-    // Validate the data input
     if (!Array.isArray(data) || data.length === 0) {
       throw new Error("Data must be a non-empty array.");
     }
 
-    const headers = Object.keys(data[0]); // Use the keys of the first object as headers
-    if (headers.length === 0) {
-      throw new Error("Data objects must have at least one key.");
-    }
+    // Archive existing file if needed
+    await super.write(archive);
 
-    const worksheet = this.workbook.addWorksheet();
-    worksheet.addRow(headers);
+    // Load workbook and get or create the first worksheet
+    await this.workbook.xlsx.readFile(this.filePath).catch(() => {});
+    const worksheet = this.workbook.worksheets[0] || this.workbook.addWorksheet();
+
+    const headers = Object.keys(data[0]);
+    if (headers.length === 0) throw new Error("Data objects must have at least one key.");
+    if (worksheet.rowCount === 0) worksheet.addRow(headers);
+
+    // Add data rows
     data.forEach((item) => {
       const row = headers.map((key) => item[key]);
       worksheet.addRow(row);

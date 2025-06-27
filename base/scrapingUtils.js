@@ -297,14 +297,26 @@ function normalizeUrl(url) {
       u.pathname = u.pathname.slice(0, -1);
     }
 
-    // Remove 'www.' from the hostname if it exists
-    // CAN'T always do this :(
-    // u.hostname = u.hostname.replace(/^www\./, "");
-
     return u.href; // Use href to ensure a consistent absolute URL
   } catch {
     return url; // fallback to original if parsing fails
   }
 }
 
-export { extendPageSelectors, normalizeUrl, StealthBrowser };
+/**
+ * Compare two URLs by domain name, ignoring 'www.'
+ * @param {string} urlA
+ * @param {string} urlB
+ * @returns {boolean}
+ */
+function sameDomain(urlA, urlB) {
+  try {
+    const domainA = new URL(normalizeUrl(urlA)).hostname.replace(/^www\./, "").toLowerCase();
+    const domainB = new URL(normalizeUrl(urlB)).hostname.replace(/^www\./, "").toLowerCase();
+    return domainA === domainB;
+  } catch {
+    return false; // Treat invalid URLs as non-matching
+  }
+}
+
+export { extendPageSelectors, normalizeUrl, sameDomain, StealthBrowser };

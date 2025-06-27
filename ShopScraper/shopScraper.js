@@ -16,7 +16,7 @@ const browser = new StealthBrowser({
 const shopWriter = new ExcelFileHandler("media/xlsx/shop_details.xlsx");
 const websiteCache = new Map();
 
-// Initalize spinner instance
+// Initialize spinner instance
 const spinner = ora();
 
 async function main() {
