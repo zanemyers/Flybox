@@ -11,11 +11,10 @@ import {
   filterReports,
   generateContent,
   getPriority,
-  isSameDomain,
   scrapeVisibleText,
 } from "./reportUtils.js";
 
-import { normalizeUrl, StealthBrowser } from "../base/scrapingUtils.js";
+import { normalizeUrl, sameDomain, StealthBrowser } from "../base/scrapingUtils.js";
 
 // Initialize spinner instance
 const spinner = ora();
@@ -133,7 +132,6 @@ async function scrapeReports(sites) {
 async function findReports(page, site) {
   const visited = new Set(); // Tracks URLs that have already been visited
   const toVisit = [{ url: site.url, priority: -1 }]; // URLs queued for crawling
-  const baseHostname = new URL(site.url).hostname; // Restrict to same domain
   const reports = []; // Collected report texts
   const pageErrors = [];
 
@@ -164,7 +162,7 @@ async function findReports(page, site) {
     const pageLinks = await extractAnchors(page);
 
     for (const { href, linkText } of pageLinks) {
-      if (!isSameDomain(href, baseHostname)) continue;
+      if (!sameDomain(href, site.url)) continue;
 
       const link = normalizeUrl(href);
 

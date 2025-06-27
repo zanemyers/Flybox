@@ -8,6 +8,13 @@
 - [Docker Desktop](https://docs.docker.com/get-started/get-docker/)
 - [Node.js](https://nodejs.org/en/download) (LTS recommended)
 
+### 🛠️ IDE Setup
+
+You can use any editor, but setup instructions are included for two popular IDEs:
+
+- [WebStorm Setup](ide.md#-webstorm-setup)
+- [Visual Studio Code Setup](ide.md#-visual-studio-code-setup)
+
 ### 🧱 Building
 
 - #### 🐳 Docker
