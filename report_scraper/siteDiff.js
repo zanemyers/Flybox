@@ -58,7 +58,7 @@ async function mergeMissingUrls({ reportFile, siteFile }) {
 }
 
 mergeMissingUrls({
-  reportFile: "assets/example_files/report_scraper_ex.xlsx",
+  reportFile: "example_files/report_scraper_ex.xlsx",
   siteFile: "media/xlsx/shop_details.xlsx",
 }).catch((err) => {
   spinner.fail(`Fatal error: ${err}`);

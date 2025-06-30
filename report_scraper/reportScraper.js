@@ -31,7 +31,7 @@ async function main() {
     spinner.start("Reading Sites from file...");
 
     // Initialize the excel file handler instance with a filepathf
-    const reader = new ExcelFileHandler("assets/example_files/report_scraper_ex.xlsx");
+    const reader = new ExcelFileHandler("example_files/report_scraper_ex.xlsx");
 
     // Read the excel file into a JSON dict
     const sites = await reader.read(
@@ -53,7 +53,7 @@ async function main() {
 
       // STEP 4: Generate a summary using Gemini
       spinner.start("Generating report summary...");
-      // await generateSummary(compiledReports);
+      await generateSummary(compiledReports);
       spinner.succeed("Finished!");
     } else {
       console.log("No reports found."); // Handle empty result set
