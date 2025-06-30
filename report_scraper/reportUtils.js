@@ -112,7 +112,7 @@ async function scrapeVisibleText(page, selector) {
 
   // Evaluate the element within the browser context to check visibility and extract text
   return await element.evaluate((node) => {
-    // Retrieve computed CSS styles of the element to determine visibility
+    // Retrieve computed CSS public of the element to determine visibility
     const style = window.getComputedStyle(node);
     const isVisible =
       style.display !== "none" && style.visibility !== "hidden" && node.offsetParent !== null;
