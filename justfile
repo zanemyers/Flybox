@@ -1,12 +1,12 @@
 #!/usr/bin/env just --justfile
 
 # Runs the setup script to prepare the .env file.
-setup_env:
+setup:
     #!/usr/bin/env sh
     if [ -f .env ]; then
         echo "✅ .env already exists, skipping setup.";
     elif docker compose ps &> /dev/null; then
-        docker compose run --rm web-scraper node setup.js;
+        docker compose run --rm web-scraper node base/setup.js;
     else
         node setup.js;
     fi
