@@ -44,22 +44,6 @@ async function checkDuplicateSites(sites) {
 }
 
 /**
- * Determines if a given URL belongs to the same domain as a specified hostname.
- *
- * @param {string} url - The full URL to check (e.g., "https://sub.example.com/page").
- * @param {string} hostname - The base hostname to compare against (e.g., "example.com").
- * @returns {boolean} Returns true if the URL's hostname exactly matches the given hostname; otherwise, false.
- */
-function isSameDomain(url, hostname) {
-  try {
-    // Parse the URL and compare its hostname to the target hostname
-    return new URL(url).hostname === hostname;
-  } catch {
-    return false;
-  }
-}
-
-/**
  * Checks if any string from a list of terms appears within a target string, ignoring case.
  *
  * @param {string} target - The string to search within.
