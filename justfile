@@ -45,6 +45,13 @@ debug_rs:
 
 @lint:
     eslint . --fix
+    stylelint "static/scss/**/*.scss"
 
 @format:
     prettier --write . --log-level silent
+
+@build_styles:
+    sass static/scss/style.scss static/public/style.css
+
+@start:
+    npx sass --watch static/scss/style.scss static/public/style.css & node server.js
