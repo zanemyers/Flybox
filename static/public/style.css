@@ -1,9 +1,21 @@
 body {
+  background-color: #797917;
+  color: #0b657b;
   font-family: sans-serif;
   margin: 2rem;
   line-height: 1.6;
 }
+
+a {
+  color: #0b657b;
+}
+a:hover {
+  color: #797917;
+}
+
 button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
 }
+
+/*# sourceMappingURL=style.css.map */
