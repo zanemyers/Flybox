@@ -5,9 +5,8 @@ import { fileURLToPath } from "url";
 import expressLayouts from "express-ejs-layouts";
 
 // Route files
-import indexRoutes from "./routes/index.js";
-import reportRoutes from "./routes/report.js";
-import runRoutes from "./routes/run.js";
+import routes from "./routes/routes.js";
+import { errorHandler } from "./routes/error.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,20 +26,8 @@ app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstra
 app.use(express.urlencoded({ extended: true }));
 
 // Mount route files
-app.use("/", indexRoutes);
-app.use("/", reportRoutes);
-app.use("/", runRoutes);
-
-// 404 fallback
-app.use((req, res) => {
-  res.status(404).send("🚫 Page not found");
-});
-
-// Error-handling middleware (must be last)
-app.use((err, req, res, _next) => {
-  console.error("Unhandled error:", err);
-  res.status(500).send("💥 Internal Server Error");
-});
+app.use("/", routes);
+app.use(errorHandler);
 
 // Start server
 app.listen(port, () => {
