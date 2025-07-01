@@ -1,22 +1,22 @@
-# ![RescueRiver logo](assets/images/RescueRiverLogo.png) RescueRiver
+# ![RescueRiver logo](static/images/rr_logo.png) RescueRiver
 
-This repository contains voluntary work done for **[Rescue River](https://rescueriver.com/)**, including:
+This repository contains community-supported tools for **[Rescue River](https://rescueriver.com/)**, focused on gathering and summarizing fishing-related data from online sources.
 
-- ✅ Shop Scraper (fully functional)
-- ⚠️ Fishing Report Scraper (in progress)
+## 📦 Tools
 
-These tools gather and summarize data from fishing-related sources online.  
-They support local and Docker-based development with flexible configuration.
+- [🛒 Shop Scraper](docs/overview.md#-shop-scraper) — Finds and catalogs fly-fishing shops across regions.
+- [📈 Report Scraper](docs/overview.md#-report-scraper-in-progress) — Scrapes, compares, and summarizes fishing reports.
 
-## 📦 Apps
-
-- [🛒 Shop Scraper](docs/overview.md#-shop-scraper)
-- [📈 Report Scraper](docs/overview.md#-report-scraper-in-progress)
+> Supports both local and Docker-based workflows with flexible `.env` configuration.
 
 ## 🛠️ Setup & Usage
 
-See the [Setup Guide](docs/setup.md), [Usage Guide](docs/usage.md), and [Configuration Guide](docs/config.md) for full instructions.
+Get started with:
 
-## 📖 Full Docs
+- [Setup Guide](docs/setup.md)
+- [Usage Guide](docs/usage.md)
+- [Configuration Guide](docs/config.md)
 
-Start here: [Documentation Index](docs/index.md)
+## 📚 Full Documentation
+
+Start here → [Documentation Index](docs/index.md)
