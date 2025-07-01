@@ -273,6 +273,5 @@ export {
   generateContent,
   getPriority,
   includesAny,
-  isSameDomain,
   scrapeVisibleText,
 };
