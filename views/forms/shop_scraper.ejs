@@ -122,12 +122,12 @@
         });
 
         const html = await response.text();
-        document.getElementById("formSection").innerHTML = html;
+        document.getElementById("form").innerHTML = html;
 
         // Now start listening for SSE progress
         const eventSource = new EventSource("/progress");
         eventSource.onmessage = function (event) {
-            const logDiv = document.getElementById("form");
+            const logDiv = document.getElementById("scriptProgress");
             logDiv.innerHTML += `<div>${event.data}</div>`;
         };
     });

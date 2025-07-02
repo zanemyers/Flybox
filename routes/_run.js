@@ -30,10 +30,12 @@ function sendProgressUpdate(message) {
 router.post("/run", async (req, res) => {
   try {
     runScript(); // non-blocking background task
-    res.render("partials/progress", { message: "✅ Script started..." });
+    res.render("partials/progress", { layout: false, message: "✅ Script started..." });
   } catch (err) {
     console.error("Error:", err);
-    res.status(500).render("partials/progress", { message: "❌ Script failed to start." });
+    res
+      .status(500)
+      .render("partials/progress", { layout: false, message: "❌ Script failed to start." });
   }
 });
 
