@@ -1,5 +1,6 @@
 @use "theme";
 
+
 html, body {
   height: 100%;
   margin: 0;  /* reset default margin for full height */
@@ -10,7 +11,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   background-color: white;
-  color: theme.$primary-color;
+  color: theme.$primary;
   font-family: sans-serif;
   margin: 0; /* avoid margin adding space */
   line-height: 1.6;
@@ -30,10 +31,10 @@ footer {
 }
 
 a {
-  color: theme.$primary-color;
+  color: theme.$primary;
 
   &:hover {
-    color: theme.$accent-color;
+    color: theme.$secondary;
   }
 }
 
@@ -41,4 +42,3 @@ button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
 }
-
