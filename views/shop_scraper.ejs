@@ -29,7 +29,7 @@
         </div>
 
         <!-- Form -->
-        <div id="form" class="col-lg-7 d-flex">
+        <div id="formContainer" class="col-lg-7 d-flex">
             <form id="searchForm" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column">
                 <div class="form-body">
                     <ul class="nav nav-tabs mb-3" id="inputTab" role="tablist">
@@ -56,8 +56,8 @@
                             <div class="mb-3">
                                 <label class="form-label">Location</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" id="latitude" name="latitude" step="0.000001" min="-90" max="90" value="44.427963" placeholder="Latitude" />
-                                    <input type="number" class="form-control" id="longitude" name="longitude" step="0.000001" min="-180" max="180" value="-110.588455" placeholder="Longitude" />
+                                    <input type="number" class="form-control" id="latitude" title="Latitude (min: -90, max: 90)" name="latitude" step="0.000001" min="-90" max="90" value="44.427963" placeholder="Latitude" />
+                                    <input type="number" class="form-control" id="longitude" title="Longitude (min: -180, max: 180)" name="longitude" step="0.000001" min="-180" max="180" value="-110.588455" placeholder="Longitude" />
                                     <button type="button" class="location-picker" title="Select a location" data-bs-placement="top" data-bs-toggle="modal" data-bs-target="#mapModal">
                                         <img src="/static/image/location_pin.png" alt="Location Pin" style="height: 1em;" />
                                     </button>
@@ -66,13 +66,16 @@
 
                             <div class="mb-3">
                                 <label for="maxResults" class="form-label">Max Results</label>
-                                <input type="number" class="form-control" id="maxResults" name="maxResults" step="20" min="20" max="120" value="100" placeholder="e.g. 100" />
+                                <input type="number" class="form-control" id="maxResults" title="Results come in increments of 20 (min: 20, max: 120)" name="maxResults" step="20" min="20" max="120" value="100" placeholder="e.g. 100" />
                             </div>
                         </div>
 
                         <div class="tab-pane" id="fileInput" role="tabpanel" aria-labelledby="file-tab">
+                            <div class="alert alert-warning text-center mb-3 rounded-2" role="alert">
+                                <strong>🚧 Coming Soon:</strong> File upload support will be available in a future update.
+                            </div>
                             <div class="mb-3">
-                                <label for="inputFile" class="form-label">Import Excel File</label>
+<!--                                <label for="inputFile" class="form-label">Import Excel File</label>-->
                                 <div class="border rounded bg-light text-center py-5" style="cursor: pointer" onclick="document.getElementById('inputFile').click()">
                                     <img src="/static/image/folder_icon.png" alt="Folder Icon" class="mb-2" style="height: 3em; filter: invert(25%) opacity(0.5);" />
                                     <p class="mb-2">Drag & Drop or Click to Select File</p>
@@ -86,6 +89,8 @@
 
                 <button type="submit" class="btn btn-primary w-100 mt-auto">Run Search</button>
             </form>
+
+
         </div>
     </div>
 </main>
@@ -106,77 +111,10 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+<!--Handle form -->
+<script src="/static/js/shopScraper.js" type="text/javascript"></script>
+
+<!--Create and Handle leaflet map for selecting coordinates-->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-
-<script>
-    document.getElementById("searchForm").addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const form = e.target;
-        const formData = new FormData(form);
-
-        const response = await fetch("/run", {
-            method: "POST",
-            body: formData
-        });
-
-        const html = await response.text();
-        document.getElementById("form").innerHTML = html;
-
-        // Now start listening for SSE progress
-        const eventSource = new EventSource("/progress");
-        eventSource.onmessage = function (event) {
-            const logDiv = document.getElementById("scriptProgress");
-            logDiv.innerHTML += `<div>${event.data}</div>`;
-        };
-    });
-</script>
-
-<script>
-    const latInput = document.getElementById("latitude");
-    const lngInput = document.getElementById("longitude");
-
-    let map, marker;
-
-    const initMap = () => {
-        const lat = parseFloat(latInput.value) || 44.427963;
-        const lng = parseFloat(lngInput.value) || -110.588455;
-
-        map = new L.Map("map").setView([lat, lng], 10);
-
-        new L.TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: 'Map data © OpenStreetMap contributors',
-        }).addTo(map);
-
-        marker = new L.Marker([lat, lng], { draggable: true }).addTo(map);
-
-        marker.on("dragend", () => {
-            const pos = marker.getLatLng();
-            latInput.value = pos.lat.toFixed(6);
-            lngInput.value = pos.lng.toFixed(6);
-        });
-
-        map.on("click", (e) => {
-            marker.setLatLng(e.latlng);
-            latInput.value = e.latlng.lat.toFixed(6);
-            lngInput.value = e.latlng.lng.toFixed(6);
-
-            const modalInstance = bootstrap.Modal.getInstance(mapModal);
-            modalInstance.hide();
-        });
-    };
-
-    const mapModal = document.getElementById("mapModal");
-    mapModal.addEventListener("shown.bs.modal", () => {
-        if (!map) {
-            initMap();
-        } else {
-            map.invalidateSize();
-            const lat = parseFloat(latInput.value);
-            const lng = parseFloat(lngInput.value);
-            map.setView([lat, lng], 10);
-            marker.setLatLng([lat, lng]);
-        }
-    });
-</script>
+<script src="/static/js/map.js" type="text/javascript"></script>
