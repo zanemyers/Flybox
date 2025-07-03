@@ -16,7 +16,8 @@
     "playwright": "^1.52.0",
     "playwright-extra": "^4.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
-    "serpapi": "^2.1.0"
+    "serpapi": "^2.1.0",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
