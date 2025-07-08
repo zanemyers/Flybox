@@ -1,3 +1,5 @@
+import { initTooltips } from "./tooltip.js";
+
 const ShopFormApp = (() => {
   let socket = null;
   let elements = {};
@@ -6,6 +8,7 @@ const ShopFormApp = (() => {
   async function showForm() {
     const res = await fetch("/partials/shop-form");
     document.getElementById("formContainer").innerHTML = await res.text();
+    initTooltips();
     cacheElements();
     setupTabs();
     handleFormSubmit();
