@@ -37,7 +37,7 @@ wss.on("connection", (ws, req) => {
   } else {
     ws.close();
   }
-}); // 👈 delegate to your modular handler
+});
 
 // Paths
 const __filename = fileURLToPath(import.meta.url);
