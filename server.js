@@ -9,7 +9,8 @@ import { WebSocketServer } from "ws";
 // Route files
 import routes from "./routes/routes.js";
 import { errorHandler } from "./routes/error.js";
-import socketHandler from "./routes/socketHandler.js";
+import shopSocket from "./routes/web_sockets/shopSocket.js";
+import reportSocket from "./routes/web_sockets/reportSocket.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,8 +19,25 @@ const port = process.env.PORT || 3000;
 const server = http.createServer(app);
 
 // WebSocket server attached to the same HTTP server
-const wss = new WebSocketServer({ server });
-wss.on("connection", socketHandler); // 👈 delegate to your modular handler
+const wss = new WebSocketServer({ noServer: true }); // Use noServer here
+
+server.on("upgrade", (req, socket, head) => {
+  wss.handleUpgrade(req, socket, head, (ws) => {
+    wss.emit("connection", ws, req);
+  });
+});
+
+wss.on("connection", (ws, req) => {
+  const { url } = req;
+
+  if (url === "/ws/shop") {
+    shopSocket(ws, req);
+  } else if (url === "/ws/report") {
+    reportSocket(ws, req);
+  } else {
+    ws.close();
+  }
+}); // 👈 delegate to your modular handler
 
 // Paths
 const __filename = fileURLToPath(import.meta.url);

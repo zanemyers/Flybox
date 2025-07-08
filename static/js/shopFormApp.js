@@ -101,7 +101,7 @@ const ShopFormApp = (() => {
       await showProgress();
 
       if (socket && socket.readyState === WebSocket.OPEN) socket.close();
-      socket = new WebSocket("ws://localhost:3000");
+      socket = new WebSocket("ws://localhost:3000/ws/shop");
 
       socket.onopen = () => socket.send(JSON.stringify(payload));
 
