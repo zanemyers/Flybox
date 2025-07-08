@@ -1,63 +1,68 @@
 import { shopScraper } from "../../shop_scraper/shopScraper.js";
+import { initCancellationToken } from "./cancellationToken.js";
 
 export default function shopSocket(ws) {
-  let currentJob = null; // Store reference to the running job
+  const cancelToken = initCancellationToken();
 
-  console.log("connected");
-  let cancelled = false; // Flag to track cancellation
+  console.log("🟢 WebSocket connected");
 
-  const send = (msg) => {
+  const sendText = (msg) => {
     if (ws.readyState === ws.OPEN) {
       ws.send(msg);
     }
   };
 
+  const sendBinary = (buffer) => {
+    if (ws.readyState === ws.OPEN) {
+      ws.send(buffer);
+    }
+  };
+
   ws.on("message", async (message) => {
-    console.log("Received", message);
+    console.log("📨 Received:", message);
     let payload = {};
     try {
       payload = JSON.parse(message);
     } catch {
-      send("❌ Invalid message format.");
+      sendText("❌ Invalid message format.");
       ws.close();
       return;
     }
 
-    // Handle cancel action
+    // Handle cancellation
     if (payload.action === "cancel") {
-      cancelled = true;
-      send("❌ Search cancelled.");
+      cancelToken.cancel();
+      sendText("❌ Search cancelled.");
       ws.close();
       return;
     }
-
-    const { apiKey, query, lat, lng, maxResults } = payload;
 
     try {
-      // Wrap progress sender to check for cancellation
       const progressUpdate = (msg) => {
-        if (!cancelled) send(msg);
+        if (!cancelToken.isCancelled()) sendText(msg);
       };
 
-      currentJob = shopScraper({
-        apiKey,
-        query,
-        lat,
-        lng,
-        maxResults,
+      const returnFile = async (buffer) => {
+        if (!cancelToken.isCancelled()) {
+          // Send the Excel file buffer as binary over WS
+          sendBinary(buffer);
+        }
+      };
+
+      await shopScraper({
+        searchParams: payload, // 👈 Pass whole payload
         progressUpdate,
-        isCancelled: () => cancelled, // 👈 Add this if your scraper can check it
+        returnFile,
+        cancelToken: cancelToken,
       });
 
-      await currentJob; // Wait for it to finish
-
-      if (!cancelled) {
-        send("✅ Search complete.");
+      if (!cancelToken.isCancelled()) {
+        sendText("✅ Search complete.");
       }
     } catch (err) {
-      console.log("error", err);
-      if (!cancelled) {
-        send(`❌ Error: ${err.message}`);
+      console.error("❌ Scraper error:", err);
+      if (!cancelToken.isCancelled()) {
+        sendText(`❌ Error: ${err.message || "Unknown error"}`);
       }
     } finally {
       ws.close();
@@ -65,6 +70,7 @@ export default function shopSocket(ws) {
   });
 
   ws.on("close", () => {
-    cancelled = true; // Also cancel if socket disconnects unexpectedly
+    cancelToken.cancel();
+    console.log("🔴 WebSocket closed");
   });
 }

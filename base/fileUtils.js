@@ -234,6 +234,18 @@ class ExcelFileHandler extends FileHandler {
 
     await this.workbook.xlsx.writeFile(this.filePath);
   }
+
+  /**
+   * Returns a buffer of the current workbook in memory for downloading or transmission.
+   *
+   * Note: The workbook must be populated by calling either `read()` or `write()` beforehand,
+   * otherwise the buffer may be empty or invalid.
+   *
+   * @returns {Promise<Buffer>} A Promise that resolves to the Excel file buffer.
+   */
+  async getBuffer() {
+    return await this.workbook.xlsx.writeBuffer();
+  }
 }
 
 export { TXTFileHandler, ExcelFileHandler };

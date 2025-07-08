@@ -4,7 +4,12 @@ import { getJson } from "serpapi";
 import { PromisePool } from "@supercharge/promise-pool";
 
 import { FALLBACK_DETAILS } from "../base/enums.js";
-import { addShopSelectors, buildShopRows, loadCachedShops } from "./shopUtils.js";
+import {
+  addShopSelectors,
+  buildCacheFileRows,
+  buildShopRows,
+  loadCachedShops,
+} from "./shopUtils.js";
 import { normalizeUrl, StealthBrowser } from "../base/scrapingUtils.js";
 import { ExcelFileHandler } from "../base/fileUtils.js";
 
@@ -12,91 +17,107 @@ import { ExcelFileHandler } from "../base/fileUtils.js";
 const browser = new StealthBrowser({
   headless: process.env.RUN_HEADLESS !== "false",
 });
-const shopWriter = new ExcelFileHandler("media/xlsx/shop_details.xlsx");
+
 const websiteCache = new Map();
 
-// Initialize global variables
-let serpKey = "";
-let searchQuery = "";
-let searchCoordinates = "";
-let max = 0;
-
 /**
+ * Runs the full shop scraping workflow:
  *
- * @param apiKey
- * @param query
- * @param lat
- * @param lng
- * @param maxResults
- * @param progressUpdate
- * @returns {Promise<void>}
+ * 1. Fetches shop search results using SerpAPI or cached data.
+ * 2. Scrapes additional details from shop websites.
+ * 3. Writes the collected data to an Excel file.
+ *
+ * Supports real-time progress updates and graceful cancellation at any step.
+ *
+ * @param {string} searchParams - ....
+ * @param {Function} [progressUpdate] - Optional callback for progress/status updates.
+ * @param returnFile
+ * @param {Object} [cancelToken] - Optional cancellation token with a `throwIfCancelled()` method.
+ *
+ * @returns {Promise<void>} Resolves when the scraping completes, errors, or is cancelled.
  */
+
 export async function shopScraper({
-  apiKey,
-  query,
-  lat,
-  lng,
-  maxResults,
+  searchParams,
   progressUpdate = () => {},
+  returnFile = () => {},
+  cancelToken = { throwIfCancelled: () => {} }, // default to no-op if not provided
 }) {
-  // set global variables
-  serpKey = apiKey;
-  searchQuery = query;
-  searchCoordinates = `${lat},${lng}`;
-  max = parseInt(maxResults, 10) || 100;
+  const shopWriter = new ExcelFileHandler("media/xlsx/shop_details.xlsx");
 
   try {
-    progressUpdate(
-      `🔑 API Key: ${apiKey}\n` +
-        `🔍 Query: ${query}\n` +
-        `📍 Location: ${lat}, ${lng}\n` +
-        `🔢 Max Results: ${maxResults}\n`
-    );
-
+    cancelToken.throwIfCancelled();
     progressUpdate("Searching for shops...");
-    const shops = await fetchShops();
+    const shops = await fetchShops(searchParams, progressUpdate, returnFile, cancelToken);
+    cancelToken.throwIfCancelled();
     progressUpdate(`[STATUS]✅ Found ${shops.length} shops.`);
 
     await browser.launch();
-    const shopDetails = await getDetails(shops, progressUpdate);
+    const shopDetails = await getDetails(shops, progressUpdate, cancelToken);
+    cancelToken.throwIfCancelled();
+
     const rows = buildShopRows(shops, shopDetails);
 
     progressUpdate("📝 Writing shop data to Excel...");
     shopWriter.write(rows);
     progressUpdate("[STATUS]✅ Excel file created.");
   } catch (err) {
-    progressUpdate(`❌ Error: ${err.message || err}`);
+    if (err.isCancelled) {
+      progressUpdate("❌ Search cancelled.");
+      console.log("❌ Search cancelled.");
+    } else {
+      progressUpdate(`❌ Error: ${err.message || err}`);
+    }
   } finally {
     await browser.close();
   }
 }
 
 /**
- * Fetches a list of shops near a given location using SerpAPI's Google Maps engine.
- * Falls back to cached results if available and valid.
+ * Fetches a list of shops near the specified location using SerpAPI's Google Maps engine.
+ * Falls back to cached results if available and matching the current query and coordinates.
  *
- * @returns {Promise<object[]>} A list of local shops, or an empty array if none found.
+ * @param searchParams
+ * @param returnFile
+ * @param {Object} cancelToken - An object with a `throwIfCancelled()` method to support graceful cancellation.
+ *
+ * @returns {Promise<object[]>} A list of shop result objects, or an empty array if none found.
  */
-async function fetchShops() {
+
+async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken) {
+  // TODO: Clean this up and fix cache file handling
+  const cacheFileWriter = new ExcelFileHandler("media/xlsx/cache_file.xlsx");
+  cancelToken.throwIfCancelled();
+
   const cacheFile = "./example_files/shops.json"; // TODO: Allow user to pass this in
   const meta = {
-    query: searchQuery,
-    coordinates: searchCoordinates,
+    query: searchParams.query,
+    coordinates: `${searchParams.lat},${searchParams.lng}`,
   };
 
   const cached = await loadCachedShops(cacheFile, meta);
-  if (cached) return cached;
+  if (cached) {
+    cacheFileWriter.write(buildCacheFileRows(cached));
+    progressUpdate(`DOWNLOAD:simple_shop_details.xlsx`);
+    const cacheFileBuffer = await cacheFileWriter.getBuffer();
+    console.log("Is Buffer:", Buffer.isBuffer(cacheFileBuffer));
+    returnFile(cacheFileBuffer);
+    await fs.writeFile("test.xlsx", cacheFileBuffer);
+    return cached;
+  }
 
   const results = [];
 
-  for (let start = 0; start < max; start += 20) {
+  for (let start = 0; start < (+searchParams.maxResults || 100); start += 20) {
+    cancelToken.throwIfCancelled();
+
     const data = await getJson({
       engine: "google_maps",
       q: meta.query,
       ll: `@${meta.coordinates},10z`,
       start,
       type: "search",
-      api_key: process.env.SERP_API_KEY,
+      api_key: process.env.SERP_API_KEY, // searchParams.apiKey
     });
 
     const pageResults = data?.local_results || [];
@@ -107,6 +128,7 @@ async function fetchShops() {
 
   // TODO: Export this to a user so they can import it as their cache file later
   if (results.length > 0) {
+    cacheFileWriter.write(buildBasicShopRows(results));
     await fs.writeFile(cacheFile, JSON.stringify({ meta, results }, null, 2), "utf-8");
   }
 
@@ -114,16 +136,19 @@ async function fetchShops() {
 }
 
 /**
- * Scrapes additional details from a shops website using Playwright.
+ * Scrapes additional business details from each shop's website using Playwright.
  *
- * Each shop is processed in parallel with controlled concurrency to avoid overwhelming
- * system resources or triggering anti-bot protections. Shops without websites are skipped.
+ * Shops are processed in parallel with controlled concurrency to avoid overwhelming
+ * system resources or triggering anti-bot protections.
  *
- * @param {Array<object>} shops - The list of shops to scrape extra details from.
- * @param progressUpdate
- * @returns {Promise<Array<object>>} - A list of detail objects (one per shop), with fallback values on failure.
+ * @param {Array<object>} shops - The list of shops to process.
+ * @param {Function} progressUpdate - A function to send real-time progress updates (optional).
+ * @param {Object} cancelToken - An object with a `throwIfCancelled()` method to support graceful cancellation.
+ *
+ * @returns {Promise<Array<object>>} A list of shop detail objects (one per shop), using fallback values when scraping fails.
  */
-async function getDetails(shops, progressUpdate = () => {}) {
+
+async function getDetails(shops, progressUpdate = () => {}, cancelToken) {
   const results = new Array(shops.length);
   let completed = 0;
 
@@ -133,15 +158,20 @@ async function getDetails(shops, progressUpdate = () => {}) {
   await PromisePool.withConcurrency(parseInt(process.env.CONCURRENCY, 10) || 5)
     .for(shops)
     .process(async (shop, index) => {
+      cancelToken.throwIfCancelled();
+
       if (!shop.website) {
         results[index] = FALLBACK_DETAILS.NONE;
       } else {
         const page = await addShopSelectors(await browser.newPage());
         try {
-          results[index] = await scrapeWebsite(page, shop.website);
+          cancelToken.throwIfCancelled();
+          results[index] = await scrapeWebsite(page, shop.website, cancelToken);
         } catch (err) {
-          console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
-          results[index] = FALLBACK_DETAILS.ERROR;
+          if (!err.isCancelled) {
+            console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
+            results[index] = FALLBACK_DETAILS.ERROR;
+          }
         } finally {
           await page.close();
         }
@@ -157,13 +187,20 @@ async function getDetails(shops, progressUpdate = () => {}) {
 }
 
 /**
- * Scrapes useful business-related data from a given website using Playwright.
+ * Scrapes useful business-related data from a shop’s website using Playwright.
  *
- * @param {Page} page - A Playwright page instance used to navigate and scrape the website.
+ * If available, cached results are used to avoid unnecessary requests. If the site
+ * blocks access or an error occurs, fallback values are returned.
+ *
+ * @param {Page} page - A Playwright Page instance used to navigate and scrape the website.
  * @param {string} url - The raw URL of the shop’s website to be scraped.
- * @returns {Promise<object>} - An object with extracted details or fallback error values.
+ * @param {Object} cancelToken - An object with a `throwIfCancelled()` method to support graceful cancellation.
+ *
+ * @returns {Promise<object>} A details object containing scraped data or fallback error values.
  */
-async function scrapeWebsite(page, url) {
+
+async function scrapeWebsite(page, url, cancelToken) {
+  cancelToken.throwIfCancelled();
   const normalizedUrl = normalizeUrl(url);
 
   // Check for cached results
@@ -174,6 +211,7 @@ async function scrapeWebsite(page, url) {
   let details;
   try {
     const response = await page.load(normalizedUrl); // Open the page and wiggle the mouse
+    cancelToken.throwIfCancelled();
 
     // Check if the request was blocked or rate-limited
     const status = response?.status();

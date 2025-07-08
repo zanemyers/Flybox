@@ -105,14 +105,36 @@ const ShopFormApp = (() => {
 
       socket.onopen = () => socket.send(JSON.stringify(payload));
 
+      let pendingFilename = "simple_shop_details.xlsx";
+      socket.binaryType = "arraybuffer";
       socket.onmessage = (event) => {
-        const progressArea = document.getElementById("progressArea");
-        if (!progressArea) return;
+        if (typeof event.data === "string") {
+          const progressArea = document.getElementById("progressArea");
+          if (!progressArea) return;
 
-        const message = event.data;
-        message.startsWith("[STATUS]")
-          ? updateProgress(progressArea, message)
-          : appendProgress(progressArea, message);
+          const message = event.data;
+          if (message.startsWith("DOWNLOAD:")) {
+            // Save the filename for the upcoming file
+            pendingFilename = message.replace("DOWNLOAD:", "").trim();
+            return;
+          }
+
+          message.startsWith("[STATUS]")
+            ? updateProgress(progressArea, message)
+            : appendProgress(progressArea, message);
+        } else {
+          // Binary message — Excel file buffer
+          const blob = new Blob([event.data], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          });
+          const url = URL.createObjectURL(blob);
+
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = pendingFilename;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
       };
 
       socket.onclose = () => {
