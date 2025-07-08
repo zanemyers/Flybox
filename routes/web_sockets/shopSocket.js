@@ -1,6 +1,6 @@
-import { shopScraper } from "../shop_scraper/shopScraper.js";
+import { shopScraper } from "../../shop_scraper/shopScraper.js";
 
-export default function shopSocketHandler(ws) {
+export default function shopSocket(ws) {
   let currentJob = null; // Store reference to the running job
 
   console.log("connected");
