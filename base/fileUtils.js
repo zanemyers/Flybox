@@ -77,6 +77,7 @@ class ExcelFileHandler {
   async loadBuffer(buffer) {
     await this.workbook.xlsx.load(buffer);
     this.worksheet = this.workbook.worksheets[0] || this.worksheet;
+    return this;
   }
 
   /**
@@ -99,15 +100,16 @@ class ExcelFileHandler {
       const rowData = {};
       headers.forEach((header, index) => {
         const cellValue = row.getCell(index + 1).value;
+        const newHeader = header.toLowerCase().replace(/\s+/g, "_");
 
         if (typeof cellValue === "string" && listCols.includes(header)) {
           // Split by comma and trim each item
-          rowData[header] = cellValue
+          rowData[newHeader] = cellValue
             .split(",")
             .map((s) => s.trim())
             .filter(Boolean);
         } else {
-          rowData[header] = cellValue;
+          rowData[newHeader] = cellValue;
         }
       });
 

@@ -68,18 +68,19 @@ const ShopFormApp = (() => {
   function validateFormInputs() {
     const manualTabActive = document.getElementById("manualInputs").classList.contains("show");
 
-    const apiKey = elements.apiKeyEl.value.trim();
-    const query = elements.queryEl.value.trim();
-    const lat = elements.latEl.value.trim();
-    const lng = elements.lngEl.value.trim();
-    const maxResults = elements.maxResultsEl.value.trim();
+    if (manualTabActive) {
+      const apiKey = elements.apiKeyEl.value.trim();
+      const query = elements.queryEl.value.trim();
+      const lat = parseFloat(elements.latEl.value);
+      const lng = parseFloat(elements.lngEl.value);
+      const maxResults = parseInt(elements.maxResultsEl.value, 10);
 
-    const hasManualInputs = apiKey && query && lat && lng && maxResults;
+      const hasManualInputs = apiKey && query && !isNaN(lat) && !isNaN(lng) && !isNaN(maxResults);
 
-    if (manualTabActive && !hasManualInputs) return null;
-    if (!manualTabActive && !elements.fileInputEl.files.length) return null;
-
-    return { apiKey, query, lat, lng, maxResults };
+      return hasManualInputs ? { apiKey, query, lat, lng, maxResults } : null;
+    } else {
+      return elements.fileInputEl.files[0] || null;
+    }
   }
 
   // === Handle Form Submission ===
@@ -103,9 +104,17 @@ const ShopFormApp = (() => {
       if (socket && socket.readyState === WebSocket.OPEN) socket.close();
       socket = new WebSocket("ws://localhost:3000/ws/shop");
 
-      socket.onopen = () => socket.send(JSON.stringify(payload));
+      socket.onopen = () => {
+        if (payload instanceof File) {
+          const reader = new FileReader();
+          reader.onload = () => socket.send(reader.result);
+          reader.readAsArrayBuffer(payload);
+        } else {
+          socket.send(JSON.stringify(payload));
+        }
+      };
 
-      let pendingFilename = "simple_shop_details.xlsx";
+      let pendingFilename = "download.xlsx";
       socket.binaryType = "arraybuffer";
       socket.onmessage = (event) => {
         if (typeof event.data === "string") {

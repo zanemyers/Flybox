@@ -1,15 +1,9 @@
 import "dotenv/config";
-import fs from "fs/promises";
 import { getJson } from "serpapi";
 import { PromisePool } from "@supercharge/promise-pool";
 
 import { FALLBACK_DETAILS } from "../base/enums.js";
-import {
-  addShopSelectors,
-  buildCacheFileRows,
-  buildShopRows,
-  loadCachedShops,
-} from "./shopUtils.js";
+import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils.js";
 import { normalizeUrl, StealthBrowser } from "../base/scrapingUtils.js";
 import { ExcelFileHandler } from "../base/fileUtils.js";
 
@@ -88,33 +82,23 @@ export async function shopScraper({
  */
 
 async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken) {
-  // TODO: Clean this up and fix cache file handling
-  const cacheFileWriter = new ExcelFileHandler("media/xlsx/cache_file.xlsx");
-  cancelToken.throwIfCancelled();
+  const cacheFileHandler = new ExcelFileHandler();
 
-  const cacheFile = "./example_files/shops.json"; // TODO: Allow user to pass this in
-  const meta = {
-    query: searchParams.query,
-    coordinates: `${searchParams.lat},${searchParams.lng}`,
-  };
-
-  const cached = await loadCachedShops(cacheFile, meta);
-  if (cached) {
-    await cacheFileWriter.write(buildCacheFileRows(cached));
-    progressUpdate(`DOWNLOAD:simple_shop_details.xlsx`);
-    returnFile(await cacheFileWriter.getBuffer());
-    return cached;
+  if (searchParams?.fileBuffer) {
+    await cacheFileHandler.loadBuffer(searchParams.fileBuffer);
+    return await cacheFileHandler.read();
   }
 
-  const results = [];
+  cancelToken.throwIfCancelled();
 
+  const results = [];
   for (let start = 0; start < (+searchParams.maxResults || 100); start += 20) {
     cancelToken.throwIfCancelled();
 
     const data = await getJson({
       engine: "google_maps",
-      q: meta.query,
-      ll: `@${meta.coordinates},10z`,
+      q: searchParams.query,
+      ll: `@${searchParams.lat},${searchParams.lng},10z`,
       start,
       type: "search",
       api_key: process.env.SERP_API_KEY, // searchParams.apiKey
@@ -126,10 +110,10 @@ async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken)
     if (pageResults.length < 20) break; // Last page reached
   }
 
-  // TODO: Export this to a user so they can import it as their cache file later
   if (results.length > 0) {
-    await cacheFileWriter.write(buildCacheFileRows(results));
-    await fs.writeFile(cacheFile, JSON.stringify({ meta, results }, null, 2), "utf-8");
+    await cacheFileHandler.write(buildCacheFileRows(results));
+    progressUpdate(`DOWNLOAD:simple_shop_details.xlsx`);
+    returnFile(await cacheFileHandler.getBuffer());
   }
 
   return results;
