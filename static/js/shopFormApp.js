@@ -120,8 +120,8 @@ const ShopFormApp = (() => {
           }
 
           message.startsWith("[STATUS]")
-            ? updateProgress(progressArea, message)
-            : appendProgress(progressArea, message);
+            ? updateProgress(progressArea, message.replace("[STATUS]", "").trim())
+            : appendProgress(progressArea, message.replace("[STATUS]:", "").trim());
         } else {
           // Binary message — Excel file buffer
           const blob = new Blob([event.data], {
