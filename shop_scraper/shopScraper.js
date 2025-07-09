@@ -59,8 +59,10 @@ export async function shopScraper({
     const rows = buildShopRows(shops, shopDetails);
 
     progressUpdate("📝 Writing shop data to Excel...");
-    shopWriter.write(rows);
+    await shopWriter.write(rows);
     progressUpdate("[STATUS]✅ Excel file created.");
+    progressUpdate(`DOWNLOAD:shop_details.xlsx`);
+    returnFile(await shopWriter.getBuffer());
   } catch (err) {
     if (err.isCancelled) {
       progressUpdate("❌ Search cancelled.");
@@ -78,6 +80,7 @@ export async function shopScraper({
  * Falls back to cached results if available and matching the current query and coordinates.
  *
  * @param searchParams
+ * @param progressUpdate
  * @param returnFile
  * @param {Object} cancelToken - An object with a `throwIfCancelled()` method to support graceful cancellation.
  *
@@ -97,12 +100,9 @@ async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken)
 
   const cached = await loadCachedShops(cacheFile, meta);
   if (cached) {
-    cacheFileWriter.write(buildCacheFileRows(cached));
+    await cacheFileWriter.write(buildCacheFileRows(cached));
     progressUpdate(`DOWNLOAD:simple_shop_details.xlsx`);
-    const cacheFileBuffer = await cacheFileWriter.getBuffer();
-    console.log("Is Buffer:", Buffer.isBuffer(cacheFileBuffer));
-    returnFile(cacheFileBuffer);
-    await fs.writeFile("test.xlsx", cacheFileBuffer);
+    returnFile(await cacheFileWriter.getBuffer());
     return cached;
   }
 
@@ -128,7 +128,7 @@ async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken)
 
   // TODO: Export this to a user so they can import it as their cache file later
   if (results.length > 0) {
-    cacheFileWriter.write(buildBasicShopRows(results));
+    await cacheFileWriter.write(buildCacheFileRows(results));
     await fs.writeFile(cacheFile, JSON.stringify({ meta, results }, null, 2), "utf-8");
   }
 
