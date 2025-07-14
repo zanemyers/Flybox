@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 
-import { EMAIL_REGEX, MESSAGES, SHOP_KEYWORDS, SOCIAL_MEDIA_MAP } from "../base/enums.js";
+import { EMAIL_REGEX, MESSAGES, SHOP_KEYWORDS, SOCIAL_MEDIA_MAP } from "../../constants/index.js";
 
 /**
  * Adds custome scraper methods directly on the page instance for convenient use during scraping.

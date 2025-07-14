@@ -7,10 +7,9 @@ import http from "http";
 import { WebSocketServer } from "ws";
 
 // Route files
-import routes from "./routes/routes.js";
+import routes from "./routes/index.js";
 import { errorHandler } from "./routes/error.js";
-import shopSocket from "./routes/web_sockets/shopSocket.js";
-import reportSocket from "./routes/web_sockets/reportSocket.js";
+import { reportSocket, shopSocket } from "./sockets/index.js";
 
 const app = express();
 const port = process.env.PORT || 3000;

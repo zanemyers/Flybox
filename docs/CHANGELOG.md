@@ -27,7 +27,7 @@ All notable changes to this project will be documented in this file.
 - `ide.md` documentation
 - Base `write` method to `FileHandler`
 - `read` method for `TXTFileHandler`
-- `BLOCKED_FORBIDDEN` keywords to `enums.js`
+- `BLOCKED_FORBIDDEN` keywords to `_shopScraper.js`
 
 #### Changed
 
@@ -35,7 +35,7 @@ All notable changes to this project will be documented in this file.
 - `.env` updates:
   - `SEARCH_COORDINATES` split into `SEARCH_LAT` & `SEARCH_LONG`
   - `GOOGLE_GENAI_API_KEY` & `GOOGLE_GENAI_MODEL` renamed to `GEMINI_API_KEY` & `GEMINI_MODEL`
-- `setup.js` updated for new `.env` keys
+- `env.js` updated for new `.env` keys
 - Report scraper now reads sites from Excel instead of JSON
 - Summary generation skipped if no reports found
 - Report scraper now uses `StealthBrowser`
@@ -63,7 +63,7 @@ All notable changes to this project will be documented in this file.
 #### Added
 
 - Integrated `playwright-extra` and `puppeteer-extra-plugin-stealth` packages.
-- Introduced `StealthBrowser` class in `scrapingUtils.js` for more human-like scraping behavior.
+- Introduced `StealthBrowser` class in `_scrapingUtils.js` for more human-like scraping behavior.
 
 #### Changed
 

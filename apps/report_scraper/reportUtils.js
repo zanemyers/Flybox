@@ -1,9 +1,8 @@
 import { differenceInDays } from "date-fns";
 import { GoogleGenAI } from "@google/genai";
 
-import { REPORT_DIVIDER } from "../base/enums.js";
-import { normalizeUrl } from "../base/scrapingUtils.js";
-import { extractDate } from "../base/dateUtils.js";
+import { REPORT_DIVIDER } from "../../constants/index.js";
+import { extractDate, normalizeUrl } from "../../utils/index.js";
 
 // Initialize .env variables
 const ageLimit = Math.max(1, parseInt(process.env.MAX_REPORT_AGE, 10) || 30);
