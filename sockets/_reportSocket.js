@@ -1,4 +1,4 @@
-export default function reportSocket(ws) {
+export function reportSocket(ws) {
   // This is a placeholder
   ws.onopen = () => {};
 }

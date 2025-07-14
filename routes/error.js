@@ -1,5 +1,5 @@
 // Generic error handler (for all server-side errors)
-function errorHandler(err, req, res, _next) {
+export function errorHandler(err, req, res, _next) {
   console.error("Unhandled error:", err);
 
   const status = err.status || 500;
@@ -32,5 +32,3 @@ function errorHandler(err, req, res, _next) {
     title,
   });
 }
-
-export { errorHandler };

@@ -2,10 +2,9 @@ import "dotenv/config";
 import { getJson } from "serpapi";
 import { PromisePool } from "@supercharge/promise-pool";
 
-import { FALLBACK_DETAILS } from "../base/enums.js";
+import { FALLBACK_DETAILS } from "../../constants/index.js";
 import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils.js";
-import { normalizeUrl, StealthBrowser } from "../base/scrapingUtils.js";
-import { ExcelFileHandler } from "../base/fileUtils.js";
+import { ExcelFileHandler, normalizeUrl, StealthBrowser } from "../../utils/index.js";
 
 // Initialize class variables
 const browser = new StealthBrowser({
@@ -165,7 +164,7 @@ async function getDetails(shops, progressUpdate = () => {}, cancelToken) {
       progressUpdate("[STATUS]" + messageTemplate(completed));
     });
 
-  progressUpdate("[STATUS]Scraping Complete");
+  progressUpdate("[STATUS]✅ Scraping Complete");
 
   return results;
 }

@@ -2,8 +2,15 @@ import "dotenv/config";
 import ora from "ora";
 import { PromisePool } from "@supercharge/promise-pool";
 
-import { MERGE_PROMPT, REPORT_DIVIDER, SUMMARY_PROMPT } from "../base/enums.js";
-import { ExcelFileHandler, TXTFileHandler } from "../base/fileUtils.js";
+import { MERGE_PROMPT, REPORT_DIVIDER, SUMMARY_PROMPT } from "../../constants/index.js";
+import {
+  ExcelFileHandler,
+  normalizeUrl,
+  sameDomain,
+  StealthBrowser,
+  TXTFileHandler,
+} from "../../utils/index.js";
+
 import {
   checkDuplicateSites,
   chunkReportText,
@@ -13,8 +20,6 @@ import {
   getPriority,
   scrapeVisibleText,
 } from "./reportUtils.js";
-
-import { normalizeUrl, sameDomain, StealthBrowser } from "../base/scrapingUtils.js";
 
 // Initialize spinner instance
 const spinner = ora();

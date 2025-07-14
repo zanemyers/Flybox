@@ -1,7 +1,7 @@
 import { CSVFileWriter } from "../base/fileUtils.js";
 import { MESSAGES } from "../base/enums.js";
 import { addShopSelectors } from "./shopScrapingUtils.js";
-import { normalizeUrl } from "../base/scrapingUtils.js";
+import { normalizeUrl } from "../base/_scrapingUtils.js";
 import {
   progressBar,
   startSpinner,

@@ -63,7 +63,7 @@ class FileHandler {
       // Create the archive directory structure recursively if it doesn't exist
       fs.mkdirSync(archiveDir, { recursive: true });
 
-      // Get the base file name without the extension
+      // Get the constants file name without the extension
       const baseName = path.basename(this.filePath, `.${this.fileType}`);
 
       // Construct the full path for the archived file, including the timestamp
