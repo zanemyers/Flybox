@@ -1,3 +1,5 @@
+/* global L, bootstrap */
+
 const latInput = document.getElementById("latitude");
 const lngInput = document.getElementById("longitude");
 
