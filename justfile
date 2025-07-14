@@ -15,6 +15,7 @@ setup:
 @dcrr *ARGS:
     docker-compose run --rm {{ARGS}}
 
+# TODO: update the ss, rs, debug_ss, and debug_rs commands
 # Runs the Shop Scraper, either locally or inside Docker.
 ss *FLAGS:
     #!/usr/bin/env sh
@@ -25,7 +26,6 @@ ss *FLAGS:
     fi
 
 # Runs the shop scraper in debug mode (VS Code ONLY)
-# TODO: Fix so it works with WebStorm too
 debug_ss:
     node --inspect ShopScraper/shopScraper.js
 
@@ -39,7 +39,6 @@ rs *FLAGS:
     fi
 
 # Runs the report scraper in debug mode (VS Code ONLY)
-# TODO: Fix so it works with WebStorm too
 debug_rs:
     node --inspect ReportScraper/reportScraper.js
 
@@ -54,4 +53,4 @@ debug_rs:
     sass static/scss/style.scss static/public/style.css
 
 @start:
-    npx sass --watch static/scss/style.scss static/public/style.css & node server.js
+    npx sass --watch static/scss/style.scss static/public/style.css & node --inspect=0.0.0.0:9229 server.js
