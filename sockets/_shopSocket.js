@@ -1,10 +1,8 @@
-import { shopScraper } from "../../shop_scraper/shopScraper.js";
-import { initCancellationToken } from "./cancellationToken.js";
+import { shopScraper } from "../apps/shop_scraper/shopScraper.js";
+import { initCancellationToken } from "./_cancellationToken.js";
 
-export default function shopSocket(ws) {
+export function shopSocket(ws) {
   const cancelToken = initCancellationToken();
-
-  console.log("🟢 WebSocket connected");
 
   const sendData = (data) => {
     if (ws.readyState === ws.OPEN) {
@@ -69,6 +67,5 @@ export default function shopSocket(ws) {
 
   ws.on("close", () => {
     cancelToken.cancel();
-    console.log("🔴 WebSocket closed");
   });
 }

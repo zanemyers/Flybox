@@ -22,7 +22,7 @@
 import { chromium } from "playwright-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-import { BLOCKED_FORBIDDEN } from "./enums.js";
+import { BLOCKED_OR_FORBIDDEN } from "../constants/index.js";
 
 // Enable plugins
 chromium.use(StealthPlugin());
@@ -112,7 +112,7 @@ class StealthBrowser {
           const status = response?.status();
           if ([401, 403, 429].includes(status)) {
             const content = await page.content();
-            if (BLOCKED_FORBIDDEN.some((text) => content.includes(text))) {
+            if (BLOCKED_OR_FORBIDDEN.some((text) => content.includes(text))) {
               throw new Error(`Blocked or forbidden (HTTP ${status})`);
             }
           }

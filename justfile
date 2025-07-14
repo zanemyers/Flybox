@@ -6,9 +6,9 @@ setup:
     if [ -f .env ]; then
         echo "✅ .env already exists, skipping setup.";
     elif docker compose ps &> /dev/null; then
-        docker compose run --rm web-scraper node base/setup.js;
+        docker compose run --rm web-scraper node constants/env.js;
     else
-        node setup.js;
+        node env.js;
     fi
 
 # Runs docker-compose with provided arguments.

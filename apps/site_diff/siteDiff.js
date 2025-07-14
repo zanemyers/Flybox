@@ -1,5 +1,4 @@
-import { ExcelFileHandler } from "../base/fileUtils.js";
-import { sameDomain } from "../base/scrapingUtils.js";
+import { ExcelFileHandler, sameDomain } from "../../utils/index.js";
 import ora from "ora";
 
 const spinner = ora();

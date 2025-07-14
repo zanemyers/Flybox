@@ -1,4 +1,4 @@
-import { extendPageSelectors } from "../base/scrapingUtils.js";
+import { extendPageSelectors } from "../base/_scrapingUtils.js";
 import {
   MESSAGES,
   EMAIL_REGEX,
@@ -10,7 +10,7 @@ import {
 } from "../base/enums.js";
 
 async function addShopSelectors(page) {
-  // Add base scraping utils
+  // Add constants scraping utils
   await extendPageSelectors(page);
 
   /**
