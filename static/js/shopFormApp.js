@@ -1,4 +1,5 @@
 import { initTooltips } from "./tooltip.js";
+import { initFileInput } from "./fileInput.js";
 
 const ShopFormApp = (() => {
   let socket = null;
@@ -11,6 +12,7 @@ const ShopFormApp = (() => {
     initTooltips();
     cacheElements();
     setupTabs();
+    initFileInput();
     handleFormSubmit();
   }
 

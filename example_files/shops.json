@@ -43,33 +43,19 @@
       "website": "https://www.bigskyanglers.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -96,13 +82,9 @@
       "rating": 4.9,
       "reviews": 115,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "305 N Canyon St, West Yellowstone, MT 59758",
       "open_state": "Open ⋅ Closes 8 PM",
       "hours": "Open ⋅ Closes 8 PM",
@@ -119,40 +101,24 @@
       "website": "http://www.blue-ribbon-flies.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -180,13 +146,9 @@
       "reviews": 49,
       "unclaimed_listing": true,
       "type": "Store",
-      "types": [
-        "Store"
-      ],
+      "types": ["Store"],
       "type_id": "store",
-      "type_ids": [
-        "store"
-      ],
+      "type_ids": ["store"],
       "address": "105 Yellowstone Ave, West Yellowstone, MT 59758",
       "open_state": "Closed ⋅ Opens 10 AM",
       "hours": "Closed ⋅ Opens 10 AM",
@@ -203,29 +165,18 @@
       "description": "Source for fly-fishing gear & clinics. Fly-fishing shop in an Old West–style building offering custom flies & nets, guided trips & clinics.",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -252,13 +203,9 @@
       "rating": 5,
       "reviews": 83,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter"
-      ],
+      "types": ["Fishing charter"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_charter"],
       "address": "136 N Hayden St, West Yellowstone, MT 59758",
       "open_state": "Closed ⋅ Opens 9 AM",
       "hours": "Closed ⋅ Opens 9 AM",
@@ -275,21 +222,13 @@
       "website": "http://www.arricks.com/",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -315,15 +254,9 @@
       "rating": 4.5,
       "reviews": 82,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Sporting goods store"
-      ],
+      "types": ["Fishing store", "Sporting goods store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "sporting_goods_store"
-      ],
+      "type_ids": ["fishing_store", "sporting_goods_store"],
       "address": "125 N Canyon St, West Yellowstone, MT 59758",
       "open_state": "Opens soon ⋅ 7:30 AM",
       "hours": "Opens soon ⋅ 7:30 AM",
@@ -340,49 +273,27 @@
       "website": "http://www.madisonriveroutfitters.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Identifies as veteran-owned",
-            "Small business"
-          ]
+          "from_the_business": ["Identifies as veteran-owned", "Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         },
         {
-          "parking": [
-            "Free parking lot",
-            "Free street parking",
-            "On-site parking"
-          ]
+          "parking": ["Free parking lot", "Free street parking", "On-site parking"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -409,24 +320,16 @@
       "rating": 5,
       "reviews": 2,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter"
-      ],
+      "types": ["Fishing charter"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_charter"],
       "address": "115 N Canyon St, West Yellowstone, MT 59758",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "user_review": "\"Great selections of flies.\"",
@@ -470,35 +373,21 @@
       "website": "http://www.trroutfitters.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -565,47 +454,27 @@
       "phone": "(406) 577-4820",
       "extensions": [
         {
-          "service_options": [
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Wi-Fi",
-            "Free Wi-Fi"
-          ]
+          "amenities": ["Wi-Fi", "Free Wi-Fi"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly",
-            "Transgender safespace"
-          ]
+          "crowd": ["LGBTQ+ friendly", "Transgender safespace"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -632,21 +501,13 @@
       "reviews": 210,
       "price": "$239",
       "type": "Store",
-      "types": [
-        "Store",
-        "Mountain cabin"
-      ],
+      "types": ["Store", "Mountain cabin"],
       "type_id": "store",
-      "type_ids": [
-        "store",
-        "mountain_hut"
-      ],
+      "type_ids": ["store", "mountain_hut"],
       "address": "4771 US-20, Island Park, ID 83429",
       "phone": "(208) 558-0152",
       "website": "http://www.driftlodge.com/",
-      "amenities": [
-        "Free Wi-Fi"
-      ],
+      "amenities": ["Free Wi-Fi"],
       "user_review": "In stock: fly fishing · Updated today",
       "thumbnail": "https://lh3.googleusercontent.com/gps-proxy/ALd4DhHds1jhWASvTsPy1KCqPcKRpNFUvvIsublsK6rHrAuiSQTeu8pfMioIKKWaMDh5P_fsnnWgCdM5x--nBurfORMiCkfP8HQiN_mMKXuc45rY_GB5Dn_W3fk5K8r-BKCmXuNx6TteJeBIZ72p2TNEsPOQi7mcREnWR1vRVOrGofVgYklxlDUBMfd7=w124-h92-k-no",
       "serpapi_thumbnail": "https://serpapi.com/images/url/cTKu2XicBcFLUoMwAADQE6UMFAo646JALRjDr7S0bhiFhCCQxIRQelQv4tr3fv_oPAv1bBgj3W46zrsRa4Vlw9mM2bxp-GR0QgEh-fow9u-tHdKoVeY3rfanpVTZw4TBT9bAQiSv52WJlf4aFdzJSO51f8pLrD1BUM9jCKtPFFInq4lirOqCFjkrAMzXkqQF6oOBZF6U90k9IXjVje3IW330nZDV1ZYMDvQk8GEwXXWy7soZv2E__nAtYZXJQWVp3rtTUxxYVZhLcUnlkZNLdxvGdQzPPiKt-3I3LRvQJwsMgPF_2oBWjg"
@@ -668,13 +529,9 @@
       "rating": 4.6,
       "reviews": 157,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "3340 US-20, Island Park, ID 83429",
       "open_state": "Open ⋅ Closes 7 PM",
       "hours": "Open ⋅ Closes 7 PM",
@@ -691,40 +548,24 @@
       "website": "http://www.henrysforkanglers.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -751,19 +592,9 @@
       "rating": 4.6,
       "reviews": 50,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing camp",
-        "Fishing charter",
-        "Liquor store"
-      ],
+      "types": ["Fishing store", "Fishing camp", "Fishing charter", "Liquor store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_camp",
-        "fishing_charter",
-        "liquor_store"
-      ],
+      "type_ids": ["fishing_store", "fishing_camp", "fishing_charter", "liquor_store"],
       "address": "1051 US-20, Ashton, ID 83420",
       "open_state": "Opens soon ⋅ 7:30 AM",
       "hours": "Opens soon ⋅ 7:30 AM",
@@ -780,39 +611,24 @@
       "website": "http://www.trroutfitters.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -839,13 +655,9 @@
       "rating": 5,
       "reviews": 158,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter"
-      ],
+      "types": ["Fishing charter"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_charter"],
       "address": "129 US Hwy 89 S, Gardiner, MT 59030",
       "open_state": "Open ⋅ Closes 7 PM",
       "hours": "Open ⋅ Closes 7 PM",
@@ -862,14 +674,10 @@
       "website": "https://www.yellowstoneflyfishingco.com/?utm_source=google&utm_medium=gbp&utm_campaign=gbp",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "user_review": "\"Learning to fly fish we had a blast fishing and catching fish.\"",
@@ -893,38 +701,26 @@
       "rating": 5,
       "reviews": 9,
       "type": "Bait shop",
-      "types": [
-        "Bait shop"
-      ],
+      "types": ["Bait shop"],
       "type_id": "bait_shop",
-      "type_ids": [
-        "bait_shop"
-      ],
+      "type_ids": ["bait_shop"],
       "address": "155 Campfire Ln, West Yellowstone, MT 59758",
       "phone": "(406) 646-7258",
       "website": "http://www.jimsflyco.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -980,39 +776,24 @@
       "website": "http://www.parksflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance"
-          ]
+          "accessibility": ["Wheelchair accessible entrance"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -1038,35 +819,22 @@
       "rating": 4.9,
       "reviews": 173,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Lodge"
-      ],
+      "types": ["Fishing store", "Lodge"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "lodge"
-      ],
+      "type_ids": ["fishing_store", "lodge"],
       "address": "150 US-287, Cameron, MT 59720",
       "phone": "(406) 682-4804",
       "website": "http://www.slideinn.com/",
       "description": "Fishing lodge with riverfront cabins. Cozy traditional cabins with cooking facilities & private bathrooms, plus a fly shop & RV hookups.",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "payments": [
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -1126,40 +894,24 @@
       "website": "http://www.trroutfitters.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -1185,13 +937,9 @@
       "rating": 5,
       "reviews": 67,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "2925 US-287, Cameron, MT 59720",
       "open_state": "Open ⋅ Closes 5:30 PM",
       "hours": "Open ⋅ Closes 5:30 PM",
@@ -1208,45 +956,27 @@
       "website": "https://www.beartoothflyfishing.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Wi-Fi",
-            "Free Wi-Fi"
-          ]
+          "amenities": ["Wi-Fi", "Free Wi-Fi"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -1273,13 +1003,9 @@
       "rating": 4.9,
       "reviews": 54,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter"
-      ],
+      "types": ["Fishing charter"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_charter"],
       "address": "19 N 1st St, Dubois, WY 82513",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -1296,20 +1022,13 @@
       "website": "https://www.cutthroatflyshop.com/",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "service_options": {
@@ -1335,28 +1054,18 @@
       "rating": 5,
       "reviews": 19,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter",
-        "Fishing camp"
-      ],
+      "types": ["Fishing charter", "Fishing camp"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter",
-        "fishing_camp"
-      ],
+      "type_ids": ["fishing_charter", "fishing_camp"],
       "address": "420 S Jackson St, Jackson, WY 83001",
       "phone": "(307) 413-1215",
       "website": "http://www.tetonflyfishing.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "user_review": "\"Nate earned 5 stars even if we hadn’t caught a pile of fish.\"",
@@ -1380,15 +1089,9 @@
       "rating": 4.6,
       "reviews": 65,
       "type": "Gift shop",
-      "types": [
-        "Gift shop",
-        "Clothing store"
-      ],
+      "types": ["Gift shop", "Clothing store"],
       "type_id": "gift_shop",
-      "type_ids": [
-        "gift_shop",
-        "clothing_store"
-      ],
+      "type_ids": ["gift_shop", "clothing_store"],
       "address": "121 Yellowstone Ave, West Yellowstone, MT 59758",
       "open_state": "Closed ⋅ Opens 10 AM",
       "hours": "Closed ⋅ Opens 10 AM",
@@ -1405,27 +1108,18 @@
       "website": "https://ventureswestinc.com/retail/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance"
-          ]
+          "accessibility": ["Wheelchair accessible entrance"]
         },
         {
-          "payments": [
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -1485,41 +1179,24 @@
       "website": "http://www.wildtroutoutfitters.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -1547,13 +1224,9 @@
       "rating": 4.9,
       "reviews": 54,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter"
-      ],
+      "types": ["Fishing charter"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_charter"],
       "address": "19 N 1st St, Dubois, WY 82513",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -1570,20 +1243,13 @@
       "website": "https://www.cutthroatflyshop.com/",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "service_options": {
@@ -1610,19 +1276,9 @@
       "rating": 4.8,
       "reviews": 158,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter",
-        "Outdoor sports store",
-        "Travel agency"
-      ],
+      "types": ["Fishing store", "Fishing charter", "Outdoor sports store", "Travel agency"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter",
-        "outdoor_sports_store",
-        "travel_agency"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter", "outdoor_sports_store", "travel_agency"],
       "address": "38 W Center St, Victor, ID 83455",
       "open_state": "Open ⋅ Closes 8 PM",
       "hours": "Open ⋅ Closes 8 PM",
@@ -1639,36 +1295,21 @@
       "website": "http://www.worldcastanglers.com/",
       "extensions": [
         {
-          "service_options": [
-            "In-store pickup",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -1733,9 +1374,7 @@
       "website": "https://www.montanaflyfishing.com/",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
           "accessibility": [
@@ -1746,27 +1385,16 @@
           ]
         },
         {
-          "amenities": [
-            "Gender-neutral restroom"
-          ]
+          "amenities": ["Gender-neutral restroom"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly",
-            "Transgender safespace"
-          ]
+          "crowd": ["LGBTQ+ friendly", "Transgender safespace"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards"]
         },
         {
-          "parking": [
-            "On-site parking"
-          ]
+          "parking": ["On-site parking"]
         }
       ],
       "service_options": {
@@ -1793,29 +1421,19 @@
       "rating": 4.6,
       "reviews": 58,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter",
-        "Fishing store"
-      ],
+      "types": ["Fishing charter", "Fishing store"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter",
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_charter", "fishing_store"],
       "address": "565 N Cache St Unit 2, Jackson, WY 83001",
       "open_state": "Open now",
       "phone": "(307) 690-0910",
       "website": "https://grandtetonflyfishing.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "user_review": "\"We caught about 2 dozen fish and had a ton of fun.\"",
@@ -1839,17 +1457,9 @@
       "rating": 4.9,
       "reviews": 156,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter",
-        "Outdoor sports store"
-      ],
+      "types": ["Fishing store", "Fishing charter", "Outdoor sports store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter",
-        "outdoor_sports_store"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter", "outdoor_sports_store"],
       "address": "109 Main St, Ennis, MT 59729",
       "open_state": "Open ⋅ Closes 6 PM",
       "hours": "Open ⋅ Closes 6 PM",
@@ -1866,40 +1476,24 @@
       "website": "http://www.mrfc.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -1926,28 +1520,18 @@
       "rating": 5,
       "reviews": 19,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter",
-        "Fishing camp"
-      ],
+      "types": ["Fishing charter", "Fishing camp"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter",
-        "fishing_camp"
-      ],
+      "type_ids": ["fishing_charter", "fishing_camp"],
       "address": "420 S Jackson St, Jackson, WY 83001",
       "phone": "(307) 413-1215",
       "website": "http://www.tetonflyfishing.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "user_review": "\"Nate earned 5 stars even if we hadn’t caught a pile of fish.\"",
@@ -2008,9 +1592,7 @@
       "website": "https://www.thetackleshop.com/?UTM_source=GMB_listing&UTM_medium=organic",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
           "service_options": [
@@ -2022,28 +1604,16 @@
           ]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Wi-Fi",
-            "Free Wi-Fi"
-          ]
+          "amenities": ["Wi-Fi", "Free Wi-Fi"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -2072,15 +1642,9 @@
       "rating": 4.7,
       "reviews": 87,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "3670 Moose Wilson Rd, Wilson, WY 83014",
       "open_state": "Open ⋅ Closes 7 PM",
       "hours": "Open ⋅ Closes 7 PM",
@@ -2097,9 +1661,7 @@
       "website": "http://www.westbankanglers.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
           "service_options": [
@@ -2111,21 +1673,13 @@
           ]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -2185,9 +1739,7 @@
       "website": "http://bozemanflysupply.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
           "service_options": [
@@ -2198,41 +1750,24 @@
           ]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Gender-neutral restroom",
-            "Wi-Fi",
-            "Free Wi-Fi"
-          ]
+          "amenities": ["Gender-neutral restroom", "Wi-Fi", "Free Wi-Fi"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly"
-          ]
+          "crowd": ["LGBTQ+ friendly"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -2301,39 +1836,24 @@
       "website": "http://www.montanatrout.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -2361,15 +1881,9 @@
       "rating": 3.8,
       "reviews": 16,
       "type": "Convenience store",
-      "types": [
-        "Convenience store",
-        "Fishing camp"
-      ],
+      "types": ["Convenience store", "Fishing camp"],
       "type_id": "convenience_store",
-      "type_ids": [
-        "convenience_store",
-        "fishing_camp"
-      ],
+      "type_ids": ["convenience_store", "fishing_camp"],
       "address": "3 Cameron Dr, Cameron, MT 59720",
       "open_state": "Open ⋅ Closes 6 PM",
       "hours": "Open ⋅ Closes 6 PM",
@@ -2386,32 +1900,21 @@
       "website": "https://www.dreamdriftflies.com/",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -2439,15 +1942,9 @@
       "rating": 4.9,
       "reviews": 72,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "5082 US-89, Livingston, MT 59047",
       "open_state": "Open ⋅ Closes 5 PM",
       "hours": "Open ⋅ Closes 5 PM",
@@ -2464,9 +1961,7 @@
       "website": "http://www.sweetwaterflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
           "service_options": [
@@ -2478,34 +1973,19 @@
           ]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Wi-Fi",
-            "Free Wi-Fi"
-          ]
+          "amenities": ["Wi-Fi", "Free Wi-Fi"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly"
-          ]
+          "crowd": ["LGBTQ+ friendly"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -2534,15 +2014,9 @@
       "rating": 4.7,
       "reviews": 144,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "81801 Gallatin Rd, Bozeman, MT 59718",
       "open_state": "Open ⋅ Closes 6 PM",
       "hours": "Open ⋅ Closes 6 PM",
@@ -2559,40 +2033,24 @@
       "website": "https://www.yellowdogflyfishing.com/yellow-dog-fly-shop/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -2620,13 +2078,9 @@
       "rating": 4.6,
       "reviews": 14,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter"
-      ],
+      "types": ["Fishing charter"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_charter"],
       "address": "Dornans Rd, Moose, WY 83012",
       "open_state": "Open ⋅ Closes 5 PM",
       "hours": "Open ⋅ Closes 5 PM",
@@ -2643,14 +2097,10 @@
       "website": "https://snakeriverangler.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "user_review": "\"Knowledgeable staff very helpful\"",
@@ -2675,39 +2125,26 @@
       "reviews": 2,
       "unclaimed_listing": true,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "33 W 4th N, St Anthony, ID 83445",
       "phone": "(208) 624-3537",
       "website": "http://www.houseofharrop.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -2733,17 +2170,9 @@
       "rating": 4.7,
       "reviews": 69,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Outdoor sports store",
-        "Sporting goods store"
-      ],
+      "types": ["Fishing store", "Outdoor sports store", "Sporting goods store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "outdoor_sports_store",
-        "sporting_goods_store"
-      ],
+      "type_ids": ["fishing_store", "outdoor_sports_store", "sporting_goods_store"],
       "address": "206 Railroad Ln, Emigrant, MT 59027",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -2760,40 +2189,24 @@
       "website": "https://www.montanaflyfishers.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -2820,17 +2233,9 @@
       "rating": 4.8,
       "reviews": 88,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter",
-        "Men's clothing store"
-      ],
+      "types": ["Fishing store", "Fishing charter", "Men's clothing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter",
-        "mens_clothing_store"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter", "mens_clothing_store"],
       "address": "612 E Main St, Bozeman, MT 59715",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -2847,35 +2252,21 @@
       "website": "https://www.theriversedge.com/",
       "extensions": [
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -2902,13 +2293,7 @@
       "rating": 4.8,
       "reviews": 57,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter",
-        "Fishing club",
-        "Fishing camp",
-        "Restaurant"
-      ],
+      "types": ["Fishing store", "Fishing charter", "Fishing club", "Fishing camp", "Restaurant"],
       "type_id": "fishing_store",
       "type_ids": [
         "fishing_store",
@@ -2933,21 +2318,13 @@
       "website": "http://www.bighorntroutshop.com/",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "parking": [
-            "Free parking lot",
-            "Free street parking"
-          ]
+          "parking": ["Free parking lot", "Free street parking"]
         }
       ],
       "service_options": {
@@ -2974,15 +2351,9 @@
       "rating": 4.7,
       "reviews": 67,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "1107 Sheridan Ave, Cody, WY 82414",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -2999,39 +2370,24 @@
       "website": "https://northforkanglers.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3060,53 +2416,32 @@
       "reviews": 52,
       "unclaimed_listing": true,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Hotel",
-        "Lodge"
-      ],
+      "types": ["Fishing store", "Hotel", "Lodge"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "hotel",
-        "lodge"
-      ],
+      "type_ids": ["fishing_store", "hotel", "lodge"],
       "address": "472 Main St, Melrose, MT 59743",
       "phone": "(406) 835-3474",
       "website": "http://www.sunriseflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3133,13 +2468,9 @@
       "rating": 5,
       "reviews": 45,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "226 N 2nd E, Rexburg, ID 83440",
       "open_state": "Closed ⋅ Opens 10 AM",
       "hours": "Closed ⋅ Opens 10 AM",
@@ -3155,42 +2486,27 @@
       "phone": "(208) 656-1211",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot",
-            "Wheelchair accessible restroom"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot", "Wheelchair accessible restroom"]
         },
         {
-          "amenities": [
-            "Gender-neutral restroom"
-          ]
+          "amenities": ["Gender-neutral restroom"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         },
         {
-          "parking": [
-            "Free parking lot"
-          ]
+          "parking": ["Free parking lot"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3217,15 +2533,9 @@
       "rating": 4.5,
       "reviews": 83,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Raft trip outfitter"
-      ],
+      "types": ["Fishing store", "Raft trip outfitter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "raft_trip_outfitter"
-      ],
+      "type_ids": ["fishing_store", "raft_trip_outfitter"],
       "address": "185 Center St, Jackson, WY 83001",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -3242,39 +2552,24 @@
       "website": "http://www.snakeriverangler.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3301,15 +2596,9 @@
       "rating": 4.7,
       "reviews": 137,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "1716 W Main St, Bozeman, MT 59715",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -3326,40 +2615,24 @@
       "website": "http://www.troutfitters.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3386,15 +2659,9 @@
       "rating": 4.7,
       "reviews": 67,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "1107 Sheridan Ave, Cody, WY 82414",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -3411,39 +2678,24 @@
       "website": "https://northforkanglers.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3471,13 +2723,9 @@
       "rating": 4.4,
       "reviews": 304,
       "type": "Outdoor sports store",
-      "types": [
-        "Outdoor sports store"
-      ],
+      "types": ["Outdoor sports store"],
       "type_id": "outdoor_sports_store",
-      "type_ids": [
-        "outdoor_sports_store"
-      ],
+      "type_ids": ["outdoor_sports_store"],
       "address": "50 E Broadway Ave, Jackson, WY 83001",
       "open_state": "Closed ⋅ Opens 10 AM",
       "hours": "Closed ⋅ Opens 10 AM",
@@ -3494,35 +2742,21 @@
       "website": "http://www.jdhcoutfitters.com/",
       "extensions": [
         {
-          "service_options": [
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3549,13 +2783,9 @@
       "rating": 4.8,
       "reviews": 55,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "5256 US-89, Livingston, MT 59047",
       "open_state": "Open ⋅ Closes 6 PM",
       "hours": "Open ⋅ Closes 6 PM",
@@ -3572,33 +2802,19 @@
       "website": "http://www.yellowstoneangler.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -3660,22 +2876,13 @@
       "website": "http://www.windrivercanyon.com/",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -3701,13 +2908,9 @@
       "rating": 4.8,
       "reviews": 97,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "11 Pierce Dr, Dillon, MT 59725",
       "open_state": "Open ⋅ Closes 6 PM",
       "hours": "Open ⋅ Closes 6 PM",
@@ -3724,40 +2927,24 @@
       "website": "https://anderson-platt-flyfishing.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3784,15 +2971,9 @@
       "rating": 5,
       "reviews": 62,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "1210 Sheridan Ave, Cody, WY 82414",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -3809,38 +2990,24 @@
       "website": "http://www.wyomingtroutguides.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3866,17 +3033,9 @@
       "rating": 4.9,
       "reviews": 402,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter",
-        "Fishing camp",
-        "Outdoor sports store"
-      ],
+      "types": ["Fishing charter", "Fishing camp", "Outdoor sports store"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter",
-        "fishing_camp",
-        "outdoor_sports_store"
-      ],
+      "type_ids": ["fishing_charter", "fishing_camp", "outdoor_sports_store"],
       "address": "435 E Main St, Bozeman, MT 59715",
       "open_state": "Open ⋅ Closes 8 PM",
       "hours": "Open ⋅ Closes 8 PM",
@@ -3893,27 +3052,16 @@
       "website": "http://www.montanaangler.com/",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly"
-          ]
+          "crowd": ["LGBTQ+ friendly"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -3940,37 +3088,23 @@
       "rating": 4.8,
       "reviews": 44,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Raft trip outfitter"
-      ],
+      "types": ["Fishing store", "Raft trip outfitter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "raft_trip_outfitter"
-      ],
+      "type_ids": ["fishing_store", "raft_trip_outfitter"],
       "address": "76793 MT-43, Divide, MT 59727",
       "phone": "(406) 267-3346",
       "website": "http://www.bigholetrout.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "payments": [
-            "Checks",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -3997,17 +3131,9 @@
       "rating": 5,
       "reviews": 24,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter",
-        "Fishing camp",
-        "Fishing club"
-      ],
+      "types": ["Fishing charter", "Fishing camp", "Fishing club"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter",
-        "fishing_camp",
-        "fishing_club"
-      ],
+      "type_ids": ["fishing_charter", "fishing_camp", "fishing_club"],
       "address": "25 Two Springs Rd, Ennis, MT 59729",
       "open_state": "Open 24 hours",
       "hours": "Open 24 hours",
@@ -4024,30 +3150,19 @@
       "website": "http://campcreekoutfitters.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Identifies as Indigenous-owned"
-          ]
+          "from_the_business": ["Identifies as Indigenous-owned"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Gender-neutral restroom"
-          ]
+          "amenities": ["Gender-neutral restroom"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards"
-          ]
+          "payments": ["Checks", "Credit cards"]
         }
       ],
       "service_options": {
@@ -4074,13 +3189,9 @@
       "rating": 4.6,
       "reviews": 9,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "2984 Swan Valley Hwy, Swan Valley, ID 83449",
       "open_state": "Open ⋅ Closes 8 PM",
       "hours": "Open ⋅ Closes 8 PM",
@@ -4097,21 +3208,15 @@
       "website": "https://shop.southforklodge.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4138,13 +3243,9 @@
       "rating": 5,
       "reviews": 11,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "4985 US-287, Ennis, MT 59729",
       "open_state": "Open ⋅ Closes 5 PM",
       "hours": "Open ⋅ Closes 5 PM",
@@ -4161,39 +3262,24 @@
       "website": "http://www.slideinn.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4252,50 +3338,30 @@
       "website": "http://www.eastslopeoutdoors.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Gender-neutral restroom"
-          ]
+          "amenities": ["Gender-neutral restroom"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly",
-            "Transgender safespace"
-          ]
+          "crowd": ["LGBTQ+ friendly", "Transgender safespace"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4322,13 +3388,9 @@
       "rating": 4.7,
       "reviews": 50,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "680 N Montana St, Dillon, MT 59725",
       "open_state": "Open ⋅ Closes 6 PM",
       "hours": "Open ⋅ Closes 6 PM",
@@ -4345,46 +3407,27 @@
       "website": "http://www.frontieranglers.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Wi-Fi",
-            "Free Wi-Fi"
-          ]
+          "amenities": ["Wi-Fi", "Free Wi-Fi"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4411,15 +3454,9 @@
       "rating": 4.7,
       "reviews": 15,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter",
-        "Fishing store"
-      ],
+      "types": ["Fishing charter", "Fishing store"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter",
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_charter", "fishing_store"],
       "address": "3285 Village Dr, Teton Village, WY 83025",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -4436,20 +3473,13 @@
       "website": "https://www.grandfishing.com/",
       "extensions": [
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "service_options": {
@@ -4475,13 +3505,9 @@
       "rating": 4.3,
       "reviews": 13,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "21 Skwala Lane, Swan Valley, ID 83449",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -4498,40 +3524,24 @@
       "website": "https://www.tlapcflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4558,13 +3568,9 @@
       "reviews": 3,
       "unclaimed_listing": true,
       "type": "Sporting goods store",
-      "types": [
-        "Sporting goods store"
-      ],
+      "types": ["Sporting goods store"],
       "type_id": "sporting_goods_store",
-      "type_ids": [
-        "sporting_goods_store"
-      ],
+      "type_ids": ["sporting_goods_store"],
       "address": "4065 Pub Pl, Jackson, WY 83001",
       "open_state": "Closed ⋅ Opens 9 AM",
       "hours": "Closed ⋅ Opens 9 AM",
@@ -4581,22 +3587,15 @@
       "website": "http://www.jacksoncardinal.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4620,14 +3619,7 @@
       "rating": 4.8,
       "reviews": 67,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Bar",
-        "Fishing camp",
-        "Fishing charter",
-        "Lodge",
-        "Restaurant"
-      ],
+      "types": ["Fishing store", "Bar", "Fishing camp", "Fishing charter", "Lodge", "Restaurant"],
       "type_id": "fishing_store",
       "type_ids": [
         "fishing_store",
@@ -4661,13 +3653,9 @@
       "rating": 4.7,
       "reviews": 136,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "275 A St, Idaho Falls, ID 83402",
       "open_state": "Closed ⋅ Opens 9 AM",
       "hours": "Closed ⋅ Opens 9 AM",
@@ -4684,40 +3672,24 @@
       "website": "http://www.flyfishfood.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4743,13 +3715,9 @@
       "rating": 5,
       "reviews": 11,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "23 S Woodard Ave, Absarokee, MT 59001",
       "open_state": "Open ⋅ Closes 7 PM",
       "hours": "Open ⋅ Closes 7 PM",
@@ -4766,38 +3734,24 @@
       "website": "https://www.absarokeeflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store shopping"
-          ]
+          "service_options": ["In-store shopping"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4823,13 +3777,9 @@
       "rating": 5,
       "reviews": 4,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "1390 Sheridan Ave, Cody, WY 82414",
       "open_state": "Closed ⋅ Opens 10 AM",
       "hours": "Closed ⋅ Opens 10 AM",
@@ -4846,32 +3796,21 @@
       "website": "http://www.gradientmountainsports.net/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4897,13 +3836,9 @@
       "rating": 4.9,
       "reviews": 155,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "960 S 24th St W suite a, Billings, MT 59102",
       "open_state": "Closed ⋅ Opens 9 AM",
       "hours": "Closed ⋅ Opens 9 AM",
@@ -4920,43 +3855,24 @@
       "website": "http://eastrosebudflyandtackle.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Appointment required",
-            "Quick visit"
-          ]
+          "planning": ["Appointment required", "Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -4983,34 +3899,18 @@
       "rating": 5,
       "reviews": 20,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fine dining restaurant",
-        "Fishing camp",
-        "Lodge"
-      ],
+      "types": ["Fishing store", "Fine dining restaurant", "Fishing camp", "Lodge"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fine_dining_restaurant",
-        "fishing_camp",
-        "lodge"
-      ],
+      "type_ids": ["fishing_store", "fine_dining_restaurant", "fishing_camp", "lodge"],
       "address": "66771 MT-43, Wise River, MT 59762",
       "phone": "(406) 832-3175",
       "website": "https://completeflyfisher.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "parking": [
-            "Free parking lot",
-            "Free street parking"
-          ]
+          "parking": ["Free parking lot", "Free street parking"]
         }
       ],
       "user_review": "\"The guides and fishing exceeded expectations.\"",
@@ -5054,27 +3954,18 @@
       "website": "http://www.flatlineoutfitters.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -5101,17 +3992,9 @@
       "rating": 4.9,
       "reviews": 111,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Comedy club",
-        "Sporting goods store"
-      ],
+      "types": ["Fishing store", "Comedy club", "Sporting goods store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "comedy_club",
-        "sporting_goods_store"
-      ],
+      "type_ids": ["fishing_store", "comedy_club", "sporting_goods_store"],
       "address": "257 N Main St, Pocatello, ID 83204",
       "open_state": "Closed ⋅ Opens 10 AM",
       "hours": "Closed ⋅ Opens 10 AM",
@@ -5128,47 +4011,27 @@
       "website": "http://snakeriverfly.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         },
         {
-          "parking": [
-            "Free parking lot",
-            "Free street parking"
-          ]
+          "parking": ["Free parking lot", "Free street parking"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -5227,42 +4090,24 @@
       "website": "https://danbaileys.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -5289,15 +4134,9 @@
       "rating": 4.9,
       "reviews": 96,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Raft trip outfitter"
-      ],
+      "types": ["Fishing store", "Raft trip outfitter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "raft_trip_outfitter"
-      ],
+      "type_ids": ["fishing_store", "raft_trip_outfitter"],
       "address": "701 S 1st St, Hamilton, MT 59840",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -5314,47 +4153,27 @@
       "website": "http://www.freestoneflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards"]
         },
         {
-          "parking": [
-            "Free parking lot",
-            "Free street parking"
-          ]
+          "parking": ["Free parking lot", "Free street parking"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -5381,17 +4200,9 @@
       "rating": 4.3,
       "reviews": 16,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Clothing store",
-        "Outdoor sports store"
-      ],
+      "types": ["Fishing store", "Clothing store", "Outdoor sports store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "clothing_store",
-        "outdoor_sports_store"
-      ],
+      "type_ids": ["fishing_store", "clothing_store", "outdoor_sports_store"],
       "address": "21 Broadway Ave S, Red Lodge, MT 59068",
       "open_state": "Closed ⋅ Opens 10 AM",
       "hours": "Closed ⋅ Opens 10 AM",
@@ -5408,34 +4219,21 @@
       "website": "https://www.redlodgemountain.com/shopgrizzlypeak/",
       "extensions": [
         {
-          "service_options": [
-            "In-store shopping"
-          ]
+          "service_options": ["In-store shopping"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -5461,15 +4259,9 @@
       "rating": 5,
       "reviews": 162,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "107 US-24, Buena Vista, CO 81211",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -5486,54 +4278,30 @@
       "website": "https://www.upriverflyfishing.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Identifies as women-owned",
-            "Small business"
-          ]
+          "from_the_business": ["Identifies as women-owned", "Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Gender-neutral restroom",
-            "Wi-Fi",
-            "Free Wi-Fi"
-          ]
+          "amenities": ["Gender-neutral restroom", "Wi-Fi", "Free Wi-Fi"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         },
         {
-          "parking": [
-            "Free parking lot",
-            "Free street parking",
-            "On-site parking"
-          ]
+          "parking": ["Free parking lot", "Free street parking", "On-site parking"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -5560,13 +4328,9 @@
       "rating": 4.8,
       "reviews": 77,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "201 N Main St, Sheridan, WY 82801",
       "open_state": "Open ⋅ Closes 7 PM",
       "hours": "Open ⋅ Closes 7 PM",
@@ -5583,9 +4347,7 @@
       "website": "http://sheridanflyfishing.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
           "service_options": [
@@ -5604,23 +4366,13 @@
           ]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         },
         {
-          "parking": [
-            "Free parking lot",
-            "Free street parking"
-          ]
+          "parking": ["Free parking lot", "Free street parking"]
         }
       ],
       "service_options": {
@@ -5648,13 +4400,9 @@
       "rating": 5,
       "reviews": 6,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "1406 Willow Ave, Idaho Falls, ID 83402",
       "open_state": "Closed ⋅ Opens 9 AM",
       "hours": "Closed ⋅ Opens 9 AM",
@@ -5671,32 +4419,19 @@
       "website": "http://www.theflyrodcompany.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Delivery",
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["Delivery", "In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Appointment required",
-            "Quick visit"
-          ]
+          "planning": ["Appointment required", "Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "service_options": {
@@ -5724,27 +4459,19 @@
       "reviews": 2,
       "unclaimed_listing": true,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "2951 Magenta Rd, Bozeman, MT 59718",
       "phone": "(406) 586-2188",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -5770,13 +4497,9 @@
       "rating": 4.9,
       "reviews": 72,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "1315 S Utah Ave, Idaho Falls, ID 83402",
       "open_state": "Closed ⋅ Opens 10 AM",
       "hours": "Closed ⋅ Opens 10 AM",
@@ -5793,31 +4516,21 @@
       "website": "http://www.procrayster.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -5844,13 +4557,7 @@
       "rating": 4.8,
       "reviews": 25,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Boat rental service",
-        "Fishing charter",
-        "Lodge",
-        "Log cabins"
-      ],
+      "types": ["Fishing store", "Boat rental service", "Fishing charter", "Lodge", "Log cabins"],
       "type_id": "fishing_store",
       "type_ids": [
         "fishing_store",
@@ -5883,13 +4590,9 @@
       "rating": 5,
       "reviews": 2,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "5350 Holiday Ave, Billings, MT 59101",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -5906,32 +4609,19 @@
       "website": "http://www.yellowstoneflygoods.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store shopping"
-          ]
+          "service_options": ["In-store shopping"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -5958,13 +4648,9 @@
       "reviews": 24,
       "unclaimed_listing": true,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "1617 S Longfellow Cir #3, Wichita, KS 67207",
       "open_state": "Closed ⋅ Opens 12 PM",
       "hours": "Closed ⋅ Opens 12 PM",
@@ -5981,29 +4667,18 @@
       "website": "http://www.arkriver.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -6030,13 +4705,9 @@
       "rating": 5,
       "reviews": 11,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter"
-      ],
+      "types": ["Fishing charter"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_charter"],
       "address": "113 Altair Dr, Livingston, MT 59047",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -6053,20 +4724,13 @@
       "website": "https://www.flyfishmontana.biz/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly"
-          ]
+          "crowd": ["LGBTQ+ friendly"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "user_review": "\"Got us up to speed quickly and helped us catch a ton of fish.\"",
@@ -6090,13 +4754,9 @@
       "rating": 5,
       "reviews": 11,
       "type": "Fishing charter",
-      "types": [
-        "Fishing charter"
-      ],
+      "types": ["Fishing charter"],
       "type_id": "fishing_charter",
-      "type_ids": [
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_charter"],
       "address": "113 Altair Dr, Livingston, MT 59047",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -6113,20 +4773,13 @@
       "website": "https://www.flyfishmontana.biz/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly"
-          ]
+          "crowd": ["LGBTQ+ friendly"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "user_review": "\"Got us up to speed quickly and helped us catch a ton of fish.\"",
@@ -6183,16 +4836,10 @@
       "website": "https://www.anglersall.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Delivery",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["Delivery", "In-store shopping", "Onsite services"]
         },
         {
           "accessibility": [
@@ -6202,32 +4849,19 @@
           ]
         },
         {
-          "amenities": [
-            "Gender-neutral restroom"
-          ]
+          "amenities": ["Gender-neutral restroom"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly"
-          ]
+          "crowd": ["LGBTQ+ friendly"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         },
         {
-          "parking": [
-            "Free street parking"
-          ]
+          "parking": ["Free street parking"]
         }
       ],
       "service_options": {
@@ -6254,13 +4888,9 @@
       "rating": 4.6,
       "reviews": 7,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "280 Washington St, Afton, WY 83110",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -6277,34 +4907,21 @@
       "website": "http://www.featheredhook.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         },
         {
-          "parking": [
-            "Free parking lot"
-          ]
+          "parking": ["Free parking lot"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -6331,49 +4948,32 @@
       "rating": 4.7,
       "reviews": 21,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "New Location Coming Soon, Lander, WY 82520",
       "phone": "(307) 438-3439",
       "website": "http://landerflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Onsite services"
-          ]
+          "service_options": ["Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -6400,13 +5000,9 @@
       "rating": 5,
       "reviews": 2,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "5350 Holiday Ave, Billings, MT 59101",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -6423,32 +5019,19 @@
       "website": "http://www.yellowstoneflygoods.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store shopping"
-          ]
+          "service_options": ["In-store shopping"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -6505,34 +5088,19 @@
       "website": "http://theportlandflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         },
         {
           "parking": [
@@ -6545,9 +5113,7 @@
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -6574,13 +5140,9 @@
       "rating": 4.6,
       "reviews": 66,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "926 E Broadway St, Missoula, MT 59802",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -6597,41 +5159,24 @@
       "website": "http://www.kingfisherflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "In-store shopping", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -6659,13 +5204,9 @@
       "reviews": 10,
       "unclaimed_listing": true,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "105 Pollywog Ln, Belgrade, MT 59714",
       "open_state": "Closed ⋅ Opens 9 AM",
       "hours": "Closed ⋅ Opens 9 AM",
@@ -6681,23 +5222,15 @@
       "phone": "(406) 388-8109",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -6781,29 +5314,18 @@
           ]
         },
         {
-          "amenities": [
-            "Wi-Fi"
-          ]
+          "amenities": ["Wi-Fi"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Checks",
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Checks", "Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -6831,15 +5353,9 @@
       "rating": 5,
       "reviews": 1,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "90 Nelsons Spring Creek Rd, Livingston, MT 59047",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -6856,9 +5372,7 @@
       "website": "http://nelsonsguidesandflies.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
           "service_options": [
@@ -6870,20 +5384,13 @@
           ]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "service_options": {
@@ -6911,13 +5418,9 @@
       "rating": 3.9,
       "reviews": 11,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "612 W Griffin Dr Ste B, Bozeman, MT 59715",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -6934,25 +5437,16 @@
       "website": "http://www.tommorganrodsmiths.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Appointment required"
-          ]
+          "planning": ["Appointment required"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "user_review": "\"I recently started getting into fly fishing.\"",
@@ -6976,17 +5470,9 @@
       "rating": 4.6,
       "reviews": 262,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Sporting goods store",
-        "Travel agency"
-      ],
+      "types": ["Fishing store", "Sporting goods store", "Travel agency"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "sporting_goods_store",
-        "travel_agency"
-      ],
+      "type_ids": ["fishing_store", "sporting_goods_store", "travel_agency"],
       "address": "4140 Churn Crk Rd, Redding, CA 96002",
       "open_state": "Closed ⋅ Opens 7:30 AM",
       "hours": "Closed ⋅ Opens 7:30 AM",
@@ -7003,33 +5489,19 @@
       "website": "http://www.theflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -7055,15 +5527,9 @@
       "rating": 4.5,
       "reviews": 11,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Fishing charter"
-      ],
+      "types": ["Fishing store", "Fishing charter"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "fishing_charter"
-      ],
+      "type_ids": ["fishing_store", "fishing_charter"],
       "address": "540 Arapahoe St, Thermopolis, WY 82443",
       "open_state": "Closed ⋅ Opens 9 AM",
       "hours": "Closed ⋅ Opens 9 AM",
@@ -7080,17 +5546,10 @@
       "website": "http://www.thermopolisflyshop.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "Delivery",
-            "In-store pickup",
-            "In-store shopping",
-            "Onsite services"
-          ]
+          "service_options": ["Delivery", "In-store pickup", "In-store shopping", "Onsite services"]
         },
         {
           "accessibility": [
@@ -7101,22 +5560,13 @@
           ]
         },
         {
-          "amenities": [
-            "Wi-Fi",
-            "Free Wi-Fi"
-          ]
+          "amenities": ["Wi-Fi", "Free Wi-Fi"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -7144,17 +5594,9 @@
       "rating": 4.9,
       "reviews": 482,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Hunting club",
-        "Hunting preserve"
-      ],
+      "types": ["Fishing store", "Hunting club", "Hunting preserve"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "hunting_club",
-        "hunting_preserve"
-      ],
+      "type_ids": ["fishing_store", "hunting_club", "hunting_preserve"],
       "address": "14706 WA-821, Ellensburg, WA 98926",
       "open_state": "Closed ⋅ Opens 8 AM",
       "hours": "Closed ⋅ Opens 8 AM",
@@ -7171,39 +5613,22 @@
       "website": "https://www.redsflyfishing.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Wi-Fi",
-            "Free Wi-Fi"
-          ]
+          "amenities": ["Wi-Fi", "Free Wi-Fi"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -7229,15 +5654,9 @@
       "rating": 4.5,
       "reviews": 54,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Canoe & kayak store"
-      ],
+      "types": ["Fishing store", "Canoe & kayak store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store",
-        "canoe_and_kayak_store"
-      ],
+      "type_ids": ["fishing_store", "canoe_and_kayak_store"],
       "address": "419 Old Newport Blvd, Newport Beach, CA 92663",
       "open_state": "Closed ⋅ Opens 10 AM",
       "hours": "Closed ⋅ Opens 10 AM",
@@ -7254,27 +5673,18 @@
       "website": "http://www.meltontackle.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -7301,13 +5711,9 @@
       "rating": 4.6,
       "reviews": 38,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "2310 E Locust Ct, Ontario, CA 91761",
       "open_state": "Closed ⋅ Opens 8:30 AM",
       "hours": "Closed ⋅ Opens 8:30 AM",
@@ -7324,21 +5730,13 @@
       "website": "http://okumafishingusa.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards"
-          ]
+          "payments": ["Credit cards", "Debit cards"]
         }
       ],
       "user_review": "\"They stand behind their products and honor their warranty.\"",
@@ -7360,13 +5758,9 @@
       "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJ63g2bIVHRVMRcQQ3Js-s4Gw",
       "provider_id": "/g/11v154tvfp",
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "478 Stubbs Ln, Bozeman, MT 59718",
       "open_state": "Open 24 hours",
       "hours": "Open 24 hours",
@@ -7383,27 +5777,18 @@
       "website": "https://flybanjo.com/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards"
-          ]
+          "payments": ["Credit cards"]
         }
       ],
       "unsupported_extensions": [
         {
-          "service_options": [
-            "Delivery"
-          ]
+          "service_options": ["Delivery"]
         }
       ],
       "service_options": {
@@ -7427,12 +5812,7 @@
       "rating": 4.8,
       "reviews": 464,
       "type": "Fishing store",
-      "types": [
-        "Fishing store",
-        "Bait shop",
-        "Hunting and fishing store",
-        "Outdoor sports store"
-      ],
+      "types": ["Fishing store", "Bait shop", "Hunting and fishing store", "Outdoor sports store"],
       "type_id": "fishing_store",
       "type_ids": [
         "fishing_store",
@@ -7456,33 +5836,19 @@
       "website": "http://www.thelongfin.com/",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
-          "service_options": [
-            "In-store pickup",
-            "Onsite services"
-          ]
+          "service_options": ["In-store pickup", "Onsite services"]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         }
       ],
       "service_options": {
@@ -7508,13 +5874,9 @@
       "rating": 4.6,
       "reviews": 137,
       "type": "Fishing store",
-      "types": [
-        "Fishing store"
-      ],
+      "types": ["Fishing store"],
       "type_id": "fishing_store",
-      "type_ids": [
-        "fishing_store"
-      ],
+      "type_ids": ["fishing_store"],
       "address": "10910 NE Halsey St, Portland, OR 97220",
       "open_state": "Closed ⋅ Opens 9 AM",
       "hours": "Closed ⋅ Opens 9 AM",
@@ -7532,9 +5894,7 @@
       "description": "Gear, trip guides & classes. Outpost selling fishing rods, gear, vests, packs, bait, bags & boots, plus guided trips & classes.",
       "extensions": [
         {
-          "from_the_business": [
-            "Small business"
-          ]
+          "from_the_business": ["Small business"]
         },
         {
           "service_options": [
@@ -7546,39 +5906,22 @@
           ]
         },
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         },
         {
-          "amenities": [
-            "Gender-neutral restroom"
-          ]
+          "amenities": ["Gender-neutral restroom"]
         },
         {
-          "crowd": [
-            "LGBTQ+ friendly"
-          ]
+          "crowd": ["LGBTQ+ friendly"]
         },
         {
-          "planning": [
-            "Quick visit"
-          ]
+          "planning": ["Quick visit"]
         },
         {
-          "payments": [
-            "Credit cards",
-            "Debit cards",
-            "NFC mobile payments"
-          ]
+          "payments": ["Credit cards", "Debit cards", "NFC mobile payments"]
         },
         {
-          "parking": [
-            "Free parking lot",
-            "Free street parking",
-            "On-site parking"
-          ]
+          "parking": ["Free parking lot", "Free street parking", "On-site parking"]
         }
       ],
       "service_options": {
@@ -7605,15 +5948,9 @@
       "provider_id": "/g/1261spffl",
       "unclaimed_listing": true,
       "type": "Non-profit organization",
-      "types": [
-        "Non-profit organization",
-        "Fishing store"
-      ],
+      "types": ["Non-profit organization", "Fishing store"],
       "type_id": "non_profit_organization",
-      "type_ids": [
-        "non_profit_organization",
-        "fishing_store"
-      ],
+      "type_ids": ["non_profit_organization", "fishing_store"],
       "address": "280 W Kagy Blvd, Bozeman, MT 59715",
       "open_state": "Closed ⋅ Opens 9 AM",
       "hours": "Closed ⋅ Opens 9 AM",
@@ -7630,10 +5967,7 @@
       "website": "https://www.affta.org/",
       "extensions": [
         {
-          "accessibility": [
-            "Wheelchair accessible entrance",
-            "Wheelchair accessible parking lot"
-          ]
+          "accessibility": ["Wheelchair accessible entrance", "Wheelchair accessible parking lot"]
         }
       ],
       "thumbnail": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=eabspHytKe9XCDGTFbowfQ&cb_client=search.gws-prod.gps&w=80&h=92&yaw=7.1308894&pitch=0&thumbfov=100",

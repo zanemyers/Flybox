@@ -44,13 +44,11 @@ button {
 }
 
 .location-picker {
-  @extend .input-group-text; // Inherit all Bootstrap input-group-text styles
-
   cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: #e9ecef; // Slightly darker hover
+    background-color: #e9ecef;
   }
 }
 
@@ -103,4 +101,9 @@ button {
 .nav-link.active {
   color: theme.$primary !important;
   font-weight: 600; // optional, make it stand out
+}
+
+#file-input-wrapper.dragover {
+  border-color: #0d6efd;
+  background-color: #f8f9fa;
 }
