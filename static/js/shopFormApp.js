@@ -21,7 +21,7 @@ const ShopFormApp = (() => {
     const res = await fetch("/partials/progress");
     document.getElementById("formContainer").innerHTML = await res.text();
 
-    document.getElementById("cancelButton").addEventListener("click", () => {
+    document.getElementById("progressButton").addEventListener("click", () => {
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify({ action: "cancel" }));
         socket.close();
@@ -150,6 +150,17 @@ const ShopFormApp = (() => {
 
       socket.onclose = () => {
         socket = null;
+
+        const progressButton = document.getElementById("progressButton");
+        if (!progressButton) return;
+
+        progressButton.textContent = "Close";
+        progressButton.classList.remove("btn-danger");
+        progressButton.classList.add("btn-secondary");
+
+        progressButton.onclick = () => {
+          showForm(); // or window.location.reload();
+        };
       };
 
       socket.onerror = () => {
