@@ -1,0 +1,48 @@
+<form id="shopForm" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column">
+    <div id="formError" class="text-danger mb-3"></div>
+
+    <div class="form-body">
+        <div class="form-input">
+            <label for="apiKey" class="form-label">Gemini API Key</label>
+            <input type="password" class="form-control" id="apiKey" name="apiKey" required />
+        </div>
+
+        <div class="form-input">
+            <label for="query" class="form-label">Gemini Model</label>
+            <input type="text" class="form-control" id="query" name="query" value="gemini-2.5-flash" required />
+        </div>
+
+        <div class="form-input">
+            <label for="maxAge" class="form-label">Max Report Age</label>
+            <input type="number" class="form-control" id="maxAge" name="maxAge" step="10" min="10" value="100" required />
+        </div>
+
+        <div class="form-input">
+            <label for="crawlDepth" class="form-label">Crawl Depth</label>
+            <input type="number" class="form-control" id="crawlDepth" name="crawlDepth" step="5" min="5" value="25" required />
+        </div>
+
+        <div class="form-input form-check">
+            <input type="checkbox" class="form-check-input" id="filterRivers" name="filterRivers" />
+            <label class="form-check-label" for="filterRivers">Filter by Rivers</label>
+        </div>
+
+        <div id="riverListWrapper" class="form-input d-none">
+            <label for="riverList" class="form-label">River Names (comma-separated)</label>
+            <input type="text" class="form-control" id="riverList" name="riverList" placeholder="e.g. Madison, Snake, Yellowstone" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 mt-auto">Run Search</button>
+</form>
+
+<script type="text/javascript">
+    document.getElementById("filterRivers").addEventListener("change", function () {
+        const wrapper = document.getElementById("riverListWrapper");
+        wrapper.classList.toggle("d-none", !this.checked);
+
+        const riverListInput = document.getElementById("riverList");
+        wrapper.classList.toggle("d-none", !this.checked);
+        riverListInput.required = this.checked;
+    });
+</script>
