@@ -1,29 +1,37 @@
-<main class="container py-5">
+<main class="container py-3">
     <div class="row d-flex align-items-stretch">
         <!-- Instructions -->
         <div class="col-lg-5 mb-4 mb-lg-0 d-flex">
             <div class="p-4 bg-light border rounded flex-fill d-flex flex-column">
                 <h2 class="h4 mb-2">🛠️ What This Tool Does</h2>
                 <p class="mb-4">
-                    Use this form to search for nearby businesses using <strong>SerpAPI</strong> and Google Maps.
-                    Perfect for finding specialty shops like fly fishing stores near a location.
+                    This tool helps you collect and summarize fly fishing reports. Once submitted, it uses the provided starter file to locate websites, scrapes those sites for relevant fishing report content, and summarizes what it finds using <strong>Google's Gemini API</strong>.
                 </p>
 
                 <h3 class="h5 mb-2">📋 How to Use It</h3>
                 <div class="steps">
-                    <div><span class="icon">🔐</span> Enter your <strong>SerpAPI key</strong> (get one at <a href="https://serpapi.com" target="_blank">serpapi.com</a>).</div>
-                    <div><span class="icon">🔎</span> Choose a <strong>search term</strong> like "Fly Fishing Shops".</div>
-                    <div><span class="icon">📍</span> Select a location or enter a <strong>latitude</strong> and <strong>longitude</strong> to center your search.</div>
-                    <div><span class="icon">✅</span> Click <strong>Run Search</strong> to begin.</div>
+                    <div>
+                        <span class="icon">🔐</span>
+                        Enter your <strong>Gemini API key</strong> (get one at <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener noreferrer">makersuite.google.com</a>).
+                    </div>
+                    <div><span class="icon">💁‍♀️️</span> Choose a <strong>Gemini model</strong> (see all models <a href="https://ai.google.dev/models/gemini" target="_blank" rel="noopener noreferrer">here</a>).</div>
+                    <div><span class="icon">🪙</span> Set the <strong>Token limit</strong>.</div>
+                    <div><span class="icon">⚙️</span> Set the <strong>crawl depth</strong> and <strong>maximum report age</strong> to limit scraping.</div>
+                    <div><span class="icon">🌊</span> Optionally, enable <strong>Filter by Rivers</strong> to narrow results by river names.</div>
+                    <div>
+                        <span class="icon">📁</span> Upload a <strong>starter file</strong> containing URLs to scrape.
+                        Need an example? <a href="/static/example_files/report_starter_file_ex.xlsx" download>Download one here</a>.
+                    </div>
+                    <div><span class="icon">✅</span> Click <strong>Run Search</strong> to start scraping and summarizing reports automatically.</div>
                 </div>
 
                 <h3 class="h5 mb-2">ℹ️ About the Defaults</h3>
                 <p class="mb-2">
-                    The default search is for <strong>Fly Fishing Shops</strong> centered near <strong>Yellowstone National Park</strong>, retrieving the first <strong>100</strong>     results. You can change these to search anywhere.
+                    By default, the tool uses a crawl depth of <strong>25</strong> and filters for reports no older than <strong>100</strong> days. You can adjust these to fine-tune your search.
                 </p>
 
                 <p class="text-muted small mb-0">
-                    🔒 <strong>Privacy Notice:</strong> Your API key and search inputs are never stored or logged. Everything runs securely and locally in memory.
+                    🔒 <strong>Privacy Notice:</strong> All data processing is done locally in memory. Your API key, inputs, and results are never stored or logged.
                 </p>
             </div>
         </div>
