@@ -36,7 +36,7 @@ async function main() {
     spinner.start("Reading Sites from file...");
 
     // Initialize the excel file handler instance with a filepathf
-    const reader = new ExcelFileHandler("example_files/report_scraper_ex.xlsx");
+    const reader = new ExcelFileHandler("example_files/report_starter_file_ex.xlsx");
 
     // Read the excel file into a JSON dict
     const sites = await reader.read(
