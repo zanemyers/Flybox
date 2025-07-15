@@ -12,17 +12,17 @@
 
         <div class="tab-content">
             <div class="tab-pane show active" id="manualInputs" role="tabpanel" aria-labelledby="manual-tab">
-                <div class="mb-3">
+                <div class="form-input">
                     <label for="apiKey" class="form-label">SerpAPI Key</label>
                     <input type="password" class="form-control" id="apiKey" name="apiKey" />
                 </div>
 
-                <div class="mb-3">
+                <div class="form-input">
                     <label for="query" class="form-label">Search Term</label>
                     <input type="text" class="form-control" id="query" name="query" value="Fly Fishing Shops" />
                 </div>
 
-                <div class="mb-3">
+                <div class="form-input">
                     <label class="form-label">Location</label>
                     <div class="input-group">
                         <input type="number" class="form-control" id="latitude" title="Latitude (min: -90, max: 90)" name="latitude" step="0.000001" min="-90" max="90" value="44.427963" placeholder="Latitude" />
@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-input">
                     <label for="maxResults" class="form-label">Max Results</label>
                     <input type="number" class="form-control" id="maxResults" title="Results come in increments of 20 (min: 20, max: 120)" name="maxResults" step="20" min="20" max="120" value="100" placeholder="e.g. 100" />
                 </div>
