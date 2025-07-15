@@ -11949,14 +11949,44 @@ button {
   font-weight: 600;
 }
 
-#file-input-wrapper.dragover {
+#file-input-wrapper,
+.file-input-wrapper {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+#file-input-wrapper.dragover,
+.file-input-wrapper.dragover {
   border-color: #0d6efd;
   background-color: #f8f9fa;
+}
+#file-input-wrapper img,
+.file-input-wrapper img {
+  height: 3em;
+  filter: invert(25%) opacity(0.5);
+  margin-bottom: 0.25rem;
+}
+#file-input-wrapper #selectedFileWrapper,
+.file-input-wrapper #selectedFileWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#file-input-wrapper #clearFileButton,
+.file-input-wrapper #clearFileButton {
+  padding: 0 0.5rem;
+  font-weight: bold;
+  border-radius: 0.25rem;
 }
 
 .form-input {
   margin-bottom: 1rem;
   margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 /*# sourceMappingURL=style.css.map */

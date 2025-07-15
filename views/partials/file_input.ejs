@@ -1,17 +1,11 @@
-<label for="inputFile" class="form-label">Import Excel File</label>
+<label for="inputFile" class="form-label"><%= label %></label>
 
-<div id="file-input-wrapper" class="border rounded bg-light text-center py-5" style="cursor: pointer;">
-    <img src="/static/image/upload.png" alt="Folder Icon" class="mb-2" style="height: 3em; filter: invert(25%) opacity(0.5);" />
+<div id="file-input-wrapper" class="file-input-wrapper border rounded bg-light py-3 flex-fill">
+    <img src="/static/image/upload.png" alt="Folder Icon" />
     <p class="mb-2">Drag & Drop or Click to Select File</p>
 
-    <div id="selectedFileWrapper" class="mb-2 fw-bold d-flex justify-content-center align-items-center gap-2 d-none">
-        <button
-                type="button"
-                id="clearFileButton"
-                class="btn btn-md btn-outline-danger px-2 py-0"
-                style="font-weight: bold; border-radius: 0.25rem;"
-                aria-label="Remove File"
-        >
+    <div id="selectedFileWrapper" class="mb-2 fw-bold g-2 d-none">
+        <button id="clearFileButton" class="btn btn-outline-danger" aria-label="Remove File">
             &times;
         </button>
 
