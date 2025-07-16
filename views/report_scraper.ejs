@@ -5,36 +5,59 @@
             <div class="p-4 bg-light border rounded flex-fill d-flex flex-column">
                 <h2 class="h4 mb-2">🛠️ What This Tool Does</h2>
                 <p class="mb-4">
-                    This tool helps you collect and summarize fly fishing reports. Once submitted, it uses the provided starter file to locate websites, scrapes those sites for relevant fishing report content, and summarizes what it finds using <strong>Google's Gemini API</strong>.
+                    This tool collects and summarizes fly fishing reports. It uses a starter file to find websites, scrapes them for report content, and summarizes the results using <strong>Google's Gemini API</strong>.
                 </p>
 
                 <h3 class="h5 mb-2">📋 How to Use It</h3>
                 <div class="steps">
                     <div>
                         <span class="icon">🔐</span>
-                        Enter your <strong>Gemini API key</strong> (get one at <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener noreferrer">makersuite.google.com</a>).
+                        Enter your <strong>Gemini API key</strong> (get one at
+                        <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener noreferrer">makersuite.google.com</a>).
                     </div>
-                    <div><span class="icon">💁‍♀️️</span> Choose a <strong>Gemini model</strong> (see all models <a href="https://ai.google.dev/models/gemini" target="_blank" rel="noopener noreferrer">here</a>).</div>
-                    <div><span class="icon">🪙</span> Set the <strong>Token limit</strong>.</div>
-                    <div><span class="icon">⚙️</span> Set the <strong>crawl depth</strong> and <strong>maximum report age</strong> to limit scraping.</div>
-                    <div><span class="icon">🌊</span> Optionally, enable <strong>Filter by Rivers</strong> to narrow results by river names.</div>
                     <div>
-                        <span class="icon">📁</span> Upload a <strong>starter file</strong> containing URLs to scrape.
-                        Need an example? <a href="/static/example_files/report_starter_file_ex.xlsx" download>Download one here</a>.
+                        <span class="icon">💁‍♀️️</span>
+                        Choose a <strong>Model</strong> (view available models at
+                        <a href="https://ai.google.dev/models/gemini" target="_blank" rel="noopener noreferrer">ai.google.dev</a>).
                     </div>
-                    <div><span class="icon">✅</span> Click <strong>Run Search</strong> to start scraping and summarizing reports automatically.</div>
+                    <div>
+                        <span class="icon">🪙</span>
+                        Set an input <strong>Token Limit</strong>.
+                    </div>
+                    <div>
+                        <span class="icon">⚙️</span>
+                        Set the <strong>Crawl Depth</strong> for the scraper.
+                    </div>
+                    <div>
+                        <span class="icon">⏱️</span>
+                        Set the <strong>Max Report Age</strong> in days.
+                    </div>
+                    <div>
+                        <span class="icon">🌊</span>
+                        Enable <strong>Filter by Rivers</strong> to filter reports by river names.
+                    </div>
+                    <div>
+                        <span class="icon">📁</span>
+                        Import a <strong>Starter File</strong>. Download an example file
+                        <a href="/static/example_files/report_starter_file_ex.xlsx" download>here</a>.
+                    </div>
+                    <div>
+                        <span class="icon">✅</span>
+                        Click <strong>Run Search</strong> to begin scraping and summarizing.
+                    </div>
                 </div>
 
                 <h3 class="h5 mb-2">ℹ️ About the Defaults</h3>
                 <p class="mb-2">
-                    By default, the tool uses a crawl depth of <strong>25</strong> and filters for reports no older than <strong>100</strong> days. You can adjust these to fine-tune your search.
+                    By default, this tool uses the <strong>gemini-2.5-flash</strong> model with a <strong>50,000 token limit</strong>. It scrapes up to <strong>25 link levels deep</strong>, includes reports up to <strong>100 days old</strong>, and does not <strong>filter by river</strong>.
                 </p>
-
                 <p class="text-muted small mb-0">
-                    🔒 <strong>Privacy Notice:</strong> All data processing is done locally in memory. Your API key, inputs, and results are never stored or logged.
+                    🔒 <strong>Privacy Notice:</strong> All processing happens locally in memory. Nothing is stored or sent to a server.
                 </p>
             </div>
         </div>
+
+
 
         <!-- Form -->
         <div id="formContainer" class="col-lg-7 d-flex">
