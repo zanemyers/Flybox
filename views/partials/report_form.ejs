@@ -8,16 +8,16 @@
                 Enter your Gemini API key, choose a model, and set the max token limit.
             </div>
 
-            <input type="password" class="form-control mb-3" id="apiKey" name="apiKey" placeholder="API key" required/>
+            <input type="password" class="form-control mb-3" id="apiKey" name="apiKey" title="Gemini API Key" placeholder="API key" required/>
 
             <div class="d-flex g-3">
                 <div class="col me-1">
                     <label for="model" class="visually-hidden">Gemini Model</label>
-                    <input type="text" class="form-control" id="model" name="model" value="gemini-2.5-flash" placeholder="Model" required/>
+                    <input type="text" class="form-control" id="model" name="model" value="gemini-2.5-flash" title="Gemini Model" placeholder="Model" required/>
                 </div>
                 <div class="col ms-1">
                     <label for="tokenLimit" class="visually-hidden">Token Limit</label>
-                    <input type="number" class="form-control" id="tokenLimit" name="tokenLimit" placeholder="Token Limit" step="1000" min="10000" max="100000" value="50000"/>
+                    <input type="number" class="form-control" id="tokenLimit" name="tokenLimit" title="Token Limit (min: 10000, max: 80000)" placeholder="Token Limit" step="1000" min="10000" max="100000" value="50000"/>
                 </div>
             </div>
         </div>
@@ -29,8 +29,8 @@
             </div>
 
             <div class="d-flex g-3 mb-3">
-                <input type="number" class="form-control me-1" id="crawlDepth" name="crawlDepth" step="5" min="5" value="25" required placeholder="Crawl Depth" aria-label="Crawl Depth"/>
-                <input type="number" class="form-control ms-1" id="maxAge" name="maxAge" step="10" min="10" value="100" required placeholder="Max Report Age" aria-label="Max Report Age"/>
+                <input type="number" class="form-control me-1" id="crawlDepth" name="crawlDepth" step="5" min="5" value="25" required title="Crawl Depth (min: 5, max: 25)" placeholder="Crawl Depth" aria-label="Crawl Depth"/>
+                <input type="number" class="form-control ms-1" id="maxAge" name="maxAge" step="10" min="10" value="100" required title="Max Report Age in days (min: 10)" placeholder="Max Report Age" aria-label="Max Report Age"/>
             </div>
 
             <div class="form-check mb-3">
@@ -39,7 +39,7 @@
             </div>
 
             <div id="riverListWrapper" class="mb-3 d-none">
-                <input type="text" class="form-control" id="riverList" name="riverList" placeholder="e.g. Madison, Snake, Yellowstone" aria-label="River Names (comma-separated)"/>
+                <input type="text" class="form-control" id="riverList" name="riverList" title="River List (comma seperated)" placeholder="e.g. Madison, Snake, Yellowstone" aria-label="River Names (comma-separated)"/>
             </div>
 
             <div id="fileInputWrapper" class="pb-3">
