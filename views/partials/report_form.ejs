@@ -1,4 +1,4 @@
-<form id="shopForm" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column">
+<form id="form" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column">
     <div id="formError"></div>
 
     <div class="form-body d-block">
@@ -107,6 +107,7 @@
                         max="100000"
                         value="50000"
                         title="Maximum number of tokens per request (min: 10,000, max: 100,000)"
+                        required
                 />
             </div>
         </details>
@@ -115,13 +116,4 @@
     <button type="submit" class="btn btn-primary mt-auto mx-1">Run Search</button>
 </form>
 
-<script type="text/javascript">
-    document.getElementById("filterRivers").addEventListener("change", function () {
-        const wrapper = document.getElementById("riverListWrapper");
-        wrapper.classList.toggle("d-none", !this.checked);
-
-        const riverListInput = document.getElementById("riverList");
-        wrapper.classList.toggle("d-none", !this.checked);
-        riverListInput.required = this.checked;
-    });
-</script>
+<script src="/static/js/reportFormApp.js" type="module"></script>
