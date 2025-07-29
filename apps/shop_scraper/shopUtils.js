@@ -203,14 +203,14 @@ function buildShopRows(shops, shopDetails) {
       Category: shop.type || "",
       Phone: shop.phone || "",
       Address: shop.address || "",
-      Email: shopDetails[i].email,
+      Email: shopDetails[i]?.email || "",
       "Has Website": !!shop.website,
       Website: shop.website || MESSAGES.NO_WEB,
-      "Sells Online": shopDetails[i].sellsOnline,
+      "Sells Online": shopDetails[i]?.sellsOnline || "",
       Rating: shop.rating != null ? `${shop.rating}/5` : "N/A",
       Reviews: shop.reviews || 0,
-      "Has Report": shopDetails[i].fishingReport,
-      Socials: shopDetails[i].socialMedia,
+      "Has Report": shopDetails[i]?.fishingReport || "",
+      Socials: shopDetails[i]?.socialMedia || [],
     };
   });
 }

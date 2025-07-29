@@ -6,13 +6,6 @@ import { FALLBACK_DETAILS } from "../../constants/index.js";
 import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils.js";
 import { ExcelFileHandler, normalizeUrl, StealthBrowser } from "../../utils/index.js";
 
-// Initialize class variables
-const browser = new StealthBrowser({
-  headless: process.env.RUN_HEADLESS !== "false",
-});
-
-const websiteCache = new Map();
-
 /**
  * Runs the full shop scraping workflow:
  *
@@ -37,29 +30,30 @@ export async function shopScraper({
   cancelToken = { throwIfCancelled: () => {} }, // default to no-op if not provided
 }) {
   const shopWriter = new ExcelFileHandler("media/xlsx/shop_details.xlsx");
+  const browser = new StealthBrowser({
+    headless: process.env.RUN_HEADLESS !== "false",
+  });
 
   try {
     cancelToken.throwIfCancelled();
     progressUpdate("Searching for shops...");
     const shops = await fetchShops(searchParams, progressUpdate, returnFile, cancelToken);
-    cancelToken.throwIfCancelled();
-    progressUpdate(`[STATUS]✅ Found ${shops.length} shops.`);
+    progressUpdate(`STATUS:✅ Found ${shops.length} shops.`);
 
+    cancelToken.throwIfCancelled();
     await browser.launch();
-    const shopDetails = await getDetails(shops, progressUpdate, cancelToken);
+    const shopDetails = await getDetails(browser, shops, progressUpdate, cancelToken);
+
     cancelToken.throwIfCancelled();
-
-    const rows = buildShopRows(shops, shopDetails);
-
     progressUpdate("📝 Writing shop data to Excel...");
+    const rows = buildShopRows(shops, shopDetails);
     await shopWriter.write(rows);
-    progressUpdate("[STATUS]✅ Excel file created.");
+    progressUpdate("STATUS:✅ Excel file created.");
     progressUpdate(`DOWNLOAD:shop_details.xlsx`);
     returnFile(await shopWriter.getBuffer());
   } catch (err) {
     if (err.isCancelled) {
-      progressUpdate("❌ Search cancelled.");
-      console.log("❌ Search cancelled.");
+      progressUpdate(err.message);
     } else {
       progressUpdate(`❌ Error: ${err.message || err}`);
     }
@@ -87,8 +81,6 @@ async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken)
     await cacheFileHandler.loadBuffer(searchParams.fileBuffer);
     return await cacheFileHandler.read();
   }
-
-  cancelToken.throwIfCancelled();
 
   const results = [];
   for (let start = 0; start < (+searchParams.maxResults || 100); start += 20) {
@@ -124,14 +116,15 @@ async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken)
  * Shops are processed in parallel with controlled concurrency to avoid overwhelming
  * system resources or triggering anti-bot protections.
  *
+ * @param browser
  * @param {Array<object>} shops - The list of shops to process.
  * @param {Function} progressUpdate - A function to send real-time progress updates (optional).
  * @param {Object} cancelToken - An object with a `throwIfCancelled()` method to support graceful cancellation.
  *
  * @returns {Promise<Array<object>>} A list of shop detail objects (one per shop), using fallback values when scraping fails.
  */
-
-async function getDetails(shops, progressUpdate = () => {}, cancelToken) {
+async function getDetails(browser, shops, progressUpdate = () => {}, cancelToken) {
+  const websiteCache = new Map();
   const results = new Array(shops.length);
   let completed = 0;
 
@@ -141,19 +134,19 @@ async function getDetails(shops, progressUpdate = () => {}, cancelToken) {
   await PromisePool.withConcurrency(parseInt(process.env.CONCURRENCY, 10) || 5)
     .for(shops)
     .process(async (shop, index) => {
-      cancelToken.throwIfCancelled();
-
       if (!shop.website) {
         results[index] = FALLBACK_DETAILS.NONE;
       } else {
+        cancelToken.throwIfCancelled();
         const page = await addShopSelectors(await browser.newPage());
         try {
-          cancelToken.throwIfCancelled();
-          results[index] = await scrapeWebsite(page, shop.website, cancelToken);
+          results[index] = await scrapeWebsite(websiteCache, page, shop.website, cancelToken);
         } catch (err) {
           if (!err.isCancelled) {
             console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
             results[index] = FALLBACK_DETAILS.ERROR;
+          } else {
+            throw err; // Bubble up
           }
         } finally {
           await page.close();
@@ -161,10 +154,10 @@ async function getDetails(shops, progressUpdate = () => {}, cancelToken) {
       }
 
       ++completed;
-      progressUpdate("[STATUS]" + messageTemplate(completed));
+      progressUpdate("STATUS:" + messageTemplate(completed));
     });
 
-  progressUpdate("[STATUS]✅ Scraping Complete");
+  progressUpdate("STATUS:✅ Scraping Complete");
 
   return results;
 }
@@ -175,6 +168,7 @@ async function getDetails(shops, progressUpdate = () => {}, cancelToken) {
  * If available, cached results are used to avoid unnecessary requests. If the site
  * blocks access or an error occurs, fallback values are returned.
  *
+ * @param websiteCache
  * @param {Page} page - A Playwright Page instance used to navigate and scrape the website.
  * @param {string} url - The raw URL of the shop’s website to be scraped.
  * @param {Object} cancelToken - An object with a `throwIfCancelled()` method to support graceful cancellation.
@@ -182,8 +176,7 @@ async function getDetails(shops, progressUpdate = () => {}, cancelToken) {
  * @returns {Promise<object>} A details object containing scraped data or fallback error values.
  */
 
-async function scrapeWebsite(page, url, cancelToken) {
-  cancelToken.throwIfCancelled();
+async function scrapeWebsite(websiteCache, page, url, cancelToken) {
   const normalizedUrl = normalizeUrl(url);
 
   // Check for cached results
@@ -193,8 +186,8 @@ async function scrapeWebsite(page, url, cancelToken) {
 
   let details;
   try {
-    const response = await page.load(normalizedUrl); // Open the page and wiggle the mouse
     cancelToken.throwIfCancelled();
+    const response = await page.load(normalizedUrl); // Open the page and wiggle the mouse
 
     // Check if the request was blocked or rate-limited
     const status = response?.status();
