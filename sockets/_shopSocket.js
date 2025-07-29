@@ -27,15 +27,14 @@ export function shopSocket(ws) {
       // 2️⃣ Handle cancellation immediately for JSON
       if (payload.action === "cancel") {
         cancelToken.cancel();
-        sendData("❌ Search cancelled.");
-        ws.close();
         return;
       }
     }
 
     try {
       const progressUpdate = (msg) => {
-        if (!cancelToken.isCancelled()) sendData(msg);
+        sendData(msg);
+        if (msg === "Cancelled") ws.close();
       };
 
       const returnFile = async (buffer) => {
