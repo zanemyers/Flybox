@@ -1,51 +1,115 @@
-<form id="shopForm" enctype="multipart/form-data" class="pt-2 px-4 pb-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column">
-    <div id="formError" class="text-danger mb-3"></div>
+<form id="shopForm" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column">
+    <div id="formError"></div>
 
-    <div class="form-body">
+    <div class="form-body d-block">
         <div class="form-input">
-            <label for="apiKey" class="form-label mb-0">Gemini Configuration</label>
-            <div class="form-text mt-0 mb-3">
-                Enter your Gemini API key, choose a model, and set the max token limit.
-            </div>
-
-            <input type="password" class="form-control mb-3" id="apiKey" name="apiKey" title="Gemini API Key" placeholder="API key" required/>
-
-            <div class="d-flex g-3">
-                <div class="col me-1">
-                    <label for="model" class="visually-hidden">Gemini Model</label>
-                    <input type="text" class="form-control" id="model" name="model" value="gemini-2.5-flash" title="Gemini Model" placeholder="Model" required/>
-                </div>
-                <div class="col ms-1">
-                    <label for="tokenLimit" class="visually-hidden">Token Limit</label>
-                    <input type="number" class="form-control" id="tokenLimit" name="tokenLimit" title="Token Limit (min: 10000, max: 80000)" placeholder="Token Limit" step="1000" min="10000" max="100000" value="50000"/>
-                </div>
-            </div>
+            <label for="apiKey" class="form-label">Gemini API Key</label>
+            <input
+                    type="password"
+                    class="form-control"
+                    id="apiKey"
+                    name="apiKey"
+                    placeholder="API key"
+                    title="Your private Gemini API key"
+                    required
+            />
         </div>
 
         <div class="form-input">
-            <label class="form-label mb-0">Filter Settings</label>
-            <div class="form-text mt-0 mb-3">
-                Set the crawl depth for the scraper and the maximum age of reports. Optionally filter by river names.
-            </div>
-
-            <div class="d-flex g-3 mb-3">
-                <input type="number" class="form-control me-1" id="crawlDepth" name="crawlDepth" step="5" min="5" value="25" required title="Crawl Depth (min: 5, max: 25)" placeholder="Crawl Depth" aria-label="Crawl Depth"/>
-                <input type="number" class="form-control ms-1" id="maxAge" name="maxAge" step="10" min="10" value="100" required title="Max Report Age in days (min: 10)" placeholder="Max Report Age" aria-label="Max Report Age"/>
-            </div>
-
-            <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="filterRivers" name="filterRivers"/>
-                <label class="form-check-label" for="filterRivers">Filter by Rivers</label>
-            </div>
-
-            <div id="riverListWrapper" class="mb-3 d-none">
-                <input type="text" class="form-control" id="riverList" name="riverList" title="River List (comma seperated)" placeholder="e.g. Madison, Snake, Yellowstone" aria-label="River Names (comma-separated)"/>
-            </div>
-
-            <div id="fileInputWrapper" class="pb-3">
-                <%- include('./file_input.ejs', { label: 'Import Starter File' }) %>
-            </div>
+            <label for="model" class="form-label">Gemini Model</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="model"
+                    name="model"
+                    value="gemini-2.5-flash"
+                    placeholder="e.g. gemini-1.5-pro or gemini-2.5-flash"
+                    title="Specify the Gemini model to use for summarization"
+                    required
+            />
         </div>
+
+        <div class="form-input">
+            <label for="maxAge" class="form-label">Max Report Age</label>
+            <input
+                    type="number"
+                    class="form-control"
+                    id="maxAge"
+                    name="maxAge"
+                    step="10"
+                    min="10"
+                    value="100"
+                    placeholder="e.g. 100"
+                    aria-label="Max Report Age"
+                    title="Filter reports by maximum age in days (min: 10)"
+                    required
+            />
+        </div>
+
+        <div class="form-input form-check">
+            <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="filterRivers"
+                    name="filterRivers"
+                    title="Enable filtering of reports by river names"
+            />
+            <label class="form-check-label" for="filterRivers">Filter by Rivers</label>
+        </div>
+
+        <div id="riverListWrapper" class="form-input d-none">
+            <label for="riverList" class="form-label">River Names</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="riverList"
+                    name="riverList"
+                    placeholder="e.g. Madison, Snake, Yellowstone"
+                    aria-label="River Names (comma-separated)"
+                    title="Enter river names separated by commas to filter reports"
+            />
+        </div>
+
+        <div id="fileInputWrapper" class="form-input">
+            <%- include('./file_input.ejs', { label: 'Import Starter File' }) %>
+        </div>
+
+        <details class="form-input">
+            <summary class="form-label mb-2">Advanced Settings</summary>
+
+            <div class="form-input">
+                <label for="crawlDepth" class="form-label">Crawl Depth</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        id="crawlDepth"
+                        name="crawlDepth"
+                        step="5"
+                        min="5"
+                        value="25"
+                        placeholder="e.g. 25"
+                        aria-label="Crawl Depth"
+                        title="Set how deep the scraper follows links (min: 5, max: 25)"
+                        required
+                />
+            </div>
+
+            <div class="form-input">
+                <label for="tokenLimit" class="form-label">Token Limit</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        id="tokenLimit"
+                        name="tokenLimit"
+                        placeholder="e.g. 50,000"
+                        step="1000"
+                        min="10000"
+                        max="100000"
+                        value="50000"
+                        title="Maximum number of tokens per request (min: 10,000, max: 100,000)"
+                />
+            </div>
+        </details>
     </div>
 
     <button type="submit" class="btn btn-primary mt-auto mx-1">Run Search</button>
