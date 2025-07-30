@@ -1,4 +1,5 @@
 import express from "express";
+import { MERGE_PROMPT, SUMMARY_PROMPT } from "../constants/index.js";
 
 const router = express.Router();
 
@@ -9,7 +10,11 @@ router.get("/shop-form", (req, res) => {
 
 //Serve the report form partial
 router.get("/report-form", (req, res) => {
-  res.render("partials/report_form", { layout: false });
+  res.render("partials/report_form", {
+    layout: false,
+    summaryPrompt: SUMMARY_PROMPT,
+    mergePrompt: MERGE_PROMPT,
+  });
 });
 
 // Serve the progress partial
