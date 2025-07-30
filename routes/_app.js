@@ -1,10 +1,12 @@
 import express from "express";
+import { MERGE_PROMPT, SUMMARY_PROMPT } from "../constants/index.js";
 
 const router = express.Router();
 router.get("/report-scraper", (req, res) => {
   res.render("report_scraper", {
     title: "Report Scraper",
-    // Add any other context variables you want here
+    summaryPrompt: SUMMARY_PROMPT,
+    mergePrompt: MERGE_PROMPT,
   });
 });
 router.get("/shop-scraper", (req, res) => {

@@ -16,20 +16,6 @@
         </div>
 
         <div class="form-input">
-            <label for="model" class="form-label">Gemini Model</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="model"
-                    name="model"
-                    value="gemini-2.5-flash"
-                    placeholder="e.g. gemini-1.5-pro or gemini-2.5-flash"
-                    title="Specify the Gemini model to use for summarization"
-                    required
-            />
-        </div>
-
-        <div class="form-input">
             <label for="maxAge" class="form-label">Max Report Age</label>
             <input
                     type="number"
@@ -78,18 +64,15 @@
             <summary class="form-label mb-2">Advanced Settings</summary>
 
             <div class="form-input">
-                <label for="crawlDepth" class="form-label">Crawl Depth</label>
+                <label for="model" class="form-label">Gemini Model</label>
                 <input
-                        type="number"
+                        type="text"
                         class="form-control"
-                        id="crawlDepth"
-                        name="crawlDepth"
-                        step="5"
-                        min="5"
-                        value="25"
-                        placeholder="e.g. 25"
-                        aria-label="Crawl Depth"
-                        title="Set how deep the scraper follows links (min: 5, max: 25)"
+                        id="model"
+                        name="model"
+                        value="gemini-2.5-flash"
+                        placeholder="e.g. gemini-1.5-pro or gemini-2.5-flash"
+                        title="Specify the Gemini model to use for summarization"
                         required
                 />
             </div>
@@ -110,6 +93,52 @@
                         required
                 />
             </div>
+
+            <div class="form-input">
+                <label for="crawlDepth" class="form-label">Crawl Depth</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        id="crawlDepth"
+                        name="crawlDepth"
+                        step="5"
+                        min="5"
+                        value="25"
+                        placeholder="e.g. 25"
+                        aria-label="Crawl Depth"
+                        title="Set how deep the scraper follows links (min: 5, max: 25)"
+                        required
+                />
+            </div>
+
+            <div class="form-input">
+                <label for="summaryPrompt" class="form-label">Summary Prompt</label>
+                <textarea
+                        class="form-control"
+                        id="summaryPrompt"
+                        name="summaryPrompt"
+                        placeholder="Enter summary prompt here..."
+                        aria-label="Summary Prompt"
+                        title="Enter the summary prompt"
+                        required
+                        rows="10"
+                ><%= summaryPrompt %></textarea>
+            </div>
+
+            <div class="form-input">
+                <label for="mergePrompt" class="form-label">Merge Prompt</label>
+                <textarea
+                        class="form-control"
+                        id="mergePrompt"
+                        name="mergePrompt"
+                        placeholder="Enter merge prompt here..."
+                        aria-label="Merge Prompt"
+                        title="Enter the merge prompt"
+                        required
+                        rows="4"
+                ><%= mergePrompt %></textarea>
+            </div>
+
         </details>
     </div>
 
