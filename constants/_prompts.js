@@ -27,11 +27,10 @@ const SUMMARY_PROMPT = `
       * Fly Patterns: ...
       * Colors: ...
       * Hook Sizes: ...
-  `;
+  `.trim();
 
 const MERGE_PROMPT = `
-  The following are summaries of fishing reports broken into sections.
-  Please consolidate the information into a single summary using the same format, listing up to the 3 most recent dates separately for each body of water:
-  `;
+The following are summaries of fishing reports broken into sections. Please consolidate the information into a single summary using the same format, listing up to the 3 most recent dates separately for each body of water:
+`.trim();
 
 export { REPORT_DIVIDER, SUMMARY_PROMPT, MERGE_PROMPT };

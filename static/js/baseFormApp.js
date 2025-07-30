@@ -52,13 +52,7 @@ export class BaseFormApp {
       this.socket = new WebSocket(`ws://localhost:3000/ws/${this.socketName}`);
 
       this.socket.onopen = () => {
-        if (payload instanceof File) {
-          const reader = new FileReader();
-          reader.onload = () => this.socket.send(reader.result);
-          reader.readAsArrayBuffer(payload);
-        } else {
-          this.socket.send(JSON.stringify(payload));
-        }
+        this.handlePayload(payload);
       };
 
       let pendingFilename = "download.xlsx";
@@ -139,4 +133,15 @@ export class BaseFormApp {
   onFormLoad() {} // override
   cacheElements() {} // override
   validateFormInput() {} // override
+
+  // override if needed
+  handlePayload(payload) {
+    if (payload instanceof File) {
+      const reader = new FileReader();
+      reader.onload = () => this.socket.send(reader.result);
+      reader.readAsArrayBuffer(payload);
+    } else {
+      this.socket.send(JSON.stringify(payload));
+    }
+  }
 }

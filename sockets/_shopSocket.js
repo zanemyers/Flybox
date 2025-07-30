@@ -55,7 +55,6 @@ export function shopSocket(ws) {
         sendData("✅ Search complete.");
       }
     } catch (err) {
-      console.error("❌ Scraper error:", err);
       if (!cancelToken.isCancelled()) {
         sendData(`❌ Error: ${err.message || "Unknown error"}`);
       }
