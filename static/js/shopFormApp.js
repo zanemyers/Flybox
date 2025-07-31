@@ -34,9 +34,9 @@ class ShopFormApp extends BaseFormApp {
       const lng = parseFloat(this.elements.lngEl.value);
       const maxResults = parseInt(this.elements.maxResultsEl.value, 10);
 
-      const hasManualInputs = apiKey && query && !isNaN(lat) && !isNaN(lng) && !isNaN(maxResults);
+      const isValid = apiKey && query && !isNaN(lat) && !isNaN(lng) && !isNaN(maxResults);
 
-      return hasManualInputs ? { apiKey, query, lat, lng, maxResults } : null;
+      return isValid ? { apiKey, query, lat, lng, maxResults } : null;
     } else {
       return this.elements.fileInputEl.files[0] || null;
     }

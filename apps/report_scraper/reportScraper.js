@@ -30,7 +30,7 @@ const crawlDepth = Math.max(1, parseInt(process.env.CRAWL_DEPTH, 10) || 25);
 const runHeadless = process.env.RUN_HEADLESS !== "false";
 const debugging = process.env.DEBUGGING === "true";
 
-async function main() {
+export async function reportScraper() {
   try {
     // STEP 1: Read and deduplicate site list
     spinner.start("Reading Sites from file...");
@@ -241,7 +241,3 @@ async function generateSummary(report) {
     console.error("Error generating summary:", err);
   }
 }
-
-main().catch((err) => {
-  console.error("Fatal error:", err);
-});
