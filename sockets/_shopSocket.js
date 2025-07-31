@@ -1,69 +1,17 @@
+import { BaseWebSocket } from "./_baseWebSocket.js";
 import { shopScraper } from "../apps/shop_scraper/shopScraper.js";
-import { initCancellationToken } from "./_cancellationToken.js";
+
+class _ShopSocket extends BaseWebSocket {
+  async handleAction(payload) {
+    await shopScraper({
+      searchParams: payload,
+      progressUpdate: this.progressUpdate.bind(this),
+      returnFile: this.returnFile.bind(this),
+      cancelToken: this.cancelToken,
+    });
+  }
+}
 
 export function shopSocket(ws) {
-  const cancelToken = initCancellationToken();
-
-  const sendData = (data) => {
-    if (ws.readyState === ws.OPEN) {
-      ws.send(data);
-    }
-  };
-
-  ws.on("message", async (message, isBinary) => {
-    let payload = null;
-
-    if (isBinary) {
-      payload = { fileBuffer: message }; // Wrap it as an object for the scraper
-    } else {
-      try {
-        payload = JSON.parse(message);
-      } catch {
-        sendData("❌ Invalid message format.");
-        ws.close();
-        return;
-      }
-
-      // 2️⃣ Handle cancellation immediately for JSON
-      if (payload.action === "cancel") {
-        cancelToken.cancel();
-        return;
-      }
-    }
-
-    try {
-      const progressUpdate = (msg) => {
-        sendData(msg);
-        if (msg === "Cancelled") ws.close();
-      };
-
-      const returnFile = async (buffer) => {
-        if (!cancelToken.isCancelled()) {
-          // Send the Excel file buffer as binary over WS
-          sendData(buffer);
-        }
-      };
-
-      await shopScraper({
-        searchParams: payload,
-        progressUpdate,
-        returnFile,
-        cancelToken: cancelToken,
-      });
-
-      if (!cancelToken.isCancelled()) {
-        sendData("✅ Search complete.");
-      }
-    } catch (err) {
-      if (!cancelToken.isCancelled()) {
-        sendData(`❌ Error: ${err.message || "Unknown error"}`);
-      }
-    } finally {
-      ws.close();
-    }
-  });
-
-  ws.on("close", () => {
-    cancelToken.cancel();
-  });
+  new _ShopSocket(ws);
 }

@@ -64,7 +64,7 @@ export class BaseFormApp {
 
           const message = event.data;
           if (message === "Cancelled") {
-            this.updateProgress(progressArea, "❌Search Cancelled.");
+            this.updateProgress(progressArea, "❌ Search Cancelled.");
             this.socket.close();
             return;
           }
@@ -120,7 +120,7 @@ export class BaseFormApp {
     const lines = area.textContent.trim().split("\n");
     const lastLine = lines[lines.length - 1];
 
-    if (lastLine === "Cancelling...." && text !== "Cancelled") return;
+    if (lastLine === "Cancelling...." && text !== "❌ Search Cancelled.") return;
 
     lines[lines.length - 1] = text;
     area.textContent = lines.join("\n");
@@ -130,9 +130,17 @@ export class BaseFormApp {
     area.textContent += (area.textContent ? "\n" : "") + text;
   }
 
-  onFormLoad() {} // override
-  cacheElements() {} // override
-  validateFormInput() {} // override
+  onFormLoad() {
+    throw new Error("onFormLoad() must be implemented in subclass.");
+  }
+
+  cacheElements() {
+    throw new Error("cacheElements() must be implemented in subclass.");
+  } // override
+
+  validateFormInput() {
+    throw new Error("validateFormInput() must be implemented in subclass.");
+  } // override
 
   // override if needed
   handlePayload(payload) {

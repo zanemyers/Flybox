@@ -39,7 +39,7 @@ class ReportFormApp extends BaseFormApp {
     const summaryPrompt = this.elements.summaryPromptEl.value.trim();
     const mergePrompt = this.elements.mergePromptEl.value.trim();
 
-    const validForm =
+    const isValid =
       apiKey &&
       !isNaN(maxAge) &&
       (!filterRivers || riverList !== "") &&
@@ -50,7 +50,7 @@ class ReportFormApp extends BaseFormApp {
       summaryPrompt &&
       mergePrompt;
 
-    return validForm
+    return isValid
       ? {
           apiKey,
           maxAge,
