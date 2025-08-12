@@ -12231,14 +12231,14 @@ button {
   filter: invert(25%) opacity(0.5);
   margin-bottom: 0.25rem;
 }
-#file-input-wrapper #selectedFileWrapper,
-.file-input-wrapper #selectedFileWrapper {
+#file-input-wrapper #selected-file-wrapper,
+.file-input-wrapper #selected-file-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-#file-input-wrapper #clearFileButton,
-.file-input-wrapper #clearFileButton {
+#file-input-wrapper #clear-file-button,
+.file-input-wrapper #clear-file-button {
   padding: 0 0.5rem;
   font-weight: bold;
   border-radius: 0.25rem;
