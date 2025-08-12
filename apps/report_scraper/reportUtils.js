@@ -138,7 +138,7 @@ function getPriority(currentUrl, link, linkText, siteInfo) {
  * - Excludes reports older than the configured age limit (in days).
  * - Optionally filters to include only reports mentioning important rivers.
  *
- * @param {{reports: *, failedDomains: *[]}} reports - Array of raw report texts.
+ * @param reports - Array of raw report texts.
  * @param maxAge
  * @param filterByRivers
  * @param riverList
