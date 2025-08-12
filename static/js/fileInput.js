@@ -1,9 +1,9 @@
 export function initFileInput() {
   const fileInput = document.getElementById("inputFile");
   const fileNameDisplay = document.getElementById("selectedFile");
-  const fileNameWrapper = document.getElementById("selectedFileWrapper");
+  const fileNameWrapper = document.getElementById("selected-file-wrapper");
   const fileWrapper = document.getElementById("file-input-wrapper");
-  const clearButton = document.getElementById("clearFileButton");
+  const clearButton = document.getElementById("clear-file-button");
 
   if (!fileInput || !fileNameDisplay || !fileWrapper || !clearButton || !fileNameWrapper) return;
 
