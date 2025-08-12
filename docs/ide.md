@@ -22,7 +22,6 @@
 
 - Click the `🐞 (Debug)` button to run in debug mode
 
-
 ### 🧰 Recommended Extensions
 
 - GitHub by JetBrains
