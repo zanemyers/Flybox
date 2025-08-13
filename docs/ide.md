@@ -1,6 +1,6 @@
 ## ⚙️ WebStorm Setup
 
-### 🐞 Debug Configuration for Web Server
+### 🐞 Debugging
 
 #### 1. Add a Debug Configuration
 
@@ -13,10 +13,8 @@
 
 #### 2. Start the Server
 
-- **Docker**
-  - `docker compose up`
-- **Local**
-  - `just start`
+- 🐳 **Docker**: `docker-compose up`
+- 🏠 **Local**: `just start`
 
 #### 3. Attach the Debugger
 
@@ -28,6 +26,8 @@
 - Just by linux_china
 - Light Sheet by Victoryil
   > WebStorm bundles some plugins like Docker automatically
+
+[//]: # "TODO: UPDATE VS Code Setup"
 
 ## ⚙️ Visual Studio Code Setup
 

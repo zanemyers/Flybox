@@ -1,13 +1,20 @@
 import { MESSAGES } from "./_messages.js";
 
-// Regex pattern to match email addresses
+/**
+ * Regular expression pattern to match email addresses in text.
+ * Matches standard email formats like "user@example.com".
+ */
 const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i;
 
-// Common e-commerce-related keywords used to detect if a website is a shop
+/**
+ * Keywords commonly associated with e-commerce or online shops.
+ */
 const SHOP_KEYWORDS = ["shop", "store", "buy", "products", "cart", "checkout"];
 
-// Mapping of domain names to social media platform names
-// Includes aliases (e.g., wa.me → WhatsApp, twitter.com → X)
+/**
+ * Mapping of known social media domains to human-readable platform names.
+ * Includes domain aliases to cover multiple URL variations (e.g., wa.me → WhatsApp, x.com → X/Twitter).
+ */
 const SOCIAL_MEDIA_MAP = [
   { domain: "facebook.com", name: "Facebook" },
   { domain: "instagram.com", name: "Instagram" },
@@ -21,7 +28,14 @@ const SOCIAL_MEDIA_MAP = [
   { domain: "youtube.com", name: "YouTube" },
 ];
 
-// Fallback details object for shops that do not have any information
+/**
+ * Standardized fallback detail objects for shops when data cannot be retrieved.
+ * Categories include:
+ * - BLOCKED: Site blocked or forbidden (with HTTP status), returns error messages for all fields.
+ * - ERROR: General errors encountered during scraping.
+ * - NONE: Explicitly empty/default values when no data is found.
+ * - TIMEOUT: Page load failures.
+ */
 const FALLBACK_DETAILS = {
   BLOCKED: (status) => ({
     email: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),

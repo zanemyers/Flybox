@@ -17,5 +17,5 @@ COPY . .
 # Optional: expose a port if using Express
 EXPOSE 3000
 
-# Default start command (if not overridden in Compose)
-CMD ["node", "--inspect=0.0.0.0:9229", "server.js"]
+# Default start command: run Sass watcher in background and Node server
+CMD sh -c "npx sass --watch --poll static/scss/style.scss:static/public/style.css 2>/dev/null & node --inspect=0.0.0.0:9229 server.js"

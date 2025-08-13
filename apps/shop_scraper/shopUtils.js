@@ -1,18 +1,18 @@
-import fs from "fs/promises";
-
 import { EMAIL_REGEX, MESSAGES, SHOP_KEYWORDS, SOCIAL_MEDIA_MAP } from "../../constants/index.js";
 
 /**
- * Adds custome scraper methods directly on the page instance for convenient use during scraping.
+ * Enhances a Playwright `Page` instance with custom scraping helper methods
+ * for extracting specific shop-related data
  *
- * @param {import('playwright').Page} page - The Playwright page to extend.
+ * @param {import('playwright').Page} page - The Playwright page instance to extend.
  * @returns {Promise<import('playwright').Page>} - The same page instance with added helper methods.
  */
 async function addShopSelectors(page) {
   /**
-   *   Checks if the page contains a link with "report" in it (case-insensitive).
+   * Checks if the page contains a hyperlink (`<a>`) with the keyword "report" (case-insensitive).
    *
-   * @returns {Promise<boolean>} - `true` if the page contains the text, otherwise `false`.
+   * @returns {Promise<boolean|string>} - `true` if found, `false` if not,
+   *                                       or an error message on failure.
    */
   page.publishesFishingReport = async function () {
     try {
@@ -23,11 +23,12 @@ async function addShopSelectors(page) {
   };
 
   /**
-   * Retrieves a list of social media platforms linked on the page by checking all anchor (`<a>`) elements
-   * for hrefs that match domains defined in the `SOCIAL_MEDIA_MAP`.
+   * Detects linked social media platforms by scanning all `<a>` tags for domains
+   * listed in `SOCIAL_MEDIA_MAP`.
    *
-   * @returns {Promise<string[]>} - A list of social media platform names found on the page,
-   *                               or an empty array if none are found.
+   * @returns {Promise<string|string[]>} - A comma-separated list of platforms found,
+   *                                       an empty string if none found,
+   *                                       or an error message on failure.
    */
   page.getSocialMedia = async function () {
     try {
@@ -47,30 +48,26 @@ async function addShopSelectors(page) {
   };
 
   /**
-   * Retrieves the `href` attribute of the first anchor (`<a>`) element on the page
-   * whose `href` contains the word "contact".
+   * Finds the first `<a>` element whose `href` contains "contact"
+   * and returns its absolute URL.
    *
-   * @returns {Promise<string|null>} - The contact link URL, or null if not found.
+   * @returns {Promise<string|null>} - The contact page URL or `null` if not found.
    */
   page.getContactLink = async function () {
     try {
       const href = await page.getAttByLocator('a[href*="contact"]', "href");
       if (!href) return null;
 
-      // Convert to absolute URL if needed
-      const contactUrl = new URL(href, page.url()).toString();
-      return contactUrl;
+      return new URL(href, page.url()).toString();
     } catch {
       return null;
     }
   };
 
   /**
-   * Retrieves the email address from the first anchor (`<a>`) element
-   * on the page that contains a `mailto:` link in its `href` attribute.
+   * Extracts the email address from the first `mailto:` link found in an `<a>` tag.
    *
-   * @returns {Promise<string|null>} - The email address extracted from the `href` attribute,
-   *                                    or null if no `mailto:` link is found.
+   * @returns {Promise<string|null>} - The email address, or `null` if none found.
    */
   page.getEmailFromHref = async function () {
     try {
@@ -82,9 +79,9 @@ async function addShopSelectors(page) {
   };
 
   /**
-   * Retrieves the email text content from the page based on a regular expression pattern.
+   * Searches the page body text for an email address using `EMAIL_REGEX`.
    *
-   * @returns {Promise<string|null>} The email text if found, or null if not.
+   * @returns {Promise<string|null>} - The email if found, otherwise `null`.
    */
   page.getEmailFromText = async function () {
     try {
@@ -97,38 +94,30 @@ async function addShopSelectors(page) {
   };
 
   /**
-   * Attempts to retrieve the email address from the page by first checking for a `mailto:` link,
-   * then checking the page text, and finally navigating to a contact page if needed.
+   * Retrieves an email address using a tiered approach:
+   * 1. Check for a `mailto:` link.
+   * 2. Search page text.
+   * 3. If still not found, navigate to the contact page (if available) and retry.
    *
-   * The function follows this order of attempts:
-   * 1. Check for email in the first `mailto:` link.
-   * 2. If no email is found, check for email in the page text.
-   * 3. If still no email is found and not already on the contact page,
-   *    navigate to the contact page and try again.
-   *
-   * @param {boolean} [onContactPage=false] - Flag to indicate whether the function is already on the contact page.
-   * @returns {Promise<string>} - The email address, or a predefined message indicating no email is found.
+   * @param {boolean} [onContactPage=false] - Prevents infinite recursion when already on contact page.
+   * @returns {Promise<string>} - Email address found, or a predefined "no email" or error message.
    */
   page.getEmail = async function (onContactPage = false) {
     try {
-      // First try to get email from mailto link
       const emailFromHref = await this.getEmailFromHref();
       if (emailFromHref) return emailFromHref;
 
-      // Then try to get email from text content
       const emailFromText = await this.getEmailFromText();
       if (emailFromText) return emailFromText;
 
-      // If not on contact page yet, try to navigate there
       if (!onContactPage) {
         const contactLink = await this.getContactLink();
         if (contactLink) {
           await page.load(contactLink);
-          return await this.getEmail(true); // Try again on contact page
+          return await this.getEmail(true);
         }
       }
 
-      // If all methods failed, return no email message
       return MESSAGES.NO_EMAIL;
     } catch {
       return MESSAGES.ERROR_EMAIL;
@@ -136,25 +125,20 @@ async function addShopSelectors(page) {
   };
 
   /**
-   * Checks if the page contains links or buttons related to an online shop
+   * Checks if the page contains keywords related to an online shop
+   * in either `<a>` or `<button>` elements.
    *
-   * @returns {Promise<boolean>} - `true` if the page contains a link or button related to an online shop,
-   *                               `false` otherwise.
+   * @returns {Promise<boolean|string>} - `true` if found, `false` if not,
+   *                                       or an error message on failure.
    */
   page.hasOnlineShop = async function () {
     try {
       for (const keyword of SHOP_KEYWORDS) {
-        // Check if any anchor link contains the keyword text
         const hasLink = await page.hasElementWithKeyword("a", keyword);
-
-        // Check if any button contains the keyword text
         const hasButton = await page.hasElementWithKeyword("button", keyword);
 
-        // If either a link or a button is found with the keyword, return true
         if (hasLink || hasButton) return true;
       }
-
-      // If no matching links or buttons are found, return false
       return false;
     } catch {
       return MESSAGES.ERROR_SHOP;
@@ -165,36 +149,17 @@ async function addShopSelectors(page) {
 }
 
 /**
- * Tries to load cached shop data from a file.
- * If the metadata in the file matches the expected metadata, returns the cached results.
+ * Combines base shop data with scraped details to create a list of export-ready row objects.
  *
- * @param {string} filePath - Path to the cache file.
- * @param {object} expectedMeta - Metadata to validate against the cached data.
- * @returns {Promise<object[]|null>} - Cached shop results if valid, otherwise null.
- */
-async function loadCachedShops(filePath, expectedMeta) {
-  try {
-    const data = await fs.readFile(filePath, "utf-8");
-    const { meta, results } = JSON.parse(data);
-
-    const isMatch = Object.entries(expectedMeta).every(([key, val]) => meta?.[key] === val);
-
-    return isMatch ? results : null;
-  } catch (err) {
-    if (err.code !== "ENOENT") throw err;
-    return null;
-  }
-}
-
-/**
- * Converts shops and their corresponding details into exportable row objects.
+ * @param {Array<object>} shops - The base shop data, each containing title, type, phone, etc.
+ * @param {Array<object>} shopDetails - The scraped or cached details for each shop.
+ * @returns {Array<object>} A new array of objects formatted for export (e.g., to CSV or Excel).
  *
- * @param {Array<object>} shops - The original list of shop objects.
- * @param {Array<object>} shopDetails - The list of additional detail objects.
- * @returns {Array<object>} - An array of row objects for export.
+ * @throws {Error} If `shops` and `shopDetails` have mismatched lengths.
  */
 function buildShopRows(shops, shopDetails) {
   if (shops.length !== shopDetails.length)
+    // ensure both arrays are the same length
     throw new Error(`Shop count - ${shops.length} ≠ details count - ${shopDetails.length}`);
 
   return shops.map((shop, i) => {
@@ -215,6 +180,12 @@ function buildShopRows(shops, shopDetails) {
   });
 }
 
+/**
+ * Formats a list of shop objects into simplified row data for the intermediate file.
+ *
+ * @param {Array<object>} shops - The list of shop objects to format.
+ * @returns {Array<object>} A new array of objects formatted for export (e.g., to CSV or Excel).
+ */
 function buildCacheFileRows(shops) {
   if (shops.length === 0) return [];
 
@@ -232,4 +203,4 @@ function buildCacheFileRows(shops) {
   });
 }
 
-export { addShopSelectors, buildCacheFileRows, buildShopRows, loadCachedShops };
+export { addShopSelectors, buildCacheFileRows, buildShopRows };
