@@ -3,12 +3,17 @@ import { MERGE_PROMPT, SUMMARY_PROMPT } from "../constants/index.js";
 
 const router = express.Router();
 
+/**
+ * Routes for serving partial views used in forms and UI components.
+ * These routes return EJS partials without the main layout (layout: false).
+ */
+
 // Serve the shop form partial
 router.get("/shop-form", (req, res) => {
   res.render("partials/shop_form", { layout: false });
 });
 
-//Serve the report form partial
+// Serve the report form partial with prompts for summary and merge
 router.get("/report-form", (req, res) => {
   res.render("partials/report_form", {
     layout: false,
@@ -17,7 +22,7 @@ router.get("/report-form", (req, res) => {
   });
 });
 
-// Serve the progress partial
+// Serve the progress partial for displaying ongoing tasks
 router.get("/progress", (req, res) => {
   res.render("partials/progress", { layout: false });
 });

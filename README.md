@@ -14,9 +14,4 @@ This repository contains tools for **[Rescue River](https://rescueriver.com/)**,
 Get started with:
 
 - [Setup Guide](docs/setup.md)
-- [Usage Guide](docs/usage.md)
 - [Configuration Guide](docs/config.md)
-
-## 📚 Full Documentation
-
-Start here → [Documentation Index](docs/index.md)

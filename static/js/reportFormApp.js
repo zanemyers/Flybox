@@ -1,18 +1,25 @@
 import { BaseFormApp } from "./baseFormApp.js";
 import { initFileInput } from "./fileInput.js";
 
+/**
+ * Handles the initialization, validation, and submission of the report form.
+ */
 class ReportFormApp extends BaseFormApp {
   constructor() {
     super("report-form", "report");
   }
 
-  // === Initialize any extra JS ===
+  /**
+   * Initialize extra UI features specific to this form.
+   */
   onFormLoad() {
-    initFileInput();
-    this.initRiverListToggle();
+    initFileInput(); // Enable custom file input styling & behavior
+    this.initRiverListToggle(); // Set up show/hide behavior for river list
   }
 
-  // === Cache frequently used DOM elements ===
+  /**
+   * Cache frequently used DOM elements for performance and convenience.
+   */
   cacheElements() {
     this.elements.apiKeyEl = document.getElementById("apiKey");
     this.elements.maxAgeEl = document.getElementById("maxAge");
@@ -26,7 +33,10 @@ class ReportFormApp extends BaseFormApp {
     this.elements.mergePromptEl = document.getElementById("mergePrompt");
   }
 
-  // === Validate Input ===
+  /**
+   * Validate form inputs and return a payload object if valid.
+   * Returns null if validation fails.
+   */
   validateFormInput() {
     const apiKey = this.elements.apiKeyEl.value.trim();
     const maxAge = parseInt(this.elements.maxAgeEl.value, 10);
@@ -39,6 +49,7 @@ class ReportFormApp extends BaseFormApp {
     const summaryPrompt = this.elements.summaryPromptEl.value.trim();
     const mergePrompt = this.elements.mergePromptEl.value.trim();
 
+    // Validation conditions
     const isValid =
       apiKey &&
       !isNaN(maxAge) &&
@@ -50,6 +61,7 @@ class ReportFormApp extends BaseFormApp {
       summaryPrompt &&
       mergePrompt;
 
+    // Return payload if valid, otherwise null
     return isValid
       ? {
           apiKey,
@@ -66,33 +78,40 @@ class ReportFormApp extends BaseFormApp {
       : null;
   }
 
+  /**
+   * Sends the form data to the server.
+   */
   handlePayload(payload) {
     const { inputFile, ...metadata } = payload;
 
-    // 1. send non file data
+    // 1. Send non-file data (metadata)
     this.socket.send(JSON.stringify({ type: "metadata", data: metadata }));
 
-    // 2. Send file
+    // 2. Send file as binary
     if (inputFile) {
       const reader = new FileReader();
       reader.onload = () => {
-        this.socket.send(reader.result); // binary ArrayBuffer
+        this.socket.send(reader.result);
       };
       reader.readAsArrayBuffer(inputFile);
     }
   }
 
+  /**
+   * Handles the show/hide logic for the river list field
+   */
   initRiverListToggle() {
     const { filterRiversEl, riverListEl } = this.elements;
     const riverListWrapper = document.getElementById("riverListWrapper");
 
+    // Ensure required elements exist
     if (!filterRiversEl || !riverListWrapper || !riverListEl) return;
 
-    // Initial state
+    // Set initial visibility & required state
     riverListWrapper.classList.toggle("d-none", !filterRiversEl.checked);
     riverListEl.required = filterRiversEl.checked;
 
-    // Listen for changes
+    // Toggle when checkbox changes
     filterRiversEl.addEventListener("change", () => {
       riverListWrapper.classList.toggle("d-none", !filterRiversEl.checked);
       riverListEl.required = filterRiversEl.checked;
@@ -100,6 +119,6 @@ class ReportFormApp extends BaseFormApp {
   }
 }
 
-// Initialize the app
+// === Initialize the app ===
 const app = new ReportFormApp();
 document.addEventListener("DOMContentLoaded", () => app.showForm());

@@ -1,6 +1,11 @@
 import express from "express";
 const router = express.Router();
 
+/**
+ * Main site routes
+ * - "/"       : Render the home page
+ * - "/about"  : Render the About page
+ */
 router.get("/", (req, res) => {
   res.render("index", { title: "The Flybox" }); // Just the name without extension, Express uses the view engine
 });

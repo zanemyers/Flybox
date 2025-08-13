@@ -1,7 +1,11 @@
+<!-- Report search form -->
 <form id="form" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column">
+
+    <!-- Error messages will be injected here dynamically -->
     <div id="formError"></div>
 
     <div class="form-body d-block">
+        <!-- API Key input -->
         <div class="form-input">
             <label for="apiKey" class="form-label">Gemini API Key</label>
             <input
@@ -15,6 +19,7 @@
             />
         </div>
 
+        <!-- Maximum report age input -->
         <div class="form-input">
             <label for="maxAge" class="form-label">Max Report Age</label>
             <input
@@ -32,6 +37,7 @@
             />
         </div>
 
+        <!-- Checkbox to enable filtering by river names -->
         <div class="form-input form-check">
             <input
                     type="checkbox"
@@ -43,6 +49,7 @@
             <label class="form-check-label" for="filterRivers">Filter by Rivers</label>
         </div>
 
+        <!-- River name filter input (hidden until checkbox is checked) -->
         <div id="riverListWrapper" class="form-input d-none">
             <label for="riverList" class="form-label">River Names</label>
             <input
@@ -56,13 +63,16 @@
             />
         </div>
 
+        <!-- File upload input (uses shared EJS partial) -->
         <div id="fileInputWrapper" class="form-input">
             <%- include('./file_input.ejs', { label: 'Import Starter File' }) %>
         </div>
 
+        <!-- Advanced settings section (collapsible with <details>) -->
         <details class="form-input">
             <summary class="form-label mb-2">Advanced Settings</summary>
 
+            <!-- Gemini model selection -->
             <div class="form-input">
                 <label for="model" class="form-label">Gemini Model</label>
                 <input
@@ -77,6 +87,7 @@
                 />
             </div>
 
+            <!-- Token limit per request -->
             <div class="form-input">
                 <label for="tokenLimit" class="form-label">Token Limit</label>
                 <input
@@ -94,6 +105,7 @@
                 />
             </div>
 
+            <!-- Crawl depth for scraping -->
             <div class="form-input">
                 <label for="crawlDepth" class="form-label">Crawl Depth</label>
                 <input
@@ -111,6 +123,7 @@
                 />
             </div>
 
+            <!-- Prompt for summarization -->
             <div class="form-input">
                 <label for="summaryPrompt" class="form-label">Summary Prompt</label>
                 <textarea
@@ -125,6 +138,7 @@
                 ><%= summaryPrompt %></textarea>
             </div>
 
+            <!-- Prompt for merging summaries -->
             <div class="form-input">
                 <label for="mergePrompt" class="form-label">Merge Prompt</label>
                 <textarea
