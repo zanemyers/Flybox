@@ -10,7 +10,7 @@ import {
   sameDomain,
   StealthBrowser,
   TXTFileHandler,
-} from "../../utils/index.js";
+} from "../base/index.js";
 
 import {
   checkDuplicateSites,
@@ -91,7 +91,7 @@ export async function reportScraper({
       progressUpdate(`DOWNLOAD:report_summary.txt`);
       await generateSummary(
         compiledReports,
-        searchParams.apiKey,
+        process.env.GEMINI_API_KEY, // TODO: use searchParams.apiKey instead
         searchParams.model,
         searchParams.summaryPrompt,
         searchParams.mergePrompt,

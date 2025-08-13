@@ -4,25 +4,22 @@ import { PromisePool } from "@supercharge/promise-pool";
 
 import { FALLBACK_DETAILS } from "../../constants/index.js";
 import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils.js";
-import { ExcelFileHandler, normalizeUrl, StealthBrowser } from "../../utils/index.js";
+import { ExcelFileHandler, normalizeUrl, StealthBrowser } from "../base/index.js";
 
 /**
- * Runs the full shop scraping workflow:
+ * Executes the complete shop scraping workflow:
  *
- * 1. Fetches shop search results using SerpAPI or cached data.
- * 2. Scrapes additional details from shop websites.
- * 3. Writes the collected data to an Excel file.
+ * 1. Retrieves shop search results from SerpAPI or cached data.
+ * 2. Scrapes additional details from each shop's website.
+ * 3. Writes the aggregated shop data into an Excel file.
  *
- * Supports real-time progress updates and graceful cancellation at any step.
+ * @param {Object} searchParams - Configuration and filters for the shop search.
+ * @param {Function} progressUpdate - Optional callback function to receive progress/status updates.
+ * @param {Function} returnFile - Optional callback to receive the final Excel file buffer.
+ * @param {Object} cancelToken - Optional cancellation token with a `throwIfCancelled()` method to abort execution.
  *
- * @param {string} searchParams - ....
- * @param {Function} [progressUpdate] - Optional callback for progress/status updates.
- * @param returnFile
- * @param {Object} [cancelToken] - Optional cancellation token with a `throwIfCancelled()` method.
- *
- * @returns {Promise<void>} Resolves when the scraping completes, errors, or is cancelled.
+ * @returns {Promise<void>} Resolves when scraping completes successfully, is cancelled, or encounters an error.
  */
-
 export async function shopScraper({
   searchParams,
   progressUpdate = () => {},
@@ -64,25 +61,32 @@ export async function shopScraper({
 
 /**
  * Fetches a list of shops near the specified location using SerpAPI's Google Maps engine.
- * Falls back to cached results if available and matching the current query and coordinates.
+ * If a cached Excel file buffer is provided, loads and returns shops from the cache instead.
  *
- * @param searchParams
- * @param progressUpdate
- * @param returnFile
- * @param {Object} cancelToken - An object with a `throwIfCancelled()` method to support graceful cancellation.
+ * @param {Object} searchParams - Parameters controlling the search, including:
+ *   - query: Search query string for the shop type or name.
+ *   - lat: Latitude coordinate for location.
+ *   - lng: Longitude coordinate for location.
+ *   - maxResults: Maximum number of shop results to fetch.
+ *   - fileBuffer: Optional Excel file buffer with cached shop data.
+ * @param {Function} progressUpdate - Callback to report progress/status messages.
+ * @param {Function} returnFile - Callback to return the cached or generated Excel file buffer.
+ * @param {Object} cancelToken - Cancellation token with a `throwIfCancelled()` method to abort execution.
  *
- * @returns {Promise<object[]>} A list of shop result objects, or an empty array if none found.
+ * @returns {Promise<Object[]>} Resolves to an array of shop result objects, or an empty array if none found.
  */
-
 async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken) {
   const cacheFileHandler = new ExcelFileHandler();
 
+  // If a cached Excel buffer is provided, load and return cached shop data
   if (searchParams?.fileBuffer) {
     await cacheFileHandler.loadBuffer(searchParams.fileBuffer);
     return await cacheFileHandler.read();
   }
 
   const results = [];
+
+  // Fetch shop results in pages of 20, up to maxResults
   for (let start = 0; start < (+searchParams.maxResults || 100); start += 20) {
     cancelToken.throwIfCancelled();
 
@@ -92,15 +96,17 @@ async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken)
       ll: `@${searchParams.lat},${searchParams.lng},10z`,
       start,
       type: "search",
-      api_key: process.env.SERP_API_KEY, // searchParams.apiKey
+      api_key: process.env.SERP_API_KEY, // TODO: use searchParams.apiKey instead
     });
 
     const pageResults = data?.local_results || [];
     results.push(...pageResults);
 
-    if (pageResults.length < 20) break; // Last page reached
+    // Stop fetching if fewer than 20 results are returned (last page)
+    if (pageResults.length < 20) break;
   }
 
+  // If any results found, write them to cache file and provide download
   if (results.length > 0) {
     await cacheFileHandler.write(buildCacheFileRows(results));
     progressUpdate(`DOWNLOAD:simple_shop_details.xlsx`);
@@ -116,15 +122,16 @@ async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken)
  * Shops are processed in parallel with controlled concurrency to avoid overwhelming
  * system resources or triggering anti-bot protections.
  *
- * @param browser
- * @param {Array<object>} shops - The list of shops to process.
- * @param {Function} progressUpdate - A function to send real-time progress updates (optional).
- * @param {Object} cancelToken - An object with a `throwIfCancelled()` method to support graceful cancellation.
+ * @param {Object} browser - Playwright browser instance to create new pages.
+ * @param {Array<object>} shops - Array of shop objects to process.
+ * @param {Function} [progressUpdate] - Optional callback function to send real-time progress updates.
+ * @param {Object} cancelToken - Cancellation token with a `throwIfCancelled()` method to support graceful cancellation.
  *
- * @returns {Promise<Array<object>>} A list of shop detail objects (one per shop), using fallback values when scraping fails.
+ * @returns {Promise<Array<object>>} Resolves to an array of shop detail objects, one per shop,
+ *   with fallback values used when scraping fails or no website is provided.
  */
 async function getDetails(browser, shops, progressUpdate = () => {}, cancelToken) {
-  const websiteCache = new Map();
+  const websiteCache = new Map(); // Stores previously scraped website details
   const results = new Array(shops.length);
   let completed = 0;
 
@@ -146,10 +153,10 @@ async function getDetails(browser, shops, progressUpdate = () => {}, cancelToken
             console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
             results[index] = FALLBACK_DETAILS.ERROR;
           } else {
-            throw err; // Bubble up
+            throw err; // Bubble-up
           }
         } finally {
-          await page.close();
+          await page.close(); // Close the page after scraping attempt
         }
       }
 
@@ -165,21 +172,20 @@ async function getDetails(browser, shops, progressUpdate = () => {}, cancelToken
 /**
  * Scrapes useful business-related data from a shop’s website using Playwright.
  *
- * If available, cached results are used to avoid unnecessary requests. If the site
- * blocks access or an error occurs, fallback values are returned.
+ * If available, cached results are used to avoid redundant requests.
+ * Handles blocked access or errors by returning predefined fallback values.
  *
- * @param websiteCache
- * @param {Page} page - A Playwright Page instance used to navigate and scrape the website.
- * @param {string} url - The raw URL of the shop’s website to be scraped.
- * @param {Object} cancelToken - An object with a `throwIfCancelled()` method to support graceful cancellation.
+ * @param {Map<string, object>} websiteCache - Cache map storing scraped results keyed by normalized URL.
+ * @param {Page} page - Playwright Page instance for navigating and scraping the website.
+ * @param {string} url - Raw URL of the shop’s website to be scraped.
+ * @param {Object} cancelToken - Cancellation token with a `throwIfCancelled()` method for graceful cancellation.
  *
- * @returns {Promise<object>} A details object containing scraped data or fallback error values.
+ * @returns {Promise<object>} Resolves to a details object containing scraped data or fallback error information.
  */
-
 async function scrapeWebsite(websiteCache, page, url, cancelToken) {
   const normalizedUrl = normalizeUrl(url);
 
-  // Check for cached results
+  // Return cached details if available
   if (websiteCache.has(normalizedUrl)) {
     return websiteCache.get(normalizedUrl);
   }
@@ -187,7 +193,7 @@ async function scrapeWebsite(websiteCache, page, url, cancelToken) {
   let details;
   try {
     cancelToken.throwIfCancelled();
-    const response = await page.load(normalizedUrl); // Open the page and wiggle the mouse
+    const response = await page.load(normalizedUrl);
 
     // Check if the request was blocked or rate-limited
     const status = response?.status();
@@ -205,7 +211,7 @@ async function scrapeWebsite(websiteCache, page, url, cancelToken) {
     details = FALLBACK_DETAILS.TIMEOUT;
   }
 
-  // Cache and return the result
   websiteCache.set(normalizedUrl, details);
+
   return details;
 }

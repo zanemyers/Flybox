@@ -1,3 +1,5 @@
+import fs from "fs/promises";
+
 import { extendPageSelectors } from "../base/_scrapingUtils.js";
 import {
   MESSAGES,
@@ -10,7 +12,7 @@ import {
 } from "../base/enums.js";
 
 async function addShopSelectors(page) {
-  // Add constants scraping utils
+  // Add constants scraping base
   await extendPageSelectors(page);
 
   /**
@@ -273,4 +275,27 @@ async function addShopSelectors(page) {
   };
 }
 
-export { addShopSelectors };
+
+/**
+ * Tries to load cached shop data from a file.
+ * If the metadata in the file matches the expected metadata, returns the cached results.
+ *
+ * @param {string} filePath - Path to the cache file.
+ * @param {object} expectedMeta - Metadata to validate against the cached data.
+ * @returns {Promise<object[]|null>} - Cached shop results if valid, otherwise null.
+ */
+async function loadCachedShops(filePath, expectedMeta) {
+  try {
+    const data = await fs.readFile(filePath, "utf-8");
+    const { meta, results } = JSON.parse(data);
+
+    const isMatch = Object.entries(expectedMeta).every(([key, val]) => meta?.[key] === val);
+
+    return isMatch ? results : null;
+  } catch (err) {
+    if (err.code !== "ENOENT") throw err;
+    return null;
+  }
+}
+
+export { addShopSelectors, loadCachedShops };

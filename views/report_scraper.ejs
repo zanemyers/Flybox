@@ -1,13 +1,17 @@
 <main class="container py-3">
     <div class="row d-flex align-items-stretch">
-        <!-- Instructions -->
+
+        <!-- Instructions panel -->
         <div class="col-lg-5 mb-4 mb-lg-0 d-flex">
             <div class="p-4 bg-light border rounded flex-fill d-flex flex-column">
+
+                <!-- What the tool does -->
                 <h2 class="h4 mb-2">🛠️ What This Tool Does</h2>
                 <p class="mb-4">
                     This tool collects and summarizes fly fishing reports. It uses a starter file to find websites, scrapes them for report content, and summarizes the results using <strong>Google's Gemini API</strong>.
                 </p>
 
+                <!-- How to use the tool -->
                 <h3 class="h5 mb-2">📋 How to Use It</h3>
                 <div class="steps">
                     <div>
@@ -28,6 +32,8 @@
                         Import a <strong>Starter File</strong>. Download an example file
                         <a href="/static/example_files/report_starter_file_ex.xlsx" download>here</a>.
                     </div>
+
+                    <!-- Advanced settings -->
                     <div><span class="icon">⚙️</span> Advanced Settings</div>
                     <div class="steps mb-0" style="font-size: .85rem;">
                         <div>
@@ -52,7 +58,6 @@
                             <span class="icon">🧩</span>
                             Set the <strong>Merge Prompt</strong> to guide how multiple summaries should be combined into a single, coherent report.
                         </div>
-
                     </div>
                     <div>
                         <span class="icon">✅</span>
@@ -60,17 +65,20 @@
                     </div>
                 </div>
 
+                <!-- About the default settings -->
                 <h3 class="h5 mb-2">ℹ️ About the Defaults</h3>
                 <p class="mb-2">
                     By default, this tool uses the <strong>gemini-2.5-flash</strong> model with a <strong>50,000 token limit</strong>. It scrapes up to <strong>25 link levels deep</strong>, includes reports up to <strong>100 days old</strong>, and does not <strong>filter by river</strong>.
                 </p>
+
+                <!-- Privacy notice -->
                 <p class="text-muted small mb-0">
                     🔒 <strong>Privacy Notice:</strong> All processing happens locally in memory. Nothing is stored or sent to a server.
                 </p>
             </div>
         </div>
 
-        <!-- Form -->
+        <!-- Form panel -->
         <div id="formContainer" class="col-lg-7 d-flex">
             <%- include('partials/report_form.ejs', {summaryPrompt, mergePrompt}) %>
         </div>

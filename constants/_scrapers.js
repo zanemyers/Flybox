@@ -1,4 +1,6 @@
-// Common block/forbidden related keywords used to detect if the site blocked us
+/**
+ * Keywords commonly found on web pages when access is blocked or forbidden.
+ */
 const BLOCKED_OR_FORBIDDEN = [
   "Access Denied",
   "Forbidden",

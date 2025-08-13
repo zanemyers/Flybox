@@ -1,61 +1,52 @@
 import { differenceInDays } from "date-fns";
 
 import { REPORT_DIVIDER } from "../../constants/index.js";
-import { extractDate, normalizeUrl } from "../../utils/index.js";
+import { extractDate, normalizeUrl } from "../base/index.js";
 
 /**
- * Normalize URLs for each site and remove duplicates based on normalized URLs.
+ * Normalize URLs for each site and remove duplicates based on the normalized URLs.
  *
- * This async function processes an array of site objects, normalizing each site's URL.
- *
- * @param {Array<{url: string, [key: string]: any}>} sites - Array of site objects, each with a `url` property.
- * @returns {Promise<Array>} A Promise resolving to a new array containing site objects with unique, normalized URLs.
+ * @param {Array<{url: string, [key: string]: any}>} sites - Array of site objects with a `url` property.
+ * @returns {Promise<Array<{url: string, [key: string]: any}>>} Promise resolving to an array of unique sites with normalized URLs.
  */
 async function checkDuplicateSites(sites) {
-  const urlsSet = new Set(); // To keep track of normalized URLs already encountered
-  const siteList = []; // Array to accumulate unique sites with normalized URLs
+  const urlsSet = new Set(); // Normalized URLs that have been processed
+  const siteList = []; // Unique site objects with normalized URLs
 
   for (const site of sites) {
     const url = normalizeUrl(site.url);
 
     if (!urlsSet.has(url)) {
-      // If URL not seen before, add it to the set and push the site with normalized URL to the list
       urlsSet.add(url);
-      siteList.push({ ...site, url });
+      siteList.push({ ...site, url }); // Add a copy of the site object with the normalized URL
     } else {
-      console.warn("Duplicate found:", url);
+      console.warn("Duplicate found:", url); // Log duplicate URLs
     }
   }
   return siteList;
 }
 
 /**
- * Checks if any string from a list of terms appears within a target string, ignoring case.
+ * Checks whether the target string contains any of the specified terms, case-insensitively.
  *
  * @param {string} target - The string to search within.
- * @param {string[]} terms - An array of strings to look for inside the target.
- * @returns {boolean} Returns `true` if at least one term is found in the target; otherwise, `false`.
+ * @param {string[]} terms - Array of terms to search for in the target string.
+ * @returns {boolean} True if any term is found in the target; otherwise false.
  */
 function includesAny(target, terms) {
-  // Validate inputs: return false if target is not a string or terms is not an array
   if (typeof target !== "string" || !Array.isArray(terms)) return false;
 
-  // Convert the target string to lowercase for case-insensitive matching
   const lower = target.toLowerCase();
-
-  // Check if any term in the list appears in the target string
   return terms.some((term) => lower.includes(term.toLowerCase()));
 }
 
 /**
- * Extracts all anchor (`<a>`) elements from the page that have an `href` attribute,
- * and returns an array of objects containing each anchor's href and normalized text content.
+ * Retrieves all anchor (`<a>`) elements with an `href` attribute from the page,
  *
- * @param {Object} page - The Playwright page instance to operate on.
- * @returns {Promise<Array<{href: string, text: string}>>} - Promise resolving to an array of objects,
- * each with:
- *   - `href`: The full URL from the anchor's `href` attribute.
- *   - `text`: The anchor's visible text content
+ * @param {Object} page - Playwright page instance to extract anchors from.
+ * @returns {Promise<Array<{href: string, text: string}>>} Promise resolving to an array of objects where:
+ *   - `href`: The full URL of the anchor's `href` attribute.
+ *   - `text`: The anchor's visible text content, lowercased and trimmed.
  */
 async function extractAnchors(page) {
   return await page.$$eval("a[href]", (anchors) =>
@@ -67,162 +58,140 @@ async function extractAnchors(page) {
 }
 
 /**
- * Scrapes only the visible text content from the first element matching the given CSS selector.
+ * Scrapes the visible text content from the first element that matches the specified CSS selector.
  *
- * @param {Object} page - Playwright Page object representing the browser page.
- * @param {string} selector - CSS selector used to find the target element.
- * @returns {Promise<string|null>} - The cleaned visible text if found; otherwise null.
+ * @param {Object} page - Playwright Page instance representing the browser page.
+ * @param {string} selector - CSS selector to find the target element.
+ * @returns {Promise<string|null>} Promise resolving to the cleaned visible text if found; otherwise, null.
  */
 async function scrapeVisibleText(page, selector) {
-  // Attempt to find the first element matching the selector on the page
   const element = await page.$(selector);
-
-  // If no element matches the selector, return null immediately
   if (!element) return null;
 
-  // Evaluate the element within the browser context to check visibility and extract text
+  // Evaluate visibility and extract text within the browser context
   return await element.evaluate((node) => {
-    // Retrieve computed CSS scss of the element to determine visibility
     const style = window.getComputedStyle(node);
     const isVisible =
       style.display !== "none" && style.visibility !== "hidden" && node.offsetParent !== null;
 
-    // If the element is visible, return its trimmed inner text
+    // If visible, return trimmed innerText with consecutive newlines replaced by single newlines
     return isVisible ? node.innerText.trim().replace(/\n{2,}/g, "\n") : null;
   });
 }
 
 /**
- * Determines the priority of a hyperlink for scraping based on the presence of
- * keywords, junk words, and specific phrases in the link and its text.
+ * Determines the priority score for a hyperlink to guide scraping order.
  *
  * @param {string} currentUrl - The URL of the page currently being scraped.
  * @param {string} link - The href URL of the candidate link to evaluate.
  * @param {string} linkText - The visible anchor text of the link.
- * @param {Object} siteInfo - Metadata about the site, including arrays for:
- *   - keywords: relevant terms indicating useful content,
- *   - junkWords: terms that suggest irrelevant or low-value content,
- *   - clickPhrases: phrases that encourage deeper exploration (e.g., "read more").
- * @returns {number} Priority score: 0 (highest), 1, 2, or Infinity (do not follow).
+ * @param {Object} siteInfo - Site metadata containing:
+ *   - keywords: array of relevant keywords indicating valuable content,
+ *   - junkWords: array of terms indicating irrelevant or low-value content,
+ *   - clickPhrases: array of phrases that encourage following the link (e.g., "read more").
+ * @returns {number} Priority score where:
+ *   - 0 means highest priority (follow immediately),
+ *   - 1 means medium priority,
+ *   - 2 means low priority,
+ *   - Infinity means do not follow.
  */
 function getPriority(currentUrl, link, linkText, siteInfo) {
-  const currentUrlHasKeyword = includesAny(currentUrl, siteInfo.keywords); // Check the current URL for relevant keywords
-  const hasKeyword = includesAny(link, siteInfo.keywords); // Check the candidate link for relevant keywords
-  const hasJunkWord = includesAny(link, siteInfo.junkWords); // Check the candidate link for junk words
-  const hasClickPhrase = includesAny(linkText, siteInfo.clickPhrases); // Check the link text for phrases suggesting more content
+  const currentUrlHasKeyword = includesAny(currentUrl, siteInfo.keywords); // Check if current URL contains keywords
+  const hasKeyword = includesAny(link, siteInfo.keywords); // Check if link URL contains keywords
+  const hasJunkWord = includesAny(link, siteInfo.junkWords); // Check if link URL contains junk words
+  const hasClickPhrase = includesAny(linkText, siteInfo.clickPhrases); // Check if anchor text contains click phrases
 
-  // Default priority: do not follow (infinite priority)
-  let priority = Infinity;
+  let priority = Infinity; // Default: do not follow
 
-  // Highest priority: link is relevant and not junk
   if (hasKeyword && !hasJunkWord) {
-    priority = 0;
-  }
-  // Next priority: current page is relevant and link text suggests more content
-  else if (currentUrlHasKeyword && hasClickPhrase) {
-    priority = 1;
-  }
-  // Lower priority: link is relevant but also contains junk terms
-  else if (hasKeyword && hasJunkWord) {
-    priority = 2;
+    priority = 0; // Highest priority: relevant link without junk words
+  } else if (currentUrlHasKeyword && hasClickPhrase) {
+    priority = 1; // Medium priority: current URL relevant and link text invites clicking
+  } else if (hasKeyword && hasJunkWord) {
+    priority = 2; // Low priority: relevant link but contains junk terms
   }
 
   return priority;
 }
 
 /**
- * Filters an array of report texts based on recency and keywords.
+ * Filters an array of report texts based on recency and content keywords.
  *
- * Criteria applied:
- * - Only includes reports with a detectable date.
- * - Excludes reports older than the configured age limit (in days).
- * - Optionally filters to include only reports mentioning important rivers.
+ * Applies the following criteria to each report:
+ * - Includes only reports with a valid, detectable date.
+ * - Excludes reports older than the specified maximum age (in days).
+ * - Optionally filters reports to include only those mentioning rivers from a given list.
  *
- * @param reports - Array of raw report texts.
- * @param maxAge
- * @param filterByRivers
- * @param riverList
- * @returns {string[]} Array of reports that meet the filtering criteria.
+ * @param {string[]} reports - Array of raw report text strings to filter.
+ * @param {number} maxAge - Maximum allowed age of reports in days.
+ * @param {boolean} filterByRivers - Whether to filter reports by river mentions.
+ * @param {string[]} riverList - List of river names to match against reports when filtering by rivers.
+ * @returns {string[]} Filtered array containing only reports meeting all criteria.
  */
 function filterReports(reports, maxAge, filterByRivers, riverList) {
   const today = new Date();
 
   return reports.filter((report) => {
-    // Extract the most recent date found in the report text
     const reportDate = extractDate(report);
 
-    // Skip reports without a valid date
     if (!reportDate) return false;
-
-    // Exclude reports older than the allowed age limit
     if (differenceInDays(today, reportDate) > maxAge) return false;
-
-    // If filtering by river is enabled, exclude reports that do not mention any important rivers
     if (filterByRivers && !includesAny(report, riverList)) return false;
-
-    // If the report passed all filters, include it
     return true;
   });
 }
 
 /**
- * Estimates the approximate token count of a given text.
+ * Estimates the approximate number of tokens in the given text.
+ * - Uses a heuristic that one word corresponds to about 1.3 tokens.
  *
- * This uses a rough heuristic that 1 word ≈ 1.3 tokens.
- *
- * @param {string} text - Input text whose tokens need to be estimated.
- * @returns {number} Estimated number of tokens.
+ * @param {string} text - The input text to estimate token count for.
+ * @returns {number} Estimated token count based on word count.
  */
 function estimateTokenCount(text) {
-  // Count words by splitting on whitespace after trimming
+  // Split the trimmed text into words by whitespace
   const words = text?.trim()?.split(/\s+/).length || 0;
-
-  // Multiply by 1.3 and round up
-  return Math.ceil(words * 1.3);
+  return Math.ceil(words * 1.3); // Multiply the word count by 1.3 and round up
 }
 
 /**
  * Splits the full report text into smaller chunks, each staying within the token limit.
  *
  * The input text is divided into sections using the REPORT_DIVIDER string.
- * Each chunk will contain as many full sections as possible without exceeding
- * the token limit.
+ * Each chunk accumulates as many full sections as possible without exceeding
+ * the specified token limit.
  *
- * @param {string} text - The complete report text to be chunked.
- * @param tokenLimit
+ * @param {string} text - The complete report text to be split into chunks.
+ * @param {number} tokenLimit - Maximum number of tokens allowed per chunk.
  * @returns {string[]} An array of text chunks, each under the token limit.
  */
 function chunkReportText(text, tokenLimit) {
-  // Split the text on the REPORT_DIVIDER
   const reports = text.split(REPORT_DIVIDER);
-  const chunks = []; // Array to store the final text chunks
+  const chunks = []; // Array to hold resulting text chunks
 
-  let currentChunk = ""; // Accumulates the current chunk's text
-  let currentTokens = 0; // Tracks the estimated token count of currentChunk
+  let currentChunk = ""; // Holds the accumulated text for the current chunk
+  let currentTokens = 0; // Estimated token count of currentChunk
 
   for (const report of reports) {
-    // Re-add the REPORT_DIVIDER to preserve section separation in each chunk
+    // Re-add REPORT_DIVIDER to preserve section separation in chunks
     const section = report + REPORT_DIVIDER;
-
-    // Estimate the token count for this section of text
     const tokens = estimateTokenCount(section);
 
-    // If adding this section would exceed the token limit,
-    // finalize the current chunk and start a new one
+    // If adding this section exceeds token limit, push current chunk and start a new one
     if (currentTokens + tokens > tokenLimit) {
       if (currentChunk) {
         chunks.push(currentChunk.trim());
       }
-      currentChunk = section; // Start a new chunk with the current section
+      currentChunk = section; // Start new chunk with current section
       currentTokens = tokens;
     } else {
-      // Otherwise, add this section to the current chunk
+      // Otherwise, append section to current chunk
       currentChunk += section;
       currentTokens += tokens;
     }
   }
 
-  // Add the last chunk if it contains any content
+  // Add any remaining chunk after loop ends
   if (currentChunk) {
     chunks.push(currentChunk.trim());
   }
@@ -231,26 +200,20 @@ function chunkReportText(text, tokenLimit) {
 }
 
 /**
- * Generates content using the Google GenAI model.
+ * Generates text content from the Google GenAI model based on the given prompt.
  *
- * @param ai
- * @param model
- * @param {string} prompt - The input prompt to generate content from.
- * @returns {Promise<string>} The generated text content, or an empty string on failure.
+ * @param {GoogleGenAI} ai - Instance of the GoogleGenAI client.
+ * @param {string} model - The name or identifier of the AI model to use.
+ * @param {string} prompt - The input prompt guiding the content generation.
+ * @returns {Promise<string>} Resolves with the generated text, or an empty string if generation fails.
  */
 async function generateContent(ai, model, prompt) {
-  try {
-    // Send the request to the AI model with the provided prompt
-    const response = await ai.models.generateContent({
-      model: model,
-      contents: prompt,
-    });
-    // Return the trimmed text response or an empty string if undefined
-    return response?.text?.trim() || "";
-  } catch (error) {
-    console.error("AI content generation failed:", error);
-    return "";
-  }
+  const response = await ai.models.generateContent({
+    model: model,
+    contents: prompt,
+  });
+
+  return response?.text?.trim() || "";
 }
 
 export {

@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const currentPath = window.location.pathname; // e.g. "/about"
+  // Get the current URL path (e.g., "/about")
+  const currentPath = window.location.pathname;
+
+  // Select all navigation links inside the navbar
   const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
 
   navLinks.forEach((link) => {
-    // Check if link href matches current path exactly
+    // Extract just the pathname from the link's full URL
     const linkPath = new URL(link.href).pathname;
 
     if (linkPath === currentPath) {
