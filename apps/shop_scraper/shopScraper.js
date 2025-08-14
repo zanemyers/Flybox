@@ -2,7 +2,7 @@ import "dotenv/config";
 import { getJson } from "serpapi";
 import { PromisePool } from "@supercharge/promise-pool";
 
-import { FALLBACK_DETAILS } from "../../constants/index.js";
+import { FALLBACK_DETAILS } from "../base/constants/index.js";
 import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils.js";
 import { ExcelFileHandler, normalizeUrl, StealthBrowser } from "../base/index.js";
 
