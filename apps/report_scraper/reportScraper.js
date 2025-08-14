@@ -3,7 +3,7 @@ import { PromisePool } from "@supercharge/promise-pool";
 import { GoogleGenAI } from "@google/genai";
 import TinyQueue from "tinyqueue";
 
-import { REPORT_DIVIDER } from "../../constants/index.js";
+import { REPORT_DIVIDER } from "../base/constants/index.js";
 import {
   ExcelFileHandler,
   normalizeUrl,
@@ -102,7 +102,7 @@ export async function reportScraper({
       );
 
       if (failedDomains.length) {
-        progressUpdate(`Failed Pages\n${failedDomains.join("\n")}`);
+        console.warn(`Failed Pages\n${failedDomains.join("\n")}`);
       }
 
       progressUpdate("STATUS:✅ Finished!");
@@ -175,7 +175,7 @@ async function scrapeReports(sites, crawlDepth, progressUpdate, cancelToken) {
     return { reports, failedDomains };
   } catch (err) {
     if (err.isCancelled) throw err; // Bubble-up
-    progressUpdate(`STATUS:Error: ${err}`);
+    progressUpdate(`STATUS:❌ Error: ${err}`);
     return { reports: [], failedDomains };
   } finally {
     await browser.close(); // Ensure browser shuts down regardless of success/failure

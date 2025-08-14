@@ -61,7 +61,7 @@ function validateRange(min = 0, max = 100, label = "Value") {
     const envContent = `RUN_HEADLESS=${answers.RUN_HEADLESS}\nCONCURRENCY=${answers.CONCURRENCY}`;
 
     // Write the .env file
-    const filePath = path.resolve(__dirname, "../.env");
+    const filePath = path.resolve(__dirname, ".env");
     fs.writeFileSync(filePath, envContent, "utf8");
 
     console.log(`✅ .env file created at ${filePath}`);

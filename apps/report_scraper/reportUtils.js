@@ -1,6 +1,6 @@
 import { differenceInDays } from "date-fns";
 
-import { REPORT_DIVIDER } from "../../constants/index.js";
+import { REPORT_DIVIDER } from "../base/constants/index.js";
 import { extractDate, normalizeUrl } from "../base/index.js";
 
 /**
