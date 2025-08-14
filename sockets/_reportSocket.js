@@ -40,7 +40,15 @@ class _ReportSocket extends BaseWebSocket {
       }
     } else {
       // Parse JSON message containing search parameters
-      this.currentSession.jsonData = JSON.parse(message).data;
+      const payload = JSON.parse(message);
+
+      // If the client requests cancellation, stop processing
+      if (payload.action === "cancel") {
+        this.cancelToken.cancel();
+        return null;
+      }
+
+      this.currentSession.jsonData = payload.data;
       return null; // Wait for file to arrive before returning payload
     }
   }

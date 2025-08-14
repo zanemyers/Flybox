@@ -154,7 +154,7 @@ async function scrapeReports(sites, crawlDepth, progressUpdate, cancelToken) {
             progressUpdate,
             cancelToken
           );
-          progressUpdate(messageTemplate(++completed));
+          progressUpdate("STATUS:" + messageTemplate(++completed));
           failedDomains.push(...pageErrors);
           return reports;
         } catch (err) {
@@ -170,12 +170,12 @@ async function scrapeReports(sites, crawlDepth, progressUpdate, cancelToken) {
 
     // Flatten nested arrays and remove empty entries
     const reports = (results ?? []).flat().filter(Boolean);
-    progressUpdate(`Found ${reports.length} total reports!`);
+    progressUpdate(`STATUS:✅ Found ${reports.length} total reports!`);
 
     return { reports, failedDomains };
   } catch (err) {
     if (err.isCancelled) throw err; // Bubble-up
-    progressUpdate(`Error: ${err}`);
+    progressUpdate(`STATUS:Error: ${err}`);
     return { reports: [], failedDomains };
   } finally {
     await browser.close(); // Ensure browser shuts down regardless of success/failure
