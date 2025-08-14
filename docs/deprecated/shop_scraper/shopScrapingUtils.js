@@ -115,9 +115,7 @@ async function addShopSelectors(page) {
    */
   page.publishesFishingReport = async function () {
     try {
-      return (
-        (await page.locator("text=/fishing reports|reports/i").count()) > 0
-      );
+      return (await page.locator("text=/fishing reports|reports/i").count()) > 0;
     } catch {
       return MESSAGES.ERROR_REPORT;
     }
@@ -132,16 +130,11 @@ async function addShopSelectors(page) {
    */
   page.getSocialMedia = async function () {
     try {
-      const hrefs = await page.$$eval("a", (links) =>
-        links.map((link) => link.href.toLowerCase())
-      );
+      const hrefs = await page.$$eval("a", (links) => links.map((link) => link.href.toLowerCase()));
 
       const foundSocials = [];
       for (const { domain, name } of SOCIAL_MEDIA_MAP) {
-        if (
-          hrefs.some((href) => href.includes(domain)) &&
-          !foundSocials.includes(name)
-        ) {
+        if (hrefs.some((href) => href.includes(domain)) && !foundSocials.includes(name)) {
           foundSocials.push(name);
         }
       }
@@ -160,10 +153,7 @@ async function addShopSelectors(page) {
    */
   page.getContactLink = async function () {
     try {
-      const contactLink = await page.getAttByLocator(
-        'a[href*="contact"]',
-        "href"
-      );
+      const contactLink = await page.getAttByLocator('a[href*="contact"]', "href");
       return contactLink || null;
     } catch {
       return null;
@@ -274,7 +264,6 @@ async function addShopSelectors(page) {
     }
   };
 }
-
 
 /**
  * Tries to load cached shop data from a file.

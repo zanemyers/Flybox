@@ -52,12 +52,12 @@ class FileHandler {
       const archiveFolder = path.basename(this.filePath, `.${this.fileType}`);
       // Define the archive directory path based on year and month
       const archiveDir = path.join(
-          projectDir,
-          "media",
-          this.fileType,
-          archiveFolder,
-          `${year}`,
-          `${month}`
+        projectDir,
+        "media",
+        this.fileType,
+        archiveFolder,
+        `${year}`,
+        `${month}`
       );
 
       // Create the archive directory structure recursively if it doesn't exist
