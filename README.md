@@ -1,4 +1,4 @@
-# ![RescueRiver logo](static/image/rr_logo.png) RescueRiver
+# ![RescueRiver logo](docs/images/rr_logo.png) RescueRiver
 
 This repository contains tools for **[Rescue River](https://rescueriver.com/)**, focused on gathering and summarizing fishing-related data from online sources.
 
