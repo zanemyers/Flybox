@@ -13,12 +13,12 @@ The `loadCachedShops` function has been deprecated.
 ### 🔄 Replacement
 
 - Instead of reading a JSON file, the workflow now:
-    1. Loads the Excel file buffer into an `ExcelFileHandler` instance via `loadBuffer`.
-    2. Reads and parses the rows using the `read` method to retrieve shop data.
+  1. Loads the Excel file buffer into an `ExcelFileHandler` instance via `loadBuffer`.
+  2. Reads and parses the rows using the `read` method to retrieve shop data.
 
 ## 🕓 Status
 
-- loadCachedShops is deprecated but remains in the codebase for legacy support. 
+- loadCachedShops is deprecated but remains in the codebase for legacy support.
 - New code should use ExcelFileHandler for cache loading and reading.
 
 # 🗒️ Deprecation Notes – Shop Scraper (v2.0)

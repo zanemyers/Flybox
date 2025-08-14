@@ -32,7 +32,6 @@ Additionally, the helper functions `getUTCYearMonth` and `getUTCTimeStamp` have 
 - New development should use the in-memory `TXTFileHandler` and `ExcelFileHandler` classes.
 - Legacy code depending on on-disk file operations or UTC-based file naming should be refactored to adopt the new in-memory paradigm.
 
-
 # 🗒️ Deprecation Notes – base (v2.1)
 
 ## 🧾 Summary
