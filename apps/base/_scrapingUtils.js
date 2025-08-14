@@ -70,7 +70,7 @@ class StealthBrowser {
    *
    * @param {import('playwright').Page} page - Playwright Page instance.
    */
-  async _customActions(page) {
+  async _enhancePageLoad(page) {
     /**
      * Simulates basic user interactions such as mouse movements.
      * Helps reduce bot detection.
@@ -171,14 +171,48 @@ class StealthBrowser {
   }
 
   /**
+   * Sets up request interception to reduce bandwidth and speed up scraping.
+   * Blocks images, fonts, stylesheets, media, and common analytics/ads,
+   * but allows scripts, XHR/fetch, and HTML to ensure content loads correctly.
+   *
+   * @param {import('playwright').Page} page
+   */
+  async _setupRequestInterception(page) {
+    await page.route("**/*", (route) => {
+      const type = route.request().resourceType();
+      const url = route.request().url();
+
+      // List of resource types to block
+      const blockedTypes = ["image", "font", "stylesheet", "media"];
+
+      // Block analytics / ad URLs (add more patterns as needed)
+      const blockedUrls = [
+        "google-analytics",
+        "doubleclick.net",
+        "ads.",
+        "googletagmanager.com",
+        "facebook.net",
+        "tiktok.com/tracker",
+      ];
+
+      if (blockedTypes.includes(type) || blockedUrls.some((pattern) => url.includes(pattern))) {
+        route.abort();
+      } else {
+        route.continue();
+      }
+    });
+  }
+
+  /**
    * Creates a new page in the browser context and applies custom helper methods.
    *
    * @returns {Promise<import('playwright').Page>} New page with stealth helpers.
    */
   async newPage() {
     const page = await this.context.newPage();
-    await this._customActions(page);
+    await this._enhancePageLoad(page);
     await extendPageSelectors(page);
+    await this._setupRequestInterception(page);
     return page;
   }
 
