@@ -2,17 +2,10 @@ import { CSVFileWriter } from "../base/fileUtils.js";
 import { MESSAGES } from "../base/enums.js";
 import { addShopSelectors } from "./shopScrapingUtils.js";
 import { normalizeUrl } from "../base/_scrapingUtils.js";
-import {
-  progressBar,
-  startSpinner,
-  stopSpinner,
-} from "../base/terminalUtils.js";
+import { progressBar, startSpinner, stopSpinner } from "../base/terminalUtils.js";
 
 // Initialize CSV file writer
-const shopDetailCSV = new CSVFileWriter(
-  "resources/csv/shop_details.csv",
-  "shopDetails"
-);
+const shopDetailCSV = new CSVFileWriter("resources/csv/shop_details.csv", "shopDetails");
 
 /**
  * Scrapes Google Maps URLs from a given page by scrolling to the bottom and collecting all the relevant URLs.
@@ -51,9 +44,7 @@ async function scrapeGoogleShopUrl(browserContext, url) {
     while (!endOfListText) {
       // Throw an error if scrolling takes more than 30 secondes (probably hung)
       if (Date.now() - scrollStart > process.env.MAX_SCROLL_DURATION) {
-        throw new Error(
-          MESSAGES.ERROR_SCROLL_TIMEOUT(process.env.MAX_SCROLL_DURATION)
-        );
+        throw new Error(MESSAGES.ERROR_SCROLL_TIMEOUT(process.env.MAX_SCROLL_DURATION));
       }
 
       // Scroll to the bottom to load more items
