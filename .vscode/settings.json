@@ -5,5 +5,19 @@
     "**/docs": true,
     "**/node_modules": true,
     "**/media": true
-  }
+  },
+  "liveSassCompile.settings.compileOnWatch": false,
+  "liveSassCompile.settings.watchOnLaunch": true,
+  "liveSassCompile.settings.useNewCompiler": true,
+  "liveSassCompile.settings.showOutputWindowOn": "Error",
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "expanded",
+      "extensionName": ".css",
+      "savePath": null,
+      "savePathReplacementPairs": {
+        "scss": "public"
+      }
+    },
+  ]
 }

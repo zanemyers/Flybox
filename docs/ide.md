@@ -7,7 +7,7 @@
 1. Open **Run/Debug Configurations** in WebStorm
 2. Click **+ (Add New Configuration)**
 3. Select **Attach to Node.js/Chrome**
-4. Set the **Name** to `localhost`
+4. Set the **Name** to `Debugger`
 5. Set the **Port** to `9229`
 6. Click **Apply** and **OK**
 
@@ -22,7 +22,7 @@
 
 ### Auto-Compile SCSS
 
-1. Go to **Settings → Tools → File Watchers**  
+1. Go to **Settings → Tools → File Watchers**
 
 2. Click the **+** icon and select **Sass/SCSS**.
 
@@ -31,8 +31,6 @@
 
 4. Save the watcher. Now, editing and saving `.scss` files will automatically compile them to `.css`.
 
-
-
 ### 🧰 Recommended Extensions
 
 - GitHub by JetBrains
@@ -40,14 +38,20 @@
 - Light Sheet by Victoryil
   > WebStorm bundles some plugins like Docker automatically
 
-[//]: # "TODO: UPDATE VS Code Setup"
-
 ## ⚙️ Visual Studio Code Setup
 
 ### 🐞 Debugging
 
-- On MacOS press `cmd + shift + p` to open the command palette
-- Search `Debug: Toggle Auto Attach` and set it to `Only With Flag`
+#### 1. Start the Server
+
+- 🐳 **Docker**: `docker-compose up`
+- 🏠 **Local**: `just start`
+
+#### 2. Attach the Debugger
+
+1. Open the **Run and Debug** tab (`Cmd + Shift + D` / `Ctrl + Shift + D`).
+2. From the dropdown, select **Debugger**.
+3. Click the **⏵ Run and Debug** button or press **F5**
 
 ### 🧰 Recommended Extensions
 
@@ -57,4 +61,5 @@
 - Excel Viewer by MESCIUS
 - GitHub Copilot by GitHub
 - Github Copilot Chat by Github
+- Live Sass Compiler by Glenn Marks
 - Prettier - Code formatter by Prettier

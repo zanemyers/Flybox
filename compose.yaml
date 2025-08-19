@@ -1,5 +1,5 @@
 services:
-  web-scraper:
+  fly-box:
     container_name: node
     build:
       context: .
