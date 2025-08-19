@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v3.0](https://github.com/zanemyers/RescueRiver/compare/v2.3..HEAD) — *19 Aug 2025*
+### [v3.0](https://github.com/zanemyers/RescueRiver/compare/v2.3..v3.0) — *19 Aug 2025*
 
 #### **Added**
 - `.env`, `.vscode/`, `.idea/`, `.git/`, `.gitignore` entries to `.dockerignore`
@@ -42,7 +42,7 @@ All notable changes to this project will be documented in this file.
 - Removed: `report_urls.txt`, `shops.json`, `index.md`, `usage.md`, `assets/`
 - Dropped Just commands for running scrapers individually
 
-### [v2.3](https://github.com/zanemyers/RescueRiver/compare/v2.2...2.3) — *30 June 2025*
+### [v2.3](https://github.com/zanemyers/RescueRiver/compare/v2.2...v2.3) — *30 June 2025*
 
 #### ✨ Added
 
