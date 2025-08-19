@@ -54,7 +54,7 @@ app.use(expressLayouts);
 app.set("layout", "layouts/base");
 
 // Serve static files
-app.use("/static", express.static(path.join(__dirname, "static")));
+app.use(express.static(path.join(__dirname, "static")));
 app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap")));
 
 // Parse URL-encoded form data
