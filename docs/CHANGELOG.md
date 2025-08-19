@@ -2,9 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v3.0](https://github.com/zanemyers/RescueRiver/compare/v2.3..v3.0) — *19 Aug 2025*
+### [v3.1](https://github.com/zanemyers/RescueRiver/compare/v3.0..v3.1) — _19 Aug 2025_
 
 #### **Added**
+- Conditional API key handling in scrapers for development (`process.env.GEMINI_API_KEY`).
+- Live Sass Compiler auto-compilation setup in VS Code.
+- Compound debugger configuration combining local and Docker.
+
+#### **Changed**
+- Updated asset paths in EJS templates and `server.js` to use `/static`.
+- VS Code debugging and settings updated for Sass and Node attach.
+- Docker service renamed to `fly-box`.
+
+#### **Removed**
+- Redundant static file references in templates.
+
+### [v3.0](https://github.com/zanemyers/RescueRiver/compare/v2.3..v3.0) — _19 Aug 2025_
+
+#### **Added**
+
 - `.env`, `.vscode/`, `.idea/`, `.git/`, `.gitignore` entries to `.dockerignore`
 - **SCSS formatting** via `stylelint` with custom `.stylelintrc`
 - Centralized `index` files for simpler imports
@@ -23,6 +39,7 @@ All notable changes to this project will be documented in this file.
 - EJS views (`index`, `about`, `error`, `report_scraper`, `shop_scraper`) and layouts/partials
 
 #### **Changed**
+
 - Added/updated comments across most files
 - Updated `Dockerfile` to expose local port & include run command
 - Revised `README` and documentation (`config.md`, `ide.md`, `overview.md`, `setup.md`)
@@ -38,11 +55,12 @@ All notable changes to this project will be documented in this file.
 - Enhanced `shopScraper` and `reportScraper` to accept form input and support cancellation
 
 #### **Removed**
+
 - Deprecated: `getUTCYearMonth`, `getUTCTimeStamp`, `FileHandler`, `loadCachedShops`
 - Removed: `report_urls.txt`, `shops.json`, `index.md`, `usage.md`, `assets/`
 - Dropped Just commands for running scrapers individually
 
-### [v2.3](https://github.com/zanemyers/RescueRiver/compare/v2.2...v2.3) — *30 June 2025*
+### [v2.3](https://github.com/zanemyers/RescueRiver/compare/v2.2...v2.3) — _30 June 2025_
 
 #### ✨ Added
 
@@ -84,7 +102,7 @@ All notable changes to this project will be documented in this file.
 - `isSameDomain` from `reportUtils` (replaced by `sameDomain` in `scrapingUtils`)
 - Site comparison tool section from README (now part of report scraper)
 
-### [v2.2](https://github.com/zanemyers/RescueRiver/compare/v2.1...v2.2) — *18 June 2025*
+### [v2.2](https://github.com/zanemyers/RescueRiver/compare/v2.1...v2.2) — _18 June 2025_
 
 #### Added
 
@@ -100,7 +118,7 @@ All notable changes to this project will be documented in this file.
 - Improved email scraping accuracy and robustness.
 - Switched shop scraper to use `StealthBrowser` instead of default Playwright browser.
 
-### [v2.1](https://github.com/zanemyers/RescueRiver/compare/v2.0...v2.1) — *2 June 2025*
+### [v2.1](https://github.com/zanemyers/RescueRiver/compare/v2.0...v2.1) — _2 June 2025_
 
 #### Added
 
@@ -118,7 +136,7 @@ All notable changes to this project will be documented in this file.
 - Deprecated `Spinner` class and `progressBar` function from `base/terminalUtils`
 - Removed Excel index column from `shop_details.xlsx`
 
-### [v2.0](https://github.com/zanemyers/RescueRiver/compare/v1.1...v2.0) — *2 June 2025*
+### [v2.0](https://github.com/zanemyers/RescueRiver/compare/v1.1...v2.0) — _2 June 2025_
 
 #### Added
 
@@ -141,7 +159,7 @@ All notable changes to this project will be documented in this file.
 - Deprecated `CSVFileWriter`, `CSVFileReader`, and `GoogleMapsShopScraper`
 - Removed unnecessary constants and page selectors from `shopUtils`
 
-### [v1.1](https://github.com/zanemyers/RescueRiver/compare/v1.0...v1.1) — *1 June 2025*
+### [v1.1](https://github.com/zanemyers/RescueRiver/compare/v1.0...v1.1) — _1 June 2025_
 
 #### Added
 
@@ -150,6 +168,7 @@ All notable changes to this project will be documented in this file.
 - Added Deprecation folder
 
 #### Updated
+
 - Simplified ReadMe
 
 ### [v1.0](https://github.com/zanemyers/RescueRiver/compare/v0.0...v1.0)
