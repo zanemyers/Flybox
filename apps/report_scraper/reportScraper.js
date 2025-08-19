@@ -86,12 +86,18 @@ export async function reportScraper({
       const compiledReports = filteredReports.join(REPORT_DIVIDER);
       progressUpdate("STATUS:✅ Compiling complete!");
 
+      // Use the environment variable if the API key is "test" and we're in development, otherwise use the provided key
+      const apiKey =
+        searchParams.apiKey === "test" && process.env.NODE_ENV === "development"
+          ? process.env.GEMINI_API_KEY
+          : searchParams.apiKey;
+
       // STEP 4: Generate a summary using Gemini
       progressUpdate("Generating report summary...");
       progressUpdate(`DOWNLOAD:report_summary.txt`);
       await generateSummary(
         compiledReports,
-        process.env.GEMINI_API_KEY, // TODO: use searchParams.apiKey instead
+        apiKey,
         searchParams.model,
         searchParams.summaryPrompt,
         searchParams.mergePrompt,

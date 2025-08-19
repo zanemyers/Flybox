@@ -90,13 +90,19 @@ async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken)
   for (let start = 0; start < (+searchParams.maxResults || 100); start += 20) {
     cancelToken.throwIfCancelled();
 
+    // Use the environment variable if the API key is "test" and we're in development, otherwise use the provided key
+    const apiKey =
+      searchParams.apiKey === "test" && process.env.NODE_ENV === "development"
+        ? process.env.GEMINI_API_KEY
+        : searchParams.apiKey;
+
     const data = await getJson({
       engine: "google_maps",
       q: searchParams.query,
       ll: `@${searchParams.lat},${searchParams.lng},10z`,
       start,
       type: "search",
-      api_key: process.env.SERP_API_KEY, // TODO: use searchParams.apiKey instead
+      api_key: apiKey,
     });
 
     const pageResults = data?.local_results || [];
