@@ -1,5 +1,5 @@
 services:
-  fly-box:
+  flybox:
     container_name: node
     build:
       context: .
