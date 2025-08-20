@@ -1,4 +1,4 @@
-## 🛒 Shop Scraper
+## 🛒 ShopReel
 
 Scrapes business data from Google Maps using SerpAPI and individual shop websites, compiling the results into a structured Excel file.
 
@@ -25,10 +25,9 @@ Scrapes business data from Google Maps using SerpAPI and individual shop website
 
 - Email scraping is probably about 70% accurate
 - Some business pages are blocked or fail to load
-- Requires headless mode in Docker
-- Cannot be debugged in Docker
+- Requires headless mode in Docker and cannot debug playwright unless headless in docker
 
-## 📈 Report Scraper
+## 📈 FishTales
 
 Parses, summarizes, and consolidates reports from various websites into structured summaries.
 
@@ -49,3 +48,4 @@ Parses, summarizes, and consolidates reports from various websites into structur
 
 - Must run headless in Docker
 - Summarization can be flakey depending on prompt or ai model
+- Summarization is slow

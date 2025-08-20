@@ -1,5 +1,5 @@
 import { BaseWebSocket } from "./_baseWebSocket.js";
-import { shopScraper } from "../apps/shop_scraper/shopScraper.js";
+import { shopScraper } from "../apps/shop_reel/shopScraper.js";
 
 /**
  * WebSocket subclass specifically for handling shop scraping requests.

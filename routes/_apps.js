@@ -7,16 +7,26 @@ import { MERGE_PROMPT, SUMMARY_PROMPT } from "../apps/base/constants/index.js";
  * - /shop-scraper: Shop data scraping interface
  */
 const router = express.Router();
-router.get("/report-scraper", (req, res) => {
+router.get("/fishTales", (req, res) => {
   res.render("report_scraper", {
-    title: "Report Scraper",
+    title: "FishTales",
     summaryPrompt: SUMMARY_PROMPT,
     mergePrompt: MERGE_PROMPT,
   });
 });
-router.get("/shop-scraper", (req, res) => {
+router.get("/shopReel", (req, res) => {
   res.render("shop_scraper", {
-    title: "Shop Scraper",
+    title: "ShopReel",
+  });
+});
+router.get("/siteScout", (req, res) => {
+  res.render("error", {
+    title: "SiteScout",
+  });
+});
+router.get("/docs", (req, res) => {
+  res.render("error", {
+    title: "Docs",
   });
 });
 

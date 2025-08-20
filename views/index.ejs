@@ -10,47 +10,49 @@
 <!-- Tools Section -->
 <section id="tools" class="container">
     <div class="row g-4 text-center">
+        <!-- Shops Scraper -->
+        <%- include('partials/card', {
+            slim: false,
+            icon: "🎣",
+            title: "ShopReel",
+            description: "Find fly-fishing shops near you!",
+            link: "/shopReel",
+            buttonText: "Hook the Shops"
+        }) %>
 
-        <!-- Shop Scraper -->
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <div class="mb-3 display-1">🛒</div>
-                    <h5 class="card-title">Shops Scraper</h5>
-                    <p class="card-text">Find fly-fishing shops near you!</p>
-                    <a href="/shop-scraper" class="btn btn-primary">Explore Shops</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Site Scout -->
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <div class="mb-3 display-1">🗺️</div>
-                    <h5 class="card-title">Site Scout</h5>
-                    <p class="card-text">
-                        Coming soon: compare your shop sites with past reports to discover new fly-fishing sites effortlessly.
-                    </p>
-                    <a href="#" class="btn btn-secondary disabled">Coming Soon</a>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Report Scraper -->
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <div class="mb-3 display-1">📄</div>
-                    <h5 class="card-title">Reports Scraper</h5>
-                    <p class="card-text">Get the latest fly-fishing reports for your area.</p>
-                    <a href="/report-scraper" class="btn btn-primary">View Reports</a>
-                </div>
-            </div>
-        </div>
+        <!-- Reports Scraper -->
+        <%- include('partials/card', {
+            slim: false,
+            icon: "🐟",
+            title: "FishTales",
+            description: "Get the latest fly-fishing reports for your area",
+            link: "/fishTales",
+            buttonText: "Catch the Latest"
+        }) %>
     </div>
+
+    <!-- Site Scout -->
+    <%- include('partials/card', {
+        slim: true,
+        icon: "🗺️",
+        title: "SiteScout",
+        description: "Coming soon: discover new fly-fishing sites.",
+        link: "/siteScout",
+        buttonText: "Coming Soon"
+    }) %>
+
+    <!-- Docs -->
+    <%- include('partials/card', {
+        slim: true,
+        icon: "📚",
+        title: "Docs",
+        description: "Learn how to use Flybox tools.",
+        link: "/docs",
+        buttonText: "Read"
+    }) %>
+
 </section>
+
 
 <section class="text-primary text-center mt-5 pt-5">
     <div class="container">
