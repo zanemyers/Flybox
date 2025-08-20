@@ -1,28 +1,104 @@
-<main class="container mt-5">
-    <h1 class="mb-4"><u>About Flybox</u></h1>
-
-    <!-- Intro paragraph -->
-    <p class="lead">
-        Flybox provides the latest fly-fishing information to help anglers plan better trips.
-        Our tools gather data from various sources, keeping you informed on shop locations and river conditions.
-    </p>
-
-    <!-- What Flybox Offers -->
-    <section class="mt-4">
-        <h2 class="h5 mb-2">What You’ll Find</h2>
-        <ul>
-            <li><strong>Shop Information:</strong> Find fly-fishing shops with location, contact info, and other details.</li>
-            <li><strong>Fishing Reports:</strong> Access the latest reports on rivers and lakes in your area.</li>
-            <li><strong>Site Scout (Coming Soon):</strong> Compare shop and report data to identify new fishing spots.</li>
-        </ul>
+<div class="container">
+    <!-- Hero / Banner -->
+    <section class="text-center m-3">
+        <!-- <img src="/images/fly-fisherman.png" alt="Fly fishing scene" class="img-fluid" style="max-height: 300px; width: auto; margin-top: -5rem; margin-bottom: -2rem;"> -->
+        <h4>Helping you stay informed and ready for your next fly-fishing adventure.</h4>
     </section>
 
-    <!-- Purpose / why it exists -->
-    <section class="mt-4">
-        <h2 class="h5 mb-2">Why Flybox</h2>
-        <p>
-            Planning a fly-fishing trip can be time-consuming. Flybox streamlines access to relevant information so you can focus on enjoying the water.
-            Whether you’re checking for shops nearby or looking up river conditions, Flybox makes it easier to stay informed.
-        </p>
+
+    <!-- The Idea -->
+    <section class="row align-items-center">
+        <div class="col-md-6">
+            <img src="/images/idea.jpg" alt="Idea illustration" class="img-fluid">
+            <p class="small text-center">
+                <a href="http://www.freepik.com" target="_blank" rel="noopener noreferrer"  class="small" style="color: rgba(0,0,0,0.25); text-decoration: none;">
+                    Designed by Dooder / Freepik
+                </a>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h2 class="h4 mb-3">Where the Idea Came From</h2>
+            <p>
+                Flybox started as an idea by one of <a href="https://rescueriver.com/" target="_blank">Rescue River</a>'s founders,
+                both to help with marketing—so they could know which flies to make, what colors to use,
+                and where to promote certain flies—and as a tool for fly-fishing enthusiasts. While some shops post reports online,
+                many still record them on a board in their shop, leaving information scattered and hard to track for those who fish.
+            </p>
+        </div>
     </section>
-</main>
+
+    <!-- Importance -->
+    <section class="row align-items-center flex-md-row-reverse mb-5">
+        <div class="col-md-6">
+            <img src="/images/important.jpg" alt="Important illustration" class="img-fluid">
+            <p class="small mt-1 text-center">
+                <a href="http://www.freepik.com" target="_blank" rel="noopener noreferrer"  class="small" style="color: rgba(0,0,0,0.25); text-decoration: none;">
+                    Designed by Dooder / Freepik
+                </a>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h2 class="h4 mb-3">Why It Matters</h2>
+            <p>
+                Fly-fishing information is often scattered, incomplete, or outdated. Flybox consolidates up-to-date information, helping users:
+            </p>
+            <ul>
+                <li>Locate shops quickly and accurately.</li>
+                <li>Access AI-powered summaries of the latest fishing activity.</li>
+                <li>Plan trips with confidence and spend more time fishing.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Who It Serves -->
+    <section class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <img src="/images/serve.jpg" alt="Important illustration" class="img-fluid">
+            <p class="small mt-1 text-center">
+                <a href="http://www.freepik.com" target="_blank" rel="noopener noreferrer"  class="small" style="color: rgba(0,0,0,0.25); text-decoration: none;">
+                    Designed by Dooder / Freepik
+                </a>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h2 class="h4 mb-3">Who We Serve</h2>
+            <p>
+                First and foremost, Flybox supports <a href="https://rescueriver.com/" target="_blank">Rescue River</a>’s mission to bring hope and healing
+                to survivors of trafficking and exploitation. By organizing fly-fishing data, we help them choose which flies to produce, which colors to prioritize,
+                and where to promote them—while giving fly-fishing enthusiasts a single place to stay informed and engaged.
+            </p>
+            </p>
+        </div>
+    </section>
+
+    <!-- Overview / What Flybox Offers -->
+    <section class="mb-5 pt-5">
+        <h2 class="h4 mb-5 text-center">What Flybox Offers</h2>
+        <div class="row g-4 text-center">
+            <%- include('partials/card', {
+                slim: false,
+                icon: "🎣",
+                title: "ShopReel",
+                description: "ShopReel scrapes business data from Google Maps and shop websites, compiling key details into a structured Excel file.",
+                link: "/docs",
+                buttonText: "Read More"
+            }) %>
+            <%- include('partials/card', {
+                slim: false,
+                icon: "🐟",
+                title: "FishTales",
+                description: "FishTales parses and consolidates fishing reports from multiple websites into structured, AI-generated summaries.",
+                link: "/docs",
+                buttonText: "Read More"
+            }) %>
+            <%- include('partials/card', {
+                slim: false,
+                icon: "🗺️",
+                title: "SiteScout",
+                description: "Coming soon: compare shops and reports to find new fishing spots.",
+                link: "/docs",
+                buttonText: "Read More"
+            }) %>
+        </div>
+    </section>
+</div>
