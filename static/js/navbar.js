@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Get the current URL path (e.g., "/about")
   const currentPath = window.location.pathname;
 
+  // Select all navigation links inside the navbar
   const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
 
   navLinks.forEach((link) => {

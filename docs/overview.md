@@ -1,4 +1,4 @@
-## 🛒 ShopReel
+## 🎣 ShopReel
 
 Scrapes business data from Google Maps using SerpAPI and individual shop websites, compiling the results into a structured Excel file.
 
@@ -23,11 +23,11 @@ Scrapes business data from Google Maps using SerpAPI and individual shop website
 
 ### 🐞 Known Issues
 
-- Email scraping is probably about 70% accurate
-- Some business pages are blocked or fail to load
-- Requires headless mode in Docker and cannot debug playwright unless headless in docker
+- Email scraping accuracy is approximately 70%.
+- Some business pages may be blocked or fail to load.
+- Playwright debugging is possible locally (headed), but not in Docker.
 
-## 📈 FishTales
+## 🐟 FishTales
 
 Parses, summarizes, and consolidates reports from various websites into structured summaries.
 
@@ -46,6 +46,17 @@ Parses, summarizes, and consolidates reports from various websites into structur
 
 ### 🐞 Known Issues
 
-- Must run headless in Docker
-- Summarization can be flakey depending on prompt or ai model
-- Summarization is slow
+- Requires running headless in Docker.
+- Summarization may be inconsistent depending on the prompt or AI model.
+- Summarization can be slow.
+
+## 🗺️ SiteScout
+
+Keeps your FishTales starter file up to date by comparing it with ShopReel results.
+
+### 🔍 Features
+
+- Supports using two Excel files as input.
+- Compares websites collected from a ShopReel run with the FishTales starter file.
+- Identifies new or missing sites.
+- Appends new sites to the FishTales starter file to maintain an up-to-date configuration.

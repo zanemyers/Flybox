@@ -4,10 +4,10 @@ This repository contains tools for **[Rescue River](https://rescueriver.com/)**,
 
 ## 📦 Tools
 
-- [🛒 Shop Scraper](docs/overview.md#-shop-scraper) — Finds and catalogs fly-fishing shops across regions.
-- [📈 Report Scraper](docs/overview.md#-report-scraper-in-progress) — Scrapes, compares, and summarizes fishing reports.
+- [🎣 ShopReel](docs/overview.md#-shopreel) — Finds and catalogs fly-fishing shops across regions.
+- [🐟 FishTales](docs/overview.md#-fishtales) — Scrapes, compares, and summarizes fishing reports.
+- [🗺️ SiteScout](docs/overview.md#-sitescout) — (In Progress) Keeps your FishTales starter file up to date.
 
-> Supports both local and Docker-based workflows with flexible `.env` configuration.
 
 ## 🛠️ Setup & Usage
 
