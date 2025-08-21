@@ -21,7 +21,7 @@ class ShopReelFormApp extends BaseFormApp {
    * Cache frequently accessed DOM elements to avoid repeated DOM lookups.
    */
   cacheElements() {
-    this.elements.fileInputEl = document.getElementById("inputFile");
+    this.elements.fileInputEl = document.querySelector(".file-input");
     this.elements.apiKeyEl = document.getElementById("apiKey");
     this.elements.queryEl = document.getElementById("query");
     this.elements.latEl = document.getElementById("latitude");

@@ -25,7 +25,7 @@ class FishTalesFormApp extends BaseFormApp {
     this.elements.maxAgeEl = document.getElementById("maxAge");
     this.elements.filterRiversEl = document.getElementById("filterRivers");
     this.elements.riverListEl = document.getElementById("riverList");
-    this.elements.fileInputEl = document.getElementById("inputFile");
+    this.elements.fileInputEl = document.querySelector(".file-input");
     this.elements.modelEl = document.getElementById("model");
     this.elements.crawlDepthEl = document.getElementById("crawlDepth");
     this.elements.tokenLimitEl = document.getElementById("tokenLimit");
