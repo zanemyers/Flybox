@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file.
 
+### [v3.2](https://github.com/zanemyers/RescueRiver/compare/v3.1..HEAD) — _21 Aug 2025_
+
+#### **Added**
+- New [**Index**](../views/index.ejs) page with hero section and cards for **ShopReel**, **FishTales**, **SiteScout**, and **Docs**.
+- New [**About**](../views/about.ejs) page with supporting images:
+    - `static/images/idea.jpg`
+    - `static/images/important.jpg`
+    - `static/images/serve.jpg`
+- Reusable [**Card partial**](../views/partials/card.ejs) supporting slim and normal layouts.
+- **Navbar** enhancement: dropdown toggles highlight when one of their items matches the current path.
+- **SiteScout** section and feature list added in the [Overview docs](./overview.md).
+- New **Packages** in the [Setup docs](./setup.md):
+    - `TinyQueue` under *Async Control*
+    - `Express`, `Express-EJS-Layouts`, and `EJS` under *Server & Templates*
+    - `ws` under *WebSockets*
+
+#### **Changed**
+- Branding & routes:
+    - `report_scraper` → **FishTales**
+    - `shop_scraper` → **ShopReel**
+    - `site_diff` → **SiteScout**
+- Renamed EJS views & form partials:
+    - `views/report_scraper.ejs` → `views/fish_tales.ejs`
+    - `views/shop_scraper.ejs` → `views/shop_reel.ejs`
+    - `views/partials/report_form.ejs` → `views/partials/fish_tales_form.ejs`
+    - `views/partials/shop_form.ejs` → `views/partials/shop_reel_form.ejs`
+- Docs refreshed for new names and clearer known issues ([README](../README.md), [Overview](./overview.md), [Setup](./setup.md)).
+- [**Compose**](../compose.yaml):
+    - service `fly-box` → `flybox`
+    - added `PORT` env var
+    - switched port mapping to `"${PORT}:3000"`
+- [**BaseFormApp**](../static/js/baseFormApp.js): WebSocket URL now uses `process.env.PORT` instead of hardcoded `3000`.
+- [**Header**](../views/partials/header.ejs): updated with larger logo, “Flybox” branding, and a “More” dropdown.
+- [**Footer**](../views/partials/footer.ejs): simplified styling.
+- [**Layout**](../views/layouts/base.ejs): favicon updated from `fishing_pole.ico` to `tackle_box.png`.
+
+#### **Removed**
+- Legacy favicon `static/images/fishing_pole.ico`.
+
+
+
 ### [v3.1](https://github.com/zanemyers/RescueRiver/compare/v3.0..v3.1) — _19 Aug 2025_
 
 #### **Added**
