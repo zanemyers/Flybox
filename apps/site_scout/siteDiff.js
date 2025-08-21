@@ -42,8 +42,8 @@ export async function mergeMissingUrls({
       ),
       shopReelHandler.read(
         [],
-        (row) => row["Has Report"] === true,
-        (row) => row["Website"]
+        (row) => row["has_report"] === true,
+        (row) => row["website"]
       ),
     ]);
 
@@ -65,15 +65,17 @@ export async function mergeMissingUrls({
     progressUpdate(`Appending ${missingUrls.length} missing URLs to the report file...`);
 
     cancelToken.throwIfCancelled();
-    // Append the missing URLs as new rows to the report Excel file
-    await fishTalesHandler.write(
+
+    const newFile = new ExcelFileHandler();
+    await newFile.write(await fishTalesHandler.read());
+    await newFile.write(
       missingUrls.map((url) => ({ url })),
       true
     );
 
-    returnFile(await fishTalesHandler.getBuffer());
-
+    progressUpdate("DOWNLOAD:new_fishTales_starter.xlsx");
     progressUpdate("✅ FishTales start file updated.");
+    returnFile(await newFile.getBuffer());
   } catch (err) {
     if (err.isCancelled) {
       progressUpdate(err.message);

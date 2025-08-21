@@ -93,7 +93,7 @@ async function fetchShops(searchParams, progressUpdate, returnFile, cancelToken)
     // Use the environment variable if the API key is "test" and we're in development, otherwise use the provided key
     const apiKey =
       searchParams.apiKey === "test" && process.env.NODE_ENV === "development"
-        ? process.env.GEMINI_API_KEY
+        ? process.env.SERP_API_KEY
         : searchParams.apiKey;
 
     const data = await getJson({
