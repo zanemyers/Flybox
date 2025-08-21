@@ -22,6 +22,10 @@ router.get("/fish-tales-form", (req, res) => {
   });
 });
 
+router.get("/site-scout-form", (req, res) => {
+  res.render("partials/site_scout_form", { layout: false });
+});
+
 // Serve the progress partial for displaying ongoing tasks
 router.get("/progress", (req, res) => {
   res.render("partials/progress", { layout: false });

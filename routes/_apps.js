@@ -22,7 +22,7 @@ router.get("/shopReel", (req, res) => {
   });
 });
 router.get("/siteScout", (req, res) => {
-  res.render("error", {
+  res.render("site_scout", {
     title: "SiteScout",
     status_code: "Coming Soon!",
     heading: `SiteScout`,

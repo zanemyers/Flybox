@@ -9,7 +9,7 @@ import { WebSocketServer } from "ws";
 // Route and WebSocket handlers
 import routes from "./routes/index.js";
 import { errorHandler } from "./routes/error.js";
-import { fishTalesSocket, shopReelSocket } from "./sockets/index.js";
+import { fishTalesSocket, shopReelSocket, siteScoutSocket } from "./sockets/index.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -37,6 +37,9 @@ wss.on("connection", (ws, req) => {
   } else if (url === "/ws/fish-tales") {
     // Connect to fishTales WebSocket
     fishTalesSocket(ws, req);
+  } else if (url === "/ws/site-scout") {
+    // Connect to siteScout WebSocket
+    siteScoutSocket(ws, req);
   } else {
     // Unknown WebSocket route, close connection
     ws.close();
