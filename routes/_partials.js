@@ -9,12 +9,12 @@ const router = express.Router();
  */
 
 // Serve the shop form partial
-router.get("/shop-form", (req, res) => {
+router.get("/shop-reel-form", (req, res) => {
   res.render("partials/shop_reel_form", { layout: false });
 });
 
 // Serve the report form partial with prompts for summary and merge
-router.get("/report-form", (req, res) => {
+router.get("/fish-tales-form", (req, res) => {
   res.render("partials/fish_tales_form", {
     layout: false,
     summaryPrompt: SUMMARY_PROMPT,

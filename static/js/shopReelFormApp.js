@@ -4,9 +4,9 @@ import { BaseFormApp } from "./baseFormApp.js";
 /**
  * Handles the UI logic for the shop scraper form.
  */
-class ShopFormApp extends BaseFormApp {
+class ShopReelFormApp extends BaseFormApp {
   constructor() {
-    super("shop-form", "shop");
+    super("shop-real-form", "shop-reel");
   }
 
   /**
@@ -88,5 +88,5 @@ class ShopFormApp extends BaseFormApp {
 }
 
 // === Initialize the app ===
-const app = new ShopFormApp();
+const app = new ShopReelFormApp();
 document.addEventListener("DOMContentLoaded", () => app.showForm());

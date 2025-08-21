@@ -9,7 +9,7 @@ import { WebSocketServer } from "ws";
 // Route and WebSocket handlers
 import routes from "./routes/index.js";
 import { errorHandler } from "./routes/error.js";
-import { reportSocket, shopSocket } from "./sockets/index.js";
+import { fishTalesSocket, shopReelSocket } from "./sockets/index.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -31,12 +31,12 @@ server.on("upgrade", (req, socket, head) => {
 wss.on("connection", (ws, req) => {
   const { url } = req;
 
-  if (url === "/ws/shop") {
-    // Connect to shop scraper WebSocket
-    shopSocket(ws, req);
-  } else if (url === "/ws/report") {
-    // Connect to report scraper WebSocket
-    reportSocket(ws, req);
+  if (url === "/ws/shop-reel") {
+    // Connect to shopReel WebSocket
+    shopReelSocket(ws, req);
+  } else if (url === "/ws/fish-tales") {
+    // Connect to fishTales WebSocket
+    fishTalesSocket(ws, req);
   } else {
     // Unknown WebSocket route, close connection
     ws.close();

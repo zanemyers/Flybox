@@ -4,7 +4,7 @@ import { shopScraper } from "../apps/shop_reel/shopScraper.js";
 /**
  * WebSocket subclass specifically for handling shop scraping requests.
  */
-class _ShopSocket extends BaseWebSocket {
+class _shopReelSocket extends BaseWebSocket {
   /**
    * Handles incoming payload from the WebSocket.
    * Delegates the scraping task to the shopScraper function.
@@ -26,6 +26,6 @@ class _ShopSocket extends BaseWebSocket {
  *
  * @param {WebSocket} ws - The WebSocket connection
  */
-export function shopSocket(ws) {
-  new _ShopSocket(ws);
+export function shopReelSocket(ws) {
+  new _shopReelSocket(ws);
 }

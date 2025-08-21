@@ -4,9 +4,9 @@ import { initFileInput } from "./fileInput.js";
 /**
  * Handles the initialization, validation, and submission of the report form.
  */
-class ReportFormApp extends BaseFormApp {
+class FishTalesFormApp extends BaseFormApp {
   constructor() {
-    super("report-form", "report");
+    super("fish-tales-form", "fish-tales");
   }
 
   /**
@@ -120,5 +120,5 @@ class ReportFormApp extends BaseFormApp {
 }
 
 // === Initialize the app ===
-const app = new ReportFormApp();
+const app = new FishTalesFormApp();
 document.addEventListener("DOMContentLoaded", () => app.showForm());

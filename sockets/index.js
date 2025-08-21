@@ -1,5 +1,5 @@
 import { initCancellationToken } from "./_cancellationToken.js";
-import { reportSocket } from "./_reportSocket.js";
-import { shopSocket } from "./_shopSocket.js";
+import { fishTalesSocket } from "./_fishTalesSocket.js";
+import { shopReelSocket } from "./_shopReelSocket.js";
 
-export { initCancellationToken, reportSocket, shopSocket };
+export { initCancellationToken, fishTalesSocket, shopReelSocket };
