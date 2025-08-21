@@ -6,7 +6,7 @@ import { reportScraper } from "../apps/fish_tales/reportScraper.js";
  * Manages the reception of JSON search parameters and file uploads,
  * then delegates the scraping task to reportScraper.
  */
-class _ReportSocket extends BaseWebSocket {
+class _FishTalesSocket extends BaseWebSocket {
   constructor(ws) {
     super(ws);
 
@@ -73,6 +73,6 @@ class _ReportSocket extends BaseWebSocket {
  *
  * @param {WebSocket} ws - The WebSocket connection
  */
-export function reportSocket(ws) {
-  new _ReportSocket(ws);
+export function fishTalesSocket(ws) {
+  new _FishTalesSocket(ws);
 }
