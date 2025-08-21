@@ -68,7 +68,7 @@ export class BaseFormApp {
       await this.showProgress();
 
       if (this.socket && this.socket.readyState === WebSocket.OPEN) this.socket.close();
-      this.socket = new WebSocket(`ws://localhost:${process.env.PORT}/ws/${this.socketName}`);
+      this.socket = new WebSocket(`ws://localhost:3000/ws/${this.socketName}`);
 
       let pendingFilename = "download.xlsx";
       this.socket.binaryType = "arraybuffer";

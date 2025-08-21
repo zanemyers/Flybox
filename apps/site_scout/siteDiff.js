@@ -1,68 +1,84 @@
 import { ExcelFileHandler, sameDomain } from "../base/index.js";
-import ora from "ora";
-
-const spinner = ora();
 
 /**
- * Compares URLs between a report Excel file and a site Excel file,
- * identifies URLs present in the site file but missing from the report file,
- * and appends the missing URLs to the report file.
+ * Compares URLs between a fishTales starter file and a shopReel file,
+ * identifies URLs present in the shopReel file but missing from the fishTales file,
+ * and appends the missing URLs to the fishTales file.
  *
- * @param {string} reportFile - Path to the Excel file containing existing report URLs
- * @param {string} siteFile - Path to the Excel file containing site URLs
+ * @param {Object} files - The two files to compare
+ * @param {Function} progressUpdate - Optional callback function to receive progress/status updates.
+ * @param {Function} returnFile - Optional callback to receive the final Excel file buffer.
+ * @param {Object} cancelToken - Optional cancellation token with a `throwIfCancelled()` method to abort execution.
+ *
+ * @returns {Promise<void>} Resolves when scraping completes successfully, is cancelled, or encounters an error.
  */
-async function mergeMissingUrls({ reportFile, siteFile }) {
-  spinner.start("Comparing report and site URLs...");
+export async function mergeMissingUrls({
+  files,
+  progressUpdate = () => {},
+  returnFile = () => {},
+  cancelToken = { throwIfCancelled: () => {} }, // default to no-op if not provided
+}) {
+  progressUpdate("Comparing report and site URLs...");
 
-  // Initialize Excel handlers for both files
-  const reportHandler = new ExcelFileHandler(reportFile);
-  const siteHandler = new ExcelFileHandler(siteFile);
+  try {
+    cancelToken.throwIfCancelled();
+    // Initialize Excel handlers for both files
+    const shopReelHandler = new ExcelFileHandler();
+    const fishTalesHandler = new ExcelFileHandler();
 
-  // Read URLs from both files:
-  // - Report file: include all rows, map to the "url" field
-  // - Site file: only include rows where "Has Report" is true, map to the "Website" field
-  const [rawReportUrls, rawSiteUrls] = await Promise.all([
-    reportHandler.read(
-      [],
-      () => true,
-      (row) => row["url"]
-    ),
-    siteHandler.read(
-      [],
-      (row) => row["Has Report"] === true,
-      (row) => row["Website"]
-    ),
-  ]);
+    // Load the buffers
+    await shopReelHandler.loadBuffer(files["shopReelFile"]);
+    await fishTalesHandler.loadBuffer(files["fishTalesFile"]);
 
-  // Deduplicate URLs by converting to Sets and back to arrays
-  const reportUrls = Array.from(new Set(rawReportUrls));
-  const siteUrls = Array.from(new Set(rawSiteUrls));
+    // Read URLs from both files:
+    // - Report file: include all rows, map to the "url" field
+    // - Site file: only include rows where "Has Report" is true, map to the "Website" field
+    cancelToken.throwIfCancelled();
+    const [rawReportUrls, rawSiteUrls] = await Promise.all([
+      fishTalesHandler.read(
+        [],
+        () => true,
+        (row) => row["url"]
+      ),
+      shopReelHandler.read(
+        [],
+        (row) => row["Has Report"] === true,
+        (row) => row["Website"]
+      ),
+    ]);
 
-  // Identify URLs in the site file whose domain is not present in any report URL
-  const missingUrls = siteUrls.filter(
-    (siteUrl) => !reportUrls.some((reportUrl) => sameDomain(siteUrl, reportUrl))
-  );
+    // Deduplicate URLs by converting to Sets and back to arrays
+    const reportUrls = Array.from(new Set(rawReportUrls));
+    const siteUrls = Array.from(new Set(rawSiteUrls));
 
-  if (missingUrls.length === 0) {
-    spinner.succeed("No missing URLs found.");
-    return;
+    cancelToken.throwIfCancelled();
+    // Identify URLs in the site file whose domain is not present in any report URL
+    const missingUrls = siteUrls.filter(
+      (siteUrl) => !reportUrls.some((reportUrl) => sameDomain(siteUrl, reportUrl))
+    );
+
+    if (missingUrls.length === 0) {
+      progressUpdate("✅ No missing URLs found.");
+      return;
+    }
+
+    progressUpdate(`Appending ${missingUrls.length} missing URLs to the report file...`);
+
+    cancelToken.throwIfCancelled();
+    // Append the missing URLs as new rows to the report Excel file
+    await fishTalesHandler.write(
+      missingUrls.map((url) => ({ url })),
+      true
+    );
+
+    returnFile(await fishTalesHandler.getBuffer());
+
+    progressUpdate("✅ FishTales start file updated.");
+  } catch (err) {
+    if (err.isCancelled) {
+      progressUpdate(err.message);
+    } else {
+      progressUpdate(`❌ Error: ${err.message || err}`);
+    }
   }
-
-  spinner.text = `Appending ${missingUrls.length} missing URLs to the report file...`;
-
-  // Append the missing URLs as new rows to the report Excel file
-  await reportHandler.write(
-    missingUrls.map((url) => ({ url })),
-    true
-  );
-
-  spinner.succeed("Report file updated.");
 }
-
-// Example usage: merge URLs from site file into report file
-mergeMissingUrls({
-  reportFile: "static/example_files/report_starter_file_ex.xlsx",
-  siteFile: "media/xlsx/shop_details.xlsx",
-}).catch((err) => {
-  spinner.fail(`Fatal error: ${err}`);
-});

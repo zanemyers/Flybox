@@ -1,0 +1,22 @@
+<!-- Report search form -->
+<form id="form" enctype="multipart/form-data" class="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column">
+
+    <!-- Error messages will be injected here dynamically -->
+    <div id="formError"></div>
+
+    <div class="form-body d-block">
+        <!-- ShopReel file upload input (uses shared EJS partial) -->
+        <div id="shop-reel-file-input" class="form-input file-input-component">
+            <%- include('./file_input.ejs', { label: 'Import ShopReel File' }) %>
+        </div>
+
+        <!-- FishTales File upload input (uses shared EJS partial) -->
+        <div id="fish-tales-file-input" class="form-input file-input-component">
+            <%- include('./file_input.ejs', { label: 'Import FishTales Starter File' }) %>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-auto mx-1">Run Search</button>
+</form>
+
+<script src="/js/siteScoutFormApp.js" type="module"></script>

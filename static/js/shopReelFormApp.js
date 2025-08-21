@@ -6,7 +6,7 @@ import { BaseFormApp } from "./baseFormApp.js";
  */
 class ShopReelFormApp extends BaseFormApp {
   constructor() {
-    super("shop-real-form", "shop-reel");
+    super("shop-reel-form", "shop-reel");
   }
 
   /**
