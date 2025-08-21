@@ -7,7 +7,7 @@
 > Configure these values in your `.env` file to control scraper behavior.
 
 | Variable       | Description                                                         |
-|----------------|---------------------------------------------------------------------|
+| -------------- | ------------------------------------------------------------------- |
 | `RUN_HEADLESS` | Run the browser in headless mode (`true`) or with UI (`false`).     |
 | `CONCURRENCY`  | Number of sites or tasks to process in parallel (recommended: 3–5). |
 
@@ -20,7 +20,7 @@
 #### 🛒 Shop Scraper
 
 | Form Input    | Description                                                                      |
-|---------------|----------------------------------------------------------------------------------|
+| ------------- | -------------------------------------------------------------------------------- |
 | `SerpAPI Key` | Your [SerpAPI](https://serpapi.com/manage-api-key) key for Google Maps searches. |
 | `Search Term` | Search term to use on Google Maps (e.g., `"Fly Fishing Shops"`).                 |
 | `Latitude`    | Latitude coordinate to center the search (e.g., `44.4280`).                      |
@@ -31,7 +31,7 @@
 #### 📈 Report Scraper
 
 | Form Input         | Description                                                                                         |
-|--------------------|-----------------------------------------------------------------------------------------------------|
+| ------------------ | --------------------------------------------------------------------------------------------------- |
 | `Gemini API Key`   | Your [Gemini API key](https://aistudio.google.com/app/apikey) for generating summaries.             |
 | `Max Report Age`   | Maximum age of reports to consider (in days).                                                       |
 | `Filter by Rivers` | Set to `true` to only include reports mentioning specific rivers.                                   |
@@ -42,6 +42,5 @@
 | `Crawl Depth`      | Number of pages to crawl per site when searching for reports.                                       |
 | `Summary Prompt`   | Text prompt used to summarize individual reports into structured entries.                           |
 | `Merge Prompt`     | Text prompt used to consolidate multiple summaries into a single, combined report.                  |
-
 
 [//]: # "TODO: possibly add the debug option for refining starter file config"
