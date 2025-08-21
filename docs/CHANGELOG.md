@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v3.2](https://github.com/zanemyers/RescueRiver/compare/v3.1..HEAD) — _21 Aug 2025_
+### [v3.2](https://github.com/zanemyers/RescueRiver/compare/v3.1..3.2) — _21 Aug 2025_
 
 #### **Added**
 - New [**Index**](../views/index.ejs) page with hero section and cards for **ShopReel**, **FishTales**, **SiteScout**, and **Docs**.
