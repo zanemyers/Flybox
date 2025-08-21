@@ -8,7 +8,6 @@ This repository contains tools for **[Rescue River](https://rescueriver.com/)**,
 - [🐟 FishTales](docs/overview.md#-fishtales) — Scrapes, compares, and summarizes fishing reports.
 - [🗺️ SiteScout](docs/overview.md#-sitescout) — (In Progress) Keeps your FishTales starter file up to date.
 
-
 ## 🛠️ Setup & Usage
 
 Get started with:
