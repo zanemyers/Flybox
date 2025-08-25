@@ -2,14 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v3.3](https://github.com/zanemyers/RescueRiver/compare/v3.2..HEAD) — _25 Aug 2025_
+### [v3.3](https://github.com/zanemyers/RescueRiver/compare/v3.2..v3.3) — _25 Aug 2025_
 
 #### **Added**
+
 - **SiteScout**:
-    - WebSocket ([`/ws/site-scout`](../server.js)) with [`siteScoutSocket`](../sockets/_siteScoutSocket.js) for handling `shopReel` + `fishTales` files.
-    - Frontend: [`siteScoutFormApp.js`](../static/js/siteScoutFormApp.js), [`site_scout_form.ejs`](../views/partials/site_scout_form.ejs) partial, and [`site_scout.ejs`](../views/site_scout.ejs) page.
+  - WebSocket ([`/ws/site-scout`](../server.js)) with [`siteScoutSocket`](../sockets/_siteScoutSocket.js) for handling `shopReel` + `fishTales` files.
+  - Frontend: [`siteScoutFormApp.js`](../static/js/siteScoutFormApp.js), [`site_scout_form.ejs`](../views/partials/site_scout_form.ejs) partial, and [`site_scout.ejs`](../views/site_scout.ejs) page.
 
 #### **Changed**
+
 - **Sockets**: `reportSocket` → [`fishTalesSocket`](../sockets/_fishTalesSocket.js), `shopSocket` → [`shopReelSocket`](../sockets/_shopReelSocket.js).
 - **Routes**: `/shop-form` → [`/shop-reel-form`](../routes/_apps.js), `/report-form` → [`/fish-tales-form`](../routes/_apps.js).
 - **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server.js), [`/ws/fish-tales`](../server.js).
@@ -20,18 +22,16 @@ All notable changes to this project will be documented in this file.
 - [**SCSS**](../static/scss/style.scss): restructured styles for `.file-input-component` (better drag-drop + file display).
 - [**Map UI**](../static/js/map.js): switched lat/lng handling to `input[name="latitude"]` / `input[name="longitude"]`.
 - **Views**:
-    - Updated wording in [`fish_tales.ejs`](../views/fish_tales.ejs) + [`shop_reel.ejs`](../views/shop_reel.ejs) (fly-fishing focus, privacy notices).
-    - [`index.ejs`](../views/index.ejs) SiteScout button text: _Coming Soon_ → _Check your sites_.
-    - [`header.ejs`](../views/partials/header.ejs) menu renamed to **SiteScout**.
+  - Updated wording in [`fish_tales.ejs`](../views/fish_tales.ejs) + [`shop_reel.ejs`](../views/shop_reel.ejs) (fly-fishing focus, privacy notices).
+  - [`index.ejs`](../views/index.ejs) SiteScout button text: _Coming Soon_ → _Check your sites_.
+  - [`header.ejs`](../views/partials/header.ejs) menu renamed to **SiteScout**.
 - **Docs**: refreshed [`README.md`](../README.md), [`setup.md`](./setup.md), and [`config.md`](./config.md).
 
 #### **Removed**
+
 - Legacy `rr_logo.png`.
 - Old socket files `_reportSocket.js`, `_shopSocket.js`.
 - Redundant IDs in `file_input.ejs` (class-based now).
-
-
-
 
 ### [v3.2](https://github.com/zanemyers/RescueRiver/compare/v3.1..v3.2) — _21 Aug 2025_
 
