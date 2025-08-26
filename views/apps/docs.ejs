@@ -1,0 +1,37 @@
+<div class="docs d-flex">
+    <!-- Sidebar -->
+    <div class="docs-sidebar">
+        <ul class="nav nav-pills flex-column" id="docsTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="app1-tab" data-bs-toggle="pill" data-bs-target="#shopReel" type="button" role="tab">ShopReel</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="app2-tab" data-bs-toggle="pill" data-bs-target="#fishTales" type="button" role="tab">FishTales</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="app3-tab" data-bs-toggle="pill" data-bs-target="#siteScout" type="button" role="tab">SiteScout</button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Content Card -->
+    <div class="docs-content card shadow-sm p-4 tab-content bg-light">
+        <div class="tab-pane fade show" id="shopReel" role="tabpanel">
+            <%- include('docs/shop_reel_documentation.ejs') %>
+        </div>
+        <div class="tab-pane fade" id="fishTales" role="tabpanel">
+            <%- include('docs/fish_tales_documentation.ejs') %>
+        </div>
+        <div class="tab-pane fade" id="siteScout" role="tabpanel">
+            <%- include('docs/site_scout_documentation.ejs') %>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabId = new URLSearchParams(window.location.search).get('tab') || 'shopReel';
+        const tabEl = document.querySelector(`#docsTabs button[data-bs-target="#${tabId}"]`);
+        tabEl && new bootstrap.Tab(tabEl).show();
+    });
+</script>
