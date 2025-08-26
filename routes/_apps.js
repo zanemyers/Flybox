@@ -10,31 +10,25 @@ import { MERGE_PROMPT, SUMMARY_PROMPT } from "../apps/base/constants/index.js";
  */
 const router = express.Router();
 router.get("/fishTales", (req, res) => {
-  res.render("fish_tales", {
+  res.render("apps/fish_tales", {
     title: "FishTales",
     summaryPrompt: SUMMARY_PROMPT,
     mergePrompt: MERGE_PROMPT,
   });
 });
 router.get("/shopReel", (req, res) => {
-  res.render("shop_reel", {
+  res.render("apps/shop_reel", {
     title: "ShopReel",
   });
 });
 router.get("/siteScout", (req, res) => {
-  res.render("site_scout", {
+  res.render("apps/site_scout", {
     title: "SiteScout",
-    status_code: "Coming Soon!",
-    heading: `SiteScout`,
-    message: "Check back later to see if we've caught anything.",
   });
 });
 router.get("/docs", (req, res) => {
-  res.render("error", {
+  res.render("apps/docs", {
     title: "Docs",
-    status_code: "Coming Soon!",
-    heading: `Docs`,
-    message: "Check back later to see if we've caught anything.",
   });
 });
 

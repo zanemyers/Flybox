@@ -194,3 +194,47 @@ button {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
 }
+
+.docs {
+  display: flex;
+  height: 100%;
+
+  .docs-sidebar {
+    width: 15%;
+    margin-top: 1rem;
+    margin-right: .5rem;
+
+    .nav-pills {
+      display: flex;
+      flex-direction: column;
+
+      .nav-link {
+        padding: 1rem;
+        border-radius: .375rem;
+        width: 100%;
+
+        &:hover {
+          background-color: #e9ecef;
+          border-left: 4px solid theme.$primary;
+        }
+
+        &.active {
+          background-color: lighten(theme.$primary, 67.5%);
+          border-left: 4px solid theme.$primary;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .docs-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;   /* enable vertical scroll */
+    max-height: 65vh;  /* restrict to viewport height */
+  }
+}
+
+
+
+

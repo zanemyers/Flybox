@@ -10,12 +10,12 @@ const router = express.Router();
 
 // Serve the shop form partial
 router.get("/shop-reel-form", (req, res) => {
-  res.render("partials/shop_reel_form", { layout: false });
+  res.render("apps/forms/shop_reel_form", { layout: false });
 });
 
 // Serve the report form partial with prompts for summary and merge
 router.get("/fish-tales-form", (req, res) => {
-  res.render("partials/fish_tales_form", {
+  res.render("apps/forms/fish_tales_form", {
     layout: false,
     summaryPrompt: SUMMARY_PROMPT,
     mergePrompt: MERGE_PROMPT,
@@ -23,7 +23,7 @@ router.get("/fish-tales-form", (req, res) => {
 });
 
 router.get("/site-scout-form", (req, res) => {
-  res.render("partials/site_scout_form", { layout: false });
+  res.render("apps/forms/site_scout_form", { layout: false });
 });
 
 // Serve the progress partial for displaying ongoing tasks
