@@ -1,5 +1,110 @@
 <h1>🐟 FishTales Documentation</h1>
 
-<p>
-    Parses, summarizes, and consolidates reports from various websites into structured summaries.
-</p>
+<p>FishTales collects, parses, and summarizes fly-fishing reports from various websites into structured summaries using <strong>Google’s Gemini API</strong>.</p>
+
+<hr>
+
+<h3>Using the FishTales Form</h3>
+<p>The FishTales interface allows you to configure report scraping and summarization. Default values are provided for convenience, but can be adjusted as needed.</p>
+
+<h5>Basic Inputs</h5>
+
+<ul>
+    <li>
+        <strong>Gemini API Key:</strong>  Enter your private API key in the field provided.<br>
+        <em>Note:</em> This is required for FishTales to access Gemini AI models.
+    </li>
+    <li>
+        <strong>Max Report Age:</strong> Specify the maximum age of reports in days.<br>
+        <em>Default:</em> <code>100</code>
+    </li>
+    <li>
+        <strong>Filter by Rivers:</strong> Enable to restrict reports to specific rivers.<br>
+        <em>Default:</em> <code>false</code>
+    </li>
+    <li>
+        <strong>River Names</strong> (<em>Optional</em>): Enter a comma-separated list of river names.
+    </li>
+    <li>
+        <strong>Starter File</strong>: Import your current dataset, or use the
+        <a href="/example_files/report_starter_file_ex.xlsx" download><strong>example file</strong></a>.
+    </li>
+</ul>
+
+<div class="d-flex justify-content-center pb-3">
+    <img src="/images/docs/fishTales_bForm.png" alt="FishTales Basic Input Form" class="img-fluid w-75">
+</div>
+
+<h5>Advanced Inputs</h5>
+<p>Optional configuration for customizing the scraping and summarization behavior:</p>
+<ul>
+    <li><strong>Model:</strong> Gemini model to use (default: <code>gemini-2.5-flash</code>)</li>
+    <li><strong>Token Limit:</strong> Max tokens per request (default: 50,000)</li>
+    <li><strong>Crawl Depth:</strong> How many link levels to follow during scraping (default: 25)</li>
+    <li><strong>Summary Prompt:</strong> Defines how each report is summarized by the model</li>
+    <li><strong>Merge Prompt:</strong> Defines how multiple summaries are combined into a single report</li>
+</ul>
+
+<div class="d-flex justify-content-center pb-3">
+    <img src="/images/docs/fishTales_aForm.png" alt="FishTales Advanced Input Form" class="img-fluid w-75">
+</div>
+
+<p>After updating the desired inputs, click <strong>Search & Summarize</strong> to start the process. Progress indicators will appear on the page.</p>
+
+
+<h5>Output Files</h5>
+<p>After running a search and summarizing, FishTales generates the following file:</p>
+<ul>
+    <li><strong>scraped_sites.txt:</strong> A list of all the scraped sites to use to optimize the starter file</li>
+    <li><strong>report_summary.txt:</strong> Generated immediately with summarized report data.</li>
+</ul>
+
+<hr>
+
+
+<h3>Get Your Gemini API Key</h3>
+<div class="text-center">
+    <ol class="text-start d-inline-block">
+        <li class="mb-4">
+            Go to <a href="https://ai.google.dev/aistudio" target="_blank" rel="noopener noreferrer">ai.google.dev</a> and sign in with a Google account.
+            <img src="/images/docs/gemini/gai_login.png" alt="Google AI Studio Login" class="img-fluid w-75 mx-auto d-block">
+        </li>
+        <li class="mb-4">
+            If it’s your first time logging in, you’ll see a welcome popup. Otherwise, you’ll land on your home dashboard. Select <code>Get API key</code>.
+            <img src="/images/docs/gemini/gai_home.png" alt="Google AI Studio Dashboard" class="img-fluid w-75 mx-auto d-block">
+        </li>
+        <li class="mb-4">
+            Accept the terms and conditions (first-time only). Check <code>I consent…</code>, then click <code>I accept</code>.
+            <img src="/images/docs/gemini/gai_terms.png" alt="Google AI Studio Terms & Conditions" class="img-fluid w-75 mx-auto d-block">
+        </li>
+        <li class="mb-4">
+            Select <code>+ Create API key</code>, or choose an existing key.
+            <img src="/images/docs/gemini/gai_api.png" alt="Google AI Studio API Keys" class="img-fluid w-75 mx-auto d-block">
+        </li>
+        <li>
+            Copy your API key and save it securely.
+            <img src="/images/docs/gemini/gai_key.png" alt="Google AI Studio API Key" class="img-fluid w-75 mx-auto d-block">
+        </li>
+    </ol>
+</div>
+
+<hr>
+
+
+<h3>Update Your Starter File</h3>
+<p>....<br>....<br>....<br</p>
+
+<hr>
+
+<h3>⚠️ Disclaimers</h3>
+<ul>
+    <li><strong>Summarization accuracy:</strong> May vary depending on prompts and the AI model used.</li>
+    <li><strong>Blocked pages:</strong> Some business websites may block Playwright or fail to load. Fallback data will be provided.</li>
+</ul>
+
+<hr>
+
+<h3>✏️ Additional Notes</h3>
+<ul>
+    <li>Future versions may support additional AI models and extended filtering options.</li>
+</ul>
