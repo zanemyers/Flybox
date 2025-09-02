@@ -51,7 +51,7 @@
     </li>
 </ul>
 <div class="d-flex justify-content-center pb-3">
-    <img src="/images/docs/fishTales/fishTales_bForm.png" alt="FishTales Basic Input Form" class="img-fluid w-75">
+    <img src="/images/docs/fish_tales/fish_tales_b-form.png" alt="FishTales Basic Input Form" class="img-fluid w-75">
 </div>
 
 <!--Advanced Inputs-->
@@ -81,7 +81,7 @@
     </li>
 </ul>
 <div class="d-flex justify-content-center pb-3">
-    <img src="/images/docs/fishTales/fishTales_aForm.png" alt="FishTales Advanced Input Form" class="img-fluid w-75">
+    <img src="/images/docs/fish_tales/fish_tales_a-form.png" alt="FishTales Advanced Input Form" class="img-fluid w-75">
 </div>
 
 <p class=>Once you’ve updated the inputs you want, click <strong>Search & Summarize</strong> to start. You’ll see progress updates on the page as FishTales works.</p>
@@ -104,23 +104,23 @@
     <ol class="text-start d-inline-block">
         <li class="mb-4">
             Go to <a href="https://ai.google.dev/aistudio" target="_blank" rel="noopener noreferrer">ai.google.dev</a> and sign in with your Google account.
-            <img src="/images/docs/fishTales/gemini/gai_login.png" alt="Google AI Studio Login" class="img-fluid w-75 mx-auto d-block">
+            <img src="/images/docs/fish_tales/gemini/gai_login.png" alt="Google AI Studio Login" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li class="mb-4">
             If this is your first time, you might see a welcome message. Otherwise, you’ll see your dashboard. Click <code>Get API key</code>.
-            <img src="/images/docs/fishTales/gemini/gai_home.png" alt="Google AI Studio Dashboard" class="img-fluid w-75 mx-auto d-block">
+            <img src="/images/docs/fish_tales/gemini/gai_home.png" alt="Google AI Studio Dashboard" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li class="mb-4">
             Accept the terms and conditions (first-time users only). Check <code>I consent…</code>, then click <code>I accept</code>.
-            <img src="/images/docs/fishTales/gemini/gai_terms.png" alt="Google AI Studio Terms & Conditions" class="img-fluid w-75 mx-auto d-block">
+            <img src="/images/docs/fish_tales/gemini/gai_terms.png" alt="Google AI Studio Terms & Conditions" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li class="mb-4">
             Click <code>+ Create API key</code> to make a new key, or select an existing one if you already have it.
-            <img src="/images/docs/fishTales/gemini/gai_api.png" alt="Google AI Studio API Keys" class="img-fluid w-75 mx-auto d-block">
+            <img src="/images/docs/fish_tales/gemini/gai_api.png" alt="Google AI Studio API Keys" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li>
             Copy your API key and keep it safe. You’ll need it to use FishTales.
-            <img src="/images/docs/fishTales/gemini/gai_key.png" alt="Google AI Studio API Key" class="img-fluid w-75 mx-auto d-block">
+            <img src="/images/docs/fish_tales/gemini/gai_key.png" alt="Google AI Studio API Key" class="img-fluid w-75 mx-auto d-block">
         </li>
     </ol>
 </div>
@@ -130,7 +130,67 @@
 <!--Updating your starter file-->
 <h3 id="update-your-starter-file">Update Your Starter File</h3>
 <p>
-    ....<br>....<br>....<br>
+    Use these steps to make sure your <strong>FishTales</strong> starter file includes all report sites and their relevant details. This helps FishTales scrape and summarize reports accurately.
+</p>
+<ol>
+    <li>
+        Run <strong>SiteScout</strong> to check if your starter file is missing any report sites.
+    </li>
+    <li>
+        For each new URL found, open the website in your browser.
+    </li>
+    <li>
+        Identify where the site publishes its reports (this could be a news section, blog, or updates page).
+    </li>
+    <li>
+        Take note of any <strong>keywords</strong>, <strong>junk-words</strong>, or “click here” type links that indicate new content (sometimes called click-phrases). Record each in the <strong>respective column</strong> of your starter file.
+    </li>
+    <li>
+        Inspect the page to find the section containing the report:
+        <ul>
+            <li>Right-click on a report and choose <strong>Inspect</strong> (or <strong>Inspect Element</strong>).</li>
+            <li>Keyboard shortcuts:
+                <ul>
+                    <li><strong>Windows/Linux:</strong> <code>Ctrl + Shift + I</code> or <code>F12</code></li>
+                    <li><strong>Mac:</strong> <code>Cmd + Option + I</code> or <code>F12</code></li>
+                </ul>
+            </li>
+            <li>Look for the container that surrounds the report content. This could be an <code>&lt;article&gt;</code>, a <code>&lt;div&gt;</code> with a <code>post</code> class, or another identifiable element.</li>
+        </ul>
+    </li>
+    <li>
+        Record the appropriate CSS selector for that section in the “Selector” column of your starter file. This tells FishTales exactly where to pull report content from.
+    </li>
+    <li>
+        The “Last Updated” column is for your reference only; it doesn’t affect how the tool works. You can use it to keep track of when you last checked a site.
+    </li>
+</ol>
+
+<h5>Advanced Selectors</h5>
+<p>
+    Most of the time, you can find a simple CSS selector like <code>&lt;article&gt;</code> or a <code>div.post</code> to grab the report content. These are easier to use and less likely to break if the website changes.
+</p>
+<p>
+    However, some websites don’t have clear containers for the reports. In those cases, you may need to use <strong>advanced selectors</strong> to be more specific. For example:
+</p>
+<pre><code>div.entry-content:has(p:text-matches("Fishing Report", "i"))</code></pre>
+<p>
+    This selector looks for a <code>div</code> with the class <code>entry-content</code> that contains a paragraph with text matching "Fishing Report" (case-insensitive). Using this approach can help you target the exact content you need without grabbing unrelated sections of the page.
+</p>
+<p>
+    ⚠️ Advanced selectors can be tricky. They may not always work perfectly, especially if the website structure changes. If you’re unsure, it’s a good idea to use a chatbot like <strong>GPT</strong> or <strong>Gemini</strong> to help you craft the correct selector.
+</p>
+<p>
+    Tips for using advanced selectors:
+</p>
+<ul>
+    <li>Start simple and only use advanced features when necessary.</li>
+    <li>Test your selector in the browser console before adding it to your starter file.</li>
+    <li>Remember that overly complex selectors can break if the website layout changes.</li>
+    <li>Document your selectors in the starter file so you can troubleshoot later if needed.</li>
+</ul>
+<p>
+    By using advanced selectors carefully, you can ensure FishTales captures the exact report content even on tricky websites.
 </p>
 
 <hr>
