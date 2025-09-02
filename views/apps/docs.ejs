@@ -3,13 +3,13 @@
     <div class="docs-sidebar">
         <ul class="nav nav-pills flex-column" id="docsTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="app1-tab" data-bs-toggle="pill" data-bs-target="#shopReel" type="button" role="tab">ShopReel</button>
+                <button class="nav-link" id="shopReel-tab" data-bs-toggle="pill" data-bs-target="#shopReel" type="button" role="tab">ShopReel</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="app2-tab" data-bs-toggle="pill" data-bs-target="#fishTales" type="button" role="tab">FishTales</button>
+                <button class="nav-link" id="fishTales-tab" data-bs-toggle="pill" data-bs-target="#fishTales" type="button" role="tab">FishTales</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="app3-tab" data-bs-toggle="pill" data-bs-target="#siteScout" type="button" role="tab">SiteScout</button>
+                <button class="nav-link" id="siteScout-tab" data-bs-toggle="pill" data-bs-target="#siteScout" type="button" role="tab">SiteScout</button>
             </li>
         </ul>
     </div>
@@ -30,8 +30,24 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const tabId = new URLSearchParams(window.location.search).get('tab') || 'shopReel';
-        const tabEl = document.querySelector(`#docsTabs button[data-bs-target="#${tabId}"]`);
-        tabEl && new bootstrap.Tab(tabEl).show();
+        // 1. Read query param
+        const tabParam = new URLSearchParams(window.location.search).get('tab') || 'shopReel';
+
+        // 2. Activate the tab
+        const tabEl = document.querySelector(`#docsTabs button[data-bs-target="#${tabParam}"]`);
+        if(tabEl) {
+            const tabInstance = new bootstrap.Tab(tabEl);
+            tabInstance.show();
+        }
+
+        // 3. Wait for tab content to render, then scroll if there is a hash
+        if(window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            setTimeout(() => {
+                const targetEl = document.getElementById(hash);
+                if(targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100); // small delay to allow tab content to show
+        }
     });
 </script>
+

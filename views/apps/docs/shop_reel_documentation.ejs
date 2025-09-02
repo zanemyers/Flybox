@@ -1,102 +1,138 @@
 <h1>🎣 ShopReel Documentation</h1>
-
-<p>ShopReel scrapes business data from <strong>Google Maps</strong> using <strong>SerpAPI</strong> and individual shop websites, compiling the results into a structured Excel file.</p>
+<p>
+    ShopReel gathers business information from <strong>Google Maps</strong> using <strong>SerpAPI</strong> and from each shop’s website, then puts everything into an easy-to-read Excel file.
+</p>
 
 <hr>
 
-<h3>Using the ShopReel Form</h3>
-
-<p>The ShopReel interface allows you to configure searches via a form with manual inputs or by importing an Excel file acting as a cache.</p>
-
-<h5>Manual Input</h5>
-<p>Use this tab to enter search parameters directly for a custom ShopReel run. Default values are provided for convenience, but you can adjust them as needed.</p>
-
+<h3>Contents</h3>
 <ul>
     <li>
-        <strong>SerpAPI Key:</strong> Enter your private API key in the field provided.<br>
-        <em>Note:</em> This key is required for ShopReel to access Google Maps data via SerpAPI.
+        <a href="#using-the-shopreel-form">Using the ShopReel Form</a>
+        <ul>
+            <li><a href="#manual-input">Manual Input</a></li>
+            <li><a href="#file-import">File Import</a></li>
+            <li><a href="#output-files">Output Files</a></li>
+        </ul>
+    </li>
+    <li><a href="#get-your-serpapi-key">Get Your SerpAPI Key</a></li>
+    <li><a href="#disclaimers">⚠ Disclaimers</a></li>
+    <li><a href="#additional-notes">✏ Additional Notes</a></li>
+</ul>
+
+<hr>
+
+<h3 id="using-the-shopreel-form">Using the ShopReel Form</h3>
+<p>
+    The ShopReel form lets you run searches in two ways: by entering your search settings manually, or by uploading an Excel file to reuse data from a previous search.
+</p>
+
+<!--Manual Input-->
+<h5 id="manual-input">Manual Input</h5>
+<p class="mb-0">
+    Use this tab to enter your own search settings for a custom ShopReel run. Default values are provided to make it easy, but you can change them as needed.
+</p>
+<ul>
+    <li>
+        <strong>SerpAPI Key:</strong> Enter your private API key. This lets ShopReel access Google Maps data to find shops.<br>
+        <em>Note:</em> This is required for the tool to work.
     </li>
     <li>
-        <strong>Search Term:</strong> Specify the type of business or shop you want to search for (e.g., "Fly Fishing Shops", "Tackle Stores").<br>
+        <strong>Search Term:</strong> What type of business you want to find (e.g., "Fly Fishing Shops" or "Tackle Stores").<br>
         <em>Default:</em> <code>Fly Fishing Shops</code>
     </li>
     <li>
-        <strong>Location:</strong> Enter latitude and longitude in decimal degrees. You can also click the map button to pick a location visually.<br>
-        <em>Default:</em> Yellowstone National Park: <code>Latitude: 44.427963</code>, <code>Longitude: -110.588455</code>.<br>
+        <strong>Location:</strong> Enter latitude and longitude for where you want to search. You can also click the map button to pick a spot.<br>
+        <em>Default:</em> Yellowstone National Park: <code>Latitude: 44.427963</code>, <code>Longitude: -110.588455</code>
     </li>
     <li>
-        <strong>Max Results:</strong> Set the maximum number of results to retrieve. ShopReel fetches results in batches of 20, so entering <code>101</code> could yield up to <code>120</code> results.<br>
-        <em>Default:</em> <code>100</code>.<br>
+        <strong>Max Results:</strong> How many results you want. ShopReel fetches in groups of 20, so setting <code>101</code> could return up to <code>120</code> results.<br>
+        <em>Default:</em> <code>100</code>
     </li>
 </ul>
-
 <div class="d-flex justify-content-center pb-3">
-    <img src="/images/docs/shopReel_mForm.png" alt="ShopReel Manual Input Form" class="img-fluid w-75">
+    <img src="/images/docs/shopReel/shopReel_mForm.png" alt="ShopReel Manual Input Form" class="img-fluid w-75">
+</div>
+<p>
+    After filling in the fields, click <strong>Search</strong>. You’ll see progress updates on the page as ShopReel runs.
+</p>
+
+<!--File Import-->
+<h5 id="file-import" class="pt-2">File Import</h5>
+<ul>
+    <li>Import a previous <strong>simple_shop_details.xlsx</strong> file to reuse shop data.</li>
+    <li>This helps ShopReel work faster by avoiding repeated requests to SerpAPI.</li>
+</ul>
+<div class="d-flex justify-content-center pb-3">
+    <img src="/images/docs/shopReel/shopReel_fForm.png" alt="ShopReel File Import Form" class="img-fluid w-75">
+</div>
+<p>
+    Once you’ve selected the file, click <strong>Search</strong>. You’ll see progress updates on the page as ShopReel runs.
+</p>
+
+
+<!--Output Files-->
+<h5 id="output-files" class="pt-2">Output Files</h5>
+<p class="mb-0">
+    After running a search, ShopReel creates Excel files with the shop data. What files are created depends on how you run the search:
+</p>
+<div class="text-center">
+    <ul class="text-start d-inline-block">
+        <li><strong>Manual Input:</strong>
+            <ul>
+                <li class="mb-4">
+                    <strong>simple_shop_details.xlsx:</strong> Created right after the search. Contains basic shop info and can be reused in future searches to save time.<br>
+                    <img src="/images/docs/shopReel/simple_shop_details.png" alt="Simple Shop Details" class="img-fluid w-75 mx-auto d-block">
+                </li>
+                <li class="mb-4">
+                    <strong>shop_details.xlsx:</strong> Contains more detailed info from each shop’s website, like emails, online store availability, and social media links.<br>
+                    <img src="/images/docs/shopReel/shop_details.png" alt="Shop Details" class="img-fluid w-75 mx-auto d-block">
+                </li>
+            </ul>
+        </li>
+        <li><strong>File Import:</strong>
+            <ul>
+                <li>
+                    Only <strong>shop_details.xlsx</strong> is downloaded, because the basic <strong>simple_shop_details.xlsx</strong> was provided as a starting place.
+                </li>
+            </ul>
+        </li>
+    </ul>
 </div>
 
-
-<p>Once all fields are set, click the <strong>Search</strong> button. Progress indicators will be displayed on the page.</p>
-
-
-<h5>File Import</h5>
-<ul>
-    <li>Import a previous <strong>simple_shop_details.xlsx</strong> to reuse shop data.</li>
-    <li>This avoids redundant requests to SerpAPI and speeds up processing.</li>
-</ul>
-
-<div class="d-flex justify-content-center pb-3">
-    <img src="/images/docs/shopReel_fForm.png" alt="ShopReel File Import Form" class="img-fluid w-75">
-</div>
-
-
-<p>After selecting the file, click the <strong>Search</strong> button. Progress indicators will be displayed on the page.</p>
-
-<h5>Output Files</h5>
-<p>After running a search, ShopReel generates Excel files containing the shop data. The behavior depends on how you run the search:</p>
-
-<ul>
-    <li><strong>Manual Input:</strong>
-        <ul>
-            <li><strong>simple_shop_details.xlsx:</strong> Generated immediately after the SerpAPI search completes. Contains basic shop information and can be reused in subsequent runs to avoid additional API requests for the same dataset.</li>
-            <li><strong>shop_details.xlsx:</strong> Includes detailed information collected from each shop’s website (emails, online store availability, social media profiles, etc.).</li>
-        </ul>
-    </li>
-    <li><strong>File Import:</strong>
-        <ul>
-            <li>Only the final <strong>shop_details.xlsx</strong> file will be downloaded, since the <strong>simple_shop_details.xlsx</strong> file is already provided for reuse.</li>
-        </ul>
-    </li>
-</ul>
 
 <hr>
 
-<h3>Get Your SerpAPI Key</h3>
+<h3 id="get-your-serpapi-key">Get Your SerpAPI Key</h3>
 <div class="text-center">
     <ol class="text-start d-inline-block">
-        <li class="mb-4">Go to <a href="https://serpapi.com/" target="_blank">SerpAPI</a> and create an account.<br>
-            <img src="/images/docs/serp/serp_home.png" alt="SerpAPI Home" class="img-fluid w-75 mx-auto d-block">
+        <li class="mb-4">
+            Go to <a href="https://serpapi.com/" target="_blank">SerpAPI</a> and create an account.<br>
+            <img src="/images/docs/shopReel/serp/serp_home.png" alt="SerpAPI Home" class="img-fluid w-75 mx-auto d-block">
         </li>
-        <li class="mb-4">Verify an email and phone number to subscribe to a free account.<br>
-            <img src="/images/docs/serp/serp_sub.png" alt="SerpAPI Home" class="img-fluid w-75 mx-auto d-block">
+        <li class="mb-4">
+            Verify your email and phone number to set up a free account.<br>
+            <img src="/images/docs/shopReel/serp/serp_sub.png" alt="SerpAPI Subscription" class="img-fluid w-75 mx-auto d-block">
         </li>
-        <li>After signing up, an API key will be automatically generated for your account. Locate the section called <code>Your Private API Key</code> and copy the key for use in ShopReel.<br>
-            <img src="/images/docs/serp/serp_dashboard.png" alt="Your Private API Key" class="img-fluid w-75 mx-auto d-block">
+        <li>
+            Once signed up, your API key is automatically created. Find the section called <code>Your Private API Key</code> and copy it to use in ShopReel.<br>
+            <img src="/images/docs/shopReel/serp/serp_dashboard.png" alt="Your Private API Key" class="img-fluid w-75 mx-auto d-block">
         </li>
     </ol>
 </div>
+
+
 <hr>
 
-<h3>⚠️ Disclaimers</h3>
+<h3 id="disclaimers">⚠ Disclaimers</h3>
 <ul>
-    <li><strong>Email scraping:</strong> Not always accurate; some addresses may be outdated or missing.</li>
-    <li><strong>Blocked pages:</strong> Some business websites may block Playwright or fail to load. Fallback data will be provided.</li>
-    <li>Use responsibly and comply with websites’ terms of service.</li>
+    <li><strong>Email scraping:</strong> Some email addresses may be missing or outdated. Results are not always 100% accurate.</li>
+    <li><strong>Blocked pages:</strong> Some websites may prevent the tool from accessing them. In these cases, fallback information will be used.</li>
 </ul>
 
 <hr>
 
-<h3>✏️ Additional Notes</h3>
+<h3 id="additional-notes">✏ Additional Notes</h3>
 <ul>
-    <li>The app supports both cached Excel files and live scraping via SerpAPI to maximize efficiency.</li>
-    <li>Future versions may support alternate APIs and extended filtering options.</li>
+    <li>Future updates may add support for other APIs and extra filtering options to help you refine searches.</li>
 </ul>
