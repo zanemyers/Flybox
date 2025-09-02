@@ -8,71 +8,45 @@
                 <!-- What the tool does -->
                 <h2 class="h4 mb-2">🛠️ What This Tool Does</h2>
                 <p class="mb-4">
-                    This tool collects and summarizes fly-fishing reports. It uses a starter file to find websites, scrapes them for report content, and summarizes the results using <strong>Google's Gemini API</strong>.
+                    FishTales helps you collect and summarize fly-fishing reports from different websites. It starts with a starter file to find the websites, gathers the report information, and then creates easy-to-read summaries using <strong>Google's Gemini API</strong>.
                 </p>
 
                 <!-- How to use the tool -->
                 <h3 class="h5 mb-2">📋 How to Use It</h3>
                 <div class="steps">
                     <div>
-                        <span class="icon">🔐</span>
-                        Enter your <strong>Gemini API key</strong> (get one at
-                        <a href="https://ai.google.dev/aistudio" target="_blank" rel="noopener noreferrer">ai.google.dev</a>).
+                        <span class="icon">🔐</span> Enter your <strong>Gemini API key</strong>
                     </div>
                     <div>
-                        <span class="icon">⏱️</span>
-                        Set the <strong>Max Report Age</strong> in days.
+                        <span class="icon">⏱️</span> Set <strong>Max Report Age</strong> in days
                     </div>
                     <div>
-                        <span class="icon">🌊</span>
-                        Enable <strong>Filter by Rivers</strong> to filter reports by river names.
+                        <span class="icon">🌊</span> Optional: Turn on <strong>Filter by Rivers</strong> and list rivers
                     </div>
                     <div>
-                        <span class="icon">📁</span>
-                        Import a <strong>Starter File</strong> (or use the <a href="/example_files/fishTales_starter_file.xlsx" download><strong>example file</strong></a>).
-                    </div>
-
-                    <!-- Advanced settings -->
-                    <div><span class="icon">⚙️</span> Advanced Settings</div>
-                    <div class="steps mb-0" style="font-size: .85rem;">
-                        <div>
-                            <span class="icon">💁‍♀️️</span>
-                            Set the <strong>Model</strong> (view available models at
-                            <a href="https://ai.google.dev/models/gemini" target="_blank" rel="noopener noreferrer">ai.google.dev</a>).
-                        </div>
-                        <div>
-                            <span class="icon">🕹️</span>
-                            Set an input <strong>Token Limit</strong> to control the maximum number of tokens used per request to the model.
-                        </div>
-
-                        <div>
-                            <span class="icon">🪏</span>
-                            Set the <strong>Crawl Depth</strong> to specify how many link levels the scraper should follow.
-                        </div>
-                        <div>
-                            <span class="icon">🤖</span>
-                            Set the <strong>Summary Prompt</strong> to define how each report should be interpreted and summarized by the model.
-                        </div>
-                        <div>
-                            <span class="icon">🧩</span>
-                            Set the <strong>Merge Prompt</strong> to guide how multiple summaries should be combined into a single, coherent report.
-                        </div>
+                        <span class="icon">📁</span> Upload a <strong>Starter File</strong> or use the <a href="/example_files/fishTales_starter_file.xlsx" download><strong>example file</strong></a>
                     </div>
                     <div>
-                        <span class="icon">✅</span>
-                        Click <strong>Run Search</strong> to begin scraping and summarizing.
+                        <span class="icon">⚙️</span> Optional: Adjust <strong>Advanced Settings</strong> as needed
                     </div>
+                    <div>
+                        <span class="icon">✅</span> Click <strong>Run Search</strong> to start
+                    </div>
+                    <p class="mt-2 small text-muted">
+                        For more detailed instructions, see the <a href="/docs?tab=fishTales">FishTales documentation</a>.
+                    </p>
                 </div>
+
 
                 <!-- About the default settings -->
                 <h3 class="h5 mb-2">ℹ️ About the Defaults</h3>
                 <p class="mb-2">
-                    By default, this tool uses the <strong>gemini-2.5-flash</strong> model with a <strong>50,000 token limit</strong>. It scrapes up to <strong>25 link levels deep</strong>, includes reports up to <strong>100 days old</strong>, and does not <strong>filter by river</strong>.
+                    By default, FishTales uses the <strong>gemini-2.5-flash</strong> model, looks at reports from the last <strong>100 days</strong>, follows up to <strong>25 links per website</strong>, and does not filter by rivers. These settings work well for most users, but you can change as needed.
                 </p>
 
                 <!-- Privacy notice -->
                 <p class="text-muted small mb-0">
-                    🔒 <strong>Privacy Notice:</strong> All processing happens in memory. Your data is never stored.
+                    🔒 <strong>Privacy Notice:</strong> Everything happens in memory while the tool runs. Your data is never saved or shared.
                 </p>
             </div>
         </div>
