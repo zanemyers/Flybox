@@ -39,10 +39,8 @@ This project uses a variety of packages for scraping, browser automation, AI sum
   - [Chrono-Node](https://www.npmjs.com/package/chrono-node) – Natural language date parser for extracting dates from text.
   - [Date-FNS](https://www.npmjs.com/package/date-fns) – Modern JavaScript date utility library for formatting, comparisons, and calculations.
 
-- **CLI & Environment**
+- **Environment**
   - [Dotenv](https://www.npmjs.com/package/dotenv) – Loads environment variables from a `.env` file.
-  - [Enquirer](https://www.npmjs.com/package/enquirer) – Elegant CLI prompts for interactive user input.
-  - [Ora](https://www.npmjs.com/package/ora) – Terminal spinners for indicating async progress.
 
 - **Scraping & Browser Automation**
   - [Playwright](https://www.npmjs.com/package/playwright) – Browser automation library for headless and headed browsing.
