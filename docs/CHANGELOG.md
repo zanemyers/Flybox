@@ -2,7 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v3.5](https://github.com/zanemyers/RescueRiver/compare/v3.4..v3.5) — 3 Sep 2025
+### [v3.5](https://github.com/zanemyers/RescueRiver/compare/v3.5..v3.6) — _3 Sep 2025_
+
+#### **Changed**
+- Fixed docs tab layout to reference renamed partials (`*_doc.ejs` instead of `*_documentation.ejs`) for ShopReel, FishTales, and SiteScout.
+
+### [v3.5](https://github.com/zanemyers/RescueRiver/compare/v3.4..v3.5) — _3 Sep 2025_
 
 #### **Changed**
 - Renamed the **CLI & Environment** section to **Environment** in [`docs/setup.md`](./setup.md).
