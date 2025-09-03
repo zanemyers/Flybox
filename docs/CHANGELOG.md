@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v3.4](https://github.com/zanemyers/RescueRiver/compare/v3.3..HEAD) — 3 Sep 2025
+### [v3.4](https://github.com/zanemyers/RescueRiver/compare/v3.3..v3.4) — 3 Sep 2025
 
 #### **Added**
 - Added new images for documentation for FishTales, ShopReel, and SiteScout.
