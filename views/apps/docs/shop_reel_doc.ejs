@@ -1,10 +1,13 @@
 <h1>🎣 ShopReel Documentation</h1>
 <p>
-    ShopReel gathers business information from <strong>Google Maps</strong> using <strong>SerpAPI</strong> and from each shop’s website, then puts everything into an easy-to-read Excel file.
+    <!-- Overview -->
+    ShopReel gathers business information from <strong>Google Maps</strong> using <strong>SerpAPI</strong>
+    and from each shop’s website, then puts everything into an easy-to-read Excel file.
 </p>
 
 <hr>
 
+<!-- Table of contents -->
 <h3>Contents</h3>
 <ul>
     <li>
@@ -22,70 +25,63 @@
 
 <hr>
 
+<!-- Using the form section -->
 <h3 id="using-the-shopreel-form">Using the ShopReel Form</h3>
 <p>
-    The ShopReel form lets you run searches in two ways: by entering your search settings manually, or by uploading an Excel file to reuse data from a previous search.
+    The ShopReel form lets you run searches in two ways:
+    by entering your search settings manually, or by uploading an Excel file to reuse data from a previous search.
 </p>
 
-<!--Manual Input-->
+<!-- Manual Input -->
 <h5 id="manual-input">Manual Input</h5>
-<p class="mb-0">
-    Use this tab to enter your own search settings for a custom ShopReel run. Default values are provided to make it easy, but you can change them as needed.
-</p>
+<p class="mb-0">Use this tab to enter your own search settings for a custom ShopReel run. Default values are provided, but you can change them.</p>
 <ul>
     <li>
-        <strong>SerpAPI Key:</strong> Enter your private API key. This lets ShopReel access Google Maps data to find shops.<br>
-        <em>Note:</em> This is required for the tool to work.
+        <strong>SerpAPI Key:</strong> Enter your private API key to allow ShopReel to access Google Maps data.<br>
+        <em>Note:</em> Required for the tool to work.
     </li>
     <li>
-        <strong>Search Term:</strong> What type of business you want to find (e.g., "Fly Fishing Shops" or "Tackle Stores").<br>
+        <strong>Search Term:</strong> Type of business you want to find (e.g., "Fly Fishing Shops").<br>
         <em>Default:</em> <code>Fly Fishing Shops</code>
     </li>
     <li>
-        <strong>Location:</strong> Enter latitude and longitude for where you want to search. You can also click the map button to pick a spot.<br>
+        <strong>Location:</strong> Latitude and longitude for the search. You can also click the map to pick a spot.<br>
         <em>Default:</em> Yellowstone National Park: <code>Latitude: 44.427963</code>, <code>Longitude: -110.588455</code>
     </li>
     <li>
-        <strong>Max Results:</strong> How many results you want. ShopReel fetches in groups of 20, so setting <code>101</code> could return up to <code>120</code> results.<br>
-        <em>Default:</em> <code>100</code>
+        <strong>Max Results:</strong> How many results to retrieve. ShopReel fetches in batches of 20.<br>
+        <em>Default:</em> <code>100</code> (<em>Max:</em> <code>120</code>, <em>Min:</em> <code>20</code>)
     </li>
 </ul>
 <div class="d-flex justify-content-center pb-3">
     <img src="/images/docs/shop_reel/shop_reel_m-form.png" alt="ShopReel Manual Input Form" class="img-fluid w-75">
 </div>
-<p>
-    After filling in the fields, click <strong>Search</strong>. You’ll see progress updates on the page as ShopReel runs.
-</p>
+<p>After filling in the fields, click <strong>Search</strong>. Progress updates will appear on the page.</p>
 
-<!--File Import-->
+<!-- File Import -->
 <h5 id="file-import" class="pt-2">File Import</h5>
 <ul>
-    <li>Import a previous <strong>simple_shop_details.xlsx</strong> file to reuse shop data.</li>
-    <li>This helps ShopReel work faster by avoiding repeated requests to SerpAPI.</li>
+    <li>Import a previous <strong>simple_shop_details.xlsx</strong> to reuse shop data.</li>
+    <li>This helps ShopReel run faster by avoiding repeated requests to SerpAPI.</li>
 </ul>
 <div class="d-flex justify-content-center pb-3">
     <img src="/images/docs/shop_reel/shop_reel_f-form.png" alt="ShopReel File Import Form" class="img-fluid w-75">
 </div>
-<p>
-    Once you’ve selected the file, click <strong>Search</strong>. You’ll see progress updates on the page as ShopReel runs.
-</p>
+<p>Once you select the file, click <strong>Search</strong>. Progress updates will appear as ShopReel runs.</p>
 
-
-<!--Output Files-->
+<!-- Output Files -->
 <h5 id="output-files" class="pt-2">Output Files</h5>
-<p class="mb-0">
-    After running a search, ShopReel creates Excel files with the shop data. What files are created depends on how you run the search:
-</p>
+<p class="mb-0">After running a search, ShopReel creates Excel files with shop data. The files depend on the type of search:</p>
 <div class="text-center">
     <ul class="text-start d-inline-block">
         <li><strong>Manual Input:</strong>
             <ul>
                 <li class="mb-4">
-                    <strong>simple_shop_details.xlsx:</strong> Created right after the search. Contains basic shop info and can be reused in future searches to save time.<br>
+                    <strong>simple_shop_details.xlsx:</strong> Created immediately. Contains basic shop info and can be reused.<br>
                     <img src="/images/docs/shop_reel/simple_shop_details.png" alt="Simple Shop Details" class="img-fluid w-75 mx-auto d-block">
                 </li>
                 <li class="mb-4">
-                    <strong>shop_details.xlsx:</strong> Contains more detailed info from each shop’s website, like emails, online store availability, and social media links.<br>
+                    <strong>shop_details.xlsx:</strong> Contains detailed info from shop websites (emails, online stores, social links).<br>
                     <img src="/images/docs/shop_reel/shop_details.png" alt="Shop Details" class="img-fluid w-75 mx-auto d-block">
                 </li>
             </ul>
@@ -93,16 +89,16 @@
         <li><strong>File Import:</strong>
             <ul>
                 <li>
-                    Only <strong>shop_details.xlsx</strong> is downloaded, because the basic <strong>simple_shop_details.xlsx</strong> was provided as a starting place.
+                    Only <strong>shop_details.xlsx</strong> is downloaded, since the basic <strong>simple_shop_details.xlsx</strong> is already provided.
                 </li>
             </ul>
         </li>
     </ul>
 </div>
 
-
 <hr>
 
+<!-- How to get your SerpAPI api key -->
 <h3 id="get-your-serpapi-key">Get Your SerpAPI Key</h3>
 <div class="text-center">
     <ol class="text-start d-inline-block">
@@ -115,24 +111,26 @@
             <img src="/images/docs/shop_reel/serp/serp_sub.png" alt="SerpAPI Subscription" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li>
-            Once signed up, your API key is automatically created. Find the section called <code>Your Private API Key</code> and copy it to use in ShopReel.<br>
+            Your API key is automatically generated. Copy the section called <code>Your Private API Key</code> to use in ShopReel.<br>
             <img src="/images/docs/shop_reel/serp/serp_dashboard.png" alt="Your Private API Key" class="img-fluid w-75 mx-auto d-block">
         </li>
     </ol>
 </div>
 
-
 <hr>
 
+<!-- Disclaimers -->
 <h3 id="disclaimers">⚠ Disclaimers</h3>
 <ul>
-    <li><strong>Email scraping:</strong> Some email addresses may be missing or outdated. Results are not always 100% accurate.</li>
-    <li><strong>Blocked pages:</strong> Some websites may prevent the tool from accessing them. In these cases, fallback information will be used.</li>
+    <!-- Warn users about limitations -->
+    <li><strong>Email scraping:</strong> Some emails may be missing or outdated. Results are not guaranteed to be 100% accurate.</li>
+    <li><strong>Blocked pages:</strong> Some websites may prevent ShopReel from accessing them. Fallback data will be used in these cases.</li>
 </ul>
 
 <hr>
 
+<!-- Additional notes section -->
 <h3 id="additional-notes">✏ Additional Notes</h3>
 <ul>
-    <li>Future updates may add support for other APIs and extra filtering options to help you refine searches.</li>
+    <li>Future updates may add support for other APIs and extra filtering options to refine searches.</li>
 </ul>

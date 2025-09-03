@@ -1,6 +1,8 @@
 <h1>🐟 FishTales Documentation</h1>
-
-<p>FishTales gathers fly-fishing reports from different websites and creates easy-to-read summaries using <strong>Google’s Gemini API</strong>.</p>
+<p>
+    <!-- Overview -->
+    FishTales gathers fly-fishing reports from different websites and creates easy-to-read summaries using <strong>Google’s Gemini API</strong>.
+</p>
 
 <hr>
 
@@ -28,9 +30,12 @@
 
 <hr>
 
-<!--FishTales Form use-->
+<!-- Using the form section -->
 <h3 id="using-the-fishtales-form">Using the FishTales Form</h3>
-<p>FishTales lets you set up how reports are collected and summarized. Default settings are provided to make it easy, but you can change them if you want.</p>
+<p>
+    FishTales lets you set up how reports are collected and summarized. Default settings are provided to make it easy,
+    but you can change them if you want.
+</p>
 
 <!--Basic Inputs-->
 <h5 id="basic-inputs">Basic Inputs</h5>
@@ -61,7 +66,9 @@
 
 <!--Advanced Inputs-->
 <h5 id="advanced-inputs" class="mt-3">Advanced Inputs</h5>
-<p class="mb-0">These settings are optional. You can change them to control how FishTales finds reports and summarizes them.</p>
+<p class="mb-0">
+    These settings are optional. You can change them to control how FishTales finds reports and summarizes them.
+</p>
 <ul>
     <li>
         <strong>Model:</strong> Pick which Gemini AI model you want to use. Different models may give slightly different results. See available models at
@@ -69,37 +76,35 @@
         <em>Default:</em> <code>gemini-2.5-flash</code>
     </li>
     <li>
-        <strong>Token Limit:</strong> The maximum amount of text the model can read and summarize at once. Too high can cause errors, too low might miss details.<br>
+        <strong>Token Limit:</strong> Maximum text the model can read at once. Too high can cause errors; too low may miss details.<br>
         <em>Default:</em> <code>50,000</code> (<em>Max:</em> <code>100,000</code>, <em>Min:</em> <code>10,000</code>)
     </li>
     <li>
-        <strong>Crawl Depth:</strong> How many links the scraper will follow on a page to find more reports. Higher numbers may find more reports but will take longer.<br>
+        <strong>Crawl Depth:</strong> How many links the scraper follows to find reports. Higher numbers may find more reports but take longer.<br>
         <em>Default:</em> <code>25</code> (<em>Max:</em> <code>25</code>, <em>Min:</em> <code>5</code>)
     </li>
     <li>
-        <strong>Summary Prompt:</strong> Instructions for the AI on how to summarize each report. You can change it to get summaries in a style you like.<br>
+        <strong>Summary Prompt:</strong> Instructions for the AI on summarizing each report.<br>
         <em>Optional:</em> Leave as default if unsure.
     </li>
     <li>
-        <strong>Merge Prompt:</strong> Instructions for combining multiple summaries into one final report. You can customize the style or format.<br>
+        <strong>Merge Prompt:</strong> Instructions for combining multiple summaries into one final report.<br>
         <em>Optional:</em> Leave as default if unsure.
     </li>
 </ul>
 <div class="d-flex justify-content-center pb-3">
     <img src="/images/docs/fish_tales/fish_tales_a-form.png" alt="FishTales Advanced Input Form" class="img-fluid w-75">
 </div>
-
-<p class=>Once you’ve updated the inputs you want, click <strong>Search & Summarize</strong> to start. You’ll see progress updates on the page as FishTales works.</p>
+<p>Once you’ve updated the inputs you want, click <strong>Search & Summarize</strong> to start. Progress updates will appear as FishTales works.</p>
 
 <!--Output Files-->
 <h5 id="output-files" class="mt-3 pt-3">Output Files</h5>
 <p class="mb-0">When FishTales finishes, it will create a file for you to view the results:</p>
 <ul>
     <li>
-        <strong>report_summary.txt:</strong> This file contains all the summarized report information. You can open it to read a simple summary of everything FishTales found.
+        <strong>report_summary.txt:</strong> Contains all summarized report information. Open this to read a simple summary of everything FishTales found.
     </li>
 </ul>
-
 
 <hr>
 
@@ -112,19 +117,19 @@
             <img src="/images/docs/fish_tales/gemini/gai_login.png" alt="Google AI Studio Login" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li class="mb-4">
-            If this is your first time, you might see a welcome message. Otherwise, you’ll see your dashboard. Click <code>Get API key</code>.
+            If first-time user, see welcome message; otherwise, click <code>Get API key</code>.
             <img src="/images/docs/fish_tales/gemini/gai_home.png" alt="Google AI Studio Dashboard" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li class="mb-4">
-            Accept the terms and conditions (first-time users only). Check <code>I consent…</code>, then click <code>I accept</code>.
+            Accept terms and conditions (first-time users only), then click <code>I accept</code>.
             <img src="/images/docs/fish_tales/gemini/gai_terms.png" alt="Google AI Studio Terms & Conditions" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li class="mb-4">
-            Click <code>+ Create API key</code> to make a new key, or select an existing one if you already have it.
+            Click <code>+ Create API key</code> or select an existing key.
             <img src="/images/docs/fish_tales/gemini/gai_api.png" alt="Google AI Studio API Keys" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li>
-            Copy your API key and keep it safe. You’ll need it to use FishTales.
+            Copy your API key and keep it safe.
             <img src="/images/docs/fish_tales/gemini/gai_key.png" alt="Google AI Studio API Key" class="img-fluid w-75 mx-auto d-block">
         </li>
     </ol>
@@ -134,10 +139,7 @@
 
 <!--Updating your starter file-->
 <h3 id="update-your-starter-file">Update Your Starter File</h3>
-<p>
-    Follow these steps to make sure your <strong>FishTales</strong> starter file includes all the right report sites.
-    Keeping this file accurate ensures FishTales can scrape and summarize reports correctly.
-</p>
+<p>Keeping the starter file accurate ensures FishTales can scrape and summarize reports correctly.</p>
 <div class="text-center">
     <ol class="text-start d-inline-block">
         <li class="mb-4">
@@ -145,92 +147,64 @@
             <img src="/images/docs/fish_tales/starter_file/new_site.png" alt="New Report Sites" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li class="mb-4">
-            For each new site, open it in your browser. Look for where reports are posted — this might be a
-            <em>Reports</em>, <em>Blog</em>, or <em>Fishing Updates</em> section.
+            Open each new site in your browser. Look for sections like <em>Reports</em>, <em>Blog</em>, or <em>Fishing Updates</em>.
             <img src="/images/docs/fish_tales/starter_file/arricks_home.png" alt="Arricks Home Page" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li class="mb-4">
-            Find the most recent report. Pay attention to the following while searching:
-            <ul>
-                <li>The date of the reports (to confirm the site still actively posts reports).</li>
-                <li><strong>Keywords</strong> in the URL, such as <code>/fishing-reports/</code> or <code>/river-reports/</code>.</li>
-                <li><strong>Junk words</strong> in the URL, such as <code>/page/</code> or <code>/category/</code>.</li>
-                <li><strong>Click-phrases</strong> that signal new content, such as <code>Continue Reading</code> or <code>Read More</code>.</li>
-            </ul>
-            <em>Tip: If the latest report is older than 1–2 years, you may want to skip adding that site
-            since it’s not actively updated.</em>
+            Pay attention to date, keywords, junk words, and click-phrases to determine if a site is actively updated.
             <img src="/images/docs/fish_tales/starter_file/arricks_report_list.png" alt="Arricks Report List" class="img-fluid w-75 mx-auto d-block">
         </li>
         <li class="mb-4">
-            Once you've located the report, inspect the page to figure out what part of the website contains the report text:
+            Use the browser inspector to find the HTML element containing the report:
             <ul class="mb-0">
-                <li>Right-click on the report and choose <strong>Inspect</strong> (or <strong>Inspect Element</strong>).</li>
-                <li>Keyboard shortcuts:
+                <li>Right-click > Inspect (or Inspect Element)</li>
+                <li>Keyboard shortcuts for opening inspector:
                     <ul>
-                        <li><strong>Windows/Linux:</strong> <code>Ctrl + Shift + I</code> or <code>F12</code></li>
-                        <li><strong>Mac:</strong> <code>Cmd + Option + I</code> or <code>F12</code></li>
+                        <li>Windows/Linux: <code>Ctrl + Shift + I</code> or <code>F12</code></li>
+                        <li>Mac: <code>Cmd + Option + I</code> or <code>F12</code></li>
                     </ul>
                 </li>
-                <li>In the inspector:
-                    <ul>
-                        <li>Hover over different HTML elements to see which part of the page they highlight.</li>
-                        <li>Or use the <strong>element picker</strong> (the cursor icon in the inspector toolbar) to click directly on the report text in the page.</li>
-                    </ul>
-                </li>
-                <li>Look for the container around the report text — for example:
-                    <ul>
-                        <li><code>&lt;article&gt;</code></li>
-                        <li><code>&lt;div class="post"&gt;</code></li>
-                        <li>Or another clear element that only holds the report content.</li>
-                    </ul>
-                </li>
+                <li>Hover over elements or use the <strong>element picker</strong> to locate the report text.</li>
+                <li>Look for a container element, e.g., <code>&lt;article&gt;</code> or <code>&lt;div class="post"&gt;</code>.</li>
             </ul>
             <img src="/images/docs/fish_tales/starter_file/arricks_report.png" alt="Arricks Report" class="img-fluid w-75 mx-auto d-block">
         </li>
-
         <li class="mb-4">
-            Fill out the starter file with what you’ve found:
-            <ul>
-                <li>Put <strong>keywords</strong>, <strong>junk-words</strong>, and <strong>click-phrases</strong> into their columns.</li>
-                <li>Enter the <strong>selector</strong> you found (so FishTales knows where the report text lives).</li>
-                <li>Optionally, add the date of the last report you saw in the <strong>Last Updated</strong> column (for your own tracking).</li>
-            </ul>
+            Add keywords, junk-words, click-phrases, selector, and optionally last report date.
             <img src="/images/docs/fish_tales/starter_file/updated_starter_file.png" alt="Updated Starter File" class="img-fluid w-75 mx-auto d-block">
         </li>
     </ol>
 </div>
 
-
+<!-- Advanced Selectors -->
 <h5 id="advanced-selectors">Advanced Selectors</h5>
 <p>
-    Most of the time, you can use a simple selector like <code>&lt;article&gt;</code> or <code>div.post</code> to capture the report content. These are easier to maintain and less likely to break if the website changes.
+    Most of the time, you can use a simple selector like <code>&lt;article&gt;</code> or <code>div.post</code> to capture the report content.
+    These are easier to maintain and less likely to break if the website changes.
 </p>
-<p>
-    Sometimes, a site doesn’t use clear containers, and you’ll need a more <strong>advanced selector</strong> to target the report. For example:
-</p>
+<p>Sometimes a site doesn’t use clear containers, and you’ll need a more <strong>advanced selector</strong> to target the report. For example:</p>
 <pre><code>div.entry-content:has(p:text-matches("Fishing Report", "i"))</code></pre>
 <p>
-    This means: “look for a <code>div</code> with the class <code>entry-content</code> that contains a paragraph mentioning ‘Fishing Report’ (ignoring upper/lower case).”
+    This means: “look for a <code>div</code> with the class <code>entry-content</code> that contains a paragraph mentioning ‘Fishing Report’
+    (ignoring upper/lower case).”
 </p>
 <p>
-    Advanced selectors can feel complicated, but don’t worry — you don’t need to start from scratch. Check the <a href="/example_files/fishTales_starter_file.xlsx" download>example starter file</a> included with FishTales for working examples you can build on.
+    Advanced selectors can feel complicated, but don’t worry — you don’t need to start from scratch. Check the
+    <a href="/example_files/fishTales_starter_file.xlsx" download>example starter file</a> included with FishTales for working
+    examples you can build on.
 </p>
-<p>
-    Tips for advanced selectors:
-</p>
+<p>Tips for advanced selectors:</p>
 <ul>
     <li>Try simple selectors first. Only use advanced ones if you can’t capture the report otherwise.</li>
     <li>Test your selector in the browser console to make sure it highlights only the report text.</li>
     <li>If you get stuck, tools like <strong>GPT</strong> or <strong>Gemini</strong> can help you write or debug a selector.</li>
     <li>Keep notes in your starter file so you remember why you used a particular selector.</li>
 </ul>
-<p>
-    Used carefully, advanced selectors let FishTales capture reports even from tricky websites.
-</p>
+<p>Used carefully, advanced selectors let FishTales capture reports even from tricky websites.</p>
 
 <hr>
 
-<!--disclaimers-->
+<!-- disclaimers -->
 <h3 id="disclaimers">⚠ Disclaimers</h3>
 <ul>
     <li>
@@ -243,7 +217,7 @@
 
 <hr>
 
-<!--additional notes-->
+<!-- additional notes -->
 <h3 id="additional-notes">✏ Additional Notes</h3>
 <ul>
     <li>

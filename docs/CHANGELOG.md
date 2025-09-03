@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+### [v3.3](https://github.com/zanemyers/RescueRiver/compare/v3.3..HEAD) — _3 Sep 2025_
+
+#### **Added**
+
+#### **Changed**
+
+#### **Removed**
+
 ### [v3.3](https://github.com/zanemyers/RescueRiver/compare/v3.2..v3.3) — _25 Aug 2025_
 
 #### **Added**
