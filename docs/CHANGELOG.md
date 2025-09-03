@@ -2,7 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v3.4](https://github.com/zanemyers/RescueRiver/compare/v3.3..v3.4) — 3 Sep 2025
+### [v3.5](https://github.com/zanemyers/RescueRiver/compare/v3.4..HEAD) — 3 Sep 2025
+
+#### **Changed**
+- Renamed the **CLI & Environment** section to **Environment** in [`docs/setup.md`](./setup.md).
+- Simplified `.env` generation logic in `setup.js`.
+
+#### **Removed**
+- Deleted unused dependencies from [`package.json`](../package.json) and `package-lock.json`.
+- Removed outdated packages from [`docs/setup.md`](./setup.md).
+
+### [v3.4](https://github.com/zanemyers/RescueRiver/compare/v3.3..v3.4) — _3 Sep 2025_
 
 #### **Added**
 - Added new images for documentation for FishTales, ShopReel, and SiteScout.
