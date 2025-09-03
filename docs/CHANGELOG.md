@@ -2,13 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v3.3](https://github.com/zanemyers/RescueRiver/compare/v3.3..HEAD) — _3 Sep 2025_
+### [v3.4](https://github.com/zanemyers/RescueRiver/compare/v3.3..HEAD) — 3 Sep 2025
 
 #### **Added**
+- Added new images for documentation for FishTales, ShopReel, and SiteScout.
+- Added `.docs` layout for sidebar and content area to [SCSS](../static/scss/style.scss).
+- Added documentation pages in [`views/apps/docs/`](../views/apps/docs):
+    - [`docs.ejs`](../views/apps/docs.ejs) — tabbed layout for ShopReel, FishTales, and SiteScout documentation.
+    - [`fish_tales_doc.ejs`](../views/apps/docs/fish_tales_doc.ejs) — FishTales Documentation.
+    - [`shop_reel_doc.ejs`](../views/apps/docs/shop_reel_doc.ejs) — ShopReel Documentation.
+    - [`site_scout_doc.ejs`](../views/apps/docs/site_scout_doc.ejs) — SiteScout Documentation.
 
 #### **Changed**
-
-#### **Removed**
+- Renamed `report_starter_file_ex.xlsx` → [`fishTales_starter_file.xlsx`](../static/example_files/fishTales_starter_file.xlsx).
+- Renamed `routes/_partials.js` → [`routes/_forms.js`](../routes/_forms.js).
+- Moved [`idea.jpg`](../static/images/about/idea.jpg), [`important.jpg`](../static/images/about/important.jpg), [`serve.jpg`](../static/images/about/serve.jpg) to [`about/`](../static/images/about).
+- Updated CSS/SCSS to improve readability.
+- Simplified text in instructions panel and updated links to point to documentation.
+- **Moved files:**
+    - Form partials to [`views/apps/forms/`](../views/apps/forms):
+        - [`fish_tales_form.ejs`](../views/apps/forms/fish_tales_form.ejs)
+        - [`shop_reel_form.ejs`](../views/apps/forms/shop_reel_form.ejs)
+        - [`site_scout_form.ejs`](../views/apps/forms/site_scout_form.ejs)
+    - Main tool views to [`views/apps/`](../views/apps):
+        - [`fish_tales.ejs`](../views/apps/fish_tales.ejs)
+        - [`shop_reel.ejs`](../views/apps/shop_reel.ejs)
+        - [`site_scout.ejs`](../views/apps/site_scout.ejs)
+- Updated Express routes to reflect new file locations.
 
 ### [v3.3](https://github.com/zanemyers/RescueRiver/compare/v3.2..v3.3) — _25 Aug 2025_
 
@@ -116,7 +136,7 @@ All notable changes to this project will be documented in this file.
 - New dev dependencies: `sass`, `stylelint`, `stylelint-config-standard`, `stylelint-config-standard-scss`, `stylelint-scss`
 - New example and image assets in `static/` and `docs/images/`
 - `server.js` for Express web server with internal WebSocket support
-- Expanded routes (`_apps.js`, `_index.js`, `_partials.js`, `_test.js`, `error.js`)
+- Expanded routes (`_apps.js`, `_index.js`, `_forms.js`, `_test.js`, `error.js`)
 - WebSocket handlers (`_baseWebSocket.js`, `_cancellationToken.js`, `_reportSocket.js`, `_shopSocket.js`)
 - Frontend scripts (`baseFormApp.js`, `fileInput.js`, `map.js`, `navbar.js`, `reportFormApp.js`, `shopFormApp.js`, `tooltip.js`)
 - SCSS styles (`_theme.scss`, `style.scss`) and compiled CSS
