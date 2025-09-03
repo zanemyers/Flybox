@@ -9,8 +9,10 @@ function initSingleFileInput(container) {
   const fileNameDisplay = container.querySelector(".selected-file-name");
   const clearButton = container.querySelector(".clear-file-button");
 
+  // If a element is missing return early
   if (!fileInput || !fileWrapper || !fileNameWrapper || !fileNameDisplay || !clearButton) return;
 
+  // Update the UI to show the selected file name,
   const updateDisplay = () => {
     const file = fileInput.files[0];
     if (file) {
@@ -24,12 +26,14 @@ function initSingleFileInput(container) {
     }
   };
 
+  // Allow clicking the wrapper to open the file dialog (only if input is enabled)
   fileWrapper.addEventListener("click", () => {
     if (!fileInput.disabled) fileInput.click();
   });
 
   fileInput.addEventListener("change", updateDisplay);
 
+  // Remove the file
   clearButton.addEventListener("click", (e) => {
     e.stopPropagation();
     fileInput.value = "";
@@ -59,6 +63,7 @@ function initSingleFileInput(container) {
     });
   });
 
+  // Handle files dropped onto the file wrapper
   fileWrapper.addEventListener("drop", (e) => {
     if (fileInput.disabled) return;
     const file = e.dataTransfer.files[0];

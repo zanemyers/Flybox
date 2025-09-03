@@ -7,7 +7,6 @@
 // =====================================
 // Base Styles
 // =====================================
-
 html,
 body {
   height: 100%;
@@ -47,6 +46,11 @@ a {
   &:hover {
     color: theme.$secondary; // change color on hover
   }
+}
+
+.nav-link.active {
+  color: theme.$primary !important; // highlight active tab
+  font-weight: 600;
 }
 
 // =====================================
@@ -108,7 +112,7 @@ button {
 }
 
 // =====================================
-// Form Layout
+// Form Styling
 // =====================================
 .form-body {
   flex-grow: 1; // allow form body to expand
@@ -124,16 +128,14 @@ button {
   flex-direction: column;
 }
 
-// =====================================
-// Active Tab Link
-// =====================================
-.nav-link.active {
-  color: theme.$primary !important; // highlight active tab
-  font-weight: 600;
+.form-input {
+  margin-bottom: 1rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 // =====================================
-// File Input Wrapper (Multiple Instances)
+// File Input Styling
 // =====================================
 .file-input-component {
   .file-input-wrapper {
@@ -188,14 +190,8 @@ button {
 }
 
 // =====================================
-// Form Input Spacing
+// Documentation Styling
 // =====================================
-.form-input {
-  margin-bottom: 1rem;
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-}
-
 .docs {
   display: flex;
   height: 100%;

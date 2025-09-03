@@ -1,7 +1,7 @@
 import express from "express";
 import indexRoutes from "./_index.js";
 import appRoutes from "./_apps.js";
-import partialRoutes from "./_partials.js";
+import partialRoutes from "./_forms.js";
 import testRoutes from "./_test.js";
 
 const router = express.Router();
