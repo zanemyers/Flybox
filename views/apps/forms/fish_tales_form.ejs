@@ -72,19 +72,16 @@
         <details class="form-input">
             <summary class="form-label mb-2">Advanced Settings</summary>
 
-            <!-- Gemini model selection -->
-            <div class="form-input">
-                <label for="model" class="form-label">Gemini Model</label>
+            <!-- Checkbox for including the sites scraped list-->
+            <div class="form-input form-check">
                 <input
-                        type="text"
-                        class="form-control"
-                        id="model"
-                        name="model"
-                        value="gemini-2.5-flash"
-                        placeholder="e.g. gemini-1.5-pro or gemini-2.5-flash"
-                        title="Specify the Gemini model to use for summarization"
-                        required
+                        type="checkbox"
+                        class="form-check-input"
+                        id="includeSiteList"
+                        name="includeSiteList"
+                        title="Output a text file listing all scraped sites"
                 />
+                <label class="form-check-label" for="includeSiteList">Include Site List</label>
             </div>
 
             <!-- Token limit per request -->
@@ -120,6 +117,21 @@
                         placeholder="e.g. 25"
                         aria-label="Crawl Depth"
                         title="Set how deep the scraper follows links (min: 5, max: 25)"
+                        required
+                />
+            </div>
+
+            <!-- Gemini model selection -->
+            <div class="form-input">
+                <label for="model" class="form-label">Gemini Model</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="model"
+                        name="model"
+                        value="gemini-2.5-flash"
+                        placeholder="e.g. gemini-1.5-pro or gemini-2.5-flash"
+                        title="Specify the Gemini model to use for summarization"
                         required
                 />
             </div>
