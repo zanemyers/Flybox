@@ -18,7 +18,11 @@ const __dirname = path.dirname(__filename);
       "PORT=3000\n\n" +
       "# Scraper configuration\n" +
       "RUN_HEADLESS=true\n" +
-      "CONCURRENCY=5";
+      "CONCURRENCY=5\n\n" +
+      "# API keys for development\n" +
+      "# - You can put your actual keys here and use 'test' in the form during development to avoid copying/pasting repeatedly.\n" +
+      "SERP_API_KEY=''\n" +
+      "GEMINI_API_KEY=''";
 
     // Write the .env file
     const filePath = path.resolve(__dirname, ".env");
