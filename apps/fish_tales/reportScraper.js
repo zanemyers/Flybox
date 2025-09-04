@@ -3,7 +3,7 @@ import { PromisePool } from "@supercharge/promise-pool";
 import { GoogleGenAI } from "@google/genai";
 import TinyQueue from "tinyqueue";
 
-import { REPORT_DIVIDER } from "../base/constants/index.js";
+import { DIVIDER } from "../base/constants/index.js";
 import {
   ExcelFileHandler,
   normalizeUrl,
@@ -38,6 +38,7 @@ const CONCURRENCY = Math.max(1, parseInt(process.env.CONCURRENCY, 10) || 5);
  * @param {string} searchParams.summaryPrompt - Prompt text for summary generation.
  * @param {string} searchParams.mergePrompt - Prompt text for merging summaries.
  * @param {number} searchParams.tokenLimit - Token limit per summary chunk.
+ * @param {boolean} searchParams.includeSiteList - Whether to return a list of sites scraped
  * @param {Function} progressUpdate - Callback to report progress.
  * @param {Function} returnFile - Callback to return the generated summary file buffer.
  * @param {Object} cancelToken - Token with `throwIfCancelled` method to cancel the operation.
@@ -67,7 +68,9 @@ export async function reportScraper({
     const { reports, failedDomains } = await scrapeReports(
       siteList,
       searchParams.crawlDepth,
+      searchParams.includeSiteList,
       progressUpdate,
+      returnFile,
       cancelToken
     );
     cancelToken.throwIfCancelled();
@@ -83,7 +86,7 @@ export async function reportScraper({
       );
       cancelToken.throwIfCancelled();
 
-      const compiledReports = filteredReports.join(REPORT_DIVIDER);
+      const compiledReports = filteredReports.join(DIVIDER);
       progressUpdate("STATUS:✅ Compiling complete!");
 
       // Use the environment variable if the API key is "test" and we're in development, otherwise use the provided key
@@ -129,16 +132,26 @@ export async function reportScraper({
  *
  * @param {Array<Object>} sites - List of site objects to crawl.
  * @param {number} crawlDepth - Maximum number of pages to visit per site.
+ * @param {boolean} includeSiteList - Whether to return the list of sites scraped
  * @param {Function} progressUpdate - Callback function to report progress status.
+ * @param {Function} returnFile - Callback to return the generated site list file buffer.
  * @param {Object} cancelToken - Cancellation token with throwIfCancelled method.
  *
  * @returns {Promise<{reports: string[], failedDomains: string[]}>} - Object containing
  *   collected reports and a list of domains where scraping failed.
  */
-async function scrapeReports(sites, crawlDepth, progressUpdate, cancelToken) {
+async function scrapeReports(
+  sites,
+  crawlDepth,
+  includeSiteList,
+  progressUpdate,
+  returnFile,
+  cancelToken
+) {
   const browser = new StealthBrowser({ headless: process.env.RUN_HEADLESS !== "false" });
   let completed = 0;
   const failedDomains = [];
+  const siteListWriter = new TXTFileHandler();
   const messageTemplate = (done) => `Scraping sites (${done}/${sites.length}) for reports...`;
 
   try {
@@ -157,6 +170,8 @@ async function scrapeReports(sites, crawlDepth, progressUpdate, cancelToken) {
             page,
             site,
             crawlDepth,
+            includeSiteList,
+            siteListWriter,
             progressUpdate,
             cancelToken
           );
@@ -178,6 +193,11 @@ async function scrapeReports(sites, crawlDepth, progressUpdate, cancelToken) {
     const reports = (results ?? []).flat().filter(Boolean);
     progressUpdate(`STATUS:✅ Found ${reports.length} total reports!`);
 
+    if (includeSiteList) {
+      progressUpdate(`DOWNLOAD:site_list.txt`);
+      returnFile(siteListWriter.getBuffer());
+    }
+
     return { reports, failedDomains };
   } catch (err) {
     if (err.isCancelled) throw err; // Bubble-up
@@ -197,11 +217,21 @@ async function scrapeReports(sites, crawlDepth, progressUpdate, cancelToken) {
  * @param {Object} page - Playwright page instance for navigation.
  * @param {Object} site - Object representing the site, including `url` and optional `selector`.
  * @param {number} crawlDepth - Maximum number of pages to visit.
+ * @param {boolean} includeSiteList - Whether to
+ * @param siteListWriter
  * @param {Function} progressUpdate - Callback function to report progress status.
  * @param {Object} cancelToken - Token to check if the operation has been cancelled.
  * @returns {Promise<{ reports: string[], pageErrors: string[] }>} - Extracted reports and any navigation errors.
  */
-async function findReports(page, site, crawlDepth, progressUpdate, cancelToken) {
+async function findReports(
+  page,
+  site,
+  crawlDepth,
+  includeSiteList,
+  siteListWriter,
+  progressUpdate,
+  cancelToken
+) {
   const visited = new Set(); // URLs already visited
   const toVisit = new TinyQueue([], (a, b) => a.priority - b.priority); // Priority queue for URLs to visit
   const reports = []; // Collected report texts
@@ -249,13 +279,19 @@ async function findReports(page, site, crawlDepth, progressUpdate, cancelToken) 
     }
   }
 
-  // Refine keywords and junk-words
-  if (process.env.DEBUGGING === "true") {
+  // If includeSiteList is enabled, write to a text file listing all visited and pending URLs.
+  if (includeSiteList) {
+    const visitedText = [...visited].map((site) => `\t${site}`).join("\n");
+    const toVisitText = toVisit.data.map((item) => `\t${item.url}`).join("\n");
+
     if (visited.size >= crawlDepth) {
-      progressUpdate(`Reached crawl depth limit for the site.`);
+      await siteListWriter.write("Reached crawl depth limit for this site.", true);
     }
-    progressUpdate(`VISITED:\n${[...visited].join("\n")}`);
-    progressUpdate(`TO VISIT:\n${toVisit.data.map((item) => item.url).join("\n")}`);
+
+    await siteListWriter.write(
+      `VISITED:\n${visitedText}\nTO VISIT:\n${toVisitText}\n${DIVIDER}\n`,
+      true
+    );
   }
 
   return { reports, pageErrors };
@@ -292,7 +328,7 @@ async function generateSummary(
   const ai = new GoogleGenAI({ apiKey: apiKey });
 
   try {
-    const summaryWriter = new TXTFileHandler("media/txt/report_summary.txt");
+    const summaryWriter = new TXTFileHandler();
 
     // Split report into chunks respecting token limits
     const chunks = chunkReportText(report, tokenLimit);

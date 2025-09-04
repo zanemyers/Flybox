@@ -1,7 +1,7 @@
 /**
  * Divider used between individual reports for improved readability.
  */
-const REPORT_DIVIDER = "\n" + "-".repeat(50) + "\n";
+const DIVIDER = "\n" + "-".repeat(50) + "\n";
 
 /**
  * Prompt template for summarizing fishing reports by body of water.
@@ -44,4 +44,4 @@ const MERGE_PROMPT = `
 The following are summaries of fishing reports broken into sections. Please consolidate the information into a single summary using the same format, listing up to the 3 most recent dates separately for each body of water:
 `.trim();
 
-export { REPORT_DIVIDER, SUMMARY_PROMPT, MERGE_PROMPT };
+export { DIVIDER, SUMMARY_PROMPT, MERGE_PROMPT };

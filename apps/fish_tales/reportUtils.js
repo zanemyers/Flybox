@@ -1,6 +1,6 @@
 import { differenceInDays } from "date-fns";
 
-import { REPORT_DIVIDER } from "../base/constants/index.js";
+import { DIVIDER } from "../base/constants/index.js";
 import { extractDate, normalizeUrl } from "../base/index.js";
 
 /**
@@ -157,7 +157,7 @@ function estimateTokenCount(text) {
 /**
  * Splits the full report text into smaller chunks, each staying within the token limit.
  *
- * The input text is divided into sections using the REPORT_DIVIDER string.
+ * The input text is divided into sections using the DIVIDER string.
  * Each chunk accumulates as many full sections as possible without exceeding
  * the specified token limit.
  *
@@ -166,15 +166,15 @@ function estimateTokenCount(text) {
  * @returns {string[]} An array of text chunks, each under the token limit.
  */
 function chunkReportText(text, tokenLimit) {
-  const reports = text.split(REPORT_DIVIDER);
+  const reports = text.split(DIVIDER);
   const chunks = []; // Array to hold resulting text chunks
 
   let currentChunk = ""; // Holds the accumulated text for the current chunk
   let currentTokens = 0; // Estimated token count of currentChunk
 
   for (const report of reports) {
-    // Re-add REPORT_DIVIDER to preserve section separation in chunks
-    const section = report + REPORT_DIVIDER;
+    // Re-add DIVIDER to preserve section separation in chunks
+    const section = report + DIVIDER;
     const tokens = estimateTokenCount(section);
 
     // If adding this section exceeds token limit, push current chunk and start a new one
