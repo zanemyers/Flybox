@@ -53,7 +53,7 @@
         <em>Default:</em> <code>false</code> (includes all rivers)
     </li>
     <li>
-        <strong>River Names</strong> (<em>Optional</em>): List the rivers you want, separated by commas.
+        <strong>River Names</strong> (<em>Optional</em>)<strong>:</strong> List the rivers you want, separated by commas.
     </li>
     <li>
         <strong>Starter File:</strong> Upload your current dataset, or use the
@@ -71,9 +71,9 @@
 </p>
 <ul>
     <li>
-        <strong>Model:</strong> Pick which Gemini AI model you want to use. Different models may give slightly different results. See available models at
-        <a href="https://ai.google.dev/models/gemini" target="_blank" rel="noopener noreferrer">ai.google.dev</a>.<br>
-        <em>Default:</em> <code>gemini-2.5-flash</code>
+        <strong>Include Site List:</strong> When enabled, a <code class="text-black">site_list.txt</code> file will be generated containing all scraped sites.
+        This can help refine or update your starter file.<br>
+        <em>Default:</em> <code>false</code>
     </li>
     <li>
         <strong>Token Limit:</strong> Maximum text the model can read at once. Too high can cause errors; too low may miss details.<br>
@@ -82,6 +82,11 @@
     <li>
         <strong>Crawl Depth:</strong> How many links the scraper follows to find reports. Higher numbers may find more reports but take longer.<br>
         <em>Default:</em> <code>25</code> (<em>Max:</em> <code>25</code>, <em>Min:</em> <code>5</code>)
+    </li>
+    <li>
+        <strong>Model:</strong> Pick which Gemini AI model you want to use. Different models may give slightly different results. See available models at
+        <a href="https://ai.google.dev/models/gemini" target="_blank" rel="noopener noreferrer">ai.google.dev</a>.<br>
+        <em>Default:</em> <code>gemini-2.5-flash</code>
     </li>
     <li>
         <strong>Summary Prompt:</strong> Instructions for the AI on summarizing each report.<br>
@@ -102,7 +107,12 @@
 <p class="mb-0">When FishTales finishes, it will create a file for you to view the results:</p>
 <ul>
     <li>
-        <strong>report_summary.txt:</strong> Contains all summarized report information. Open this to read a simple summary of everything FishTales found.
+        <strong>report_summary.txt:</strong> Contains all summarized report information.
+        Open this to read a simple summary of everything FishTales found.
+    </li>
+    <li>
+        <strong>site_list.txt</strong> (<em>optional</em>): A text file containing all scraped websites.
+        Useful for identifying keywords and filtering out junk terms in the URL to refine your starter file.
     </li>
 </ul>
 
