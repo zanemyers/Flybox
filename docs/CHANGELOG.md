@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [UNRELEASED](https://github.com/zanemyers/RescueRiver/compare/v3.6..HEAD) — _4 Sep 2025_
+### [v3.7](https://github.com/zanemyers/RescueRiver/compare/v3.6..v3.7) — _4 Sep 2025_
 
 #### **Added**
 - Option in FishTales to generate a `site_list.txt` for refining starter files.
