@@ -11,6 +11,14 @@ setup:
         node setup.js;
     fi
 
+@clean_docker:
+    docker compose down --volumes --remove-orphans # Remove orphaned containers and volumes
+    docker ps -q | xargs -r docker kill # Stop all running containers
+    docker ps -a -q | xargs -r docker rm # Remove all containers
+    docker images -f "dangling=true" -q | xargs -r docker rmi # Remove dangling images
+    docker compose build # Rebuild the container
+
+
 @update_dependencies:
     npm install -g npm-check-updates
     ncu -u
@@ -27,10 +35,10 @@ setup:
 @build_styles:
     sass static/scss/style.scss static/public/style.css
 
-@start:
-    npx sass --watch static/scss/style.scss static/public/style.css & node --inspect=0.0.0.0:9229 server.js
-
-@update_dependencies:
-    ncu -u
-    rm -rf node_modules package-lock.json
-    npm install
+start *FLAGS:
+    #!/usr/bin/env sh
+    if [[ "{{FLAGS}}" == *"-l"* ]]; then  # check for -l (local) flag
+        npx sass --watch static/scss/style.scss static/public/style.css & node --inspect=0.0.0.0:9229 server.js
+    else
+        docker compose up
+    fi
