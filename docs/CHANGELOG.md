@@ -2,47 +2,71 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v3.5](https://github.com/zanemyers/RescueRiver/compare/v3.5..v3.6) — _3 Sep 2025_
+### [UNRELEASED](https://github.com/zanemyers/RescueRiver/compare/v3.6..HEAD) — _4 Sep 2025_
+
+#### **Added**
+- Option in FishTales to generate a `site_list.txt` for refining starter files.
+- `.env` setup now includes placeholders for SERP and Gemini API keys.
 
 #### **Changed**
+- [Justfile](../justfile) updated to install dependencies locally and support flexible `start` commands.
+- Renamed `REPORT_DIVIDER` constant to `DIVIDER` and updated FishTales logic accordingly.
+- Upgraded Node base image from `23.11-slim` → `24.7.0-slim` in the [Dockerfile](../Dockerfile).
+- Reordered FishTales form advanced input fields.
+- Updated documentation for FishTales starter file workflow.
+- Updated dependencies: `@google/genai`, `bootstrap`, `chrono-node`, `playwright`, `serpapi`, `eslint`, `stylelint`, and others.
+- Refined [IDE](./ide.md) and [setup](./setup.md) documentation for both Docker and local workflows.
+
+#### **Removed**
+- Redundant or outdated Docker/Local instructions in IDE documentation.
+
+
+### [v3.6](https://github.com/zanemyers/RescueRiver/compare/v3.5..v3.6) — _3 Sep 2025_
+
+#### **Changed**
+
 - Fixed docs tab layout to reference renamed partials (`*_doc.ejs` instead of `*_documentation.ejs`) for ShopReel, FishTales, and SiteScout.
 
 ### [v3.5](https://github.com/zanemyers/RescueRiver/compare/v3.4..v3.5) — _3 Sep 2025_
 
 #### **Changed**
+
 - Renamed the **CLI & Environment** section to **Environment** in [`docs/setup.md`](./setup.md).
 - Simplified `.env` generation logic in `setup.js`.
 
 #### **Removed**
+
 - Deleted unused dependencies from [`package.json`](../package.json) and `package-lock.json`.
 - Removed outdated packages from [`docs/setup.md`](./setup.md).
 
 ### [v3.4](https://github.com/zanemyers/RescueRiver/compare/v3.3..v3.4) — _3 Sep 2025_
 
 #### **Added**
+
 - Added new images for documentation for FishTales, ShopReel, and SiteScout.
 - Added `.docs` layout for sidebar and content area to [SCSS](../static/scss/style.scss).
 - Added documentation pages in [`views/apps/docs/`](../views/apps/docs):
-    - [`docs.ejs`](../views/apps/docs.ejs) — tabbed layout for ShopReel, FishTales, and SiteScout documentation.
-    - [`fish_tales_doc.ejs`](../views/apps/docs/fish_tales_doc.ejs) — FishTales Documentation.
-    - [`shop_reel_doc.ejs`](../views/apps/docs/shop_reel_doc.ejs) — ShopReel Documentation.
-    - [`site_scout_doc.ejs`](../views/apps/docs/site_scout_doc.ejs) — SiteScout Documentation.
+  - [`docs.ejs`](../views/apps/docs.ejs) — tabbed layout for ShopReel, FishTales, and SiteScout documentation.
+  - [`fish_tales_doc.ejs`](../views/apps/docs/fish_tales_doc.ejs) — FishTales Documentation.
+  - [`shop_reel_doc.ejs`](../views/apps/docs/shop_reel_doc.ejs) — ShopReel Documentation.
+  - [`site_scout_doc.ejs`](../views/apps/docs/site_scout_doc.ejs) — SiteScout Documentation.
 
 #### **Changed**
+
 - Renamed `report_starter_file_ex.xlsx` → [`fishTales_starter_file.xlsx`](../static/example_files/fishTales_starter_file.xlsx).
 - Renamed `routes/_partials.js` → [`routes/_forms.js`](../routes/_forms.js).
 - Moved [`idea.jpg`](../static/images/about/idea.jpg), [`important.jpg`](../static/images/about/important.jpg), [`serve.jpg`](../static/images/about/serve.jpg) to [`about/`](../static/images/about).
 - Updated CSS/SCSS to improve readability.
 - Simplified text in instructions panel and updated links to point to documentation.
 - **Moved files:**
-    - Form partials to [`views/apps/forms/`](../views/apps/forms):
-        - [`fish_tales_form.ejs`](../views/apps/forms/fish_tales_form.ejs)
-        - [`shop_reel_form.ejs`](../views/apps/forms/shop_reel_form.ejs)
-        - [`site_scout_form.ejs`](../views/apps/forms/site_scout_form.ejs)
-    - Main tool views to [`views/apps/`](../views/apps):
-        - [`fish_tales.ejs`](../views/apps/fish_tales.ejs)
-        - [`shop_reel.ejs`](../views/apps/shop_reel.ejs)
-        - [`site_scout.ejs`](../views/apps/site_scout.ejs)
+  - Form partials to [`views/apps/forms/`](../views/apps/forms):
+    - [`fish_tales_form.ejs`](../views/apps/forms/fish_tales_form.ejs)
+    - [`shop_reel_form.ejs`](../views/apps/forms/shop_reel_form.ejs)
+    - [`site_scout_form.ejs`](../views/apps/forms/site_scout_form.ejs)
+  - Main tool views to [`views/apps/`](../views/apps):
+    - [`fish_tales.ejs`](../views/apps/fish_tales.ejs)
+    - [`shop_reel.ejs`](../views/apps/shop_reel.ejs)
+    - [`site_scout.ejs`](../views/apps/site_scout.ejs)
 - Updated Express routes to reflect new file locations.
 
 ### [v3.3](https://github.com/zanemyers/RescueRiver/compare/v3.2..v3.3) — _25 Aug 2025_
