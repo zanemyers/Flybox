@@ -217,8 +217,8 @@ async function scrapeReports(
  * @param {Object} page - Playwright page instance for navigation.
  * @param {Object} site - Object representing the site, including `url` and optional `selector`.
  * @param {number} crawlDepth - Maximum number of pages to visit.
- * @param {boolean} includeSiteList - Whether to
- * @param siteListWriter
+ * @param {boolean} includeSiteList - Whether to generate a list of visited sites.
+ * @param {TXTFileHandler} siteListWriter - File handler used to write the site list (if enabled).
  * @param {Function} progressUpdate - Callback function to report progress status.
  * @param {Object} cancelToken - Token to check if the operation has been cancelled.
  * @returns {Promise<{ reports: string[], pageErrors: string[] }>} - Extracted reports and any navigation errors.
