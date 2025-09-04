@@ -26,8 +26,9 @@ class FishTalesFormApp extends BaseFormApp {
     this.elements.filterRiversEl = document.getElementById("filterRivers");
     this.elements.riverListEl = document.getElementById("riverList");
     this.elements.fileInputEl = document.querySelector(".file-input");
-    this.elements.modelEl = document.getElementById("model");
+    this.elements.includeSiteListEl = document.getElementById("includeSiteList");
     this.elements.crawlDepthEl = document.getElementById("crawlDepth");
+    this.elements.modelEl = document.getElementById("model");
     this.elements.tokenLimitEl = document.getElementById("tokenLimit");
     this.elements.summaryPromptEl = document.getElementById("summaryPrompt");
     this.elements.mergePromptEl = document.getElementById("mergePrompt");
@@ -43,8 +44,9 @@ class FishTalesFormApp extends BaseFormApp {
     const filterByRivers = this.elements.filterRiversEl.checked;
     const riverList = this.elements.riverListEl.value.trim();
     const inputFile = this.elements.fileInputEl.files[0] || null;
-    const model = this.elements.modelEl.value.trim();
+    const includeSiteList = this.elements.includeSiteListEl.checked; // Optional
     const crawlDepth = parseInt(this.elements.crawlDepthEl.value, 10);
+    const model = this.elements.modelEl.value.trim();
     const tokenLimit = parseInt(this.elements.tokenLimitEl.value, 10);
     const summaryPrompt = this.elements.summaryPromptEl.value.trim();
     const mergePrompt = this.elements.mergePromptEl.value.trim();
@@ -55,8 +57,8 @@ class FishTalesFormApp extends BaseFormApp {
       !isNaN(maxAge) &&
       (!filterByRivers || riverList !== "") &&
       inputFile &&
-      model &&
       !isNaN(crawlDepth) &&
+      model &&
       !isNaN(tokenLimit) &&
       summaryPrompt &&
       mergePrompt;
@@ -69,8 +71,9 @@ class FishTalesFormApp extends BaseFormApp {
           filterByRivers,
           riverList,
           inputFile,
-          model,
+          includeSiteList,
           crawlDepth,
+          model,
           tokenLimit,
           summaryPrompt,
           mergePrompt,
