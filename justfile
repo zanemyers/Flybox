@@ -11,6 +11,12 @@ setup:
         node setup.js;
     fi
 
+@update_dependencies:
+    npm install -g npm-check-updates
+    ncu -u
+    rm -rf node_modules package-lock.json
+    npm install
+
 @lint:
     eslint . --fix
     stylelint "static/scss/**/*.scss"
@@ -23,3 +29,8 @@ setup:
 
 @start:
     npx sass --watch static/scss/style.scss static/public/style.css & node --inspect=0.0.0.0:9229 server.js
+
+@update_dependencies:
+    ncu -u
+    rm -rf node_modules package-lock.json
+    npm install

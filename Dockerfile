@@ -1,5 +1,5 @@
 # Use a lightweight Node image
-FROM node:23.11-slim
+FROM node:24.7.0-slim
 
 # Set working directory
 WORKDIR /app
