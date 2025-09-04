@@ -1,15 +1,17 @@
 #!/usr/bin/env just --justfile
 
-# Runs the setup script to prepare the .env file.
+# Runs the setup script to prepare the .env file and install pacakges locally.
 setup:
     #!/usr/bin/env sh
-    if [ -f .env ]; then
+    if [ -f .env ]; then # Setup .env
         echo "✅ .env already exists, skipping setup.";
     elif docker compose ps &> /dev/null; then
         docker compose run --rm web-scraper node setup.js;
     else
         node setup.js;
     fi
+
+    npm install # Install node packages locally
 
 @clean_docker:
     docker compose down --volumes --remove-orphans # Remove orphaned containers and volumes
