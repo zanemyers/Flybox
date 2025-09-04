@@ -285,7 +285,7 @@ async function findReports(
     const toVisitText = toVisit.data.map((item) => `\t${item.url}`).join("\n");
 
     if (visited.size >= crawlDepth) {
-      await siteListWriter.write("Reached crawl depth limit for this site.", true);
+      await siteListWriter.write("Reached crawl depth limit for this site.\n", true);
     }
 
     await siteListWriter.write(
