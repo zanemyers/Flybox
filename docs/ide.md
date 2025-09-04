@@ -13,8 +13,8 @@
 
 #### 2. Start the Server
 
-- 🐳 **Docker**: `docker-compose up`
-- 🏠 **Local**: `just start`
+- 🐳 **Docker**: `just start`
+- 🏠 **Local**: `just start -l`
 
 #### 3. Attach the Debugger
 
@@ -35,7 +35,7 @@
 
 - GitHub by JetBrains
 - Just by linux_china
-- Light Sheet by Victoryil
+- Light Sheet by Victoryil (_may not work for newer versions of WebStorm_)
   > WebStorm bundles some plugins like Docker automatically
 
 ## ⚙️ Visual Studio Code Setup
@@ -44,8 +44,8 @@
 
 #### 1. Start the Server
 
-- 🐳 **Docker**: `docker-compose up`
-- 🏠 **Local**: `just start`
+- 🐳 **Docker**: `just start`
+- 🏠 **Local**: `just start -l`
 
 #### 2. Attach the Debugger
 
