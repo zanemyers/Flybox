@@ -6,3 +6,6 @@ media/
 
 # Environment files (already passed via `env_file`)
 .env
+
+# Database file
+/db/dev.db

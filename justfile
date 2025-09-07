@@ -15,6 +15,7 @@ setup:
     fi
 
     npm install # Install node packages locally
+    just migrate -n init # Initialize the database
 
 # Clean and rebuild docker
 @clean_docker:

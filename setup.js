@@ -16,6 +16,8 @@ const __dirname = path.dirname(__filename);
       "# Local Environment Config\n" +
       "NODE_ENV=development\n" +
       "PORT=3000\n\n" +
+      "# Database Config\n" +
+      "DATABASE_URL='file:./dev.db'\n\n" +
       "# Scraper configuration\n" +
       "RUN_HEADLESS=true\n" +
       "CONCURRENCY=5\n\n" +
