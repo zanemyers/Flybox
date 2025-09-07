@@ -1,0 +1,16 @@
+enum JobType {
+  SHOP_REEL
+  FISH_TALES
+  SITE_SCOUT
+}
+
+model Job {
+  id        String   @id @default(uuid())
+  type      JobType
+  status    String
+  message   String?
+  createdAt DateTime @default(now())
+
+  fileA     Bytes? // Always the final file produced
+  fileB     Bytes? // Any secondary file
+}
