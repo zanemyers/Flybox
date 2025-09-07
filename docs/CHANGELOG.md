@@ -129,7 +129,7 @@ All notable changes to this project will be documented in this file.
   - `views/partials/report_form.ejs` → `views/partials/fish_tales_form.ejs`
   - `views/partials/shop_form.ejs` → `views/partials/shop_reel_form.ejs`
 - Docs refreshed for new names and clearer known issues ([README](../README.md), [Overview](./overview.md), [Setup](./setup.md)).
-- [**Compose**](../compose.yaml):
+- [**Compose**](../docker-compose.yml):
   - service `fly-box` → `flybox`
   - added `PORT` env var
   - switched port mapping to `"${PORT}:3000"`
