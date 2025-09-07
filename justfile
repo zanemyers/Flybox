@@ -72,15 +72,15 @@ reset_db:
 
 # Regenerate the Prisma Client without touching the DB
 # 👉 Use after pulling schema, cloning repo, or changing generator settings
-generate:
+generate_db:
     npx prisma generate --schema={{schema}}
 
 # Launch Prisma Studio (interactive DB viewer/editor)
-studio:
+studio_db:
     npx prisma studio --schema={{schema}}
 
 # Introspect DB → update schema.prisma to match the database, then regenerate client
 # 👉 Use when DB was changed outside Prisma (like `inspectdb` in Django)
-db_pull:
+pull_db:
     npx prisma db pull --schema={{schema}}
     just generate
