@@ -3,12 +3,14 @@ import indexRoutes from "./_index.js";
 import appRoutes from "./_apps.js";
 import partialRoutes from "./_forms.js";
 import testRoutes from "./_test.js";
+import apiRoutes from "./_api.js";
 
 const router = express.Router();
 
 // Mount the main routes
 router.use("/", indexRoutes);
 router.use("/", appRoutes);
+router.use("/api", apiRoutes);
 router.use("/partials", partialRoutes);
 router.use("/", testRoutes);
 

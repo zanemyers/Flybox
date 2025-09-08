@@ -4,10 +4,17 @@ enum JobType {
   SITE_SCOUT
 }
 
+enum JobStatus {
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
 model Job {
   id        String   @id @default(uuid())
   type      JobType
-  status    String
+  status    JobStatus
   message   String?
   createdAt DateTime @default(now())
 
