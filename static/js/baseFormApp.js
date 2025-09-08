@@ -7,13 +7,12 @@ import { initTooltips } from "./tooltip.js";
 export class BaseFormApp {
   /**
    * @param {string} formPartial - Name of the EJS partial to load for the form
-   * @param {string} socketName - Name of the WebSocket endpoint to connect to
+   * @param {string} route - The api route to hit
    */
-  constructor(formPartial, socketName) {
-    this.socket = null; // WebSocket connection instance
+  constructor(formPartial, route) {
     this.elements = {}; // Cached DOM elements used across methods
     this.formPartial = formPartial;
-    this.socketName = socketName;
+    this.route = route;
   }
 
   /**
@@ -67,70 +66,43 @@ export class BaseFormApp {
 
       await this.showProgress();
 
-      if (this.socket && this.socket.readyState === WebSocket.OPEN) this.socket.close();
-      this.socket = new WebSocket(`ws://localhost:3000/ws/${this.socketName}`);
+      // Send the payload to create the job
+      await this.handlePayload(payload);
 
-      let pendingFilename = "download.xlsx";
-      this.socket.binaryType = "arraybuffer";
+      if (!this.jobId) return;
 
-      // Send payload when connection opens
-      this.socket.onopen = () => this.handlePayload(payload);
+      const progressArea = document.getElementById("progressArea");
 
-      // Handle messages (progress updates, cancelled task, or file download)
-      this.socket.onmessage = (event) => {
-        const progressArea = document.getElementById("progressArea");
-        if (!progressArea) return;
+      // Poll for updates every 1-2 seconds
+      const pollInterval = 1500;
+      let jobStatus = "IN_PROGRESS";
 
-        if (typeof event.data === "string") {
-          const message = event.data;
+      while (jobStatus === "IN_PROGRESS") {
+        try {
+          const res = await fetch(`/api/jobs/${this.socketName}/${this.jobId}/updates`);
+          const data = await res.json();
 
-          if (message === "Cancelled") {
-            this.updateProgress(progressArea, "❌ Search Cancelled.");
-            this.socket.close();
-            return;
-          }
+          jobStatus = data.status;
+          progressArea.textContent = data.message || progressArea.textContent;
 
-          if (message.startsWith("DOWNLOAD:")) {
-            // Save filename for upcoming file
-            pendingFilename = message.replace("DOWNLOAD:", "").trim();
-            return;
-          }
-
-          message.startsWith("STATUS:")
-            ? this.updateProgress(progressArea, message.replace("STATUS:", "").trim())
-            : this.appendProgress(progressArea, message.trim());
-        } else {
-          // Binary file (Excel)
-          const blob = new Blob([event.data], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = pendingFilename;
-          a.click();
-          URL.revokeObjectURL(url);
+          // If files are ready, automatically download
+          if (data.fileA) this.downloadFile(data.fileA, "fileA.xlsx");
+          if (data.fileB) this.downloadFile(data.fileB, "fileB.xlsx");
+        } catch (err) {
+          console.error("Polling error:", err);
         }
-      };
 
-      // Reset UI on WebSocket close
-      this.socket.onclose = () => {
-        this.socket = null;
-        const progressButton = document.getElementById("progressButton");
-        if (!progressButton) return;
+        if (jobStatus === "IN_PROGRESS") await new Promise((r) => setTimeout(r, pollInterval));
+      }
 
-        progressButton.textContent = "Close";
-        progressButton.classList.remove("btn-danger");
-        progressButton.classList.add("btn-secondary");
-        progressButton.disabled = false;
+      // Once complete, update button
+      const progressButton = document.getElementById("progressButton");
+      progressButton.textContent = "Close";
+      progressButton.classList.remove("btn-danger");
+      progressButton.classList.add("btn-secondary");
+      progressButton.disabled = false;
 
-        progressButton.onclick = () => this.showForm();
-      };
-
-      this.socket.onerror = () => {
-        alert("❌ WebSocket error.");
-        this.socket.close();
-      };
+      progressButton.onclick = () => this.showForm();
     });
   }
 
@@ -183,13 +155,19 @@ export class BaseFormApp {
    *
    * @param {Object|File} payload
    */
-  handlePayload(payload) {
-    if (payload instanceof File) {
-      const reader = new FileReader();
-      reader.onload = () => this.socket.send(reader.result);
-      reader.readAsArrayBuffer(payload);
-    } else {
-      this.socket.send(JSON.stringify(payload));
+  async handlePayload(payload) {
+    debugger;
+    const formData = new FormData();
+
+    for (const [key, value] of Object.entries(payload)) {
+      formData.append(key, value);
     }
+
+    const res = await fetch(`/api/${this.route}`, {
+      method: "POST",
+      body: formData,
+    });
+
+    return res.json();
   }
 }

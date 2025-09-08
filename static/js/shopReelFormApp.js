@@ -52,8 +52,9 @@ class ShopReelFormApp extends BaseFormApp {
 
       return isValid ? { apiKey, query, lat, lng, maxResults } : null;
     } else {
-      // File tab active — return selected file or null if none chosen
-      return this.elements.fileInputEl.files[0] || null;
+      // File tab active — return selected file
+      const file = this.elements.fileInputEl[0];
+      return file ? { file } : null;
     }
   }
 
