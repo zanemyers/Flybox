@@ -1,4 +1,5 @@
 import "dotenv/config"; // Load environment variables from .env
+import "./db.js"; // Initialize the db
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
