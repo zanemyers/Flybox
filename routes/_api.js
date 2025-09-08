@@ -1,5 +1,9 @@
 import express from "express";
-import { FishTalesAPI, ShopReelAPI, SiteScoutAPI } from "api/index.js";
+import { FishTalesAPI, ShopReelAPI, SiteScoutAPI } from "../api/index.js";
+import multer from "multer";
+
+const storage = multer.memoryStorage(); // store files in memory
+const upload = multer({ storage });
 
 const router = express.Router();
 
@@ -14,7 +18,8 @@ router.get("/fish-tales/:id/updates", fishTales.getJobUpdates.bind(fishTales));
 router.get("/fish-tales/:id/files", fishTales.getJobFiles.bind(fishTales));
 
 // ShopReel endpoints
-router.post("/shop-reel", shopReel.createJob.bind(shopReel));
+// router.post("/shop-reel", shopReel.createJob.bind(shopReel));
+router.post("/shop-reel", upload.any(), shopReel.createJob.bind(shopReel));
 router.get("/shop-reel/:id/updates", shopReel.getJobUpdates.bind(shopReel));
 router.get("/shop-reel/:id/files", shopReel.getJobFiles.bind(shopReel));
 
