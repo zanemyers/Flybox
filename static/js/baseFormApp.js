@@ -13,6 +13,8 @@ export class BaseFormApp {
     this.elements = {}; // Cached DOM elements used across methods
     this.formPartial = formPartial;
     this.route = route;
+    this.jobId = null;
+    this.files = new Set();
   }
 
   /**
@@ -32,18 +34,36 @@ export class BaseFormApp {
    * Loads the progress partial into the container and sets up
    * the cancel button to allow aborting the current WebSocket task.
    */
-  async showProgress() {
+  async trackProgress(status) {
     const res = await fetch("/partials/progress");
     document.getElementById("formContainer").innerHTML = await res.text();
 
-    document.getElementById("progressButton").addEventListener("click", (event) => {
-      event.currentTarget.disabled = true;
+    const progressArea = document.getElementById("progressArea");
+    const progressButton = document.getElementById("progressButton");
 
-      if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-        this.socket.send(JSON.stringify({ action: "cancel" }));
-        this.appendProgress(document.getElementById("progressArea"), "Cancelling....");
-      }
-    });
+    progressButton.onclick = async (event) => {
+      event.currentTarget.disabled = true;
+      localStorage.removeItem(`${this.route}-jobId`);
+      await fetch(`/api/${this.route}/${this.jobId}/cancel`, { method: "POST" });
+    };
+
+    while (status === "IN_PROGRESS") {
+      const res = await fetch(`/api/${this.route}/${this.jobId}/updates`);
+      const data = await res.json();
+
+      progressArea.textContent = data.message; // Update the progress
+      status = data.status; // Update the status
+      this.addDownloadLink(data.files);
+      if (status === "IN_PROGRESS") await new Promise((r) => setTimeout(r, 1000));
+    }
+
+    // Once complete, update button
+    progressButton.textContent = "Close";
+    progressButton.classList.remove("btn-danger");
+    progressButton.classList.add("btn-secondary");
+    progressButton.disabled = false;
+
+    progressButton.onclick = () => this.showForm();
   }
 
   /**
@@ -64,73 +84,44 @@ export class BaseFormApp {
         return;
       }
 
-      await this.showProgress();
-
       // Send the payload to create the job
-      await this.handlePayload(payload);
+      const data = await this.handlePayload(payload);
+      if (!data) return;
 
-      if (!this.jobId) return;
-
-      const progressArea = document.getElementById("progressArea");
-
-      // Poll for updates every 1-2 seconds
-      const pollInterval = 1500;
-      let jobStatus = "IN_PROGRESS";
-
-      while (jobStatus === "IN_PROGRESS") {
-        try {
-          const res = await fetch(`/api/jobs/${this.socketName}/${this.jobId}/updates`);
-          const data = await res.json();
-
-          jobStatus = data.status;
-          progressArea.textContent = data.message || progressArea.textContent;
-
-          // If files are ready, automatically download
-          if (data.fileA) this.downloadFile(data.fileA, "fileA.xlsx");
-          if (data.fileB) this.downloadFile(data.fileB, "fileB.xlsx");
-        } catch (err) {
-          console.error("Polling error:", err);
-        }
-
-        if (jobStatus === "IN_PROGRESS") await new Promise((r) => setTimeout(r, pollInterval));
-      }
-
-      // Once complete, update button
-      const progressButton = document.getElementById("progressButton");
-      progressButton.textContent = "Close";
-      progressButton.classList.remove("btn-danger");
-      progressButton.classList.add("btn-secondary");
-      progressButton.disabled = false;
-
-      progressButton.onclick = () => this.showForm();
+      // set the job id in local storage & track its progress
+      this.jobId = data.jobId;
+      localStorage.setItem(`${this.route}-jobId`, this.jobId);
+      await this.trackProgress(data.status);
     });
   }
 
-  /**
-   * Updates the last line in the progress area with new text.
-   * Prevents overwriting "Cancelling...." message with unrelated updates.
-   *
-   * @param {HTMLElement} area - Progress display area
-   * @param {string} text - New text to show
-   */
-  updateProgress(area, text) {
-    const lines = area.textContent.trim().split("\n");
-    const lastLine = lines[lines.length - 1];
+  addDownloadLink(files) {
+    const fileLinksContainer = document.getElementById("fileLinks");
 
-    if (lastLine === "Cancelling...." && text !== "❌ Search Cancelled.") return;
+    files.forEach(({ name, buffer }) => {
+      // Skip if already processed
+      if (this.files.has(name)) return;
 
-    lines[lines.length - 1] = text;
-    area.textContent = lines.join("\n");
-  }
+      // Decode base64 → Uint8Array
+      const blob = new Blob([Uint8Array.from(atob(buffer), (c) => c.charCodeAt(0))]);
 
-  /**
-   * Appends a new line of progress to the progress area.
-   *
-   * @param {HTMLElement} area - Progress display area
-   * @param {string} text - Text to append
-   */
-  appendProgress(area, text) {
-    area.textContent += (area.textContent ? "\n" : "") + text;
+      // Create link
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = name;
+      link.textContent = name;
+      link.classList.add("d-block", "mb-2");
+
+      // Add link to container
+      fileLinksContainer.appendChild(link);
+
+      // Auto-trigger download
+      link.click();
+
+      // Track file as processed
+      this.files.add(name);
+    });
   }
 
   // Subclass must implement: additional setup after form load
@@ -149,16 +140,14 @@ export class BaseFormApp {
   }
 
   /**
-   * Sends the payload to the WebSocket.
-   * Supports sending either File objects (converted to ArrayBuffer)
-   * or regular JSON payloads.
+   * Sends a payload to the create endpoint using multipart/form-data.
+   * allowing support for both File objects and standard fields.
    *
-   * @param {Object|File} payload
+   * @param {Object} payload - An object containing form fields and/or File objects.
+   * @returns {Promise<Object>} The parsed JSON response from the server.
    */
   async handlePayload(payload) {
-    debugger;
     const formData = new FormData();
-
     for (const [key, value] of Object.entries(payload)) {
       formData.append(key, value);
     }

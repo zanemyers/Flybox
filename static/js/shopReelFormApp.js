@@ -53,7 +53,7 @@ class ShopReelFormApp extends BaseFormApp {
       return isValid ? { apiKey, query, lat, lng, maxResults } : null;
     } else {
       // File tab active — return selected file
-      const file = this.elements.fileInputEl[0];
+      const file = this.elements.fileInputEl.files[0];
       return file ? { file } : null;
     }
   }
@@ -75,13 +75,13 @@ class ShopReelFormApp extends BaseFormApp {
     this.elements.fileInputEl.removeAttribute("required");
 
     // When manual tab is clicked, set manual fields to required and file input optional
-    this.elements.manualTab.addEventListener("click", () => {
+    this.elements.manualTab.addEventListener("shown.bs.tab", () => {
       manualFields.forEach((f) => f.setAttribute("required", "required"));
       this.elements.fileInputEl.removeAttribute("required");
     });
 
     // When file tab is clicked, set file input to required and manual fields optional
-    this.elements.fileTab.addEventListener("click", () => {
+    this.elements.fileTab.addEventListener("shown.bs.tab", () => {
       manualFields.forEach((f) => f.removeAttribute("required"));
       this.elements.fileInputEl.setAttribute("required", "required");
     });
@@ -90,4 +90,20 @@ class ShopReelFormApp extends BaseFormApp {
 
 // === Initialize the app ===
 const app = new ShopReelFormApp();
-document.addEventListener("DOMContentLoaded", () => app.showForm());
+document.addEventListener("DOMContentLoaded", async () => {
+  app.jobId = localStorage.getItem(`${app.route}-jobId`);
+
+  if (app.jobId) {
+    const res = await fetch(`/api/${app.route}/${app.jobId}/updates`);
+    const data = await res.json();
+
+    // If job is still in progress or completed, show progress view
+    if (data.status === "IN_PROGRESS" || data.status === "COMPLETED") {
+      app.trackProgress(data.status);
+      return; // skip showForm
+    }
+  }
+
+  // No jobId or job is cancelled/failed — show the form
+  app.showForm();
+});

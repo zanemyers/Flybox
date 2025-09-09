@@ -1,7 +1,7 @@
-import { baseAPI } from "./_base.js";
-import { prisma } from "../db.js";
+import { BaseAPI } from "../base/_baseAPI.js";
+import { prisma } from "../../db.js";
 
-export class SiteScoutAPI extends baseAPI {
+export class SiteScoutAPI extends BaseAPI {
   async createJob(req, res) {
     const { site } = req.body;
     try {

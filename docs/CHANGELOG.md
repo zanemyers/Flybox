@@ -5,10 +5,12 @@ All notable changes to this project will be documented in this file.
 ### [v3.7](https://github.com/zanemyers/RescueRiver/compare/v3.6..v3.7) — _4 Sep 2025_
 
 #### **Added**
+
 - Option in FishTales to generate a `site_list.txt` for refining starter files.
 - `.env` setup now includes placeholders for SERP and Gemini API keys.
 
 #### **Changed**
+
 - [Justfile](../justfile) updated to install dependencies locally and support flexible `start` commands.
 - Renamed `REPORT_DIVIDER` constant to `DIVIDER` and updated FishTales logic accordingly.
 - Upgraded Node base image from `23.11-slim` → `24.7.0-slim` in the [Dockerfile](../Dockerfile).
@@ -18,8 +20,8 @@ All notable changes to this project will be documented in this file.
 - Refined [IDE](./ide.md) and [setup](./setup.md) documentation for both Docker and local workflows.
 
 #### **Removed**
-- Redundant or outdated Docker/Local instructions in IDE documentation.
 
+- Redundant or outdated Docker/Local instructions in IDE documentation.
 
 ### [v3.6](https://github.com/zanemyers/RescueRiver/compare/v3.5..v3.6) — _3 Sep 2025_
 
@@ -83,7 +85,7 @@ All notable changes to this project will be documented in this file.
 - **Routes**: `/shop-form` → [`/shop-reel-form`](../routes/_apps.js), `/report-form` → [`/fish-tales-form`](../routes/_apps.js).
 - **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server.js), [`/ws/fish-tales`](../server.js).
 - [**BaseFormApp**](../static/js/baseFormApp.js): WebSocket port fixed at `3000` (was `process.env.PORT`).
-- **SiteScout logic**: [`mergeMissingUrls`](../apps/site_scout/siteDiff.js) now accepts in-memory buffers, supports cancellation, returns updated starter files.
+- **SiteScout logic**: [`mergeMissingUrls`](../apps/site_scout/siteScout.js) now accepts in-memory buffers, supports cancellation, returns updated starter files.
 - [**File input**](../static/js/fileInput.js): refactored for independent components (`.file-input-component`), simplified partials, and per-component init.
 - **Forms**: `reportFormApp.js` → [`fishTalesFormApp.js`](../static/js/fishTalesFormApp.js), `shopFormApp.js` → [`shopReelFormApp.js`](../static/js/shopReelFormApp.js).
 - [**SCSS**](../static/scss/style.scss): restructured styles for `.file-input-component` (better drag-drop + file display).

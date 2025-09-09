@@ -1,5 +1,8 @@
 import express from "express";
-import { FishTalesAPI, ShopReelAPI, SiteScoutAPI } from "../api/index.js";
+import { ShopReelAPI } from "../apps/shop_reel/shopAPI.js";
+import { FishTalesAPI } from "../apps/fish_tales/fishAPI.js";
+import { SiteScoutAPI } from "../apps/site_scout/siteAPI.js";
+
 import multer from "multer";
 
 const storage = multer.memoryStorage(); // store files in memory
@@ -13,19 +16,18 @@ const shopReel = new ShopReelAPI();
 const siteScout = new SiteScoutAPI();
 
 // FishTales endpoints
-router.post("/fish-tales", fishTales.createJob.bind(fishTales));
+router.post("/fish-tales", upload.any(), fishTales.createJob.bind(fishTales));
 router.get("/fish-tales/:id/updates", fishTales.getJobUpdates.bind(fishTales));
-router.get("/fish-tales/:id/files", fishTales.getJobFiles.bind(fishTales));
+router.post("/fish-tales/:id/cancel", fishTales.cancelJob.bind(fishTales));
 
 // ShopReel endpoints
-// router.post("/shop-reel", shopReel.createJob.bind(shopReel));
 router.post("/shop-reel", upload.any(), shopReel.createJob.bind(shopReel));
 router.get("/shop-reel/:id/updates", shopReel.getJobUpdates.bind(shopReel));
-router.get("/shop-reel/:id/files", shopReel.getJobFiles.bind(shopReel));
+router.post("/shop-reel/:id/cancel", shopReel.cancelJob.bind(shopReel));
 
 // SiteScout endpoints
-router.post("/site-scout", siteScout.createJob.bind(siteScout));
+router.post("/site-scout", upload.any(), siteScout.createJob.bind(siteScout));
 router.get("/site-scout/:id/updates", siteScout.getJobUpdates.bind(siteScout));
-router.get("/site-scout/:id/files", siteScout.getJobFiles.bind(siteScout));
+router.post("/site-scout/:id/cancel", siteScout.cancelJob.bind(siteScout));
 
 export default router;
