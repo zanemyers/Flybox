@@ -1,7 +1,7 @@
-import { baseAPI } from "./_base.js";
-import { prisma } from "../db.js";
+import { BaseAPI } from "../base/_baseAPI.js";
+import { prisma } from "../../db.js";
 
-export class FishTalesAPI extends baseAPI {
+export class FishTalesAPI extends BaseAPI {
   async createJob(req, res) {
     const { payload } = req.body;
     try {

@@ -12,12 +12,20 @@ enum JobStatus {
 }
 
 model Job {
-  id        String   @id @default(uuid())
+  id        String       @id @default(uuid())
   type      JobType
   status    JobStatus
-  message   String?
-  createdAt DateTime @default(now())
+  messages  JobMessage[]
+  createdAt DateTime     @default(now())
 
-  fileA     Bytes? // Always the final file produced
-  fileB     Bytes? // Any secondary file
+  primaryFile     Bytes?
+  secondaryFile     Bytes?
+}
+
+model JobMessage {
+  id        String   @id @default(uuid())
+  job       Job      @relation(fields: [jobId], references: [id])
+  jobId     String
+  createdAt DateTime @default(now())
+  message   String
 }

@@ -5,8 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/app               # syncs source code for live changes in dev
-      - ./db:/app/db         # persists SQLite dev.db outside container
+      - .:/app # syncs source code for live changes in dev
+      - ./db:/app/db # persists SQLite dev.db outside container
     env_file:
       - .env
     working_dir: /app
