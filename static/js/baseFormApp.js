@@ -132,8 +132,8 @@ export class BaseFormApp {
     // Handle cancel button click
     progressButton.onclick = async () => {
       progressButton.disabled = true;
-      this.cleanLocalStorage();
       await fetch(`/api/${this.route}/${this.jobId}/cancel`, { method: "POST" });
+      this.cleanLocalStorage();
     };
 
     // Poll the server until job completes
@@ -171,24 +171,25 @@ export class BaseFormApp {
     const fileLinksContainer = document.getElementById("fileLinks");
 
     files.forEach(({ name, buffer }) => {
-      // Always create the blob and link
-      const blob = new Blob([Uint8Array.from(atob(buffer), (c) => c.charCodeAt(0))]);
-      const url = URL.createObjectURL(blob);
+      // Only create link if it doesn't already exist
+      if (!fileLinksContainer.querySelector(`a[download="${name}"]`)) {
+        const blob = new Blob([Uint8Array.from(atob(buffer), (c) => c.charCodeAt(0))]);
+        const url = URL.createObjectURL(blob);
 
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = name;
-      link.textContent = name;
-      link.classList.add("d-block", "mb-2");
-      fileLinksContainer.appendChild(link);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = name;
+        link.textContent = name;
+        link.classList.add("d-block", "mb-2");
 
-      // Auto-download only if not already processed
-      if (!this.files.has(name)) {
-        link.click();
-        this.files.add(name);
+        fileLinksContainer.appendChild(link);
 
-        // Persist downloaded file names in localStorage
-        localStorage.setItem(`${this.route}-${this.jobId}-files`, JSON.stringify([...this.files]));
+        // Auto-download if not yet downloaded
+        if (!this.files.has(name)) {
+          link.click();
+          this.files.add(name);
+          localStorage.setItem(`${this.route}-files`, JSON.stringify([...this.files]));
+        }
       }
     });
   }
