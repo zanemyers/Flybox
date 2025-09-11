@@ -94,6 +94,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   app.jobId = localStorage.getItem(`${app.route}-jobId`);
 
   if (app.jobId) {
+    app.files = new Set(
+      JSON.parse(localStorage.getItem(`${app.route}-${app.jobId}-files`) || "[]")
+    );
     const res = await fetch(`/api/${app.route}/${app.jobId}/updates`);
     const data = await res.json();
 
