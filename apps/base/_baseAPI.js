@@ -1,58 +1,83 @@
 import { prisma } from "../../db.js";
 import { JobStatus } from "@prisma/client";
 
+/**
+ * BaseAPI provides common job-related endpoints for polling, cancellation,
+ * and job creation. Subclasses should extend this class to implement
+ * application-specific job creation and file handling.
+ */
 export class BaseAPI {
-  // GET job status & messages
+  /**
+   * Fetch updates for a job (status, progress messages, and any files).
+   * Expected route: GET /api/:route/:id/updates
+   *
+   * @param {import("express").Request} req - Express request object
+   * @param {import("express").Response} res - Express response object
+   * @returns {Promise<*>} JSON with job status, concatenated messages, and files
+   */
   async getJobUpdates(req, res) {
     try {
       const job = await prisma.job.findUnique({
         where: { id: req.params.id },
         include: { messages: { orderBy: { createdAt: "asc" } } },
       });
-
       if (!job) return res.status(404).json({ error: "Job not found" });
 
       res.json({
         status: job.status,
-        message: job.messages.map((m) => m.message).join("\n"),
-        files: this.getFiles(job),
+        message: job.messages.map((m) => m.message).join("\n"), // Concatenate all job messages into one string
+        files: this.getFiles(job), // Delegate file retrieval to subclass
       });
-    } catch (err) {
-      console.error("Error fetching job updates:", err);
+    } catch {
       res.status(500).json({ error: "Failed to fetch job updates" });
     }
   }
 
+  /**
+   * Cancel a job by setting its status to CANCELLED and appending a "Cancelled" message.
+   * Expected route: POST /api/:route/:id/cancel
+   *
+   * @param {import("express").Request} req - Express request object
+   * @param {import("express").Response} res - Express response object
+   * @returns {Promise<void>}
+   */
   async cancelJob(req, res) {
     const { id } = req.params;
 
     try {
-      // Add a cancelled message
-      await prisma.jobMessage.create({
-        data: { jobId: id, message: "❌ Cancelled" },
-      });
+      await prisma.jobMessage.create({ data: { jobId: id, message: "❌ Cancelled" } }); // Log cancellation message
 
-      // cancel the job
+      // Update job status to CANCELLED
       await prisma.job.update({
-        where: { id: id },
+        where: { id },
         data: { status: JobStatus.CANCELLED },
       });
-      res.sendStatus(204); // No Content
+
+      res.sendStatus(204); // No response body needed
     } catch {
       res.status(500).json({ error: "Failed to cancel job" });
     }
   }
 
-  // Base POST create (Must be overridden!)
-  async createJob(req, res) {
-    res.status(501).json({ error: "createJob not implemented" });
+  /**
+   * Creates and starts a new job
+   * Subclasses MUST override this with an actual implementation.
+   * Expected route: POST /api/:route
+   *
+   * @throws {Error} If not implemented by subclass
+   */
+  createJob() {
+    throw new Error("createJob must be implemented in subclass");
   }
 
   /**
-   * Return an array of file names.
-   * Subclasses should override this method to provide custom file names.
+   * Retrieve files associated with a job.
+   * Subclasses MUST override this method to return an array of file objects:
+   * e.g. [{ name: string, buffer: base64string }, ...]
+   *
+   * @throws {Error} If not implemented by subclass
    */
-  getFiles(_job) {
-    throw new Error("getFileNames(job) must be implemented in the subclass");
+  getFiles() {
+    throw new Error("getFiles must be implemented in subclass");
   }
 }

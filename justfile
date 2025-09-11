@@ -55,7 +55,6 @@ start *FLAGS:
     fi
 
 # Create a new migration from schema changes and apply it
-# 👉 Use after editing schema.prisma (like `makemigrations && migrate`)
 migrate *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-n"* ]]; then # Use -n flag to pass a name
@@ -67,12 +66,10 @@ migrate *FLAGS:
     fi
 
 # Reset the db, reapply all migrations, and regenerate the client
-# 👉 Use when you want a fresh start (like `django flush && migrate`)
 reset_db:
     npx prisma migrate reset --schema={{schema}}
 
 # Regenerate the Prisma Client without touching the DB
-# 👉 Use after pulling schema, cloning repo, or changing generator settings
 generate_db:
     npx prisma generate --schema={{schema}}
 
@@ -80,8 +77,7 @@ generate_db:
 studio_db:
     npx prisma studio --schema={{schema}}
 
-# Introspect DB → update schema.prisma to match the database, then regenerate client
-# 👉 Use when DB was changed outside Prisma (like `inspectdb` in Django)
+# Update schema.prisma to match the database, then regenerate client
 pull_db:
     npx prisma db pull --schema={{schema}}
     just generate

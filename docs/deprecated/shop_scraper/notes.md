@@ -1,4 +1,4 @@
-# 🗒️ Deprecation Notes – Shop Scraper ([UNRELEASED])
+# 🗒️ Deprecation Notes – Flybox (v3.0)
 
 ## 🧾 Summary
 
@@ -21,7 +21,7 @@ The `loadCachedShops` function has been deprecated.
 - loadCachedShops is deprecated but remains in the codebase for legacy support.
 - New code should use ExcelFileHandler for cache loading and reading.
 
-# 🗒️ Deprecation Notes – Shop Scraper (v2.0)
+# 🗒️ Deprecation Notes – Flybox (v2.0)
 
 ## 🧾 Summary
 
