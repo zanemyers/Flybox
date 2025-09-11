@@ -90,6 +90,4 @@ class ShopReelFormApp extends BaseFormApp {
 
 // === Initialize the app ===
 const app = new ShopReelFormApp();
-document.addEventListener("DOMContentLoaded", async () => {
-  await app.startApp();
-});
+document.addEventListener("DOMContentLoaded", async () => app.startApp());

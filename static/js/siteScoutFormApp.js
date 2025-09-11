@@ -46,6 +46,4 @@ class SiteScoutFormApp extends BaseFormApp {
 
 // === Initialize the app ===
 const app = new SiteScoutFormApp();
-document.addEventListener("DOMContentLoaded", async () => {
-  await app.startApp();
-});
+document.addEventListener("DOMContentLoaded", async () => app.startApp());

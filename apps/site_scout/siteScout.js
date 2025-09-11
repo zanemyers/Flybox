@@ -28,8 +28,6 @@ export class SiteScout extends BaseApp {
    * Compares URLs between the ShopReel and FishTales files, identifies URLs
    * present in the ShopReel file but missing from the FishTales file, and
    * appends any missing URLs to the FishTales file.
-   *
-   * @returns {Promise<void>} Resolves when processing completes, is cancelled, or fails.
    */
   async mergeMissingUrls() {
     await this.addJobMessage("Comparing report and site URLs...");

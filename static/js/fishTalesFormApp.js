@@ -70,7 +70,7 @@ class FishTalesFormApp extends BaseFormApp {
           maxAge,
           filterByRivers,
           riverList,
-          inputFile,
+          file: inputFile,
           includeSiteList,
           crawlDepth,
           model,
@@ -79,25 +79,6 @@ class FishTalesFormApp extends BaseFormApp {
           mergePrompt,
         }
       : null;
-  }
-
-  /**
-   * Sends the form data to the server.
-   */
-  handlePayload(payload) {
-    const { inputFile, ...metadata } = payload;
-
-    // 1. Send non-file data (metadata)
-    this.socket.send(JSON.stringify({ type: "metadata", data: metadata }));
-
-    // 2. Send file as binary
-    if (inputFile) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.socket.send(reader.result);
-      };
-      reader.readAsArrayBuffer(inputFile);
-    }
   }
 
   /**
@@ -124,4 +105,4 @@ class FishTalesFormApp extends BaseFormApp {
 
 // === Initialize the app ===
 const app = new FishTalesFormApp();
-document.addEventListener("DOMContentLoaded", () => app.showForm());
+document.addEventListener("DOMContentLoaded", () => app.startApp());
