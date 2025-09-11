@@ -1,5 +1,4 @@
 import * as chrono from "chrono-node";
-import { differenceInDays } from "date-fns";
 
 import { DIVIDER } from "../base/constants/index.js";
 import { normalizeUrl } from "../base/index.js";
@@ -116,33 +115,6 @@ function getPriority(currentUrl, link, linkText, siteInfo) {
 }
 
 /**
- * Filters an array of report texts based on recency and content keywords.
- *
- * Applies the following criteria to each report:
- * - Includes only reports with a valid, detectable date.
- * - Excludes reports older than the specified maximum age (in days).
- * - Optionally filters reports to include only those mentioning rivers from a given list.
- *
- * @param {string[]} reports - Array of raw report text strings to filter.
- * @param {number} maxAge - Maximum allowed age of reports in days.
- * @param {boolean} filterByRivers - Whether to filter reports by river mentions.
- * @param {string[]} riverList - List of river names to match against reports when filtering by rivers.
- * @returns {string[]} Filtered array containing only reports meeting all criteria.
- */
-function filterReports(reports, maxAge, filterByRivers, riverList) {
-  const today = new Date();
-
-  return reports.filter((report) => {
-    const reportDate = extractDate(report);
-
-    if (!reportDate) return false;
-    if (differenceInDays(today, reportDate) > maxAge) return false;
-    if (filterByRivers && !includesAny(report, riverList)) return false;
-    return true;
-  });
-}
-
-/**
  * Parses text to find explicit date expressions and returns
  * the most recent valid date within a set range.
  *
@@ -248,7 +220,7 @@ export {
   chunkReportText,
   estimateTokenCount,
   extractAnchors,
-  filterReports,
+  extractDate,
   generateContent,
   getPriority,
   includesAny,
