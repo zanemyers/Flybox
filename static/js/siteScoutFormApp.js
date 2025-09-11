@@ -42,25 +42,10 @@ class SiteScoutFormApp extends BaseFormApp {
 
     return isValid ? { shopReelFile, fishTalesFile } : null;
   }
-
-  /**
-   * Sends the both files in the payload to the WebSocket
-   *
-   * @param {Object|File} payload
-   */
-  handlePayload(payload) {
-    // payload is expected to be an object with File values
-    for (const key in payload) {
-      const file = payload[key];
-      if (file instanceof File) {
-        const reader = new FileReader();
-        reader.onload = () => this.socket.send(reader.result);
-        reader.readAsArrayBuffer(file);
-      }
-    }
-  }
 }
 
 // === Initialize the app ===
 const app = new SiteScoutFormApp();
-document.addEventListener("DOMContentLoaded", () => app.showForm());
+document.addEventListener("DOMContentLoaded", async () => {
+  await app.startApp();
+});

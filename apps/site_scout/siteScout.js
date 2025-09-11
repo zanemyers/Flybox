@@ -1,86 +1,102 @@
-import { ExcelFileHandler, sameDomain } from "../base/index.js";
+import { BaseApp, ExcelFileHandler, sameDomain } from "../base/index.js";
+import { ERRORS } from "../base/constants/index.js";
+import { JobStatus } from "@prisma/client";
 
 /**
- * Compares URLs between a fishTales starter file and a shopReel file,
- * identifies URLs present in the shopReel file but missing from the fishTales file,
- * and appends the missing URLs to the fishTales file.
+ * SiteScout class merges URLs between a ShopReel report file and a
+ * FishTales starter Excel file and saves the results to a new Excel file.
  *
- * @param {Object} files - The two files to compare
- * @param {Function} progressUpdate - Optional callback function to receive progress/status updates.
- * @param {Function} returnFile - Optional callback to receive the final Excel file buffer.
- * @param {Object} cancelToken - Optional cancellation token with a `throwIfCancelled()` method to abort execution.
- *
- * @returns {Promise<void>} Resolves when scraping completes successfully, is cancelled, or encounters an error.
+ * Extends BaseApp to integrate with the job system (progress tracking,
+ * cancellation, messages, and file attachments).
  */
-export async function mergeMissingUrls({
-  files,
-  progressUpdate = () => {},
-  returnFile = () => {},
-  cancelToken = { throwIfCancelled: () => {} }, // default to no-op if not provided
-}) {
-  progressUpdate("Comparing report and site URLs...");
+export class SiteScout extends BaseApp {
+  /**
+   * @param {string|null} jobId - Optional Job ID for tracking progress and associated files.
+   * @param {Object} files - An object containing the two Excel files:
+   */
+  constructor(jobId, files) {
+    super(jobId);
+    this.files = files;
 
-  try {
-    cancelToken.throwIfCancelled();
-    // Initialize Excel handlers for both files
-    const shopReelHandler = new ExcelFileHandler();
-    const fishTalesHandler = new ExcelFileHandler();
+    // Excel file handlers for reading/writing
+    this.shopReelHandler = new ExcelFileHandler();
+    this.fishTalesHandler = new ExcelFileHandler();
+    this.updatedFile = new ExcelFileHandler();
+  }
 
-    // Load the buffers
-    await shopReelHandler.loadBuffer(files["shopReelFile"]);
-    await fishTalesHandler.loadBuffer(files["fishTalesFile"]);
+  /**
+   * Compares URLs between the ShopReel and FishTales files, identifies URLs
+   * present in the ShopReel file but missing from the FishTales file, and
+   * appends any missing URLs to the FishTales file.
+   *
+   * @returns {Promise<void>} Resolves when processing completes, is cancelled, or fails.
+   */
+  async mergeMissingUrls() {
+    await this.addJobMessage("Comparing report and site URLs...");
 
-    // Read URLs from both files:
-    // - Report file: include all rows, map to the "url" field
-    // - Site file: only include rows where "Has Report" is true, map to the "Website" field
-    cancelToken.throwIfCancelled();
-    const [rawReportUrls, rawSiteUrls] = await Promise.all([
-      fishTalesHandler.read(
-        [],
-        () => true,
-        (row) => row["url"]
-      ),
-      shopReelHandler.read(
-        [],
-        (row) => row["has_report"] === true,
-        (row) => row["website"]
-      ),
-    ]);
+    try {
+      // Load the Excel file buffers into their respective handlers
+      await this.shopReelHandler.loadBuffer(this.files["shopReelFile"]);
+      await this.fishTalesHandler.loadBuffer(this.files["fishTalesFile"]);
 
-    // Deduplicate URLs by converting to Sets and back to arrays
-    const reportUrls = Array.from(new Set(rawReportUrls));
-    const siteUrls = Array.from(new Set(rawSiteUrls));
+      await this.throwIfJobCancelled();
 
-    cancelToken.throwIfCancelled();
-    // Identify URLs in the site file whose domain is not present in any report URL
-    const missingUrls = siteUrls.filter(
-      (siteUrl) => !reportUrls.some((reportUrl) => sameDomain(siteUrl, reportUrl))
-    );
+      // Extract URLs:
+      // - Report URLs: all rows, using the "url" column
+      // - Site URLs: only rows where "has_report" is true, using the "website" column
+      const [rawReportUrls, rawSiteUrls] = await Promise.all([
+        this.fishTalesHandler.read(
+          [],
+          () => true,
+          (row) => row["url"]
+        ),
+        this.shopReelHandler.read(
+          [],
+          (row) => row["has_report"] === true,
+          (row) => row["website"]
+        ),
+      ]);
 
-    if (missingUrls.length === 0) {
-      progressUpdate("✅ No missing URLs found.");
-      return;
-    }
+      // Deduplicate URLs
+      const reportUrls = Array.from(new Set(rawReportUrls));
+      const siteUrls = Array.from(new Set(rawSiteUrls));
 
-    progressUpdate(`Appending ${missingUrls.length} missing URLs to the report file...`);
+      await this.throwIfJobCancelled();
 
-    cancelToken.throwIfCancelled();
+      // Determine which site URLs are missing from the report file based on domain
+      const missingUrls = siteUrls.filter(
+        (siteUrl) => !reportUrls.some((reportUrl) => sameDomain(siteUrl, reportUrl))
+      );
 
-    const newFile = new ExcelFileHandler();
-    await newFile.write(await fishTalesHandler.read());
-    await newFile.write(
-      missingUrls.map((url) => ({ url })),
-      true
-    );
+      if (missingUrls.length === 0) {
+        await this.addJobMessage("✅ No missing URLs found.");
+        await this.updateJobStatus(JobStatus.COMPLETED);
+        return;
+      }
 
-    progressUpdate("DOWNLOAD:new_fishTales_starter.xlsx");
-    progressUpdate("✅ FishTales start file updated.");
-    returnFile(await newFile.getBuffer());
-  } catch (err) {
-    if (err.isCancelled) {
-      progressUpdate(err.message);
-    } else {
-      progressUpdate(`❌ Error: ${err.message || err}`);
+      await this.addJobMessage(
+        `Appending ${missingUrls.length} missing URLs to the report file...`
+      );
+      await this.throwIfJobCancelled();
+
+      // Write existing report rows to the updated file
+      await this.updatedFile.write(await this.fishTalesHandler.read());
+
+      // Append missing URLs as new rows
+      await this.updatedFile.write(
+        missingUrls.map((url) => ({ url })),
+        true
+      );
+
+      await this.addJobMessage("✅ FishTales starter file updated.");
+      await this.addJobFile("primaryFile", await this.updatedFile.getBuffer()); // Save the updated file in the job system
+      await this.updateJobStatus(JobStatus.COMPLETED);
+    } catch (err) {
+      // Handle errors (except job cancellation) and mark job as failed
+      if (err.message !== ERRORS.CANCELLED) {
+        await this.addJobMessage(`❌ Error: ${err.message || err}`);
+        await this.updateJobStatus(JobStatus.FAILED);
+      }
     }
   }
 }

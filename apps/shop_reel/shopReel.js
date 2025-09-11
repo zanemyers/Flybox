@@ -37,7 +37,6 @@ export class ShopReel extends BaseApp {
    */
   async shopScraper() {
     try {
-      await this.throwIfJobCancelled();
       await this.addJobMessage("Searching for shops...");
       const shops = await this.fetchShops();
       await this.addJobMessage(`✅ Found ${shops.length} shops.`, true);
