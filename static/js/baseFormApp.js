@@ -25,6 +25,32 @@ export class BaseFormApp {
   }
 
   /**
+   * Initializes the application on page load.
+   */
+  async startApp() {
+    // Retrieve any stored job ID for this app
+    this.jobId = localStorage.getItem(`${this.route}-jobId`);
+
+    if (this.jobId) {
+      // Restore the set of files that have already been auto-downloaded for this job
+      this.files = new Set(JSON.parse(localStorage.getItem(`${this.route}-files`) || "[]"));
+
+      // Fetch the latest job status and messages from the server
+      const res = await fetch(`/api/${this.route}/${this.jobId}/updates`);
+      const data = await res.json();
+
+      // If the job is still in progress or already completed, show the progress view
+      if (data.status === "IN_PROGRESS" || data.status === "COMPLETED") {
+        this.trackProgress(data.status);
+        return; // Skip showing the form since the job is active or done
+      }
+    }
+
+    // No job ID found, or job is cancelled/failed — show the input form
+    this.showForm();
+  }
+
+  /**
    * Loads the form partial into the container, initializes tooltips,
    * caches commonly used elements, and sets up form submission handling.
    */
@@ -154,7 +180,6 @@ export class BaseFormApp {
       link.download = name;
       link.textContent = name;
       link.classList.add("d-block", "mb-2");
-
       fileLinksContainer.appendChild(link);
 
       // Auto-download only if not already processed
@@ -173,7 +198,8 @@ export class BaseFormApp {
    */
   cleanLocalStorage() {
     localStorage.removeItem(`${this.route}-jobId`);
-    localStorage.removeItem(`${this.route}-${this.jobId}-files`);
+    localStorage.removeItem(`${this.route}-files`);
+    this.files.clear();
   }
 
   // ------------------------------
