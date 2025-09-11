@@ -76,12 +76,12 @@ All notable changes to this project will be documented in this file.
 #### **Added**
 
 - **SiteScout**:
-  - WebSocket ([`/ws/site-scout`](../server.js)) with [`siteScoutSocket`](../sockets/_siteScoutSocket.js) for handling `shopReel` + `fishTales` files.
+  - WebSocket ([`/ws/site-scout`](../server.js)) with [`siteScoutSocket`](deprecated/sockets/_siteScoutSocket.js) for handling `shopReel` + `fishTales` files.
   - Frontend: [`siteScoutFormApp.js`](../static/js/siteScoutFormApp.js), [`site_scout_form.ejs`](../views/apps/forms/site_scout_form.ejs) partial, and [`site_scout.ejs`](../views/apps/site_scout.ejs) page.
 
 #### **Changed**
 
-- **Sockets**: `reportSocket` → [`fishTalesSocket`](../sockets/_fishTalesSocket.js), `shopSocket` → [`shopReelSocket`](../sockets/_shopReelSocket.js).
+- **Sockets**: `reportSocket` → [`fishTalesSocket`](deprecated/sockets/_fishTalesSocket.js), `shopSocket` → [`shopReelSocket`](deprecated/sockets/_shopReelSocket.js).
 - **Routes**: `/shop-form` → [`/shop-reel-form`](../routes/_apps.js), `/report-form` → [`/fish-tales-form`](../routes/_apps.js).
 - **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server.js), [`/ws/fish-tales`](../server.js).
 - [**BaseFormApp**](../static/js/baseFormApp.js): WebSocket port fixed at `3000` (was `process.env.PORT`).

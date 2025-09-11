@@ -1,3 +1,7 @@
+// ----------------------------
+// Job related models & enums
+// ----------------------------
+
 enum JobType {
   SHOP_REEL
   FISH_TALES
@@ -18,8 +22,8 @@ model Job {
   messages  JobMessage[]
   createdAt DateTime     @default(now())
 
-  primaryFile     Bytes?
-  secondaryFile     Bytes?
+  primaryFile   Bytes?
+  secondaryFile Bytes?
 }
 
 model JobMessage {

@@ -91,22 +91,25 @@ class ShopReelFormApp extends BaseFormApp {
 // === Initialize the app ===
 const app = new ShopReelFormApp();
 document.addEventListener("DOMContentLoaded", async () => {
-  app.jobId = localStorage.getItem(`${app.route}-jobId`);
+  app.jobId = localStorage.getItem(`${app.route}-jobId`); // Retrieve any stored job ID for this app
 
   if (app.jobId) {
+    // Load the set of files that have already been auto-downloaded for this job
     app.files = new Set(
       JSON.parse(localStorage.getItem(`${app.route}-${app.jobId}-files`) || "[]")
     );
+
+    // Fetch the latest job status and messages from the server
     const res = await fetch(`/api/${app.route}/${app.jobId}/updates`);
     const data = await res.json();
 
-    // If job is still in progress or completed, show progress view
+    // If the job is still in progress or already completed, show the progress view
     if (data.status === "IN_PROGRESS" || data.status === "COMPLETED") {
       app.trackProgress(data.status);
-      return; // skip showForm
+      return; // Skip showing the form since the job is active or done
     }
   }
 
-  // No jobId or job is cancelled/failed — show the form
+  // No job ID found, or job is cancelled/failed — show the input form
   app.showForm();
 });

@@ -1,5 +1,5 @@
 import { BaseWebSocket } from "./_baseWebSocket.js";
-import { reportScraper } from "../apps/fish_tales/reportScraper.js";
+import { reportScraper } from "../../../apps/fish_tales/reportScraper.js";
 
 /**
  * WebSocket subclass specifically for handling report scraping requests.

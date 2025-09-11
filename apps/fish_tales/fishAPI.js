@@ -1,17 +1,12 @@
 import { BaseAPI } from "../base/_baseAPI.js";
-import { prisma } from "../../db.js";
 
+// TODO: Set this up
 export class FishTalesAPI extends BaseAPI {
   async createJob(req, res) {
-    const { payload } = req.body;
-    try {
-      // Custom logic for FishTales
-      const job = await prisma.job.create({
-        data: { status: "pending", message: "FishTales job started", payload },
-      });
-      res.status(201).json({ jobId: job.id });
-    } catch {
-      res.status(500).json({ error: "Failed to create FishTales job" });
-    }
+    res.sendStatus(204); // No response body needed
+  }
+
+  getFiles() {
+    return [];
   }
 }

@@ -1,37 +1,47 @@
 import { initTooltips } from "./tooltip.js";
 
 /**
- * Base class for client-side form applications that interact with
- * WebSocket endpoints and show progress for long-running tasks.
+ * Base class for client-side form applications that handle:
+ * - Form rendering and validation
+ * - Long-running jobs via API endpoints
+ * - Progress tracking and file downloads
+ *
+ * Subclasses must implement methods for form-specific behavior:
+ * - onFormLoad()
+ * - cacheElements()
+ * - validateFormInput()
  */
 export class BaseFormApp {
   /**
-   * @param {string} formPartial - Name of the EJS partial to load for the form
-   * @param {string} route - The api route to hit
+   * @param {string} formPartial - The EJS partial to load for the form
+   * @param {string} route - The API route to hit for job creation and updates
    */
   constructor(formPartial, route) {
-    this.elements = {}; // Cached DOM elements used across methods
+    this.elements = {}; // Cached DOM elements for efficiency
     this.formPartial = formPartial;
     this.route = route;
-    this.jobId = null;
-    this.files = new Set();
+    this.jobId = null; // Current job ID being tracked
+    this.files = new Set(); // Tracks already auto-downloaded files
   }
 
   /**
    * Loads the form partial into the container, initializes tooltips,
-   * caches commonly used elements, and sets up submit handling.
+   * caches commonly used elements, and sets up form submission handling.
    */
   async showForm() {
     const res = await fetch(`partials/${this.formPartial}`);
     document.getElementById("formContainer").innerHTML = await res.text();
     initTooltips();
     this.cacheElements();
-    this.onFormLoad(); // Additional form setup defined in subclass
+    this.onFormLoad(); // Subclass-specific form setup
     this.handleFormSubmit();
   }
 
   /**
-   * Sets up the form submission listener:
+   * Sets up the form submission listener.
+   * - Validates input
+   * - Sends payload to server
+   * - Tracks job progress if successful
    */
   handleFormSubmit() {
     const form = document.getElementById("form");
@@ -48,11 +58,11 @@ export class BaseFormApp {
         return;
       }
 
-      // Send the payload to create the job
+      // Send payload to API and get job info
       const data = await this.handlePayload(payload);
       if (!data) return;
 
-      // set the job id in local storage & track its progress
+      // Track job progress and store jobId locally
       this.jobId = data.jobId;
       localStorage.setItem(`${this.route}-jobId`, this.jobId);
       await this.trackProgress(data.status);
@@ -61,10 +71,10 @@ export class BaseFormApp {
 
   /**
    * Sends a payload to the create endpoint using multipart/form-data.
-   * allowing support for both File objects and standard fields.
+   * Supports both File objects and standard form fields.
    *
-   * @param {Object} payload - An object containing form fields and/or File objects.
-   * @returns {Promise<Object>} The parsed JSON response from the server.
+   * @param {Object} payload - Object containing form fields and/or File objects
+   * @returns {Promise<Object>} Parsed JSON response from the server
    */
   async handlePayload(payload) {
     const formData = new FormData();
@@ -81,8 +91,10 @@ export class BaseFormApp {
   }
 
   /**
-   * Loads the progress partial into the container and sets up
-   * the cancel button to allow aborting the current WebSocket task.
+   * Displays job progress in the UI and handles auto-downloading of returned files.
+   * Updates the cancel/close button behavior based on job status.
+   *
+   * @param {string} status - Initial status of the job ("IN_PROGRESS" or "COMPLETED")
    */
   async trackProgress(status) {
     const res = await fetch("/partials/progress");
@@ -91,23 +103,28 @@ export class BaseFormApp {
     const progressArea = document.getElementById("progressArea");
     const progressButton = document.getElementById("progressButton");
 
+    // Handle cancel button click
     progressButton.onclick = async () => {
       progressButton.disabled = true;
       this.cleanLocalStorage();
       await fetch(`/api/${this.route}/${this.jobId}/cancel`, { method: "POST" });
     };
 
+    // Poll the server until job completes
     do {
       const res = await fetch(`/api/${this.route}/${this.jobId}/updates`);
       const data = await res.json();
 
-      progressArea.textContent = data.message; // Update the progress
-      status = data.status; // Update the status
-      this.addDownloadLink(data.files); // if a file is returned auto download it, and add a link if you need to download again
-      if (status === "IN_PROGRESS") await new Promise((r) => setTimeout(r, 1000)); // wait 1 sec before trying again
+      progressArea.textContent = data.message; // Update progress messages
+      status = data.status; // Update job status
+      this.addDownloadLink(data.files); // Download new files, add links
+
+      if (status === "IN_PROGRESS") {
+        await new Promise((r) => setTimeout(r, 1000)); // Wait 1 second before next poll
+      }
     } while (status === "IN_PROGRESS");
 
-    // Once complete, update button
+    // Update button to allow closing the progress view
     progressButton.textContent = "Close";
     progressButton.classList.remove("btn-danger");
     progressButton.classList.add("btn-secondary");
@@ -118,11 +135,17 @@ export class BaseFormApp {
     };
   }
 
+  /**
+   * Adds links for downloaded files to the DOM and auto-downloads
+   * files that haven’t already been processed.
+   *
+   * @param {Array<{name: string, buffer: string}>} files - Array of files returned from server
+   */
   addDownloadLink(files) {
     const fileLinksContainer = document.getElementById("fileLinks");
 
     files.forEach(({ name, buffer }) => {
-      // Always create the blob & link
+      // Always create the blob and link
       const blob = new Blob([Uint8Array.from(atob(buffer), (c) => c.charCodeAt(0))]);
       const url = URL.createObjectURL(blob);
 
@@ -136,30 +159,49 @@ export class BaseFormApp {
 
       // Auto-download only if not already processed
       if (!this.files.has(name)) {
-        link.click(); // auto download
+        link.click();
         this.files.add(name);
 
+        // Persist downloaded file names in localStorage
         localStorage.setItem(`${this.route}-${this.jobId}-files`, JSON.stringify([...this.files]));
       }
     });
   }
 
+  /**
+   * Clears stored jobId and downloaded file information from localStorage.
+   */
   cleanLocalStorage() {
     localStorage.removeItem(`${this.route}-jobId`);
     localStorage.removeItem(`${this.route}-${this.jobId}-files`);
   }
 
-  // Subclass must implement: additional setup after form load
+  // ------------------------------
+  // Subclass must implement these
+  // ------------------------------
+
+  /**
+   * Additional form setup after the partial is loaded.
+   * e.g., attach extra event listeners, populate selects.
+   */
   onFormLoad() {
     throw new Error("onFormLoad() must be implemented in subclass.");
   }
 
-  // Subclass must implement: cache frequently used form elements
+  /**
+   * Cache frequently accessed form elements to avoid repeated DOM queries.
+   * e.g., this.elements.submitButton = document.getElementById("submit");
+   */
   cacheElements() {
     throw new Error("cacheElements() must be implemented in subclass.");
   }
 
-  // Subclass must implement: validate and return form input as payload
+  /**
+   * Validate form input and return a payload object for submission.
+   * Return null/false if validation fails.
+   *
+   * @returns {Object|null} Validated payload
+   */
   validateFormInput() {
     throw new Error("validateFormInput() must be implemented in subclass.");
   }
