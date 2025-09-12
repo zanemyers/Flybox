@@ -1,8 +1,8 @@
 {
   "type": "module",
   "dependencies": {
-    "@google/genai": "^1.17.0",
-    "@prisma/client": "^6.15.0",
+    "@google/genai": "^1.19.0",
+    "@prisma/client": "^6.16.1",
     "@supercharge/promise-pool": "^3.2.0",
     "bootstrap": "^5.3.8",
     "chrono-node": "^2.8.4",
@@ -17,21 +17,20 @@
     "playwright-extra": "^4.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "serpapi": "^2.2.1",
-    "tinyqueue": "^3.0.0",
-    "ws": "^8.18.3"
+    "tinyqueue": "^3.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.34.0",
-    "eslint": "^9.34.0",
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "globals": "^16.3.0",
+    "globals": "^16.4.0",
     "prettier": "^3.6.2",
-    "prisma": "^6.15.0",
-    "sass": "^1.92.0",
-    "stylelint": "^16.23.1",
+    "prisma": "^6.16.1",
+    "sass": "^1.92.1",
+    "stylelint": "^16.24.0",
     "stylelint-config-standard": "^39.0.0",
-    "stylelint-config-standard-scss": "^15.0.1",
+    "stylelint-config-standard-scss": "^16.0.0",
     "stylelint-scss": "^6.12.1"
   }
 }
