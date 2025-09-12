@@ -17,7 +17,7 @@ You can use any editor, but setup instructions are included for two popular IDEs
 
 ### 🌳 Environment
 
-- Run `just setup` in the terminal to create your `.env` file and install dependencies.
+- Run `just setup` in the terminal to create your `.env` file, install dependencies & initialize the database.
   - You can edit the `.env` manually anytime to change the default values.
 
 ### 🏃‍♂️ Running
@@ -54,6 +54,10 @@ This project uses a variety of packages for scraping, browser automation, AI sum
 - **Search & Data Fetching**
   - [SerpAPI](https://www.npmjs.com/package/serpapi) – API for scraping Google search results, including Google Maps business listings.
 
+- **Database & File Uploads**
+  - [@prisma/client](https://www.npmjs.com/package/@prisma/client) – Type-safe database client for Node.js and TypeScript.
+  - [Multer](https://www.npmjs.com/package/multer) – Middleware for handling multipart/form-data, primarily used for file uploads in Express.
+
 - **Styling & Frontend**
   - [Bootstrap](https://www.npmjs.com/package/bootstrap) – CSS framework used for form styling and layout.
 
@@ -61,6 +65,3 @@ This project uses a variety of packages for scraping, browser automation, AI sum
   - [Express](https://www.npmjs.com/package/express) – Fast, minimal Node.js web framework.
   - [Express-EJS-Layouts](https://www.npmjs.com/package/express-ejs-layouts) – Layout support for EJS templates in Express.
   - [EJS](https://www.npmjs.com/package/ejs) – Embedded JavaScript templates for generating HTML.
-
-- **WebSockets**
-  - [WS](https://www.npmjs.com/package/ws) – Simple and fast WebSocket library for Node.js.
