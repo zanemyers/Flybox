@@ -5,15 +5,7 @@ schema := "./db"
 
 # Runs the setup script to prepare the .env file and install pacakges locally.
 setup:
-    #!/usr/bin/env sh
-    if [ -f .env ]; then # Setup .env
-        echo "✅ .env already exists, skipping setup.";
-    elif docker compose ps &> /dev/null; then
-        docker compose run --rm web-scraper node setup.js;
-    else
-        node setup.js;
-    fi
-
+    node setup.js # Run the setup script
     npm install # Install node packages locally
     just migrate -n init # Initialize the database
 
