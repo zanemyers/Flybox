@@ -1,5 +1,14 @@
 {
+  "name": "flybox",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
+  "scripts": {
+    "dev": "vite --config config/vite.config.ts",
+    "build": "tsc -b && vite build --config config/vite.config.ts",
+    "lint": "eslint -c config/eslint.config.js .",
+    "preview": "vite preview --config config/vite.config.ts"
+  },
   "dependencies": {
     "@google/genai": "^1.19.0",
     "@prisma/client": "^6.16.1",
@@ -8,22 +17,29 @@
     "chrono-node": "^2.8.4",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.2",
-    "ejs": "^3.1.10",
     "exceljs": "^4.4.0",
     "express": "^5.1.0",
-    "express-ejs-layouts": "^2.5.1",
     "multer": "^2.0.2",
     "playwright": "^1.55.0",
     "playwright-extra": "^4.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "serpapi": "^2.2.1",
     "tinyqueue": "^3.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react-swc": "^4.0.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react-dom": "^1.53.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "eslint-plugin-react-x": "^1.53.1",
     "globals": "^16.4.0",
     "prettier": "^3.6.2",
     "prisma": "^6.16.1",
@@ -31,6 +47,9 @@
     "stylelint": "^16.24.0",
     "stylelint-config-standard": "^39.0.0",
     "stylelint-config-standard-scss": "^16.0.0",
-    "stylelint-scss": "^6.12.1"
+    "stylelint-scss": "^6.12.1",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2"
   }
 }
