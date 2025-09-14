@@ -17,7 +17,7 @@ RUN npm install
 RUN npx playwright install --with-deps
 
 # Copy the rest of the app
-COPY . .
+COPY .. .
 
 # Optional: expose a port if using Express
 EXPOSE 3000

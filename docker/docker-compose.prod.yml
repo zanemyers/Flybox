@@ -3,12 +3,12 @@ services:
   flybox:
     container_name: node
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ../Dockerfile
     volumes:
       - ./db:/app/db
     env_file:
-      - .env
+      - ../.env
     environment:
       - NODE_ENV=production
       - PORT=3000

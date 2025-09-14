@@ -46,29 +46,29 @@ All notable changes to this project will be documented in this file.
 #### **Added**
 
 - Added new images for documentation for FishTales, ShopReel, and SiteScout.
-- Added `.docs` layout for sidebar and content area to [SCSS](../static/scss/style.scss).
-- Added documentation pages in [`views/apps/docs/`](../views/apps/docs):
-  - [`docs.ejs`](../views/apps/docs.ejs) — tabbed layout for ShopReel, FishTales, and SiteScout documentation.
-  - [`fish_tales_doc.ejs`](../views/apps/docs/fish_tales_doc.ejs) — FishTales Documentation.
-  - [`shop_reel_doc.ejs`](../views/apps/docs/shop_reel_doc.ejs) — ShopReel Documentation.
-  - [`site_scout_doc.ejs`](../views/apps/docs/site_scout_doc.ejs) — SiteScout Documentation.
+- Added `.docs` layout for sidebar and content area to [SCSS](../client/static/scss/style.scss).
+- Added documentation pages in [`views/apps/docs/`](../client/views/apps/docs):
+  - [`docs.ejs`](../client/views/apps/docs.ejs) — tabbed layout for ShopReel, FishTales, and SiteScout documentation.
+  - [`fish_tales_doc.ejs`](../client/views/apps/docs/fish_tales_doc.ejs) — FishTales Documentation.
+  - [`shop_reel_doc.ejs`](../client/views/apps/docs/shop_reel_doc.ejs) — ShopReel Documentation.
+  - [`site_scout_doc.ejs`](../client/views/apps/docs/site_scout_doc.ejs) — SiteScout Documentation.
 
 #### **Changed**
 
-- Renamed `report_starter_file_ex.xlsx` → [`fishTales_starter_file.xlsx`](../static/example_files/fishTales_starter_file.xlsx).
-- Renamed `routes/_partials.js` → [`routes/_forms.js`](../routes/_forms.js).
-- Moved [`idea.jpg`](../static/images/about/idea.jpg), [`important.jpg`](../static/images/about/important.jpg), [`serve.jpg`](../static/images/about/serve.jpg) to [`about/`](../static/images/about).
+- Renamed `report_starter_file_ex.xlsx` → [`fishTales_starter_file.xlsx`](../client/static/example_files/fishTales_starter_file.xlsx).
+- Renamed `routes/_partials.js` → [`routes/_forms.js`](../server/routes/_forms.js).
+- Moved [`idea.jpg`](../client/static/images/about/idea.jpg), [`important.jpg`](../client/static/images/about/important.jpg), [`serve.jpg`](../client/static/images/about/serve.jpg) to [`about/`](../client/static/images/about).
 - Updated CSS/SCSS to improve readability.
 - Simplified text in instructions panel and updated links to point to documentation.
 - **Moved files:**
-  - Form partials to [`views/apps/forms/`](../views/apps/forms):
-    - [`fish_tales_form.ejs`](../views/apps/forms/fish_tales_form.ejs)
-    - [`shop_reel_form.ejs`](../views/apps/forms/shop_reel_form.ejs)
-    - [`site_scout_form.ejs`](../views/apps/forms/site_scout_form.ejs)
-  - Main tool views to [`views/apps/`](../views/apps):
-    - [`fish_tales.ejs`](../views/apps/fish_tales.ejs)
-    - [`shop_reel.ejs`](../views/apps/shop_reel.ejs)
-    - [`site_scout.ejs`](../views/apps/site_scout.ejs)
+  - Form partials to [`views/apps/forms/`](../client/views/apps/forms):
+    - [`fish_tales_form.ejs`](../client/views/apps/forms/fish_tales_form.ejs)
+    - [`shop_reel_form.ejs`](../client/views/apps/forms/shop_reel_form.ejs)
+    - [`site_scout_form.ejs`](../client/views/apps/forms/site_scout_form.ejs)
+  - Main tool views to [`views/apps/`](../client/views/apps):
+    - [`fish_tales.ejs`](../client/views/apps/fish_tales.ejs)
+    - [`shop_reel.ejs`](../client/views/apps/shop_reel.ejs)
+    - [`site_scout.ejs`](../client/views/apps/site_scout.ejs)
 - Updated Express routes to reflect new file locations.
 
 ### [v3.3](https://github.com/zanemyers/RescueRiver/compare/v3.2..v3.3) — _25 Aug 2025_
@@ -76,24 +76,24 @@ All notable changes to this project will be documented in this file.
 #### **Added**
 
 - **SiteScout**:
-  - WebSocket ([`/ws/site-scout`](../server.js)) with [`siteScoutSocket`](deprecated/sockets/_siteScoutSocket.js) for handling `shopReel` + `fishTales` files.
-  - Frontend: [`siteScoutFormApp.js`](../static/js/siteScoutFormApp.js), [`site_scout_form.ejs`](../views/apps/forms/site_scout_form.ejs) partial, and [`site_scout.ejs`](../views/apps/site_scout.ejs) page.
+  - WebSocket ([`/ws/site-scout`](../server/server.js)) with [`siteScoutSocket`](deprecated/sockets/_siteScoutSocket.js) for handling `shopReel` + `fishTales` files.
+  - Frontend: [`siteScoutFormApp.js`](../client/static/js/siteScoutFormApp.js), [`site_scout_form.ejs`](../client/views/apps/forms/site_scout_form.ejs) partial, and [`site_scout.ejs`](../client/views/apps/site_scout.ejs) page.
 
 #### **Changed**
 
 - **Sockets**: `reportSocket` → [`fishTalesSocket`](deprecated/sockets/_fishTalesSocket.js), `shopSocket` → [`shopReelSocket`](deprecated/sockets/_shopReelSocket.js).
-- **Routes**: `/shop-form` → [`/shop-reel-form`](../routes/_apps.js), `/report-form` → [`/fish-tales-form`](../routes/_apps.js).
-- **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server.js), [`/ws/fish-tales`](../server.js).
-- [**BaseFormApp**](../static/js/baseFormApp.js): WebSocket port fixed at `3000` (was `process.env.PORT`).
+- **Routes**: `/shop-form` → [`/shop-reel-form`](../server/routes/_apps.js), `/report-form` → [`/fish-tales-form`](../server/routes/_apps.js).
+- **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server/server.js), [`/ws/fish-tales`](../server/server.js).
+- [**BaseFormApp**](../client/static/js/baseFormApp.js): WebSocket port fixed at `3000` (was `process.env.PORT`).
 - **SiteScout logic**: [`mergeMissingUrls`](../apps/site_scout/siteScout.js) now accepts in-memory buffers, supports cancellation, returns updated starter files.
-- [**File input**](../static/js/fileInput.js): refactored for independent components (`.file-input-component`), simplified partials, and per-component init.
-- **Forms**: `reportFormApp.js` → [`fishTalesFormApp.js`](../static/js/fishTalesFormApp.js), `shopFormApp.js` → [`shopReelFormApp.js`](../static/js/shopReelFormApp.js).
-- [**SCSS**](../static/scss/style.scss): restructured styles for `.file-input-component` (better drag-drop + file display).
-- [**Map UI**](../static/js/map.js): switched lat/lng handling to `input[name="latitude"]` / `input[name="longitude"]`.
+- [**File input**](../client/static/js/fileInput.js): refactored for independent components (`.file-input-component`), simplified partials, and per-component init.
+- **Forms**: `reportFormApp.js` → [`fishTalesFormApp.js`](../client/static/js/fishTalesFormApp.js), `shopFormApp.js` → [`shopReelFormApp.js`](../client/static/js/shopReelFormApp.js).
+- [**SCSS**](../client/static/scss/style.scss): restructured styles for `.file-input-component` (better drag-drop + file display).
+- [**Map UI**](../client/static/js/map.js): switched lat/lng handling to `input[name="latitude"]` / `input[name="longitude"]`.
 - **Views**:
-  - Updated wording in [`fish_tales.ejs`](../views/apps/fish_tales.ejs) + [`shop_reel.ejs`](../views/apps/shop_reel.ejs) (fly-fishing focus, privacy notices).
-  - [`index.ejs`](../views/index.ejs) SiteScout button text: _Coming Soon_ → _Check your sites_.
-  - [`header.ejs`](../views/partials/header.ejs) menu renamed to **SiteScout**.
+  - Updated wording in [`fish_tales.ejs`](../client/views/apps/fish_tales.ejs) + [`shop_reel.ejs`](../client/views/apps/shop_reel.ejs) (fly-fishing focus, privacy notices).
+  - [`index.ejs`](../client/views/index.ejs) SiteScout button text: _Coming Soon_ → _Check your sites_.
+  - [`header.ejs`](../client/views/partials/header.ejs) menu renamed to **SiteScout**.
 - **Docs**: refreshed [`README.md`](../README.md), [`setup.md`](./setup.md), and [`config.md`](./config.md).
 
 #### **Removed**
@@ -106,12 +106,12 @@ All notable changes to this project will be documented in this file.
 
 #### **Added**
 
-- New [**Index**](../views/index.ejs) page with hero section and cards for **ShopReel**, **FishTales**, **SiteScout**, and **Docs**.
-- New [**About**](../views/about.ejs) page with supporting images:
+- New [**Index**](../client/views/index.ejs) page with hero section and cards for **ShopReel**, **FishTales**, **SiteScout**, and **Docs**.
+- New [**About**](../client/views/about.ejs) page with supporting images:
   - `static/images/idea.jpg`
   - `static/images/important.jpg`
   - `static/images/serve.jpg`
-- Reusable [**Card partial**](../views/partials/card.ejs) supporting slim and normal layouts.
+- Reusable [**Card partial**](../client/views/partials/card.ejs) supporting slim and normal layouts.
 - **Navbar** enhancement: dropdown toggles highlight when one of their items matches the current path.
 - **SiteScout** section and feature list added in the [Overview docs](./overview.md).
 - New **Packages** in the [Setup docs](./setup.md):
@@ -131,14 +131,14 @@ All notable changes to this project will be documented in this file.
   - `views/partials/report_form.ejs` → `views/partials/fish_tales_form.ejs`
   - `views/partials/shop_form.ejs` → `views/partials/shop_reel_form.ejs`
 - Docs refreshed for new names and clearer known issues ([README](../README.md), [Overview](./overview.md), [Setup](./setup.md)).
-- [**Compose**](../docker-compose.yml):
+- [**Compose**](../docker/docker-compose.yml):
   - service `fly-box` → `flybox`
   - added `PORT` env var
   - switched port mapping to `"${PORT}:3000"`
-- [**BaseFormApp**](../static/js/baseFormApp.js): WebSocket URL now uses `process.env.PORT` instead of hardcoded `3000`.
-- [**Header**](../views/partials/header.ejs): updated with larger logo, “Flybox” branding, and a “More” dropdown.
-- [**Footer**](../views/partials/footer.ejs): simplified styling.
-- [**Layout**](../views/layouts/base.ejs): favicon updated from `fishing_pole.ico` to `tackle_box.png`.
+- [**BaseFormApp**](../client/static/js/baseFormApp.js): WebSocket URL now uses `process.env.PORT` instead of hardcoded `3000`.
+- [**Header**](../client/views/partials/header.ejs): updated with larger logo, “Flybox” branding, and a “More” dropdown.
+- [**Footer**](../client/views/partials/footer.ejs): simplified styling.
+- [**Layout**](../client/views/layouts/base.ejs): favicon updated from `fishing_pole.ico` to `tackle_box.png`.
 
 #### **Removed**
 
