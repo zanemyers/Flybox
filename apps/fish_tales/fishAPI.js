@@ -1,5 +1,5 @@
 import { BaseAPI } from "../base/_baseAPI.js";
-import { prisma } from "../../db.js";
+import { prisma } from "../../server/db.js";
 import { JobStatus, JobType } from "@prisma/client";
 import { FishTales } from "./fishTales.js";
 

@@ -33,7 +33,7 @@ Parses, summarizes, and consolidates reports from various websites into structur
 
 ### 🔍 Features
 
-- Uses an **[Excel starter/config file](../static/example_files/fishTales_starter_file.xlsx)** to define site-specific extraction rules:
+- Uses an **[Excel starter/config file](../client/static/example_files/fishTales_starter_file.xlsx)** to define site-specific extraction rules:
   - CSS selectors, keywords, and other metadata for each shop website.
 - Filters reports based on **maximum age** (in days) to prioritize recent content.
 - Supports **river-specific filtering**, allowing users to focus on particular rivers:
