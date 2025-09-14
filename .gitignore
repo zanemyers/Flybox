@@ -8,4 +8,4 @@ media/
 .env
 
 # Database file
-/db/dev.db
+/server/db/dev.db

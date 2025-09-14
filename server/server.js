@@ -3,7 +3,6 @@ import "./db.js"; // Initialize the database
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import expressLayouts from "express-ejs-layouts";
 
 // Route handlers
 import routes from "./routes/index.js";
@@ -16,21 +15,20 @@ const port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Set up view engine with layouts
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-app.use(expressLayouts);
-app.set("layout", "layouts/base");
-
-// Serve static files
-app.use(express.static(path.join(__dirname, "static")));
-app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap")));
-
 // Parse URL-encoded form data
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Attach application routes
-app.use("/", routes);
+// Attach application routes (API)
+app.use("/api", routes);
+
+// Serve static files (React build output)
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
+// For all other routes, send React index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
 
 // Generic error handler (must be last middleware)
 app.use(errorHandler);

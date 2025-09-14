@@ -1,4 +1,4 @@
-import { prisma } from "../../db.js";
+import { prisma } from "../../server/db.js";
 import { JobStatus } from "@prisma/client";
 import { ERRORS } from "./constants/index.js";
 
