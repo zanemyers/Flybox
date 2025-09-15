@@ -1,4 +1,9 @@
-import { EMAIL_REGEX, MESSAGES, SHOP_KEYWORDS, SOCIAL_MEDIA_MAP } from "../base/constants/index.js";
+import {
+  EMAIL_REGEX,
+  MESSAGES,
+  SHOP_KEYWORDS,
+  SOCIAL_MEDIA_MAP,
+} from "../base/constants/index.js";
 
 /**
  * Enhances a Playwright `Page` instance with custom scraping helper methods
@@ -32,11 +37,16 @@ async function addShopSelectors(page) {
    */
   page.getSocialMedia = async function () {
     try {
-      const hrefs = await page.$$eval("a", (links) => links.map((link) => link.href.toLowerCase()));
+      const hrefs = await page.$$eval("a", (links) =>
+        links.map((link) => link.href.toLowerCase()),
+      );
 
       const foundSocials = [];
       for (const { domain, name } of SOCIAL_MEDIA_MAP) {
-        if (hrefs.some((href) => href.includes(domain)) && !foundSocials.includes(name)) {
+        if (
+          hrefs.some((href) => href.includes(domain)) &&
+          !foundSocials.includes(name)
+        ) {
           foundSocials.push(name);
         }
       }
@@ -160,7 +170,9 @@ async function addShopSelectors(page) {
 function buildShopRows(shops, shopDetails) {
   if (shops.length !== shopDetails.length)
     // ensure both arrays are the same length
-    throw new Error(`Shop count - ${shops.length} ≠ details count - ${shopDetails.length}`);
+    throw new Error(
+      `Shop count - ${shops.length} ≠ details count - ${shopDetails.length}`,
+    );
 
   return shops.map((shop, i) => {
     return {

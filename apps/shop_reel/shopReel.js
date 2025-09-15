@@ -4,8 +4,17 @@ import { PromisePool } from "@supercharge/promise-pool";
 import { JobStatus } from "@prisma/client";
 
 import { ERRORS, FALLBACK_DETAILS } from "../base/constants/index.js";
-import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils.js";
-import { BaseApp, ExcelFileHandler, normalizeUrl, StealthBrowser } from "../base/index.js";
+import {
+  addShopSelectors,
+  buildCacheFileRows,
+  buildShopRows,
+} from "./shopUtils.js";
+import {
+  BaseApp,
+  ExcelFileHandler,
+  normalizeUrl,
+  StealthBrowser,
+} from "../base/index.js";
 
 /**
  * ShopReel class handles scraping shops from Google Maps via SerpAPI,
@@ -24,7 +33,9 @@ export class ShopReel extends BaseApp {
     this.searchParams = searchParams;
     this.shopWriter = new ExcelFileHandler(); // Excel writer for results
     this.websiteCache = new Map(); // Cache for previously scraped website details
-    this.browser = new StealthBrowser({ headless: process.env.RUN_HEADLESS !== "false" });
+    this.browser = new StealthBrowser({
+      headless: process.env.RUN_HEADLESS !== "false",
+    });
   }
 
   /**
@@ -79,13 +90,18 @@ export class ShopReel extends BaseApp {
     const results = [];
 
     // Fetch in pages of 20 until maxResults
-    for (let start = 0; start < (+this.searchParams.maxResults || 100); start += 20) {
+    for (
+      let start = 0;
+      start < (+this.searchParams.maxResults || 100);
+      start += 20
+    ) {
       await this.throwIfJobCancelled();
 
       // Use the environment variable SERP_API_KEY for development/testing if the provided apiKey is "test";
       // Otherwise, use the actual apiKey
       const apiKey =
-        this.searchParams.apiKey === "test" && process.env.NODE_ENV === "development"
+        this.searchParams.apiKey === "test" &&
+        process.env.NODE_ENV === "development"
           ? process.env.SERP_API_KEY
           : this.searchParams.apiKey;
 
@@ -107,7 +123,10 @@ export class ShopReel extends BaseApp {
     // Save results to secondary file if any found
     if (results.length > 0) {
       await cacheFileHandler.write(buildCacheFileRows(results));
-      await this.addJobFile("secondaryFile", await cacheFileHandler.getBuffer());
+      await this.addJobFile(
+        "secondaryFile",
+        await cacheFileHandler.getBuffer(),
+      );
     }
 
     return results;
@@ -124,10 +143,13 @@ export class ShopReel extends BaseApp {
     let completed = 0;
 
     await this.browser.launch();
-    const messageTemplate = (done) => `Scraping shops (${done}/${shops.length})`;
+    const messageTemplate = (done) =>
+      `Scraping shops (${done}/${shops.length})`;
     await this.addJobMessage(messageTemplate(completed));
 
-    await PromisePool.withConcurrency(parseInt(process.env.CONCURRENCY, 10) || 5)
+    await PromisePool.withConcurrency(
+      parseInt(process.env.CONCURRENCY, 10) || 5,
+    )
       .for(shops)
       .process(async (shop, index) => {
         if (!shop.website) {

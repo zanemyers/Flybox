@@ -18,9 +18,3 @@ RUN npx playwright install --with-deps
 
 # Copy the rest of the app
 COPY .. .
-
-# Optional: expose a port if using Express
-EXPOSE 3000
-
-# Default command for development (Sass watcher + Node server)
-CMD sh -c "npx sass --watch --poll static/scss/style.scss:static/public/style.css 2>/dev/null & node --inspect=0.0.0.0:9229 server.js"

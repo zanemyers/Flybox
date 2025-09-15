@@ -1,7 +1,7 @@
 #!/usr/bin/env just --justfile
 
 # Define schema path
-schema := "./db"
+schema := "./server/db"
 
 # Runs the setup script to prepare the .env file and install pacakges locally.
 setup:
@@ -26,22 +26,26 @@ setup:
 
 # Lint the code
 @lint:
-    eslint . --fix
-    stylelint "static/scss/**/*.scss"
+    eslint -c config/eslint.config.js .
+    eslint -c config/eslint.config.js . --fix
+    stylelint "client/src/styles/**/*.scss" -c config/.stylelintrc
+    stylelint "client/src/styles/**/*.scss" -c config/.stylelintrc --fix
 
 # Format the code
 @format:
     prettier --write . --log-level silent
 
-# Compiles scss into css
-@build_styles:
-    sass static/scss/style.scss static/public/style.css
+# Build typescript
+@build:
+    tsc -p config/tsconfig.json && vite build -c config/vite.config.ts
 
 # Starts the server with docker (pass the '-l' flag to run locally)
 start *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-l"* ]]; then  # check for -l (local) flag
-        npx sass --watch static/scss/style.scss static/public/style.css & node --inspect=0.0.0.0:9229 server.js
+        vite -c config/vite.config.ts & node --inspect=0.0.0.0:9229 server/server.js
+    elif [[ "{{FLAGS}}" == *"-p"* ]]; then # check for -p (preview) flag
+        node server/server.js
     else
         docker compose up
     fi

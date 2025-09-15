@@ -10,9 +10,10 @@ export default defineConfig([
   {
     ignores: ["**/deprecated/", "node_modules/", "dist/"],
   },
-  // --- Server / JS files ---
+  // --- JS / Server / scripts / config (everything except client) ---
   {
-    files: ["server/**/*.{js,mjs,cjs}"],
+    files: ["**/*.{js,mjs,cjs}"],
+    ignores: ["client/**/*"],
     plugins: { js, prettier: prettierPlugin },
     extends: ["js/recommended"],
     languageOptions: {
@@ -39,7 +40,7 @@ export default defineConfig([
     ],
     languageOptions: {
       parserOptions: {
-        project: ["./client/tsconfig.app.json", "./client/tsconfig.node.json"],
+        project: ["./tsconfig.app.json", "./tsconfig.node.json"],
         tsconfigRootDir: import.meta.dirname,
       },
     },

@@ -25,8 +25,9 @@ app.use("/api", routes);
 // Serve static files (React build output)
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-// For all other routes, send React index.html
-app.get("*", (req, res) => {
+// Serve React app for all non-API routes
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api")) return next(); // skip API routes
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
