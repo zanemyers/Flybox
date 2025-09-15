@@ -46,12 +46,12 @@ export class SiteScout extends BaseApp {
         this.fishTalesHandler.read(
           [],
           () => true,
-          (row) => row["url"]
+          (row) => row["url"],
         ),
         this.shopReelHandler.read(
           [],
           (row) => row["has_report"] === true,
-          (row) => row["website"]
+          (row) => row["website"],
         ),
       ]);
 
@@ -63,7 +63,8 @@ export class SiteScout extends BaseApp {
 
       // Determine which site URLs are missing from the report file based on domain
       const missingUrls = siteUrls.filter(
-        (siteUrl) => !reportUrls.some((reportUrl) => sameDomain(siteUrl, reportUrl))
+        (siteUrl) =>
+          !reportUrls.some((reportUrl) => sameDomain(siteUrl, reportUrl)),
       );
 
       if (missingUrls.length === 0) {
@@ -73,7 +74,7 @@ export class SiteScout extends BaseApp {
       }
 
       await this.addJobMessage(
-        `Appending ${missingUrls.length} missing URLs to the report file...`
+        `Appending ${missingUrls.length} missing URLs to the report file...`,
       );
       await this.throwIfJobCancelled();
 
@@ -83,7 +84,7 @@ export class SiteScout extends BaseApp {
       // Append missing URLs as new rows
       await this.updatedFile.write(
         missingUrls.map((url) => ({ url })),
-        true
+        true,
       );
 
       await this.addJobMessage("✅ FishTales starter file updated.");

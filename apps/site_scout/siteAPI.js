@@ -24,7 +24,7 @@ export class SiteScoutAPI extends BaseAPI {
       // Start the job asynchronously
       const scout = new SiteScout(
         job.id,
-        Object.fromEntries(req.files.map((f) => [f.fieldname, f.buffer])) // map the files to {name: buffer}
+        Object.fromEntries(req.files.map((f) => [f.fieldname, f.buffer])), // map the files to {name: buffer}
       );
       scout.mergeMissingUrls().catch((err) => {
         console.error(`SiteScout failed for job ${job.id}:`, err);

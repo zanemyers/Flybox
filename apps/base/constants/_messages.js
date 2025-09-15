@@ -9,7 +9,8 @@ const MESSAGES = {
   // ERROR MESSAGES
   ERROR_SCROLL_TIMEOUT: (time) =>
     `Scroll Timeout: Reached ${time / 1000} seconds without seeing end-of-list message.`,
-  ERROR_BLOCKED_FORBIDDEN: (status) => `Blocked or Forbidden link (HTTP ${status})`,
+  ERROR_BLOCKED_FORBIDDEN: (status) =>
+    `Blocked or Forbidden link (HTTP ${status})`,
   ERROR_EMAIL: "Errored while checking for an email",
   ERROR_LOAD_FAILED: "Page load failed",
   ERROR_REPORT: "Errored while checking for reports",
