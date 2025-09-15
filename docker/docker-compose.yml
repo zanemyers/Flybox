@@ -1,15 +1,30 @@
 services:
-  flybox:
-    container_name: node
+  backend:
+    container_name: backend
     build:
       context: ..
       dockerfile: ../Dockerfile
+    working_dir: /app
+    command: node --inspect=0.0.0.0:9229 server/server.js
     volumes:
-      - .:/app # syncs source code for live changes in dev
-      - ./db:/app/db # persists SQLite dev.db outside container
+      - .:/app # sync all source for live changes
+      - ./db:/app/db # persist SQLite dev.db outside container
     env_file:
       - ../.env
-    working_dir: /app
     ports:
-      - "${PORT}:3000"
-      - "9229:9229"
+      - "${PORT:-3000}:3000" # backend API
+      - "9229:9229" # Node debugger
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ..
+      dockerfile: ../Dockerfile
+    working_dir: /app/client
+    command: vite --config config/vite.config.ts
+    volumes:
+      - ../client:/app/client # mount only client code
+    ports:
+      - "5173:5173" # Vite dev server
+    depends_on:
+      - backend

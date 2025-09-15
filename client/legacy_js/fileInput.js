@@ -10,7 +10,14 @@ function initSingleFileInput(container) {
   const clearButton = container.querySelector(".clear-file-button");
 
   // If a element is missing return early
-  if (!fileInput || !fileWrapper || !fileNameWrapper || !fileNameDisplay || !clearButton) return;
+  if (
+    !fileInput ||
+    !fileWrapper ||
+    !fileNameWrapper ||
+    !fileNameDisplay ||
+    !clearButton
+  )
+    return;
 
   // Update the UI to show the selected file name,
   const updateDisplay = () => {
