@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 interface NavItem {
   label: string;
@@ -12,7 +13,7 @@ const links: NavItem[] = [
   { label: "FishTales", href: "/fishTales" },
   {
     label: "More",
-    href: "#",
+    href: "",
     dropdown: [
       { label: "SiteScout", href: "/siteScout" },
       { label: "Docs", href: "/docs" },
