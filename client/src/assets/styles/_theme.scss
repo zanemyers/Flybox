@@ -1,0 +1,20 @@
+// =====================================
+// Import Bootstrap with overridden variables
+// =====================================
+
+$primary-blue: #0b657b;
+$secondary-green: #797917;
+$danger-red: #b2554f;
+
+@use "bootstrap" with (
+  $primary: $primary-blue,
+  $secondary: $secondary-green,
+  $danger: $danger-red,
+);
+
+// =====================================
+// Create Public Variables
+// =====================================
+$primary: $primary-blue;
+$secondary: $secondary-green;
+$danger: $danger-red;

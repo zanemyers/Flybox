@@ -39,6 +39,9 @@ setup:
 @build:
     tsc -p config/tsconfig.json && vite build -c config/vite.config.ts
 
+@debug:
+    node -p "process.env.SASS_QUIET_DEPS"
+
 # Starts the server with docker (pass the '-l' flag to run locally)
 start *FLAGS:
     #!/usr/bin/env sh
