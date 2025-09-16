@@ -8,7 +8,7 @@ interface Props extends ImageProps {
   reverse?: boolean; // defaults to false
 }
 
-export default function InfoBlock({
+export default function ContentBlock({
   heading,
   children,
   reverse = false,

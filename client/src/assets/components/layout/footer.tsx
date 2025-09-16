@@ -1,4 +1,4 @@
-export function Footer() {
+export default function Footer() {
   return (
     <footer className="bg-light text-center text-muted border-top">
       <div className="container">

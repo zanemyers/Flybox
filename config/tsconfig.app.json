@@ -21,9 +21,14 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    "baseUrl": "../client/src", // <-- your src folder
+    "paths": {
+      "@images/*": ["assets/images/*"],
+      "@components/*": ["components/*"],
+      "@styles/*": ["assets/styles/*"]
+    },
   },
-  "include": [
-    "../client/src"
-  ]
+  "include": ["../client/src", "./global.d.ts"]
 }

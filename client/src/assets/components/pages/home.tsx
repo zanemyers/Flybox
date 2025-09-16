@@ -1,6 +1,6 @@
-import { Card } from "./card";
+import Card from "../ui/card";
 
-export function Home() {
+export default function Home() {
   return (
     <>
       {/* Hero Section */}
