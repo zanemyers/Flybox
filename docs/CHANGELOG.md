@@ -46,7 +46,7 @@ All notable changes to this project will be documented in this file.
 #### **Added**
 
 - Added new images for documentation for FishTales, ShopReel, and SiteScout.
-- Added `.docs` layout for sidebar and content area to [SCSS](../client/src/styles/style.scss).
+- Added `.docs` layout for sidebar and content area to [SCSS](../client/src/assets/styles/style.scss).
 - Added documentation pages in [`views/apps/docs/`](../client/legacy_views/apps/docs):
   - [`docs.ejs`](../client/legacy_views/apps/docs.ejs) — tabbed layout for ShopReel, FishTales, and SiteScout documentation.
   - [`fish_tales_doc.ejs`](../client/legacy_views/apps/docs/fish_tales_doc.ejs) — FishTales Documentation.
@@ -88,7 +88,7 @@ All notable changes to this project will be documented in this file.
 - **SiteScout logic**: [`mergeMissingUrls`](../apps/site_scout/siteScout.js) now accepts in-memory buffers, supports cancellation, returns updated starter files.
 - [**File input**](../client/legacy_js/fileInput.js): refactored for independent components (`.file-input-component`), simplified partials, and per-component init.
 - **Forms**: `reportFormApp.js` → [`fishTalesFormApp.js`](../client/legacy_js/fishTalesFormApp.js), `shopFormApp.js` → [`shopReelFormApp.js`](../client/legacy_js/shopReelFormApp.js).
-- [**SCSS**](../client/src/styles/style.scss): restructured styles for `.file-input-component` (better drag-drop + file display).
+- [**SCSS**](../client/src/assets/styles/style.scss): restructured styles for `.file-input-component` (better drag-drop + file display).
 - [**Map UI**](../client/legacy_js/map.js): switched lat/lng handling to `input[name="latitude"]` / `input[name="longitude"]`.
 - **Views**:
   - Updated wording in [`fish_tales.ejs`](../client/legacy_views/apps/fish_tales.ejs) + [`shop_reel.ejs`](../client/legacy_views/apps/shop_reel.ejs) (fly-fishing focus, privacy notices).

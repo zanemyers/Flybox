@@ -2,8 +2,6 @@ import newFishTalesStarter from "@images/docs/site_scout/new_fish_tales_starter.
 import siteScout from "@images/docs/site_scout/site_scout.png";
 import HashLink from "../ui/hashLink";
 
-const contents = [""];
-
 export default function SiteScoutDoc() {
   return (
     <>
@@ -26,7 +24,7 @@ export default function SiteScoutDoc() {
           </HashLink>
           <ul>
             <li>
-              <HashLink id="inputs">Manual Input</HashLink>
+              <HashLink id="inputs">Inputs</HashLink>
             </li>
             <li>
               <HashLink id="output-files">Output Files</HashLink>

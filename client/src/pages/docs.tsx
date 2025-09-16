@@ -1,5 +1,5 @@
-import { FishTalesDoc, ShopReelDoc, SiteScoutDoc } from "../docs/index";
-import SideBar from "../ui/sideBar";
+import { FishTalesDoc, ShopReelDoc, SiteScoutDoc } from "../components/docs";
+import SideBar from "../components/ui/sideBar";
 import React, { useState } from "react";
 
 const sideBarItems = ["ShopReel", "FishTales", "SiteScout"];

@@ -1,8 +1,8 @@
 import idea from "@images/about/idea.jpg";
 import important from "@images/about/important.jpg";
 import serve from "@images/about/serve.jpg";
-import Card from "../ui/card";
-import ContentBlock from "../ui/contentBlock";
+import Card from "../components/ui/card";
+import ContentBlock from "../components/ui/contentBlock";
 
 export default function About() {
   return (
