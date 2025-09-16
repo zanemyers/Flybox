@@ -54,6 +54,6 @@ interface Props extends CardProps {
   slim?: boolean; // defaults to false
 }
 
-export function Card({ slim, ...cardProps }: Props) {
+export default function Card({ slim, ...cardProps }: Props) {
   return slim ? <SlimCard {...cardProps} /> : <NormalCard {...cardProps} />;
 }
