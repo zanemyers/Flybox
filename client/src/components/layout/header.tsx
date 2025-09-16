@@ -1,5 +1,5 @@
 import Navbar from "./navbar";
-import tackleBox from "../../images/tackle_box.png";
+import tackleBox from "../../assets/images/tackle_box.png";
 import { NavLink } from "react-router-dom";
 
 export default function Header() {

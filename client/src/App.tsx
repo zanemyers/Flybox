@@ -1,7 +1,7 @@
 // App.tsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "./assets/components/layout/layout";
-import { routes } from "./assets/components/pages";
+import { Layout } from "./components/layout/layout";
+import { routes } from "./pages";
 
 function App() {
   return (
