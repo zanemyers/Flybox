@@ -1,6 +1,6 @@
 import { FishTalesDoc, ShopReelDoc, SiteScoutDoc } from "../docs/index";
 import SideBar from "../ui/sideBar";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const sideBarItems = ["ShopReel", "FishTales", "SiteScout"];
 const docComponents: { [key: string]: React.FC } = {
@@ -19,18 +19,6 @@ export default function Docs() {
     sideBarItems.includes(queryTab) ? queryTab : "ShopReel",
   );
   const ActiveComponent = docComponents[activeTab];
-
-  // 3. Scroll to hash if present
-  useEffect(() => {
-    if (window.location.hash) {
-      const hash = window.location.hash.substring(1);
-      setTimeout(() => {
-        const targetEl = document.getElementById(hash);
-        if (targetEl)
-          targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
-    }
-  }, [activeTab]); // run whenever activeTab changes
 
   return (
     <div className="docs d-flex">
