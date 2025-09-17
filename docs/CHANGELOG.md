@@ -47,11 +47,11 @@ All notable changes to this project will be documented in this file.
 
 - Added new images for documentation for FishTales, ShopReel, and SiteScout.
 - Added `.docs` layout for sidebar and content area to [SCSS](../client/src/assets/styles/style.scss).
-- Added documentation pages in [`views/apps/docs/`](../client/legacy_views/apps/docs):
-  - [`docs.ejs`](../client/legacy_views/apps/docs.ejs) — tabbed layout for ShopReel, FishTales, and SiteScout documentation.
-  - [`fish_tales_doc.ejs`](../client/legacy_views/apps/docs/fish_tales_doc.ejs) — FishTales Documentation.
-  - [`shop_reel_doc.ejs`](../client/legacy_views/apps/docs/shop_reel_doc.ejs) — ShopReel Documentation.
-  - [`site_scout_doc.ejs`](../client/legacy_views/apps/docs/site_scout_doc.ejs) — SiteScout Documentation.
+- Added documentation pages in [`views/apps/docs/`](deprecated/legacy_views/apps/docs):
+  - [`docs.ejs`](deprecated/legacy_views/apps/docs.ejs) — tabbed layout for ShopReel, FishTales, and SiteScout documentation.
+  - [`fish_tales_doc.ejs`](deprecated/legacy_views/apps/docs/fish_tales_doc.ejs) — FishTales Documentation.
+  - [`shop_reel_doc.ejs`](deprecated/legacy_views/apps/docs/shop_reel_doc.ejs) — ShopReel Documentation.
+  - [`site_scout_doc.ejs`](deprecated/legacy_views/apps/docs/site_scout_doc.ejs) — SiteScout Documentation.
 
 #### **Changed**
 
@@ -61,14 +61,14 @@ All notable changes to this project will be documented in this file.
 - Updated CSS/SCSS to improve readability.
 - Simplified text in instructions panel and updated links to point to documentation.
 - **Moved files:**
-  - Form partials to [`views/apps/forms/`](../client/legacy_views/apps/forms):
-    - [`fish_tales_form.ejs`](../client/legacy_views/apps/forms/fish_tales_form.ejs)
-    - [`shop_reel_form.ejs`](../client/legacy_views/apps/forms/shop_reel_form.ejs)
-    - [`site_scout_form.ejs`](../client/legacy_views/apps/forms/site_scout_form.ejs)
-  - Main tool views to [`views/apps/`](../client/legacy_views/apps):
-    - [`fish_tales.ejs`](../client/legacy_views/apps/fish_tales.ejs)
-    - [`shop_reel.ejs`](../client/legacy_views/apps/shop_reel.ejs)
-    - [`site_scout.ejs`](../client/legacy_views/apps/site_scout.ejs)
+  - Form partials to [`views/apps/forms/`](deprecated/legacy_views/apps/forms):
+    - [`fish_tales_form.ejs`](deprecated/legacy_views/apps/forms/fish_tales_form.ejs)
+    - [`shop_reel_form.ejs`](deprecated/legacy_views/apps/forms/shop_reel_form.ejs)
+    - [`site_scout_form.ejs`](deprecated/legacy_views/apps/forms/site_scout_form.ejs)
+  - Main tool views to [`views/apps/`](deprecated/legacy_views/apps):
+    - [`fish_tales.ejs`](deprecated/legacy_views/apps/fish_tales.ejs)
+    - [`shop_reel.ejs`](deprecated/legacy_views/apps/shop_reel.ejs)
+    - [`site_scout.ejs`](deprecated/legacy_views/apps/site_scout.ejs)
 - Updated Express routes to reflect new file locations.
 
 ### [v3.3](https://github.com/zanemyers/RescueRiver/compare/v3.2..v3.3) — _25 Aug 2025_
@@ -77,23 +77,23 @@ All notable changes to this project will be documented in this file.
 
 - **SiteScout**:
   - WebSocket ([`/ws/site-scout`](../server/server.js)) with [`siteScoutSocket`](deprecated/sockets/_siteScoutSocket.js) for handling `shopReel` + `fishTales` files.
-  - Frontend: [`siteScoutFormApp.js`](../client/legacy_js/siteScoutFormApp.js), [`site_scout_form.ejs`](../client/legacy_views/apps/forms/site_scout_form.ejs) partial, and [`site_scout.ejs`](../client/legacy_views/apps/site_scout.ejs) page.
+  - Frontend: [`siteScoutFormApp.js`](deprecated/legacy_js/siteScoutFormApp.js), [`site_scout_form.ejs`](deprecated/legacy_views/apps/forms/site_scout_form.ejs) partial, and [`site_scout.ejs`](deprecated/legacy_views/apps/site_scout.ejs) page.
 
 #### **Changed**
 
 - **Sockets**: `reportSocket` → [`fishTalesSocket`](deprecated/sockets/_fishTalesSocket.js), `shopSocket` → [`shopReelSocket`](deprecated/sockets/_shopReelSocket.js).
 - **Routes**: `/shop-form` → [`/shop-reel-form`](../server/routes/_apps.js), `/report-form` → [`/fish-tales-form`](../server/routes/_apps.js).
 - **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server/server.js), [`/ws/fish-tales`](../server/server.js).
-- [**BaseFormApp**](../client/legacy_js/baseFormApp.js): WebSocket port fixed at `3000` (was `process.env.PORT`).
+- [**BaseFormApp**](deprecated/legacy_js/baseFormApp.js): WebSocket port fixed at `3000` (was `process.env.PORT`).
 - **SiteScout logic**: [`mergeMissingUrls`](../apps/site_scout/siteScout.js) now accepts in-memory buffers, supports cancellation, returns updated starter files.
-- [**File input**](../client/legacy_js/fileInput.js): refactored for independent components (`.file-input-component`), simplified partials, and per-component init.
-- **Forms**: `reportFormApp.js` → [`fishTalesFormApp.js`](../client/legacy_js/fishTalesFormApp.js), `shopFormApp.js` → [`shopReelFormApp.js`](../client/legacy_js/shopReelFormApp.js).
+- [**File input**](deprecated/legacy_js/fileInput.js): refactored for independent components (`.file-input-component`), simplified partials, and per-component init.
+- **Forms**: `reportFormApp.js` → [`fishTalesFormApp.js`](deprecated/legacy_js/fishTalesFormApp.js), `shopFormApp.js` → [`shopReelFormApp.js`](deprecated/legacy_js/shopReelFormApp.js).
 - [**SCSS**](../client/src/assets/styles/style.scss): restructured styles for `.file-input-component` (better drag-drop + file display).
-- [**Map UI**](../client/legacy_js/map.js): switched lat/lng handling to `input[name="latitude"]` / `input[name="longitude"]`.
+- [**Map UI**](deprecated/legacy_js/map.js): switched lat/lng handling to `input[name="latitude"]` / `input[name="longitude"]`.
 - **Views**:
-  - Updated wording in [`fish_tales.ejs`](../client/legacy_views/apps/fish_tales.ejs) + [`shop_reel.ejs`](../client/legacy_views/apps/shop_reel.ejs) (fly-fishing focus, privacy notices).
-  - [`index.ejs`](../client/legacy_views/index.ejs) SiteScout button text: _Coming Soon_ → _Check your sites_.
-  - [`header.ejs`](../client/legacy_views/partials/header.ejs) menu renamed to **SiteScout**.
+  - Updated wording in [`fish_tales.ejs`](deprecated/legacy_views/apps/fish_tales.ejs) + [`shop_reel.ejs`](deprecated/legacy_views/apps/shop_reel.ejs) (fly-fishing focus, privacy notices).
+  - [`index.ejs`](deprecated/legacy_views/index.ejs) SiteScout button text: _Coming Soon_ → _Check your sites_.
+  - [`header.ejs`](deprecated/legacy_views/partials/header.ejs) menu renamed to **SiteScout**.
 - **Docs**: refreshed [`README.md`](../README.md), [`setup.md`](./setup.md), and [`config.md`](./config.md).
 
 #### **Removed**
@@ -106,12 +106,12 @@ All notable changes to this project will be documented in this file.
 
 #### **Added**
 
-- New [**App**](../client/legacy_views/index.ejs) page with hero section and cards for **ShopReel**, **FishTales**, **SiteScout**, and **Docs**.
-- New [**About**](../client/legacy_views/about.ejs) page with supporting images:
+- New [**App**](deprecated/legacy_views/index.ejs) page with hero section and cards for **ShopReel**, **FishTales**, **SiteScout**, and **Docs**.
+- New [**About**](deprecated/legacy_views/about.ejs) page with supporting images:
   - `static/images/idea.jpg`
   - `static/images/important.jpg`
   - `static/images/serve.jpg`
-- Reusable [**Card partial**](../client/legacy_views/partials/card.ejs) supporting slim and normal layouts.
+- Reusable [**Card partial**](deprecated/legacy_views/partials/card.ejs) supporting slim and normal layouts.
 - **Navbar** enhancement: dropdown toggles highlight when one of their items matches the current path.
 - **SiteScout** section and feature list added in the [Overview docs](./overview.md).
 - New **Packages** in the [Setup docs](./setup.md):
@@ -135,10 +135,10 @@ All notable changes to this project will be documented in this file.
   - service `fly-box` → `flybox`
   - added `PORT` env var
   - switched port mapping to `"${PORT}:3000"`
-- [**BaseFormApp**](../client/legacy_js/baseFormApp.js): WebSocket URL now uses `process.env.PORT` instead of hardcoded `3000`.
-- [**Header**](../client/legacy_views/partials/header.ejs): updated with larger logo, “Flybox” branding, and a “More” dropdown.
-- [**Footer**](../client/legacy_views/partials/footer.ejs): simplified styling.
-- [**Layout**](../client/legacy_views/layouts/base.ejs): favicon updated from `fishing_pole.ico` to `tackle_box.png`.
+- [**BaseFormApp**](deprecated/legacy_js/baseFormApp.js): WebSocket URL now uses `process.env.PORT` instead of hardcoded `3000`.
+- [**Header**](deprecated/legacy_views/partials/header.ejs): updated with larger logo, “Flybox” branding, and a “More” dropdown.
+- [**Footer**](deprecated/legacy_views/partials/footer.ejs): simplified styling.
+- [**Layout**](deprecated/legacy_views/layouts/base.ejs): favicon updated from `fishing_pole.ico` to `tackle_box.png`.
 
 #### **Removed**
 

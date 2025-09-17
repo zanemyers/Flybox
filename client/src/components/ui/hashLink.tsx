@@ -1,23 +1,37 @@
 import React, { type ReactNode } from "react";
 
-interface Props {
+interface HashLinkProps {
   id: string;
-  children: ReactNode; // label passed as children
+  tab?: string; // optional tab to activate first
+  children: ReactNode;
+  onActivateTab?: (tab: string) => void;
 }
 
-export default function HashLink(props: Props) {
+export default function HashLink({
+  id,
+  tab,
+  children,
+  onActivateTab,
+}: HashLinkProps) {
   const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault(); // stop instant jump
+    e.preventDefault();
 
-    const el = document.getElementById(props.id);
-    if (!el) return;
-
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (tab && onActivateTab) {
+      onActivateTab(tab);
+      // delay scroll to wait for component mount
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    } else {
+      const el = document.getElementById(id);
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
 
   return (
-    <a href={`#${props.id}`} onClick={handleClick}>
-      {props.children}
+    <a href={`#${id}`} onClick={handleClick}>
+      {children}
     </a>
   );
 }
