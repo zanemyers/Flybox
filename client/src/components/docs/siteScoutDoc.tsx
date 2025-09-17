@@ -1,8 +1,22 @@
-import newFishTalesStarter from "@images/docs/site_scout/new_fish_tales_starter.png";
-import siteScout from "@images/docs/site_scout/site_scout.png";
+import newStarterFile from "@images/docs/site_scout/new_fish_tales_starter.png";
+import siteScoutForm from "@images/docs/site_scout/site_scout.png";
+
+import TableOfContents from "../ui/tableOfContents";
 import HashLink from "../ui/hashLink";
 
-export default function SiteScoutDoc() {
+interface Props {
+  setActiveTab: (tab: string) => void;
+}
+
+const tocItems = [
+  {
+    label: "Using the SiteScout Form",
+    children: [{ label: "Inputs" }, { label: "Output Files" }],
+  },
+  { label: "Additional Notes" },
+];
+
+export default function SiteScoutDoc(props: Props) {
   return (
     <>
       <h1>🗺️ SiteScout Documentation</h1>
@@ -16,25 +30,7 @@ export default function SiteScoutDoc() {
       <hr />
 
       {/*Table of contents*/}
-      <h3>Contents</h3>
-      <ul>
-        <li>
-          <HashLink id="using-the-sitescout-form">
-            Using the ShopReel Form
-          </HashLink>
-          <ul>
-            <li>
-              <HashLink id="inputs">Inputs</HashLink>
-            </li>
-            <li>
-              <HashLink id="output-files">Output Files</HashLink>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <HashLink id="additional-notes">✏ Additional Notes</HashLink>
-        </li>
-      </ul>
+      <TableOfContents items={tocItems} />
 
       <hr />
 
@@ -62,7 +58,11 @@ export default function SiteScoutDoc() {
         </li>
       </ul>
       <div className="d-flex justify-content-center pb-3">
-        <img src={siteScout} alt="SiteScout Form" className="img-fluid w-75" />
+        <img
+          src={siteScoutForm}
+          alt="SiteScout Form"
+          className="img-fluid w-75"
+        />
       </div>
       <p>
         After selecting the files, click <strong>Compare</strong>. You’ll see
@@ -83,16 +83,20 @@ export default function SiteScoutDoc() {
           <em>Note:</em> Only new URLs are added; the rest of your file stays
           the same. For full instructions on how to update your starter file,
           see the{" "}
-          <a href="/docs?tab=FishTales#update-your-starter-file">
+          <HashLink
+            id="update-your-starter-file"
+            tab="FishTales"
+            onActivateTab={props.setActiveTab}
+          >
             Update Your Starter File
-          </a>{" "}
+          </HashLink>{" "}
           guide.
         </li>
       </ul>
 
       <div className="d-flex justify-content-center pb-3">
         <img
-          src={newFishTalesStarter}
+          src={newStarterFile}
           alt="New FishTales starter file"
           className="img-fluid w-75"
         />

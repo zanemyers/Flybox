@@ -2,8 +2,12 @@ import { FishTalesDoc, ShopReelDoc, SiteScoutDoc } from "../components/docs";
 import SideBar from "../components/ui/sideBar";
 import React, { useState } from "react";
 
+interface DocProps {
+  setActiveTab: (tab: string) => void;
+}
+
 const sideBarItems = ["ShopReel", "FishTales", "SiteScout"];
-const docComponents: { [key: string]: React.FC } = {
+const docComponents: { [key: string]: React.FC<DocProps> } = {
   ShopReel: ShopReelDoc,
   FishTales: FishTalesDoc,
   SiteScout: SiteScoutDoc,
@@ -30,7 +34,7 @@ export default function Docs() {
 
       {/*Content Cards */}
       <div className="docs-content card shadow-sm p-4 bg-light flex-grow-1">
-        <ActiveComponent />
+        <ActiveComponent setActiveTab={setActiveTab} />
       </div>
     </div>
   );
