@@ -5,7 +5,7 @@ interface TocItem {
   children?: TocItem[];
 }
 
-interface Props {
+export interface Props {
   items: TocItem[];
 }
 
