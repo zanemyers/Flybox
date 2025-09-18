@@ -5,7 +5,7 @@ export interface Props {
   attribution: string;
 }
 
-export default function Image(props: Props) {
+export default function AttributedImage(props: Props) {
   return (
     <>
       <img src={props.image} alt={props.alt} className="img-fluid" />

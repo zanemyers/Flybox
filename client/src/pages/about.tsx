@@ -2,7 +2,7 @@ import idea from "@images/about/idea.jpg";
 import important from "@images/about/important.jpg";
 import serve from "@images/about/serve.jpg";
 import Card from "../components/ui/card";
-import ContentBlock from "../components/ui/contentBlock";
+import AboutSection from "../components/ui/aboutSection";
 
 export default function About() {
   return (
@@ -16,7 +16,7 @@ export default function About() {
       </section>
 
       {/* The Idea */}
-      <ContentBlock
+      <AboutSection
         image={idea}
         alt="Idea Illustration"
         url="https://www.freepik.com"
@@ -32,10 +32,10 @@ export default function About() {
           flies to make, what colors to use, and where to promote certain
           flies—and as a tool for fly-fishing enthus
         </p>
-      </ContentBlock>
+      </AboutSection>
 
       {/* Importance */}
-      <ContentBlock
+      <AboutSection
         image={important}
         alt="Important Illustration"
         url="https://www.freepik.com"
@@ -52,10 +52,10 @@ export default function About() {
           <li>Access AI-powered summaries of the latest fishing activity.</li>
           <li>Plan trips with confidence and spend more time fishing.</li>
         </ul>
-      </ContentBlock>
+      </AboutSection>
 
       {/* Who It Serves */}
-      <ContentBlock
+      <AboutSection
         image={serve}
         alt="Serve Illustration"
         url="https://www.freepik.com"
@@ -73,7 +73,7 @@ export default function About() {
           promote them—while giving fly-fishing enthusiasts a single place to
           stay informed and engaged.
         </p>
-      </ContentBlock>
+      </AboutSection>
 
       {/* Overview / What Flybox Offers */}
       <section className="mb-5 pt-5">
