@@ -1,88 +1,45 @@
 import newStarterFile from "@images/docs/site_scout/new_fish_tales_starter.png";
 import siteScoutForm from "@images/docs/site_scout/site_scout.png";
 
-import TableOfContents from "../ui/tableOfContents";
 import HashLink from "../ui/hashLink";
+import DocOverview from "../layout/docOverview";
+import ListBlock from "../ui/listBlock";
+import DocSection from "../layout/DocSection";
+import DocImage from "../ui/docImage";
 
 interface Props {
   setActiveTab: (tab: string) => void;
 }
 
-const tocItems = [
-  {
-    label: "Using the SiteScout Form",
-    children: [{ label: "Inputs" }, { label: "Output Files" }],
-  },
-  { label: "Additional Notes" },
-];
-
 export default function SiteScoutDoc(props: Props) {
-  return (
-    <>
-      <h1>🗺️ SiteScout Documentation</h1>
-      <p>
-        {/*Overview */}
-        SiteScout helps keep your <strong>FishTales</strong> starter file up to
-        date. It checks the latest <strong>ShopReel</strong> results and adds
-        any new report sites automatically.
-      </p>
+  const tocItems = [
+    {
+      label: "Using the SiteScout Form",
+      children: [{ label: "Inputs" }, { label: "Output Files" }],
+    },
+    { label: "Additional Notes" },
+  ];
 
-      <hr />
+  const inputListItems = [
+    {
+      label: "ShopReel File",
+      main: "Import the final results file you got from ShopReel.",
+    },
+    {
+      label: "FishTales Starter File",
+      main: "Import your current starter file, or use the [**example file**](/example_files/fishTales_starter_file.xlsx)",
+    },
+  ];
 
-      {/*Table of contents*/}
-      <TableOfContents items={tocItems} />
-
-      <hr />
-
-      {/* Using the form section */}
-      <h3 id="using-the-sitescout-form">Using the SiteScout Form</h3>
-      <p>
-        Use the SiteScout form to update your FishTales starter file by
-        importing two Excel files.
-      </p>
-
-      {/* Inputs section */}
-      <h5 id="inputs">Inputs</h5>
-      <ul>
-        <li>
-          <strong>ShopReel File:</strong> Import the results file you got from
-          ShopReel.
-        </li>
-        <li>
-          <strong>FishTales Starter File:</strong> Import your current starter
-          file, or use the{" "}
-          <a href="/example_files/fishTales_starter_file.xlsx" download>
-            <strong>example file</strong>
-          </a>
-          .
-        </li>
-      </ul>
-      <div className="d-flex justify-content-center pb-3">
-        <img
-          src={siteScoutForm}
-          alt="SiteScout Form"
-          className="img-fluid w-75"
-        />
-      </div>
-      <p>
-        After selecting the files, click <strong>Compare</strong>. You’ll see
-        progress updates as SiteScout runs.
-      </p>
-
-      {/* Output files section */}
-      <h5 id="output-files">Output Files</h5>
-      <p className="mb-0">
-        After running the comparison, SiteScout creates the following file:
-      </p>
-      <ul>
-        <li>
-          <strong>new_fishTales_starter.xlsx:</strong>
-          Includes all the original entries plus any new sites found in your
-          ShopReel results.
-          <br />
-          <em>Note:</em> Only new URLs are added; the rest of your file stays
-          the same. For full instructions on how to update your starter file,
-          see the{" "}
+  const outputListItems = [
+    {
+      label: "new_fishTales_starter.xlsx",
+      main: "Includes all the original entries plus any new sites found in your ShopReel results.",
+      noteLabel: "Note",
+      note: (
+        <>
+          Only new URLs are added; the rest of your file stays the same. For
+          full instructions on how to update your starter file, see the{" "}
           <HashLink
             id="update-your-starter-file"
             tab="FishTales"
@@ -91,28 +48,65 @@ export default function SiteScoutDoc(props: Props) {
             Update Your Starter File
           </HashLink>{" "}
           guide.
-        </li>
-      </ul>
+        </>
+      ),
+    },
+  ];
 
-      <div className="d-flex justify-content-center pb-3">
-        <img
-          src={newStarterFile}
-          alt="New FishTales starter file"
-          className="img-fluid w-75"
-        />
-      </div>
+  const notesListItems = [
+    {
+      main: "SiteScout works together with **FishTales** and **ShopReel** to keep your data up to date.",
+    },
+    {
+      main: "Future updates may add better ways to detect duplicate entries.",
+    },
+  ];
+
+  return (
+    <>
+      {/*Overview */}
+      <DocOverview title="SiteScout" icon="🗺" items={tocItems}>
+        <p>
+          SiteScout helps keep your <strong>FishTales</strong> starter file up
+          to date. It checks the latest <strong>ShopReel</strong> results and
+          adds any new report sites automatically.
+        </p>
+      </DocOverview>
 
       <hr />
 
-      {/* Additional notes section */}
-      <h3 id="additional-notes">✏ Additional Notes</h3>
-      <ul>
-        <li>
-          SiteScout works together with <strong>FishTales</strong> and{" "}
-          <strong>ShopReel</strong> to keep your data up to date.
-        </li>
-        <li>Future updates may add better ways to detect duplicate entries.</li>
-      </ul>
+      {/* Using the form section */}
+      <DocSection
+        title="Using the SiteScout Form"
+        p1="Use the SiteScout form to update your FishTales starter file by importing two Excel files."
+      >
+        {/* Inputs section */}
+        <DocSection
+          subSection={true}
+          title="Inputs"
+          p2="After selecting the files, click **Compare**. You’ll see progress updates as SiteScout runs."
+        >
+          <ListBlock items={inputListItems} />
+          <DocImage img={siteScoutForm} alt="SiteScout Form" />
+        </DocSection>
+
+        {/* Output files section */}
+        <DocSection
+          subSection={true}
+          title="Output Files"
+          p1=" After running the comparison, SiteScout creates the following file:"
+        >
+          <ListBlock items={outputListItems} />
+          <DocImage img={newStarterFile} alt="New FishTales starter file" />
+        </DocSection>
+      </DocSection>
+
+      <hr />
+
+      {/* Additional Notes */}
+      <DocSection title="Additional Notes">
+        <ListBlock items={notesListItems} />
+      </DocSection>
     </>
   );
 }

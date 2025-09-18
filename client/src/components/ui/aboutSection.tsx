@@ -1,6 +1,5 @@
 import React from "react";
-import Image from "./image";
-import type { Props as ImageProps } from "./image";
+import AttributedImage, { type Props as ImageProps } from "./attributedImage";
 
 interface Props extends ImageProps {
   heading: string;
@@ -8,7 +7,7 @@ interface Props extends ImageProps {
   reverse?: boolean; // defaults to false
 }
 
-export default function ContentBlock({
+export default function AboutSection({
   heading,
   children,
   reverse = false,
@@ -19,7 +18,7 @@ export default function ContentBlock({
       className={`row align-items-center ${reverse ? "flex-md-row-reverse" : ""}`}
     >
       <div className="col-md-6">
-        <Image {...imageProps} />
+        <AttributedImage {...imageProps} />
       </div>
       <div className="col-md-6">
         <h2 className="h4 mb-3">{heading}</h2>

@@ -12,7 +12,10 @@ import newSite from "@images/docs/fish_tales/starter_file/new_site.png";
 import siteList from "@images/docs/fish_tales/starter_file/site_list.png";
 import updatedFile from "@images/docs/fish_tales/starter_file/updated_starter_file.png";
 
-import TableOfContents from "../ui/tableOfContents";
+import DocOverview from "../layout/docOverview";
+import ListBlock from "../ui/listBlock";
+import ExternalLink from "../ui/externalLink";
+import DocSection from "../layout/DocSection";
 
 const tocItems = [
   {
@@ -32,20 +35,37 @@ const tocItems = [
   { label: "Additional Notes" },
 ];
 
+const disclaimersListItems = [
+  {
+    label: "Summarization accuracy",
+    main: "The summaries may not always be perfect. Results can vary depending on the AI model and instructions used.",
+  },
+  {
+    label: "Blocked pages",
+    main: " Some websites may prevent FishTales from accessing their pages.",
+  },
+];
+
+const notesListItems = [
+  {
+    main: "Future versions will include a file listing all the websites FishTales looked at. This can help improve the starter file.",
+  },
+  {
+    main: "Future updates may add support for more AI models and extra filtering options to give you better control over results.",
+  },
+];
+
 export default function FishTalesDoc() {
   return (
     <>
-      <h1>🐟 FishTales Documentation</h1>
-      <p>
-        {/* Overview */}
-        FishTales gathers fly-fishing reports from different websites and
-        creates easy-to-read summaries using{" "}
-        <strong>Google’s Gemini API</strong>.
-      </p>
-
-      <hr />
-
-      <TableOfContents items={tocItems} />
+      {/* Overview */}
+      <DocOverview title="FishTales" icon="🐟" items={tocItems}>
+        <p>
+          FishTales gathers fly-fishing reports from different websites and
+          creates easy-to-read summaries using{" "}
+          <strong>Google’s Gemini API</strong>.
+        </p>
+      </DocOverview>
 
       <hr />
 
@@ -80,7 +100,7 @@ export default function FishTalesDoc() {
         </li>
         <li>
           <strong>River Names</strong> (<em>Optional</em>)<strong>:</strong>{" "}
-          List the rivers you want, separated by commas.
+          ListBlock the rivers you want, separated by commas.
         </li>
         <li>
           <strong>Starter File:</strong> Upload your current dataset, or use the{" "}
@@ -91,11 +111,7 @@ export default function FishTalesDoc() {
         </li>
       </ul>
       <div className="d-flex justify-content-center pb-3">
-        <img
-          src={basicForm}
-          alt="FishTales Basic Input Form"
-          className="img-fluid w-75"
-        />
+        <img src={basicForm} alt="FishTales Basic Input Form" />
       </div>
 
       {/*dvanced Inputs*/}
@@ -108,7 +124,7 @@ export default function FishTalesDoc() {
       </p>
       <ul>
         <li>
-          <strong>Include Site List:</strong> When enabled, a{" "}
+          <strong>Include Site ListBlock:</strong> When enabled, a{" "}
           <code className="text-black">site_list.txt</code> file will be
           generated containing all scraped sites. This can help refine or update
           your starter file.
@@ -133,13 +149,9 @@ export default function FishTalesDoc() {
           <strong>Model:</strong> Pick which Gemini AI model you want to use.
           Different models may give slightly different results. See available
           models at{" "}
-          <a
-            href="https://ai.google.dev/models/gemini"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <ExternalLink url="https://ai.google.dev/models/gemini">
             ai.google.dev
-          </a>
+          </ExternalLink>
           .<br />
           <em>Default:</em> <code>gemini-2.5-flash</code>
         </li>
@@ -157,11 +169,7 @@ export default function FishTalesDoc() {
         </li>
       </ul>
       <div className="d-flex justify-content-center pb-3">
-        <img
-          src={advancedForm}
-          alt="FishTales Advanced Input Form"
-          className="img-fluid w-75"
-        />
+        <img src={advancedForm} alt="FishTales Advanced Input Form" />
       </div>
       <p>
         Once you’ve updated the inputs you want, click{" "}
@@ -192,59 +200,35 @@ export default function FishTalesDoc() {
 
       <hr />
 
-      {/*etting your Gemini API Key*/}
+      {/* Getting your Gemini API Key */}
       <h3 id="get-your-gemini-api-key">Get Your Gemini API Key</h3>
       <div className="text-center">
         <ol className="text-start d-inline-block">
           <li className="mb-4">
             Go to{" "}
-            <a
-              href="https://ai.google.dev/aistudio"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink url="https://ai.google.dev/aistudio">
               ai.google.dev
-            </a>{" "}
+            </ExternalLink>{" "}
             and sign in with your Google account.
-            <img
-              src={gaiLogin}
-              alt="Google AI Studio Login"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={gaiLogin} alt="Google AI Studio Login" />
           </li>
           <li className="mb-4">
             If first-time user, see welcome message; otherwise, click{" "}
             <code>Get API key</code>.
-            <img
-              src={gaiHome}
-              alt="Google AI Studio Dashboard"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={gaiHome} alt="Google AI Studio Dashboard" />
           </li>
           <li className="mb-4">
             Accept terms and conditions (first-time users only), then click{" "}
             <code>I accept</code>.
-            <img
-              src={gaiTerms}
-              alt="Google AI Studio Terms & Conditions"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={gaiTerms} alt="Google AI Studio Terms & Conditions" />
           </li>
           <li className="mb-4">
             Click <code>+ Create API key</code> or select an existing key.
-            <img
-              src={gaiApi}
-              alt="Google AI Studio API Keys"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={gaiApi} alt="Google AI Studio API Keys" />
           </li>
           <li>
             Copy your API key and keep it safe.
-            <img
-              src={gaiKey}
-              alt="Google AI Studio API Key"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={gaiKey} alt="Google AI Studio API Key" />
           </li>
         </ol>
       </div>
@@ -262,29 +246,17 @@ export default function FishTalesDoc() {
           <li className="mb-4">
             Run <strong>SiteScout</strong> to see if your starter file is
             missing any report sites.
-            <img
-              src={newSite}
-              alt="New Report Sites"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={newSite} alt="New Report Sites" />
           </li>
           <li className="mb-4">
             Open each new site in your browser. Look for sections like{" "}
             <em>Reports</em>, <em>Blog</em>, or <em>Fishing Updates</em>.
-            <img
-              src={arHome}
-              alt="Arricks App Page"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={arHome} alt="Arricks App Page" />
           </li>
           <li className="mb-4">
             Pay attention to date, keywords, junk words, and click-phrases to
             determine if a site is actively updated.
-            <img
-              src={arReportList}
-              alt="Arricks Report List"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={arReportList} alt="Arricks Report ListBlock" />
           </li>
           <li className="mb-4">
             Use the browser inspector to find the HTML element containing the
@@ -312,32 +284,20 @@ export default function FishTalesDoc() {
                 or <code>&lt;div class="post"&gt;</code>.
               </li>
             </ul>
-            <img
-              src={arReport}
-              alt="Arricks Report"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={arReport} alt="Arricks Report" />
           </li>
           <li className="mb-4">
             Add keywords, junk-words, click-phrases, selector, and optionally
             last report date.
-            <img
-              src={updatedFile}
-              alt="Updated Starter File"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={updatedFile} alt="Updated Starter File" />
           </li>
           <li className="mb-4">
             Run FishTales with the updated starter file and enable{" "}
-            <strong>Include Site List</strong> under advanced settings. Then,
-            use the generated site list to review and refine your keywords and
-            junk-words for more accurate scraping and summaries.
+            <strong>Include Site ListBlock</strong> under advanced settings.
+            Then, use the generated site list to review and refine your keywords
+            and junk-words for more accurate scraping and summaries.
             <br />
-            <img
-              src={siteList}
-              alt="Site List File"
-              className="img-fluid w-75 mx-auto d-block"
-            />
+            <img src={siteList} alt="Site ListBlock File" />
           </li>
         </ol>
       </div>
@@ -398,34 +358,17 @@ export default function FishTalesDoc() {
 
       <hr />
 
-      {/* disclaimers */}
-      <h3 id="disclaimers">⚠ Disclaimers</h3>
-      <ul>
-        <li>
-          <strong>Summarization accuracy:</strong> The summaries may not always
-          be perfect. Results can vary depending on the AI model and
-          instructions used.
-        </li>
-        <li>
-          <strong>Blocked pages:</strong> Some websites may prevent FishTales
-          from accessing their pages.
-        </li>
-      </ul>
+      {/* Disclaimers */}
+      <DocSection title="Disclaimers">
+        <ListBlock items={disclaimersListItems} />
+      </DocSection>
 
       <hr />
 
-      {/* additional notes */}
-      <h3 id="additional-notes">✏ Additional Notes</h3>
-      <ul>
-        <li>
-          Future versions will include a file listing all the websites FishTales
-          looked at. This can help improve the starter file.
-        </li>
-        <li>
-          Future updates may add support for more AI models and extra filtering
-          options to give you better control over results.
-        </li>
-      </ul>
+      {/* Additional Notes*/}
+      <DocSection title="Additional Notes">
+        <ListBlock items={notesListItems} />
+      </DocSection>
     </>
   );
 }

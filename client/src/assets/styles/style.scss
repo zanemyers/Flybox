@@ -231,4 +231,15 @@ button {
     overflow-y: auto; /* enable vertical scroll */
     max-height: 65vh; /* restrict to viewport height */
   }
+
+  img {
+    max-width: 75%; // same as w-75
+    height: auto;   // same as img-fluid
+  }
+
+  li img {
+    display: block;   // same as d-block
+    margin-left: auto;
+    margin-right: auto; // same as mx-auto
+  }
 }
