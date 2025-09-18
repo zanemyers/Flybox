@@ -14,6 +14,7 @@ interface ListItems {
 interface Props {
   items: ListItems[];
   ordered?: boolean;
+  orderChild?: boolean;
   extraClass?: string;
 }
 
@@ -67,7 +68,7 @@ export default function ListBlock(props: Props) {
 
           {/* Recursive render if nested items exist */}
           {item.children && (
-            <ListBlock items={item.children} ordered={props.ordered} />
+            <ListBlock items={item.children} ordered={props.orderChild} />
           )}
         </li>
       ))}

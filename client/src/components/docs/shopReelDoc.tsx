@@ -7,7 +7,6 @@ import serpHome from "@images/docs/shop_reel/serp/serp_home.png";
 import serpSub from "@images/docs/shop_reel/serp/serp_sub.png";
 
 import DocOverview from "../layout/docOverview";
-import ExternalLink from "../ui/externalLink";
 import ListBlock from "../ui/listBlock";
 import DocImage from "../ui/docImage";
 import DocSection from "../layout/DocSection";
@@ -94,12 +93,7 @@ export default function ShopReelDoc() {
 
   const serpListItems = [
     {
-      main: (
-        <>
-          Go to <ExternalLink url="https://serpapi.com/">SerpAPI</ExternalLink>{" "}
-          and create an account.
-        </>
-      ),
+      main: "Go to [SerpAPI](https://serpapi.com/) and create an account.",
       img: serpHome,
       alt: "SerpAPI App",
     },
