@@ -2,9 +2,9 @@ import React from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 
 import TableOfContents, { type Props as TocProps } from "../ui/tableOfContents";
-import { AttributedImage, type AttributedImageProps } from "./images";
+import Image, { type ImageProps } from "./images";
 
-interface AboutSectionProps extends AttributedImageProps {
+interface AboutSectionProps extends ImageProps {
   heading: string;
   children: React.ReactNode;
   reverse?: boolean; // defaults to false
@@ -21,7 +21,7 @@ export function AboutSection({
       className={`row align-items-center ${reverse ? "flex-md-row-reverse" : ""}`}
     >
       <div className="col-md-6">
-        <AttributedImage {...imageProps} />
+        <Image variant="attributed" {...imageProps} />
       </div>
       <div className="col-md-6">
         <h2 className="h4 mb-3">{heading}</h2>
