@@ -1,11 +1,10 @@
 import newStarterFile from "@images/docs/site_scout/new_fish_tales_starter.png";
 import siteScoutForm from "@images/docs/site_scout/site_scout.png";
 
-import HashLink from "../ui/hashLink";
-import DocOverview from "../layout/docOverview";
 import ListBlock from "../ui/listBlock";
-import DocSection from "../layout/DocSection";
-import DocImage from "../ui/docImage";
+import { DocOverview, DocSection } from "../ui/sections";
+import { DocImage } from "../ui/images";
+import Link from "../ui/links";
 
 interface Props {
   setActiveTab: (tab: string) => void;
@@ -40,13 +39,14 @@ export default function SiteScoutDoc(props: Props) {
         <>
           Only new URLs are added; the rest of your file stays the same. For
           full instructions on how to update your starter file, see the{" "}
-          <HashLink
-            id="update-your-starter-file"
+          <Link
+            variant="hash"
+            target="update-your-starter-file"
             tab="FishTales"
             onActivateTab={props.setActiveTab}
           >
             Update Your Starter File
-          </HashLink>{" "}
+          </Link>{" "}
           guide.
         </>
       ),

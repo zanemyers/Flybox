@@ -1,4 +1,4 @@
-import HashLink from "./hashLink";
+import Link from "./links";
 
 interface TocItem {
   label: string;
@@ -16,11 +16,13 @@ export default function TableOfContents({ items }: Props) {
   const renderItems = (items: TocItem[]) => (
     <ul>
       {items.map((item) => {
-        const id = generateId(item.label);
+        const target = generateId(item.label);
 
         return (
-          <li key={id}>
-            <HashLink id={id}>{item.label}</HashLink>
+          <li key={target}>
+            <Link variant="hash" target={target}>
+              {item.label}
+            </Link>
             {item.children && renderItems(item.children)}
           </li>
         );

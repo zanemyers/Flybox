@@ -2,7 +2,7 @@ import idea from "@images/about/idea.jpg";
 import important from "@images/about/important.jpg";
 import serve from "@images/about/serve.jpg";
 import Card from "../components/ui/card";
-import AboutSection from "../components/ui/aboutSection";
+import { AboutSection } from "../components/ui/sections";
 
 export default function About() {
   return (

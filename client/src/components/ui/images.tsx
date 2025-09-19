@@ -1,11 +1,11 @@
-export interface Props {
+export interface AttributedImageProps {
   image: string;
   alt: string;
   url: string;
   attribution: string;
 }
 
-export default function AttributedImage(props: Props) {
+export function AttributedImage(props: AttributedImageProps) {
   return (
     <>
       <img src={props.image} alt={props.alt} className="img-fluid" />
@@ -21,5 +21,19 @@ export default function AttributedImage(props: Props) {
         </a>
       </p>
     </>
+  );
+}
+
+interface DocImageProps {
+  img: string;
+  alt: string;
+}
+
+// Used for non-list images in the docs
+export function DocImage(props: DocImageProps) {
+  return (
+    <div className="d-flex justify-content-center pb-3">
+      <img src={props.img} alt={props.alt} />
+    </div>
   );
 }
