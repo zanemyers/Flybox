@@ -14,7 +14,7 @@ import updatedFile from "@images/docs/fish_tales/starter_file/updated_starter_fi
 
 import ListBlock from "../ui/listBlock";
 import { DocOverview, DocSection } from "../ui/sections";
-import { DocImage } from "../ui/images";
+import Image from "../ui/images";
 
 export default function FishTalesDoc() {
   const tocItems = [
@@ -91,7 +91,9 @@ export default function FishTalesDoc() {
     },
     {
       label: "Model",
-      main: "Pick which Gemini AI model you want to use. Different models may give slightly different results. See available models at [ai.google.dev](https://ai.google.dev/models/gemini)",
+      main:
+        "Pick which Gemini AI model you want to use. Different models may give slightly different results. See " +
+        "available models at [ai.google.dev](https://ai.google.dev/models/gemini)",
       noteLabel: "Default",
       note: "`gemini-2.5-flash`",
     },
@@ -116,7 +118,9 @@ export default function FishTalesDoc() {
     },
     {
       label: "site_list.txt",
-      main: "(*optional*) A text file containing all scraped websites. Useful for identifying keywords and filtering out junk terms in the URL to refine your starter",
+      main:
+        "(*optional*) A text file containing all scraped websites. Useful for identifying keywords and filtering out" +
+        " junk terms in the URL to refine your starter",
     },
   ];
 
@@ -166,13 +170,15 @@ export default function FishTalesDoc() {
     },
     {
       main: "Use the browser inspector to find the HTML element containing the report:",
+      img: arReport,
+      alt: "Arricks Report",
       children: [
-        { main: "Right-click > Inspect (or Inspect Element)" },
         {
-          main: "Keyboard shortcuts for opening inspector:",
+          main: "Right-click > Inspect (or Inspect Element)",
           children: [
-            { main: "Windows/Linux: `Ctrl + Shift + I` or `F12`" },
-            { main: "Mac: `Cmd + Option + I` or `F12`" },
+            {
+              main: "Keyboard shortcuts (Win/Linux: `Ctrl+Shift+I` · Mac: `Cmd+Opt+I` · Both: `F12`)",
+            },
           ],
         },
         {
@@ -180,8 +186,6 @@ export default function FishTalesDoc() {
         },
         {
           main: 'Look for a container element, e.g., `<article>;` or `<div class="post">`.',
-          img: arReport,
-          alt: "Arricks Report",
         },
       ],
     },
@@ -191,7 +195,9 @@ export default function FishTalesDoc() {
       alt: "Updated Starter File",
     },
     {
-      main: "Run FishTales with the updated starter file and enable **Include Site ListBlock** under advanced settings. Then, use the generated site list to review and refine your keywords and junk-words for more accurate scraping and summaries.",
+      main:
+        "Run FishTales with the updated starter file and enable **Include Site ListBlock** under advanced settings. " +
+        "Then, use the generated site list to review and refine your keywords and junk-words for more accurate scraping and summaries.",
       img: siteList,
       alt: "Site ListBlock File",
     },
@@ -240,7 +246,7 @@ export default function FishTalesDoc() {
         {/* Basic Inputs */}
         <DocSection subSection={true} title="Basic Inputs">
           <ListBlock items={basicInputListItems} />
-          <DocImage img={basicForm} alt="FishTales Basic Input Form" />
+          <Image img={basicForm} alt="FishTales Basic Input Form" />
         </DocSection>
 
         {/* Advanced Inputs */}
@@ -251,7 +257,7 @@ export default function FishTalesDoc() {
           p2="Once you’ve updated the inputs you want, click **Search & Summarize** to start. Progress updates will appear as FishTales works."
         >
           <ListBlock items={advancedInputListItems} />
-          <DocImage img={advancedForm} alt="FishTales Advanced Input Form" />
+          <Image img={advancedForm} alt="FishTales Advanced Input Form" />
         </DocSection>
 
         {/* Output Files*/}
@@ -277,8 +283,7 @@ export default function FishTalesDoc() {
       {/* updating your starter file*/}
       <DocSection
         title="Update Your Starter File"
-        p1="Keeping the starter file accurate ensures FishTales can scrape and
-        summarize reports correctly."
+        p1="Keeping the starter file accurate ensures FishTales can scrape and summarize reports correctly."
       >
         <ListBlock items={updateFileListItems} ordered={true} />
       </DocSection>

@@ -3,7 +3,7 @@ import siteScoutForm from "@images/docs/site_scout/site_scout.png";
 
 import ListBlock from "../ui/listBlock";
 import { DocOverview, DocSection } from "../ui/sections";
-import { DocImage } from "../ui/images";
+import Image from "../ui/images";
 import Link from "../ui/links";
 
 interface Props {
@@ -87,7 +87,7 @@ export default function SiteScoutDoc(props: Props) {
           p2="After selecting the files, click **Compare**. You’ll see progress updates as SiteScout runs."
         >
           <ListBlock items={inputListItems} />
-          <DocImage img={siteScoutForm} alt="SiteScout Form" />
+          <Image img={siteScoutForm} alt="SiteScout Form" />
         </DocSection>
 
         {/* Output files section */}
@@ -97,7 +97,7 @@ export default function SiteScoutDoc(props: Props) {
           p1=" After running the comparison, SiteScout creates the following file:"
         >
           <ListBlock items={outputListItems} />
-          <DocImage img={newStarterFile} alt="New FishTales starter file" />
+          <Image img={newStarterFile} alt="New FishTales starter file" />
         </DocSection>
       </DocSection>
 

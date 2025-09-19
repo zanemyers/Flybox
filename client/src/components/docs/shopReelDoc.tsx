@@ -8,7 +8,7 @@ import serpSub from "@images/docs/shop_reel/serp/serp_sub.png";
 
 import ListBlock from "../ui/listBlock";
 import { DocOverview, DocSection } from "../ui/sections";
-import { DocImage } from "../ui/images";
+import Image from "../ui/images";
 
 export default function ShopReelDoc() {
   const tocItems = [
@@ -154,7 +154,7 @@ export default function ShopReelDoc() {
           p2="After filling in the fields, click **Search**. Progress updates will appear on the page."
         >
           <ListBlock items={manualInputListItems} />
-          <DocImage img={manualForm} alt="ShopReel Manual Input Form" />
+          <Image img={manualForm} alt="ShopReel Manual Input Form" />
         </DocSection>
 
         {/*File Import */}
@@ -164,7 +164,7 @@ export default function ShopReelDoc() {
           p2="Once you select the file, click **Search**. Progress updates will appear as ShopReel runs."
         >
           <ListBlock items={fileImportListItems} />
-          <DocImage img={fileImport} alt="ShopReel File Import Form" />
+          <Image img={fileImport} alt="ShopReel File Import Form" />
         </DocSection>
 
         {/* Output Files */}

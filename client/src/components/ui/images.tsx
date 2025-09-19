@@ -1,14 +1,14 @@
-export interface AttributedImageProps {
-  image: string;
+export interface ImageProps {
+  img: string;
   alt: string;
-  url: string;
-  attribution: string;
+  url?: string;
+  attribution?: string;
 }
 
-export function AttributedImage(props: AttributedImageProps) {
+function AttributedImage(props: ImageProps) {
   return (
     <>
-      <img src={props.image} alt={props.alt} className="img-fluid" />
+      <img src={props.img} alt={props.alt} className="img-fluid" />
       <p className="small text-center">
         <a
           href={props.url}
@@ -24,16 +24,19 @@ export function AttributedImage(props: AttributedImageProps) {
   );
 }
 
-interface DocImageProps {
-  img: string;
-  alt: string;
-}
-
-// Used for non-list images in the docs
-export function DocImage(props: DocImageProps) {
+function CenteredImage(props: ImageProps) {
   return (
     <div className="d-flex justify-content-center pb-3">
       <img src={props.img} alt={props.alt} />
     </div>
   );
+}
+
+interface Props extends ImageProps {
+  variant?: "attributed" | "centered";
+}
+
+export default function Image({ variant = "centered", ...imageProps }: Props) {
+  if (variant === "attributed") return <AttributedImage {...imageProps} />;
+  else return <CenteredImage {...imageProps} />;
 }
