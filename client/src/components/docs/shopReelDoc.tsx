@@ -6,10 +6,9 @@ import serpDashboard from "@images/docs/shop_reel/serp/serp_dashboard.png";
 import serpHome from "@images/docs/shop_reel/serp/serp_home.png";
 import serpSub from "@images/docs/shop_reel/serp/serp_sub.png";
 
-import DocOverview from "../layout/docOverview";
 import ListBlock from "../ui/listBlock";
-import DocImage from "../ui/docImage";
-import DocSection from "../layout/DocSection";
+import { DocOverview, DocSection } from "../ui/sections";
+import { DocImage } from "../ui/images";
 
 export default function ShopReelDoc() {
   const tocItems = [

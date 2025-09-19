@@ -12,10 +12,9 @@ import newSite from "@images/docs/fish_tales/starter_file/new_site.png";
 import siteList from "@images/docs/fish_tales/starter_file/site_list.png";
 import updatedFile from "@images/docs/fish_tales/starter_file/updated_starter_file.png";
 
-import DocOverview from "../layout/docOverview";
 import ListBlock from "../ui/listBlock";
-import DocSection from "../layout/DocSection";
-import DocImage from "../ui/docImage";
+import { DocOverview, DocSection } from "../ui/sections";
+import { DocImage } from "../ui/images";
 
 export default function FishTalesDoc() {
   const tocItems = [
