@@ -67,13 +67,7 @@ export default function FishTalesDoc() {
   const advancedInputListItems = [
     {
       label: "Include Site List",
-      main: (
-        <>
-          When enabled, a <code className="text-black">site_list.txt</code> file
-          will be generated containing all scraped sites. This can help refine
-          or update your starter file.
-        </>
-      ),
+      main: "When enabled, **site_list.txt** will be generated containing all scraped sites. This can help refine or update your starter file.",
       noteLabel: "Default",
       note: "`false`",
     },
@@ -203,6 +197,21 @@ export default function FishTalesDoc() {
     },
   ];
 
+  const advancedSelectorTips = [
+    {
+      main: "Try simple selectors first. Only use advanced ones if you can’t capture the report otherwise.",
+    },
+    {
+      main: "Test your selector in the browser console to make sure it highlights only the report text.",
+    },
+    {
+      main: "If you get stuck, tools like **GPT** or **Gemini** can help you write or debug a selector.",
+    },
+    {
+      main: "Keep notes in your starter file so you remember why you used a particular selector.",
+    },
+  ];
+
   const disclaimersListItems = [
     {
       label: "Summarization accuracy",
@@ -289,58 +298,38 @@ export default function FishTalesDoc() {
       </DocSection>
 
       {/* Advanced Selectors */}
-      <h5 id="advanced-selectors">Advanced Selectors</h5>
-      <p>
-        Most of the time, you can use a simple selector like{" "}
-        <code>&lt;article&gt;</code> or <code>div.post</code> to capture the
-        report content. These are easier to maintain and less likely to break if
-        the website changes.
-      </p>
-      <p>
-        Sometimes a site doesn’t use clear containers, and you’ll need a more{" "}
-        <strong>advanced selector</strong> to target the report. For example:
-      </p>
-      <pre>
-        <code>
-          div.entry-content:has(p:text-matches("Fishing Report", "i"))
-        </code>
-      </pre>
-      <p>
-        This means: “look for a <code>div</code> with the class{" "}
-        <code>entry-content</code> that contains a paragraph mentioning ‘Fishing
-        Report’ (ignoring upper/lower case).”
-      </p>
-      <p>
-        Advanced selectors can feel complicated, but don’t worry — you don’t
-        need to start from scratch. Check the{" "}
-        <a href="/example_files/fishTales_starter_file.xlsx" download>
-          example starter file
-        </a>{" "}
-        included with FishTales for working examples you can build on.
-      </p>
-      <p>Tips for advanced selectors:</p>
-      <ul>
-        <li>
-          Try simple selectors first. Only use advanced ones if you can’t
-          capture the report otherwise.
-        </li>
-        <li>
-          Test your selector in the browser console to make sure it highlights
-          only the report text.
-        </li>
-        <li>
-          If you get stuck, tools like <strong>GPT</strong> or{" "}
-          <strong>Gemini</strong> can help you write or debug a selector.
-        </li>
-        <li>
-          Keep notes in your starter file so you remember why you used a
-          particular selector.
-        </li>
-      </ul>
-      <p>
-        Used carefully, advanced selectors let FishTales capture reports even
-        from tricky websites.
-      </p>
+      <DocSection
+        subSection={true}
+        title="Advanced Selectors"
+        p1="Most of the time, you can use a simple selector like `<article>` or `div.post` to capture the report content.
+          These are easier to maintain and less likely to break if the website changes."
+        p2="Used carefully, advanced selectors let FishTales capture reports even from tricky websites."
+      >
+        <p className="mt-3">
+          Sometimes a site doesn’t use clear containers, and you’ll need a more{" "}
+          <strong>advanced selector</strong> to target the report. For example:
+        </p>
+        <pre>
+          <code>
+            div.entry-content:has(p:text-matches("Fishing Report", "i"))
+          </code>
+        </pre>
+        <p>
+          This means: “look for a <code>div</code> with the class{" "}
+          <code>entry-content</code> that contains a paragraph mentioning
+          ‘Fishing Report’ (ignoring upper/lower case).”
+        </p>
+        <p>
+          Advanced selectors can feel complicated, but don’t worry — you don’t
+          need to start from scratch. Check the{" "}
+          <a href="/example_files/fishTales_starter_file.xlsx" download>
+            example starter file
+          </a>{" "}
+          included with FishTales for working examples you can build on.
+        </p>
+        <>Tips for advanced selectors:</>
+        <ListBlock items={advancedSelectorTips} />
+      </DocSection>
 
       <hr />
 
