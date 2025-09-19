@@ -17,7 +17,7 @@ export default function About() {
 
       {/* The Idea */}
       <AboutSection
-        image={idea}
+        img={idea}
         alt="Idea Illustration"
         url="https://www.freepik.com"
         attribution="Designed by Dooder / Freepik"
@@ -36,7 +36,7 @@ export default function About() {
 
       {/* Importance */}
       <AboutSection
-        image={important}
+        img={important}
         alt="Important Illustration"
         url="https://www.freepik.com"
         attribution="Designed by Dooder / Freepik"
@@ -56,7 +56,7 @@ export default function About() {
 
       {/* Who It Serves */}
       <AboutSection
-        image={serve}
+        img={serve}
         alt="Serve Illustration"
         url="https://www.freepik.com"
         attribution="Designed by Dooder / Freepik"
