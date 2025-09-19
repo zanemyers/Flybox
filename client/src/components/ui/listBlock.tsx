@@ -58,17 +58,16 @@ export default function ListBlock(props: Props) {
             </>
           )}
 
-          {/* Render igm if it exists */}
-          {item.img && (
-            <>
-              <br />
-              <img src={item.img} alt={item.alt} />
-            </>
-          )}
-
           {/* Recursive render if nested items exist */}
           {item.children && (
             <ListBlock items={item.children} ordered={props.orderChild} />
+          )}
+
+          {/* Render igm if it exists */}
+          {item.img && (
+            <>
+              <img src={item.img} alt={item.alt} />
+            </>
           )}
         </li>
       ))}
