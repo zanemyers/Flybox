@@ -1,4 +1,4 @@
-import { InstructionPanel } from "../components/ui/sections";
+import InstructionPanel from "../components/forms/components/instructionPanel";
 
 const steps = [
   { icon: "🔐", text: "Enter your **SerpAPI key**" },
