@@ -243,3 +243,8 @@ button {
     margin-right: auto; // same as mx-auto
   }
 }
+
+.form-error {
+  color: theme.$danger;
+  white-space: pre-wrap;
+}

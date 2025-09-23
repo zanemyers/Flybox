@@ -1,4 +1,5 @@
-import { InstructionPanel } from "../components/ui/sections";
+import InstructionPanel from "../components/forms/components/instructionPanel";
+import SiteScoutForm from "../components/forms/siteScoutForm";
 
 const steps = [
   { icon: "🎣", text: "Import your **ShopReel** results file." },
@@ -14,16 +15,18 @@ export default function SiteScout() {
     <main className="container py-3">
       <div className="row d-flex align-items-stretch">
         {/* Instructions panel */}
-        <InstructionPanel
-          app="SiteScout"
-          description="SiteScout keeps your **FishTales** starter file up to date by checking it against your
+        <div className="col-lg-5 mb-3 mb-lg-0 d-flex">
+          <InstructionPanel
+            app="SiteScout"
+            description="SiteScout keeps your **FishTales** starter file up to date by checking it against your
                   **ShopReel** results. Any new report sites are added automatically, so your dataset stays accurate and complete."
-          steps={steps}
-        />
+            steps={steps}
+          />
+        </div>
 
         {/* Form panel */}
-        <div id="formContainer" className="col-lg-7 d-flex">
-          <div>Hello Form</div>
+        <div className="col-lg-7 d-flex">
+          <SiteScoutForm />
         </div>
       </div>
     </main>
