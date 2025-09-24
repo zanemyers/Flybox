@@ -50,12 +50,6 @@ export default class SiteScoutForm extends BaseForm<BaseProps, State> {
     return { shopReelFile, fishTalesFile };
   }
 
-  // Extend handleClose to clear child-specific state
-  handleClose = () => {
-    super.cleanJob();
-    this.setState({ shopReelFile: null, fishTalesFile: null });
-  };
-
   // Render the file inputs
   renderFormInput(): React.ReactNode {
     return (

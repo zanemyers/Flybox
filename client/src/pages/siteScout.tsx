@@ -26,7 +26,7 @@ export default function SiteScout() {
 
         {/* Form panel */}
         <div className="col-lg-7 d-flex">
-          <SiteScoutForm />
+          <SiteScoutForm route="site-scout" />
         </div>
       </div>
     </main>
