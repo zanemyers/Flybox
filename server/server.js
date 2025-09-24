@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Attach application routes (API)
-app.use("/api", routes);
+app.use("", routes);
 
 // Serve static files (React build output)
 app.use(express.static(path.join(__dirname, "../client/dist")));
