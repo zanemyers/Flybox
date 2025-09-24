@@ -55,16 +55,10 @@ export default abstract class BaseForm<
     this.setState({ jobId: data.jobId });
   };
 
-  protected cleanJob() {
-    localStorage.removeItem(this.storageKey);
-    localStorage.removeItem(`${this.storageKey}-files`);
-    this.setState({ jobId: null });
-  }
-
   // Arrow function ensures 'this' binding
-  // Subclass should override this to clean additional state
   handleClose = () => {
-    this.cleanJob();
+    localStorage.removeItem(this.storageKey);
+    this.setState({ jobId: null });
   };
 
   render() {
@@ -73,7 +67,7 @@ export default abstract class BaseForm<
         <ProgressPanel
           jobId={this.state.jobId}
           route={this.props.route}
-          close={this.handleClose}
+          handleClose={this.handleClose}
         />
       );
     }
