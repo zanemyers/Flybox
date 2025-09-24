@@ -16,6 +16,9 @@ declare module "*.gif" {
   export default value;
 }
 
+// bootstrap
+declare module "bootstrap";
+
 // Styles
 declare module "*.scss";
 declare module "*.css";
