@@ -1,4 +1,5 @@
 import InstructionPanel from "../components/forms/components/instructionPanel";
+import ShopReelForm from "../components/forms/shopReelForm";
 
 const steps = [
   { icon: "🔐", text: "Enter your **SerpAPI key**" },
@@ -24,9 +25,7 @@ export default function ShopReel() {
         />
 
         {/* Form panel */}
-        <div id="formContainer" className="col-lg-7 d-flex">
-          <div>Hello Form</div>
-        </div>
+        <ShopReelForm route="shop-reel" />
       </div>
     </main>
   );

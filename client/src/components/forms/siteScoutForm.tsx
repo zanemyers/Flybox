@@ -29,7 +29,7 @@ export default class SiteScoutForm extends BaseForm<BaseProps, State> {
   }
 
   // Validate input and return payload for API
-  validateFormInput(): Payload | string | null {
+  validateFormInput(): Payload | null {
     let hasError = false;
     const { shopReelFile, fishTalesFile } = this.state;
 

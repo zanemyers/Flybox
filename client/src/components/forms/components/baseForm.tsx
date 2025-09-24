@@ -1,4 +1,5 @@
 import React from "react";
+// import { Tooltip } from "bootstrap";
 import ProgressPanel from "./progressPanel";
 
 export type Payload = Record<string, any> | string;
@@ -25,7 +26,20 @@ export default abstract class BaseForm<
     this.storageKey = `${props.route}-jobId`;
 
     this.state = { jobId: localStorage.getItem(this.storageKey) } as S;
+    // this.initTooltips();
   }
+
+  // initTooltips() {
+  //   const tooltipList = document.querySelectorAll<HTMLElement>("[title]");
+  //
+  //   tooltipList.forEach((el) => {
+  //     // Clean up old tooltip instance if it exists
+  //     const existing = Tooltip.getInstance(el);
+  //     if (existing) existing.dispose();
+  //
+  //     new Tooltip(el);
+  //   });
+  // }
 
   // Subclass must implement the actual form input JSX
   abstract renderFormInput(): React.ReactNode;
@@ -35,6 +49,7 @@ export default abstract class BaseForm<
 
   // Arrow function ensures 'this' binding
   handleSubmit = async (e: React.FormEvent) => {
+    debugger;
     e.preventDefault();
 
     const payload = this.validateFormInput();
@@ -73,15 +88,17 @@ export default abstract class BaseForm<
     }
 
     return (
-      <form
-        className="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column"
-        onSubmit={this.handleSubmit}
-      >
-        {this.renderFormInput()}
-        <button type="submit" className="btn btn-primary mt-auto mx-1">
-          Compare
-        </button>
-      </form>
+      <div className="col-lg-7 d-flex">
+        <form
+          className="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column"
+          onSubmit={this.handleSubmit}
+        >
+          {this.renderFormInput()}
+          <button type="submit" className="btn btn-primary mt-auto mx-1">
+            Compare
+          </button>
+        </form>
+      </div>
     );
   }
 }

@@ -15,19 +15,15 @@ export default function SiteScout() {
     <main className="container py-3">
       <div className="row d-flex align-items-stretch">
         {/* Instructions panel */}
-        <div className="col-lg-5 mb-3 mb-lg-0 d-flex">
-          <InstructionPanel
-            app="SiteScout"
-            description="SiteScout keeps your **FishTales** starter file up to date by checking it against your
+        <InstructionPanel
+          app="SiteScout"
+          description="SiteScout keeps your **FishTales** starter file up to date by checking it against your
                   **ShopReel** results. Any new report sites are added automatically, so your dataset stays accurate and complete."
-            steps={steps}
-          />
-        </div>
+          steps={steps}
+        />
 
         {/* Form panel */}
-        <div className="col-lg-7 d-flex">
-          <SiteScoutForm route="site-scout" />
-        </div>
+        <SiteScoutForm route="site-scout" />
       </div>
     </main>
   );
