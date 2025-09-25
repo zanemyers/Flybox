@@ -6,16 +6,18 @@ import BaseForm, {
   type Payload,
 } from "./components/baseForm";
 import FileInput from "./components/fileInput";
+import FormInput, { FormInputGroup } from "./components/formInput";
 
-interface State extends BaseState {
-  activeTab: "manual" | "file";
+interface FormState {
   file: File | null;
   apiKey: string;
   searchTerm: string;
-  latitude: number;
-  longitude: number;
-  maxResults: number;
+  latitude: string;
+  longitude: string;
+  maxResults: string;
+}
 
+interface ErrorState {
   fileError?: string;
   apiKeyError?: string;
   searchTermError?: string;
@@ -24,100 +26,120 @@ interface State extends BaseState {
   maxResultsError?: string;
 }
 
-const errorMap = {
-  file: { fileError: "" },
-  apiKey: { apiKeyError: "" },
-  searchTerm: { searchTermError: "" },
-  latitude: { latitudeError: "" },
-  longitude: { longitudeError: "" },
-  maxResults: { maxResultsError: "" },
+interface State extends BaseState {
+  activeTab: "manual" | "file";
+  form: FormState;
+  errors: ErrorState;
+}
+
+type NestedStateKeys = "form" | "errors";
+const formErrors: {
+  [K in keyof FormState]: {
+    [E in keyof ErrorState]: string;
+  };
+} = {
+  file: { fileError: "⚠ Please upload a file." },
+  apiKey: { apiKeyError: "⚠ Please enter an API key." },
+  searchTerm: { searchTermError: "⚠ Please enter a search term." },
+  latitude: {
+    latitudeError: "⚠ Please enter a latitude value between -90 and 90.",
+  },
+  longitude: {
+    longitudeError: "⚠ Please enter a longitude value between -180 and 180.",
+  },
+  maxResults: {
+    maxResultsError:
+      "⚠ Please set a maximum number of results between 20 and 120.",
+  },
 };
 
 export default class ShopReelForm extends BaseForm<BaseProps, State> {
+  protected readonly defaultState: State = {
+    jobId: null,
+    activeTab: "manual",
+    form: {
+      file: null,
+      apiKey: "",
+      searchTerm: "Fly Fishing Shops",
+      latitude: "44.427963",
+      longitude: "-110.588455",
+      maxResults: "100",
+    },
+    errors: {},
+  };
+
   constructor(props: BaseProps) {
     super(props);
 
     // Preserve jobId from BaseForm
     this.state = {
-      ...this.state,
-      activeTab: "manual",
-      file: null,
-      apiKey: "",
-      searchTerm: "Fly Fishing Shops",
-      latitude: 44.427963,
-      longitude: -110.588455,
-      maxResults: 100,
+      ...this.defaultState,
+      jobId: this.state.jobId,
     };
   }
 
   // Validate input and return payload for API
   validateFormInput(): Payload | null {
-    const {
-      activeTab,
-      file,
-      apiKey,
-      searchTerm,
-      latitude,
-      longitude,
-      maxResults,
-    } = this.state;
-
-    const newErrors: Pick<
-      State,
-      | "fileError"
-      | "apiKeyError"
-      | "searchTermError"
-      | "latitudeError"
-      | "longitudeError"
-      | "maxResultsError"
-    > = {
-      fileError: "",
-      apiKeyError: "",
-      searchTermError: "",
-      latitudeError: "",
-      longitudeError: "",
-      maxResultsError: "",
-    };
-
+    debugger;
+    const activeTab = this.state.activeTab;
     let hasError = false;
 
-    if (activeTab === "manual") {
-      if (!apiKey) {
+    for (const [fieldKey, errorObj] of Object.entries(formErrors) as [
+      keyof FormState,
+      Record<keyof ErrorState, string>,
+    ][]) {
+      const errorKey = Object.keys(errorObj)[0] as keyof ErrorState;
+      const error = errorObj[errorKey];
+      // Skip file check if in manual tab, skip other fields if in file tab
+      if (activeTab === "manual" && fieldKey === "file") continue;
+      if (activeTab === "file" && fieldKey !== "file") continue;
+
+      if (this.isFieldInvalid(fieldKey, this.state.form[fieldKey])) {
         hasError = true;
-        newErrors.apiKeyError = "⚠ Please enter an API key.";
-      }
-      if (!searchTerm) {
-        hasError = true;
-        newErrors.searchTermError = "⚠ Please enter a search term.";
-      }
-      if (!latitude) {
-        hasError = true;
-        newErrors.latitudeError = "⚠ Please enter a latitude.";
-      }
-      if (!longitude) {
-        hasError = true;
-        newErrors.longitudeError = "⚠ Please enter a longitude.";
-      }
-      if (!maxResults) {
-        hasError = true;
-        newErrors.maxResultsError =
-          "⚠ Please set a maximum number of results.";
-      }
-    } else {
-      if (!file) {
-        hasError = true;
-        newErrors.fileError = "⚠ Please upload a file.";
+        this.updateState("errors", errorKey, error);
+      } else {
+        this.updateState("errors", errorKey, "");
       }
     }
 
-    if (hasError) {
-      this.setState(newErrors);
-      return null;
-    }
+    if (hasError) return null;
 
-    return activeTab === "manual"
-      ? { apiKey, searchTerm, latitude, longitude, maxResults }
-      : { file };
+    const { file, ...fields } = this.state.form;
+    return activeTab === "manual" ? fields : { file };
+  }
+
+  isFieldInvalid(fieldKey: keyof FormState, value: any): boolean {
+    if (typeof value === "string") return !value;
+    if (fieldKey === "file") return !value;
+
+    // Validate number inputs
+    if (fieldKey === "maxResults") {
+      const val = parseInt(value, 10);
+      return val < 20 || val > 120;
+    }
+    if (fieldKey === "latitude") {
+      const val = parseFloat(value);
+      return val < -90 || val > 90;
+    }
+    if (fieldKey === "longitude") {
+      const val = parseFloat(value);
+      return val < -180 || val > 180;
+    }
+    return false;
+  }
+
+  updateState<K extends keyof State[T], T extends NestedStateKeys>(
+    stateKey: T,
+    key: K,
+    value: State[T][K],
+  ) {
+    this.setState((prevState) => ({
+      ...prevState,
+      [stateKey]: {
+        ...prevState[stateKey],
+        [key]: value,
+      },
+    }));
   }
 
   // Render the file inputs
@@ -151,109 +173,80 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
           {/* Manual Input */}
           {this.state.activeTab === "manual" && (
             <div className="tab-pane show active" role="tabpanel">
-              <div className="form-input">
-                <label htmlFor="apiKey" className="form-label">
-                  SerpAPI Key
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="apiKey"
-                  placeholder="API key"
-                  title="Your private SerpAPI key"
-                  value={this.state.apiKey}
-                  onChange={(e) => this.setState({ apiKey: e.target.value })}
-                />
-                {this.state.apiKeyError && (
-                  <div className="form-error">{this.state.apiKeyError}</div>
-                )}
-              </div>
+              <FormInput
+                type="password"
+                label="SerpAPI Key"
+                placeholder="API Key"
+                title="Your private SerpAPI key"
+                value={this.state.form.apiKey}
+                onChange={(val) => this.updateState("form", "apiKey", val)}
+                error={this.state.errors.apiKeyError}
+              />
 
-              {/* Search Term */}
-              <div className="form-input">
-                <label htmlFor="query" className="form-label">
-                  Search Term
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="query"
-                  placeholder="e.g. Fly Fishing Shops"
-                  title="Specify the business or shop type"
-                  value={this.state.searchTerm}
-                  onChange={(e) =>
-                    this.setState({ searchTerm: e.target.value })
-                  }
-                />
-                {this.state.searchTermError && (
-                  <div className="form-error">{this.state.searchTermError}</div>
-                )}
-              </div>
+              <FormInput
+                type="text"
+                label="Search Term"
+                placeholder="e.g. Fly Fishing Shops"
+                title="Specify the business or shop typ"
+                value={this.state.form.searchTerm}
+                onChange={(val) => this.updateState("form", "searchTerm", val)}
+                error={this.state.errors.searchTermError}
+              />
 
-              {/* Location */}
-              <div className="form-input">
-                <label className="form-label">Location</label>
-                <div className="input-group">
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="latitude"
-                    step="0.000001"
-                    min="-90"
-                    max="90"
-                    placeholder="Latitude"
-                    title="Latitude in decimal degrees"
-                    value={this.state.latitude}
-                    onChange={(e) =>
-                      this.setState({ latitude: parseFloat(e.target.value) })
-                    }
-                  />
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="longitude"
-                    step="0.000001"
-                    min="-180"
-                    max="180"
-                    placeholder="Longitude"
-                    title="Longitude in decimal degrees"
-                    value={this.state.longitude}
-                    onChange={(e) =>
-                      this.setState({ longitude: parseFloat(e.target.value) })
-                    }
-                  />
-                </div>
-                {this.state.latitudeError && (
-                  <div className="form-error">{this.state.latitudeError}</div>
-                )}
-                {this.state.longitudeError && (
-                  <div className="form-error">{this.state.longitudeError}</div>
-                )}
-              </div>
-
-              {/* Max Results */}
-              <div className="form-input">
-                <label htmlFor="maxResults" className="form-label">
-                  Max Results
-                </label>
-                <input
+              <FormInputGroup
+                label="Location"
+                errors={[
+                  this.state.errors.latitudeError,
+                  this.state.errors.longitudeError,
+                ].filter(Boolean)}
+              >
+                <FormInput
                   type="number"
-                  className="form-control"
-                  id="maxResults"
-                  step="20"
-                  min="20"
-                  max="120"
-                  placeholder="e.g. 100"
-                  title="Maximum number of results"
-                  value={this.state.maxResults}
-                  onChange={(e) =>
-                    this.setState({ maxResults: parseInt(e.target.value, 10) })
-                  }
+                  label="Latitude"
+                  value={this.state.form.latitude}
+                  placeholder="Latitude"
+                  title="Latitude in decimal degrees"
+                  step="0.000001"
+                  onChange={(val) => this.updateState("form", "latitude", val)}
+                  noWrapper
                 />
-                {this.state.maxResultsError && (
-                  <div className="form-error">{this.state.maxResultsError}</div>
-                )}
-              </div>
+                <FormInput
+                  type="number"
+                  label="Longitude"
+                  placeholder="Longitude"
+                  title="Longitude in decimal degrees"
+                  step="0.000001"
+                  value={this.state.form.longitude}
+                  onChange={(val) => this.updateState("form", "longitude", val)}
+                  noWrapper
+                />
+                {/*  TODO: Fix this for the location picker */}
+                {/*<button*/}
+                {/*  type="button"*/}
+                {/*  className="input-group-text location-picker"*/}
+                {/*  title="Open map to select location"*/}
+                {/*  data-bs-placement="top"*/}
+                {/*  data-bs-toggle="modal"*/}
+                {/*  data-bs-target="#mapModal"*/}
+                {/*>*/}
+                {/*  <img*/}
+                {/*    src="/assets/images/location_pin.png"*/}
+                {/*    alt="Location Pin"*/}
+                {/*    style={{ height: 1 }}*/}
+                {/*  />*/}
+                {/*</button>*/}
+              </FormInputGroup>
+
+              <FormInput
+                type="number"
+                label="Max Results"
+                placeholder="e.g. 100"
+                title="Maximum number of results"
+                step="20"
+                value={this.state.form.maxResults}
+                onChange={(val) => this.updateState("form", "maxResults", val)}
+                error={this.state.errors.maxResultsError}
+              />
             </div>
           )}
 
@@ -263,11 +256,8 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
               <FileInput
                 label="Import Excel File"
                 acceptedTypes={[".xls", ".xlsx"]}
-              >
-                {this.state.fileError && (
-                  <div className="form-error">{this.state.fileError}</div>
-                )}
-              </FileInput>
+                error={this.state.errors.fileError}
+              />
             </div>
           )}
         </div>

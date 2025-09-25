@@ -12,7 +12,6 @@ export interface BaseProps {
 
 export interface BaseState {
   jobId: string | null;
-  errorMessage?: string;
 }
 
 export default abstract class BaseForm<
@@ -21,6 +20,7 @@ export default abstract class BaseForm<
 > extends React.Component<P, S> {
   protected postRoute: string;
   protected storageKey: string;
+  protected abstract readonly defaultState: S;
 
   protected constructor(props: P) {
     super(props);
@@ -56,9 +56,6 @@ export default abstract class BaseForm<
     const payload = this.validateFormInput();
     if (!payload) return;
 
-    // Clear any previous errors
-    this.setState({ errorMessage: undefined });
-
     const formData = new FormData();
     Object.entries(payload).forEach(([key, value]) =>
       formData.append(key, value),
@@ -72,19 +69,21 @@ export default abstract class BaseForm<
   };
 
   // Arrow function ensures 'this' binding
-  handleClose = () => {
+  handleClose() {
     localStorage.removeItem(this.storageKey);
-    this.setState({ jobId: null });
-  };
+    this.setState(this.defaultState as S);
+  }
 
   render() {
     if (this.state.jobId) {
       return (
-        <ProgressPanel
-          jobId={this.state.jobId}
-          route={this.props.route}
-          handleClose={this.handleClose}
-        />
+        <Col lg={7} className="d-flex">
+          <ProgressPanel
+            jobId={this.state.jobId}
+            route={this.props.route}
+            handleClose={this.handleClose.bind(this)}
+          />
+        </Col>
       );
     }
 
