@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 
 interface NavItem {
   label: string;
@@ -22,55 +22,37 @@ const links: NavItem[] = [
   { label: "About", href: "/about" },
 ];
 
-export default function Navbar() {
+export default function NavigationBar() {
   return (
-    <nav className="navbar navbar-expand-sm navbar-light bg-light rounded shadow-sm px-3">
-      <ul className="navbar-nav mx-auto">
-        {links.map((link) =>
-          !link.dropdown ? (
-            <li className="nav-item" key={link.label}>
-              <NavLink
-                to={link.href}
-                className={({ isActive }: { isActive: boolean }) =>
-                  `nav-link${isActive ? " active" : ""}`
-                }
-              >
+    <Navbar
+      expand="sm"
+      bg="light"
+      variant="light"
+      className="rounded shadow-sm px-3"
+    >
+      <Container>
+        <Nav className="mx-auto">
+          {links.map((link) =>
+            !link.dropdown ? (
+              <Nav.Link as={NavLink} to={link.href} key={link.label}>
                 {link.label}
-              </NavLink>
-            </li>
-          ) : (
-            <li className="nav-item dropdown" key={link.label}>
-              <a
-                className="nav-link dropdown-toggle"
-                href={link.href}
+              </Nav.Link>
+            ) : (
+              <NavDropdown
+                title={link.label}
                 id={`${link.label}-dropdown`}
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                {link.label}
-              </a>
-              <ul
-                className="dropdown-menu"
-                aria-labelledby={`${link.label}-dropdown`}
+                key={link.label}
               >
                 {link.dropdown.map((sub) => (
-                  <li key={sub.label}>
-                    <NavLink
-                      to={sub.href}
-                      className={({ isActive }: { isActive: boolean }) =>
-                        `dropdown-item${isActive ? " active" : ""}`
-                      }
-                    >
-                      {sub.label}
-                    </NavLink>
-                  </li>
+                  <NavDropdown.Item as={NavLink} to={sub.href} key={sub.label}>
+                    {sub.label}
+                  </NavDropdown.Item>
                 ))}
-              </ul>
-            </li>
-          ),
-        )}
-      </ul>
-    </nav>
+              </NavDropdown>
+            ),
+          )}
+        </Nav>
+      </Container>
+    </Navbar>
   );
 }
