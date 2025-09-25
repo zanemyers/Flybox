@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Card, Button } from "react-bootstrap";
 
 interface FileData {
   name: string;
@@ -94,6 +95,7 @@ export default function ProgressPanel(props: ProgressPanelProps) {
   };
 
   const handleClose = () => {
+    debugger;
     files.forEach((f) => {
       if (f.url) URL.revokeObjectURL(f.url); // revoke the file urls
     });
@@ -103,37 +105,44 @@ export default function ProgressPanel(props: ProgressPanelProps) {
   };
 
   return (
-    <div className="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column">
-      <div className="mb-3">
-        <h5 className="mb-2">
-          {status === "IN_PROGRESS" ? "🔄 Running Search..." : "✅ Completed"}
-        </h5>
-        <pre
-          ref={progressAreaRef}
-          className="small text-monospace"
-          style={{ whiteSpace: "pre-wrap" }}
-        />
-      </div>
+    <div className="d-flex flex-fill flex-column">
+      <Card className="flex-fill shadow-sm">
+        <Card.Body className="d-flex flex-column">
+          <div className="mb-3">
+            <Card.Title as="h5" className="mb-2">
+              {status === "IN_PROGRESS"
+                ? "🔄 Running Search..."
+                : "✅ Completed"}
+            </Card.Title>
+            <pre
+              ref={progressAreaRef}
+              className="small text-monospace"
+              style={{ whiteSpace: "pre-wrap" }}
+            />
+          </div>
 
-      <div id="fileLinks" className="mt-auto mb-3">
-        {files.map(({ name, url }: FileData) => (
-          <a
-            key={name}
-            href={url}
-            download={name}
-            className="d-block mb-2 small"
+          <div id="fileLinks" className="mt-auto mb-3">
+            {files.map(({ name, url }: FileData) => (
+              <a
+                key={name}
+                href={url}
+                download={name}
+                className="d-block mb-2 small"
+              >
+                {name}
+              </a>
+            ))}
+          </div>
+
+          <Button
+            onClick={status === "IN_PROGRESS" ? handleCancel : handleClose}
+            variant={status === "IN_PROGRESS" ? "danger" : "secondary"}
+            className="w-100"
           >
-            {name}
-          </a>
-        ))}
-      </div>
-
-      <button
-        onClick={status === "IN_PROGRESS" ? handleCancel : handleClose}
-        className={`w-100 btn ${status === "IN_PROGRESS" ? "btn-danger" : "btn-secondary"}`}
-      >
-        {status === "IN_PROGRESS" ? "Cancel" : "Close"}
-      </button>
+            {status === "IN_PROGRESS" ? "Cancel" : "Close"}
+          </Button>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

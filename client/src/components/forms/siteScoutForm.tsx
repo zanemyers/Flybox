@@ -16,36 +16,39 @@ interface State extends BaseState {
 
 export default class SiteScoutForm extends BaseForm<BaseProps, State> {
   private readonly fileTypes = [".xls", ".xlsx"];
+  protected readonly defaultState: State = {
+    jobId: null,
+    shopReelFile: null,
+    fishTalesFile: null,
+    shopReelError: "",
+    fishTalesError: "",
+  };
 
   constructor(props: BaseProps) {
     super(props);
-
-    // Preserve jobId from BaseForm
     this.state = {
-      ...this.state,
-      shopReelFile: null,
-      fishTalesFile: null,
+      ...this.defaultState,
+      jobId: this.state.jobId,
     };
   }
 
   // Validate input and return payload for API
   validateFormInput(): Payload | null {
-    let hasError = false;
     const { shopReelFile, fishTalesFile } = this.state;
 
-    if (!shopReelFile) {
-      hasError = true;
-      this.setState({ shopReelError: "⚠ Please upload your ShopReel file." });
-    }
-    if (!fishTalesFile) {
-      hasError = true;
-      this.setState({
-        fishTalesError:
-          "⚠ Please upload your FishTales starter file or use the example file.",
-      });
-    }
+    const errors = {
+      shopReelError: shopReelFile ? "" : "⚠ Please upload your ShopReel file.",
+      fishTalesError: fishTalesFile
+        ? ""
+        : "⚠ Please upload your FishTales starter file or use the example file.",
+    };
 
-    if (hasError) return null;
+    const hasError = Object.values(errors).some((e) => e !== "");
+
+    this.setState(errors);
+    if (hasError) {
+      return null;
+    }
 
     return { shopReelFile, fishTalesFile };
   }
@@ -58,21 +61,15 @@ export default class SiteScoutForm extends BaseForm<BaseProps, State> {
           label="Import ShopReel File"
           acceptedTypes={this.fileTypes}
           onSelect={(file) => this.setState({ shopReelFile: file })}
-        >
-          {this.state.shopReelError && (
-            <div className="form-error">{this.state.shopReelError}</div>
-          )}
-        </FileInput>
+          error={this.state.shopReelError}
+        />
 
         <FileInput
           label="Import FishTales Starter File"
           acceptedTypes={this.fileTypes}
           onSelect={(file) => this.setState({ fishTalesFile: file })}
-        >
-          {this.state.fishTalesError && (
-            <div className="form-error">{this.state.fishTalesError}</div>
-          )}
-        </FileInput>
+          error={this.state.fishTalesError}
+        />
       </>
     );
   }
