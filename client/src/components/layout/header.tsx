@@ -1,6 +1,6 @@
-import Navbar from "./navbar";
-import tackleBox from "../../assets/images/tackle_box.png";
 import { NavLink } from "react-router-dom";
+import tackleBox from "../../assets/images/tackle_box.png";
+import NavigationBar from "./navbar";
 
 export default function Header() {
   return (
@@ -16,7 +16,7 @@ export default function Header() {
           <h1 className="m-0 display-4">Flybox</h1>
         </div>
       </NavLink>
-      <Navbar />
+      <NavigationBar />
     </header>
   );
 }

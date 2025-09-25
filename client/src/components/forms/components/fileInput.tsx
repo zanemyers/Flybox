@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
+import { Form, Button } from "react-bootstrap";
 
 import fileInput from "@images/upload.png";
 
 interface Props {
   label: string;
   acceptedTypes: string[];
-  children?: React.ReactNode;
+  error?: string;
   onSelect?: (file: File | null) => void; // callback to parent
 }
 
@@ -77,23 +78,20 @@ export default function FileInput(props: Props) {
   };
 
   return (
-    <div className="form-input file-input-component">
-      {/* Label */}
-      <label className="form-label">{props.label}</label>
+    <Form.Group className="form-input file-input-component">
+      <Form.Label>{props.label}</Form.Label>
 
       {/* File drop / click wrapper */}
       <div
         className={`file-input-wrapper border rounded bg-light py-3 flex-fill ${
           isDragging ? "border-primary bg-white" : ""
         }`}
-        onClick={() => {
-          if (!file) inputRef.current?.click();
-        }}
+        onClick={() => !file && inputRef.current?.click()}
         onDragEnter={handleDrag}
         onDragOver={handleDrag}
         onDragLeave={handleDrag}
         onDrop={handleDrag}
-        style={{ transition: "all 0.2s ease" }} // optional smooth highlight
+        style={{ transition: "all 0.2s ease" }}
       >
         <img src={fileInput} alt="Upload Icon" />
         <p className="mb-2">Drag & Drop or Click to Select File</p>
@@ -101,14 +99,15 @@ export default function FileInput(props: Props) {
         {/* Selected file display */}
         {file && (
           <div className="selected-file-wrapper mb-2 fw-bold g-2">
-            <button
-              type="button"
-              className="clear-file-button btn btn-outline-danger"
+            <Button
+              size="sm"
+              variant="outline-danger"
+              className="clear-file-button"
               aria-label="Remove File"
               onClick={handleClear}
             >
               &times;
-            </button>
+            </Button>
             <span className="selected-file-name ms-2">{file.name}</span>
           </div>
         )}
@@ -119,17 +118,21 @@ export default function FileInput(props: Props) {
           {formatAcceptedTypes(props.acceptedTypes as [string, ...string[]])}.
         </p>
       </div>
-      {props.children}
 
       {/* Hidden file input */}
-      <input
+      <Form.Control
         ref={inputRef}
-        className="form-control d-none file-input"
         type="file"
+        className="d-none"
         accept={props.acceptedTypes.join(",")}
         onChange={handleFileChange}
         disabled={!!file}
+        isInvalid={!!props.error}
       />
-    </div>
+
+      <Form.Control.Feedback type="invalid">
+        {props.error}
+      </Form.Control.Feedback>
+    </Form.Group>
   );
 }

@@ -1,4 +1,6 @@
 import React from "react";
+import { Form, Button, Col } from "react-bootstrap";
+
 // import { Tooltip } from "bootstrap";
 import ProgressPanel from "./progressPanel";
 
@@ -49,7 +51,6 @@ export default abstract class BaseForm<
 
   // Arrow function ensures 'this' binding
   handleSubmit = async (e: React.FormEvent) => {
-    debugger;
     e.preventDefault();
 
     const payload = this.validateFormInput();
@@ -88,17 +89,17 @@ export default abstract class BaseForm<
     }
 
     return (
-      <div className="col-lg-7 d-flex">
-        <form
+      <Col lg={7} className="d-flex">
+        <Form
           className="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column"
           onSubmit={this.handleSubmit}
         >
           {this.renderFormInput()}
-          <button type="submit" className="btn btn-primary mt-auto mx-1">
+          <Button type="submit" variant="primary" className="mt-auto mx-1">
             Compare
-          </button>
-        </form>
-      </div>
+          </Button>
+        </Form>
+      </Col>
     );
   }
 }
