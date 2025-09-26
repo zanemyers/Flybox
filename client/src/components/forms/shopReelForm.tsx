@@ -7,14 +7,17 @@ import BaseForm, {
 } from "./components/baseForm";
 import FileInput from "./components/fileInput";
 import FormInput, { FormInputGroup } from "./components/formInput";
+import MapInput from "./components/mapInput";
+
+import Pin from "@images/location_pin.png";
 
 interface FormState {
   file: File | null;
   apiKey: string;
   searchTerm: string;
-  latitude: string;
-  longitude: string;
-  maxResults: string;
+  latitude: number;
+  longitude: number;
+  maxResults: number;
 }
 
 interface ErrorState {
@@ -28,6 +31,7 @@ interface ErrorState {
 
 interface State extends BaseState {
   activeTab: "manual" | "file";
+  showMap: boolean;
   form: FormState;
   errors: ErrorState;
 }
@@ -57,13 +61,14 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
   protected readonly defaultState: State = {
     jobId: null,
     activeTab: "manual",
+    showMap: false,
     form: {
       file: null,
       apiKey: "",
       searchTerm: "Fly Fishing Shops",
-      latitude: "44.427963",
-      longitude: "-110.588455",
-      maxResults: "100",
+      latitude: 44.427963,
+      longitude: -110.588455,
+      maxResults: 100,
     },
     errors: {},
   };
@@ -114,16 +119,13 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
 
     // Validate number inputs
     if (fieldKey === "maxResults") {
-      const val = parseInt(value, 10);
-      return val < 20 || val > 120;
+      return value < 20 || value > 120;
     }
     if (fieldKey === "latitude") {
-      const val = parseFloat(value);
-      return val < -90 || val > 90;
+      return value < -90 || value > 90;
     }
     if (fieldKey === "longitude") {
-      const val = parseFloat(value);
-      return val < -180 || val > 180;
+      return value < -180 || value > 180;
     }
     return false;
   }
@@ -207,7 +209,9 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                   placeholder="Latitude"
                   title="Latitude in decimal degrees"
                   step="0.000001"
-                  onChange={(val) => this.updateState("form", "latitude", val)}
+                  onChange={(val) =>
+                    this.updateState("form", "latitude", parseFloat(val))
+                  }
                   noWrapper
                 />
                 <FormInput
@@ -217,24 +221,33 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                   title="Longitude in decimal degrees"
                   step="0.000001"
                   value={this.state.form.longitude}
-                  onChange={(val) => this.updateState("form", "longitude", val)}
+                  onChange={(val) =>
+                    this.updateState("form", "longitude", parseFloat(val))
+                  }
                   noWrapper
                 />
-                {/*  TODO: Fix this for the location picker */}
-                {/*<button*/}
-                {/*  type="button"*/}
-                {/*  className="input-group-text location-picker"*/}
-                {/*  title="Open map to select location"*/}
-                {/*  data-bs-placement="top"*/}
-                {/*  data-bs-toggle="modal"*/}
-                {/*  data-bs-target="#mapModal"*/}
-                {/*>*/}
-                {/*  <img*/}
-                {/*    src="/assets/images/location_pin.png"*/}
-                {/*    alt="Location Pin"*/}
-                {/*    style={{ height: 1 }}*/}
-                {/*  />*/}
-                {/*</button>*/}
+                <button
+                  type="button"
+                  className="btn btn-light input-group-text"
+                  onClick={() => this.setState({ showMap: true })}
+                >
+                  <img
+                    src={Pin}
+                    alt="location pin"
+                    style={{ width: 20, height: 20 }}
+                  />
+                </button>
+
+                <MapInput
+                  show={this.state.showMap}
+                  onClose={() => this.setState({ showMap: false })}
+                  latitude={this.state.form.latitude}
+                  longitude={this.state.form.longitude}
+                  onChange={(newLat, newLng) => {
+                    this.updateState("form", "latitude", newLat);
+                    this.updateState("form", "longitude", newLng);
+                  }}
+                />
               </FormInputGroup>
 
               <FormInput
@@ -244,7 +257,9 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                 title="Maximum number of results"
                 step="20"
                 value={this.state.form.maxResults}
-                onChange={(val) => this.updateState("form", "maxResults", val)}
+                onChange={(val) =>
+                  this.updateState("form", "maxResults", parseInt(val, 10))
+                }
                 error={this.state.errors.maxResultsError}
               />
             </div>

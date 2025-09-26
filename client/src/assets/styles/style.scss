@@ -135,6 +135,15 @@ button {
   margin-right: 0.25rem;
 }
 
+.input-group {
+  .btn {
+    border-bottom-right-radius: 0.375rem !important; // override Bootstrap flattening
+    border-top-right-radius: 0.375rem !important;
+  }
+}
+
+
+
 // =====================================
 // File Input Styling
 // =====================================
