@@ -264,6 +264,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
               <FileInput
                 label="Import Excel File"
                 acceptedTypes={[".xls", ".xlsx"]}
+                onSelect={(file) => this.updateState("form", "file", file)}
                 error={this.state.errors.fileError}
               />
             </div>
