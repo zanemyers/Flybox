@@ -6,7 +6,7 @@ import BaseForm, {
   type Payload,
 } from "./components/baseForm";
 import FileInput from "./components/fileInput";
-import FormInput, { FormInputGroup } from "./components/formInput";
+import { TextInput, FormInputGroup } from "./components/formInput";
 import MapInput from "./components/mapInput";
 import Tabs from "../ui/tabs";
 
@@ -91,7 +91,6 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
 
   // Validate input and return payload for API
   validateFormInput(): Payload | null {
-    debugger;
     const activeTab = this.state.activeTab;
     let hasError = false;
 
@@ -168,7 +167,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
           {/* Manual Input */}
           {this.state.activeTab === "manual" && (
             <div className="tab-pane show active" role="tabpanel">
-              <FormInput
+              <TextInput
                 type="password"
                 label="SerpAPI Key"
                 placeholder="API Key"
@@ -178,7 +177,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                 error={this.state.errors.apiKeyError}
               />
 
-              <FormInput
+              <TextInput
                 type="text"
                 label="Search Term"
                 placeholder="e.g. Fly Fishing Shops"
@@ -195,7 +194,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                   this.state.errors.longitudeError,
                 ].filter(Boolean)}
               >
-                <FormInput
+                <TextInput
                   type="number"
                   label="Latitude"
                   value={this.state.form.latitude}
@@ -207,7 +206,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                   }
                   noWrapper
                 />
-                <FormInput
+                <TextInput
                   type="number"
                   label="Longitude"
                   placeholder="Longitude"
@@ -243,7 +242,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                 />
               </FormInputGroup>
 
-              <FormInput
+              <TextInput
                 type="number"
                 label="Max Results"
                 placeholder="e.g. 100"
