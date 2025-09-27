@@ -1,13 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 
 interface FileData {
   name: string;
   buffer?: string;
-  url?: string; // blob URL we generate
 }
 
-interface ProgressPanelProps {
+interface Props {
   route: string;
   jobId: string;
   handleClose: () => void;
@@ -15,10 +14,14 @@ interface ProgressPanelProps {
 
 type Status = "IN_PROGRESS" | "COMPLETED" | "CANCELLED" | "FAILED";
 
-export default function ProgressPanel(props: ProgressPanelProps) {
+export default function ProgressPanel(props: Props) {
   const [status, setStatus] = useState<Status>("IN_PROGRESS");
   const [files, setFiles] = useState<FileData[]>([]);
   const progressAreaRef = useRef<HTMLPreElement>(null);
+
+  // Store blob URLs
+  const fileUrlsRef = useRef<Map<string, string>>(new Map());
+  const downloadedFilesRef = useRef<Set<string>>(new Set());
 
   // Load saved file names on first render
   useEffect(() => {
@@ -27,11 +30,13 @@ export default function ProgressPanel(props: ProgressPanelProps) {
       setFiles((JSON.parse(saved) as string[]).map((name) => ({ name })));
   }, [props.route]);
 
-  // Keep localStorage in sync with fileNames
-  const fileNames = useMemo(() => files.map((f) => f.name), [files]);
+  // Keep localStorage in sync with file names
   useEffect(() => {
-    localStorage.setItem(`${props.route}-files`, JSON.stringify(fileNames));
-  }, [fileNames, props.route]);
+    if (files.length > 0) {
+      const fileNames = JSON.stringify(files.map((f) => f.name));
+      localStorage.setItem(`${props.route}-files`, fileNames);
+    }
+  }, [files, props.route]);
 
   // Poll server for progress updates
   useEffect(() => {
@@ -45,44 +50,51 @@ export default function ProgressPanel(props: ProgressPanelProps) {
       setStatus(data.status);
       downloadFile(data.files);
 
-      // Stop polling if no longer in progress
       if (data.status !== "IN_PROGRESS") clearInterval(intervalId);
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, [props.route, props.jobId]);
 
-  // When adding new files, check fileNames to prevent duplicates
-  const downloadFile = (incomingFiles: FileData[]) => {
-    const getFileUrl = (buffer: string) =>
-      URL.createObjectURL(
-        new Blob([Uint8Array.from(atob(buffer), (c) => c.charCodeAt(0))]),
+  // Create or get object URL for a file
+  const getFileUrl = (file: FileData) => {
+    if (!file.buffer) return;
+
+    if (!fileUrlsRef.current.has(file.name)) {
+      const url = URL.createObjectURL(
+        new Blob([Uint8Array.from(atob(file.buffer), (c) => c.charCodeAt(0))]),
       );
+      fileUrlsRef.current.set(file.name, url);
+    }
 
+    return fileUrlsRef.current.get(file.name)!;
+  };
+
+  const downloadFile = (incomingFiles: FileData[]) => {
     setFiles((currentFiles) => {
-      const existingNames = new Set(currentFiles.map((f) => f.name));
-
+      // Update buffers for existing files
       const updatedFiles = currentFiles.map((cf) => {
-        if (cf.url) return cf;
-        const match = incomingFiles.find((f) => f.name === cf.name);
-        return match
-          ? { ...cf, buffer: match.buffer, url: getFileUrl(match.buffer!) }
-          : cf;
+        const match = incomingFiles.find((f) => f.name === cf.name && f.buffer);
+        return match ? { ...cf, buffer: match.buffer } : cf;
       });
 
-      const newFiles = incomingFiles
-        .filter((f) => !existingNames.has(f.name))
-        .map((f) => {
-          const url = getFileUrl(f.buffer!);
+      // Truly new files
+      const existingNames = new Set(currentFiles.map((f) => f.name));
+      const newFiles = incomingFiles.filter((f) => !existingNames.has(f.name));
 
-          // Auto-download new files
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = f.name;
-          link.click();
-
-          return { ...f, url };
-        });
+      // Auto-download only truly new files
+      newFiles.forEach((f) => {
+        if (f.buffer && !downloadedFilesRef.current.has(f.name)) {
+          const url = getFileUrl(f);
+          if (url) {
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = f.name;
+            link.click();
+          }
+          downloadedFilesRef.current.add(f.name);
+        }
+      });
 
       return [...updatedFiles, ...newFiles];
     });
@@ -95,10 +107,9 @@ export default function ProgressPanel(props: ProgressPanelProps) {
   };
 
   const handleClose = () => {
-    debugger;
-    files.forEach((f) => {
-      if (f.url) URL.revokeObjectURL(f.url); // revoke the file urls
-    });
+    // Revoke all blob URLs
+    fileUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+    fileUrlsRef.current.clear();
 
     localStorage.removeItem(`${props.route}-files`); // clear the files from local storage
     props.handleClose(); // delegate back to parent
@@ -122,16 +133,19 @@ export default function ProgressPanel(props: ProgressPanelProps) {
           </div>
 
           <div id="fileLinks" className="mt-auto mb-3">
-            {files.map(({ name, url }: FileData) => (
-              <a
-                key={name}
-                href={url}
-                download={name}
-                className="d-block mb-2 small"
-              >
-                {name}
-              </a>
-            ))}
+            {files.map(
+              (file) =>
+                file.buffer && (
+                  <a
+                    key={file.name}
+                    href={getFileUrl(file)}
+                    download={file.name}
+                    className="d-block mb-2 small"
+                  >
+                    {file.name}
+                  </a>
+                ),
+            )}
           </div>
 
           <Button
