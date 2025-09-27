@@ -36,7 +36,7 @@
         // 2. Activate the tab
         const tabEl = document.querySelector(`#docsTabs button[data-bs-target="#${tabParam}"]`);
         if(tabEl) {
-            const tabInstance = new bootstrap.Tab(tabEl);
+            const tabInstance = new bootstrap.Tabs(tabEl);
             tabInstance.show();
         }
 
