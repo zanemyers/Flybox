@@ -4,7 +4,7 @@ services:
     container_name: node
     build:
       context: ..
-      dockerfile: ../Dockerfile
+      dockerfile: docker/Dockerfile
     volumes:
       - ./db:/app/db
     env_file:
