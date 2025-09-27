@@ -1,14 +1,14 @@
 services:
   backend:
-    container_name: backend
     build:
       context: ..
-      dockerfile: ../Dockerfile
+      dockerfile: docker/Dockerfile
     working_dir: /app
     command: node --inspect=0.0.0.0:9229 server/server.js
     volumes:
-      - .:/app # sync all source for live changes
-      - ./db:/app/db # persist SQLite dev.db outside container
+      - ..:/app                # mount entire project root
+      - /app/client            # hide client/ (replaced with empty volume inside container)
+      - ../server/db:/app/server/db   # persist SQLite db outside container
     env_file:
       - ../.env
     ports:
@@ -16,12 +16,11 @@ services:
       - "9229:9229" # Node debugger
 
   frontend:
-    container_name: frontend
     build:
       context: ..
-      dockerfile: ../Dockerfile
+      dockerfile: docker/Dockerfile
     working_dir: /app/client
-    command: vite --config config/vite.config.ts
+    command: npx vite --config ../config/vite.config.ts
     volumes:
       - ../client:/app/client # mount only client code
     ports:

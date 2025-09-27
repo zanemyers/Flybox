@@ -11,11 +11,11 @@ setup:
 
 # Clean and rebuild docker
 @clean_docker:
-    docker compose down --volumes --remove-orphans # Remove orphaned containers and volumes
-    docker ps -q | xargs -r docker kill # Stop all running containers
-    docker ps -a -q | xargs -r docker rm # Remove all containers
-    docker images -f "dangling=true" -q | xargs -r docker rmi # Remove dangling images
-    docker compose build # Rebuild the container
+	docker compose -f docker/docker-compose.yml down --volumes --remove-orphans # Remove orphaned containers and volumes
+	docker ps -q | xargs -r docker kill # Stop all running containers
+	docker ps -aq | xargs -r docker rm # Remove all containers
+	docker images -f "dangling=true" -q | xargs -r docker rmi # Remove dangling images
+	docker compose -f docker/docker-compose.yml build # Rebuild the container
 
 # Update node packages
 @update_dependencies:
@@ -48,9 +48,11 @@ start *FLAGS:
     if [[ "{{FLAGS}}" == *"-l"* ]]; then  # check for -l (local) flag
         vite -c config/vite.config.ts & node --inspect=0.0.0.0:9229 server/server.js
     elif [[ "{{FLAGS}}" == *"-p"* ]]; then # check for -p (preview) flag
+        just build
         node server/server.js
     else
-        docker compose up
+        just build
+        docker compose -f docker/docker-compose.yml up
     fi
 
 # Create a new migration from schema changes and apply it
