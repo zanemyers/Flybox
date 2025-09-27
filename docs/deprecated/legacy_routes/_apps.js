@@ -2,7 +2,7 @@ import express from "express";
 import {
   MERGE_PROMPT,
   SUMMARY_PROMPT,
-} from "../../apps/base/constants/index.js";
+} from "../../../apps/base/constants/index.js";
 
 /**
  * Defines application routes for rendering scraper pages.

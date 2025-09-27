@@ -9,7 +9,7 @@ $danger-red: #b2554f;
 @use "bootstrap" with (
   $primary: $primary-blue,
   $secondary: $secondary-green,
-  $danger: $danger-red,
+  $danger: $danger-red
 );
 
 // =====================================

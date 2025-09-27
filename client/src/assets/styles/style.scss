@@ -146,7 +146,6 @@ button {
   }
 }
 
-
 // =====================================
 // File Input Styling
 // =====================================
@@ -246,11 +245,11 @@ button {
 
   img {
     max-width: 75%; // same as w-75
-    height: auto;   // same as img-fluid
+    height: auto; // same as img-fluid
   }
 
   li img {
-    display: block;   // same as d-block
+    display: block; // same as d-block
     margin-left: auto;
     margin-right: auto; // same as mx-auto
   }

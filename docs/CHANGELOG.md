@@ -56,7 +56,7 @@ All notable changes to this project will be documented in this file.
 #### **Changed**
 
 - Renamed `report_starter_file_ex.xlsx` → [`fishTales_starter_file.xlsx`](../client/public/example_files/fishTales_starter_file.xlsx).
-- Renamed `routes/_partials.js` → [`routes/_forms.js`](../server/routes/_forms.js).
+- Renamed `routes/_partials.js` → [`routes/_forms.js`](../server/api_routes/_forms.js).
 - Moved [`idea.jpg`](../client/src/assets/images/about/idea.jpg), [`important.jpg`](../client/src/assets/images/about/important.jpg), [`serve.jpg`](../client/src/assets/images/about/serve.jpg) to [`about/`](../client/src/assets/images/about).
 - Updated CSS/SCSS to improve readability.
 - Simplified text in instructions panel and updated links to point to documentation.
@@ -82,7 +82,7 @@ All notable changes to this project will be documented in this file.
 #### **Changed**
 
 - **Sockets**: `reportSocket` → [`fishTalesSocket`](deprecated/sockets/_fishTalesSocket.js), `shopSocket` → [`shopReelSocket`](deprecated/sockets/_shopReelSocket.js).
-- **Routes**: `/shop-form` → [`/shop-reel-form`](../server/routes/_apps.js), `/report-form` → [`/fish-tales-form`](../server/routes/_apps.js).
+- **Routes**: `/shop-form` → [`/shop-reel-form`](../server/api_routes/_apps.js), `/report-form` → [`/fish-tales-form`](../server/api_routes/_apps.js).
 - **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server/server.js), [`/ws/fish-tales`](../server/server.js).
 - [**BaseFormApp**](deprecated/legacy_js/baseFormApp.js): WebSocket port fixed at `3000` (was `process.env.PORT`).
 - **SiteScout logic**: [`mergeMissingUrls`](../apps/site_scout/siteScout.js) now accepts in-memory buffers, supports cancellation, returns updated starter files.
