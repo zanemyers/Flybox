@@ -136,12 +136,15 @@ button {
 }
 
 .input-group {
-  .btn {
-    border-bottom-right-radius: 0.375rem !important; // override Bootstrap flattening
-    border-top-right-radius: 0.375rem !important;
+  .input-group-text {
+    border-top-right-radius: var(--bs-border-radius) !important;
+    border-bottom-right-radius: var(--bs-border-radius) !important;
+
+    &:hover {
+      background-color: var(--bs-secondary-bg);
+    }
   }
 }
-
 
 
 // =====================================

@@ -8,6 +8,7 @@ import BaseForm, {
 import FileInput from "./components/fileInput";
 import FormInput, { FormInputGroup } from "./components/formInput";
 import MapInput from "./components/mapInput";
+import Tabs from "../ui/tabs";
 
 import Pin from "@images/location_pin.png";
 
@@ -56,6 +57,11 @@ const formErrors: {
       "⚠ Please set a maximum number of results between 20 and 120.",
   },
 };
+
+const tabs = [
+  { id: "manual", label: "Manual Input" },
+  { id: "file", label: "File Import" },
+];
 
 export default class ShopReelForm extends BaseForm<BaseProps, State> {
   protected readonly defaultState: State = {
@@ -149,26 +155,13 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
     return (
       <div className="form-body">
         {/* Tab navigation */}
-        <ul className="nav nav-tabs mb-3" role="tablist">
-          <li className="nav-item">
-            <button
-              className={`nav-link ${this.state.activeTab === "manual" ? "active" : ""}`}
-              type="button"
-              onClick={() => this.setState({ activeTab: "manual" })}
-            >
-              Manual Input
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${this.state.activeTab === "file" ? "active" : ""}`}
-              type="button"
-              onClick={() => this.setState({ activeTab: "file" })}
-            >
-              File Import
-            </button>
-          </li>
-        </ul>
+        <Tabs
+          tabs={tabs}
+          activeTab={this.state.activeTab}
+          onChange={(tabId) =>
+            this.setState({ activeTab: tabId as "manual" | "file" })
+          }
+        />
 
         {/* Tab content */}
         <div className="tab-content">
@@ -228,7 +221,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                 />
                 <button
                   type="button"
-                  className="btn btn-light input-group-text"
+                  className="input-group-text"
                   onClick={() => this.setState({ showMap: true })}
                 >
                   <img
