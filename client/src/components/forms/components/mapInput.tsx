@@ -17,24 +17,26 @@ interface MapModalProps {
   onChange: (lat: number, lng: number) => void;
 }
 
-export default function MapInput({
-  show,
-  onClose,
-  latitude,
-  longitude,
-  onChange,
-}: MapModalProps) {
+export default function MapInput(props: MapModalProps) {
   const [position, setPosition] = useState<[number, number]>([
-    latitude,
-    longitude,
+    props.latitude,
+    props.longitude,
   ]);
+
+  useEffect(() => {
+    setPosition(() => {
+      const lat = Number.isNaN(props.latitude) ? 44.427963 : props.latitude;
+      const lng = Number.isNaN(props.longitude) ? -110.588455 : props.longitude;
+      return [lat, lng];
+    });
+  }, [props.latitude, props.longitude]);
 
   function LocationSelector() {
     useMapEvents({
       click(e) {
         setPosition([e.latlng.lat, e.latlng.lng]);
-        onChange(e.latlng.lat, e.latlng.lng);
-        onClose(); // auto-close modal after picking
+        props.onChange(e.latlng.lat, e.latlng.lng);
+        props.onClose(); // auto-close modal after picking
       },
     });
     return null;
@@ -55,44 +57,54 @@ export default function MapInput({
   }
 
   return (
-    <div
-      className={`modal fade ${show ? "show d-block" : ""}`}
-      tabIndex={-1}
-      role="dialog"
-    >
-      <div className="modal-dialog modal-lg modal-dialog-centered">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Select a Location</h5>
-            <button type="button" className="btn-close" onClick={onClose} />
-          </div>
-          <div className="modal-body p-0">
-            <MapContainer
-              center={position}
-              zoom={10}
-              style={{ height: "500px", width: "100%" }}
-            >
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution="Map data © OpenStreetMap contributors"
+    <>
+      {/* Backdrop */}
+      {props.show && <div className="modal-backdrop fade show"></div>}
+
+      {/* Modal */}
+      <div
+        className={`modal fade ${props.show ? "show d-block" : ""}`}
+        tabIndex={-1}
+        role="dialog"
+      >
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Select a Location</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={props.onClose}
               />
-              <Marker
-                position={position}
-                draggable={true}
-                eventHandlers={{
-                  dragend: (e) => {
-                    const latlng = (e.target as L.Marker).getLatLng();
-                    setPosition([latlng.lat, latlng.lng]);
-                    onChange(latlng.lat, latlng.lng);
-                  },
-                }}
-              />
-              <LocationSelector />
-              <ResizeOnShow active={show} />
-            </MapContainer>
+            </div>
+            <div className="modal-body overflow-hidden rounded-bottom-3 p-0">
+              <MapContainer
+                center={position}
+                zoom={10}
+                style={{ height: "500px", width: "100%" }}
+              >
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution="Map data © OpenStreetMap contributors"
+                />
+                <Marker
+                  position={position}
+                  draggable={true}
+                  eventHandlers={{
+                    dragend: (e) => {
+                      const latlng = (e.target as L.Marker).getLatLng();
+                      setPosition([latlng.lat, latlng.lng]);
+                      props.onChange(latlng.lat, latlng.lng);
+                    },
+                  }}
+                />
+                <LocationSelector />
+                <ResizeOnShow active={props.show} />
+              </MapContainer>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
