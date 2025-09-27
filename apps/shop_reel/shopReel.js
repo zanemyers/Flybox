@@ -87,6 +87,14 @@ export class ShopReel extends BaseApp {
       return await cacheFileHandler.read();
     }
 
+    // Use the environment variable SERP_API_KEY for development/testing if the provided apiKey is "test";
+    // Otherwise, use the actual apiKey
+    const apiKey =
+      this.searchParams.apiKey === "test" &&
+      process.env.NODE_ENV === "development"
+        ? process.env.SERP_API_KEY
+        : this.searchParams.apiKey;
+
     const results = [];
 
     // Fetch in pages of 20 until maxResults
@@ -96,14 +104,6 @@ export class ShopReel extends BaseApp {
       start += 20
     ) {
       await this.throwIfJobCancelled();
-
-      // Use the environment variable SERP_API_KEY for development/testing if the provided apiKey is "test";
-      // Otherwise, use the actual apiKey
-      const apiKey =
-        this.searchParams.apiKey === "test" &&
-        process.env.NODE_ENV === "development"
-          ? process.env.SERP_API_KEY
-          : this.searchParams.apiKey;
 
       const data = await getJson({
         engine: "google_maps",
