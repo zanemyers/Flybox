@@ -27,9 +27,9 @@ export class ShopReelAPI extends BaseAPI {
         ? { file }
         : {
             apiKey: req.body.apiKey,
-            query: req.body.query,
-            lat: parseFloat(req.body.lat),
-            lng: parseFloat(req.body.lng),
+            query: req.body.searchTerm,
+            lat: parseFloat(req.body.latitude),
+            lng: parseFloat(req.body.longitude),
             maxResults: parseInt(req.body.maxResults, 10),
           };
 
