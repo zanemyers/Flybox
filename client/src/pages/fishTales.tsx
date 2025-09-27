@@ -1,4 +1,5 @@
 import InstructionPanel from "../components/forms/components/instructionPanel";
+import FishTalesForm from "../components/forms/fishTalesForm";
 
 const steps = [
   { icon: "🔐", text: "Enter your **Gemini API key**" },
@@ -31,9 +32,7 @@ export default function FishTales() {
         />
 
         {/* Form panel */}
-        <div id="formContainer" className="col-lg-7 d-flex">
-          <div>Hello Form</div>
-        </div>
+        <FishTalesForm route="fish-tales" />
       </div>
     </main>
   );

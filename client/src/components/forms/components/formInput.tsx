@@ -1,20 +1,41 @@
 import React from "react";
 
-interface InputProps {
+interface WrapperProps {
+  type: "text" | "textarea" | "password" | "number" | "checkbox";
+  id: string;
   label: string;
-  type: "number" | "text" | "password";
-  value: string | number;
-  placeholder?: string;
-  title?: string;
   error?: string;
-  onChange: (value: string) => void;
-  noWrapper?: boolean; // new
-
-  //extra number props
-  step?: string;
+  children: React.ReactNode;
 }
 
-export default function FormInput(props: InputProps) {
+function FormWrapper(props: WrapperProps) {
+  const labelEl = <label htmlFor={props.id}>{props.label}</label>;
+  return (
+    <div className="form-input">
+      {props.type !== "checkbox" && labelEl}
+      {props.children}
+      {props.type === "checkbox" && labelEl}
+      {props.error && <div className="form-error">{props.error}</div>}
+    </div>
+  );
+}
+
+interface BaseInputProps {
+  label: string;
+  title?: string;
+  error?: string;
+  noWrapper?: boolean;
+}
+
+interface TextProps extends BaseInputProps {
+  type: "text" | "password" | "number";
+  step?: string;
+  value: string | number;
+  placeholder: string;
+  onChange: (value: string) => void;
+}
+
+export function TextInput(props: TextProps) {
   const id = props.label.toLowerCase().replace(/\s+/g, "-");
 
   const inputEl = (
@@ -22,24 +43,92 @@ export default function FormInput(props: InputProps) {
       id={id}
       type={props.type}
       className="form-control"
-      value={props.value}
       placeholder={props.placeholder}
       title={props.title}
+      step={props.type === "number" ? props.step : undefined}
+      value={props.value}
       onChange={(e) => props.onChange(e.target.value)}
-      {...(props.type === "number" ? { step: props.step } : {})}
-    ></input>
+    />
   );
 
   if (props.noWrapper) return inputEl;
-
   return (
-    <div className="form-input">
-      <label htmlFor={id} className="form-label">
-        {props.label}
-      </label>
+    <FormWrapper
+      type={props.type}
+      id={id}
+      label={props.label}
+      error={props.error}
+    >
       {inputEl}
-      {props.error && <div className="form-error">{props.error}</div>}
-    </div>
+    </FormWrapper>
+  );
+}
+
+interface CheckedBoxProps extends BaseInputProps {
+  checked: boolean;
+  onChange: (value: boolean) => void;
+}
+
+export function CheckBoxInput(props: CheckedBoxProps) {
+  const id = props.label.toLowerCase().replace(/\s+/g, "-");
+
+  const inputEl = (
+    <input
+      id={id}
+      type="checkbox"
+      className="form-check-input"
+      title={props.title}
+      checked={props.checked}
+      onChange={(e) => props.onChange(e.target.checked)}
+    />
+  );
+
+  if (props.noWrapper) return inputEl;
+  return (
+    <FormWrapper
+      type="checkbox"
+      id={id}
+      label={props.label}
+      error={props.error}
+    >
+      {inputEl}
+    </FormWrapper>
+  );
+}
+
+interface TextAreaProps extends BaseInputProps {
+  rows: number;
+  value: string;
+  placeholder?: string;
+  onChange: (value: string) => void;
+}
+
+export function TextAreaInput(props: TextAreaProps) {
+  const id = props.label.toLowerCase().replace(/\s+/g, "-");
+
+  const inputEl = (
+    <textarea
+      className="form-control"
+      id={id}
+      placeholder={props.placeholder}
+      title={props.title}
+      rows={props.rows}
+      onChange={(e) => props.onChange(e.target.value)}
+    >
+      {props.value}
+    </textarea>
+  );
+
+  if (props.noWrapper) return inputEl;
+  return (
+    <FormWrapper
+      type="textarea"
+      id={id}
+      label={props.label}
+      error={props.error}
+    >
+      {inputEl}
+    </FormWrapper>
   );
 }
 
