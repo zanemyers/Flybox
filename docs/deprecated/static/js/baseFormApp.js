@@ -33,9 +33,7 @@ export class BaseFormApp {
 
     if (this.jobId) {
       // Restore the set of files that have already been auto-downloaded for this job
-      this.files = new Set(
-        JSON.parse(localStorage.getItem(`${this.route}-files`) || "[]"),
-      );
+      this.files = new Set(JSON.parse(localStorage.getItem(`${this.route}-files`) || "[]"));
 
       // Fetch the latest job status and messages from the server
       const res = await fetch(`/api/${this.route}/${this.jobId}/updates`);
@@ -82,8 +80,7 @@ export class BaseFormApp {
       const payload = this.validateFormInput();
       if (!payload) {
         const errorArea = document.getElementById("formError");
-        if (errorArea)
-          errorArea.textContent = "❗ Please fill out all required fields.";
+        if (errorArea) errorArea.textContent = "❗ Please fill out all required fields.";
         return;
       }
 
@@ -178,9 +175,7 @@ export class BaseFormApp {
     files.forEach(({ name, buffer }) => {
       // Only create link if it doesn't already exist
       if (!fileLinksContainer.querySelector(`a[download="${name}"]`)) {
-        const blob = new Blob([
-          Uint8Array.from(atob(buffer), (c) => c.charCodeAt(0)),
-        ]);
+        const blob = new Blob([Uint8Array.from(atob(buffer), (c) => c.charCodeAt(0))]);
         const url = URL.createObjectURL(blob);
 
         const link = document.createElement("a");
@@ -195,10 +190,7 @@ export class BaseFormApp {
         if (!this.files.has(name)) {
           link.click();
           this.files.add(name);
-          localStorage.setItem(
-            `${this.route}-files`,
-            JSON.stringify([...this.files]),
-          );
+          localStorage.setItem(`${this.route}-files`, JSON.stringify([...this.files]));
         }
       }
     });

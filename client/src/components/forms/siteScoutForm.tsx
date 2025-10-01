@@ -1,9 +1,5 @@
 import React from "react";
-import BaseForm, {
-  type BaseProps,
-  type BaseState,
-  type Payload,
-} from "./components/baseForm";
+import BaseForm, { type BaseProps, type BaseState, type Payload } from "./components/baseForm";
 import FileInput from "./components/fileInput";
 
 /** Component state */

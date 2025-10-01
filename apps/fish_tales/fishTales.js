@@ -51,17 +51,14 @@ export class FishTales extends BaseApp {
     this.summaryHandler = new TXTFileHandler(); // Final summary output
 
     // Browser with stealth mode to reduce bot detection
-    this.browser = new StealthBrowser({
-      headless: process.env.RUN_HEADLESS !== "false",
-    });
+    this.browser = new StealthBrowser({ headless: process.env.RUN_HEADLESS !== "false" });
 
     // Keep track of sites that failed during scraping
     this.failedDomains = [];
 
     // If the API key is set to "test" in dev mode, use GEMINI_API_KEY from env
     this.apiKey =
-      this.searchParams.apiKey === "test" &&
-      process.env.NODE_ENV === "development"
+      this.searchParams.apiKey === "test" && process.env.NODE_ENV === "development"
         ? process.env.GEMINI_API_KEY
         : this.searchParams.apiKey;
   }
@@ -80,16 +77,9 @@ export class FishTales extends BaseApp {
       await this.starterFileHandler.loadBuffer(this.searchParams.file.buffer);
       await this.throwIfJobCancelled();
 
-      const sites = await this.starterFileHandler.read([
-        "keywords",
-        "junk-words",
-        "click-phrases",
-      ]);
+      const sites = await this.starterFileHandler.read(["keywords", "junk-words", "click-phrases"]);
       const siteList = await checkDuplicateSites(sites);
-      await this.addJobMessage(
-        `✅ Found ${siteList.length} sites to scrape!`,
-        true,
-      );
+      await this.addJobMessage(`✅ Found ${siteList.length} sites to scrape!`, true);
       await this.throwIfJobCancelled();
 
       // STEP 2: Scrape reports from sites
@@ -132,8 +122,7 @@ export class FishTales extends BaseApp {
    */
   async scrapeReports(sites) {
     let completed = 0;
-    const messageTemplate = (done) =>
-      `Scraping sites (${done}/${sites.length}) for reports...`;
+    const messageTemplate = (done) => `Scraping sites (${done}/${sites.length}) for reports...`;
 
     try {
       await this.browser.launch();
@@ -151,9 +140,7 @@ export class FishTales extends BaseApp {
             return reports;
           } catch (err) {
             if (err.isCancelled) throw err; // Bubble-up
-            this.failedDomains.push(
-              `Error scraping ${site.url}: ${err.message || err}`,
-            );
+            this.failedDomains.push(`Error scraping ${site.url}: ${err.message || err}`);
             return [];
           }
         });
@@ -162,17 +149,11 @@ export class FishTales extends BaseApp {
 
       // Flatten nested arrays and remove empty entries
       const reports = (results ?? []).flat().filter(Boolean);
-      await this.addJobMessage(
-        `✅ Found ${reports.length} total reports!`,
-        true,
-      );
+      await this.addJobMessage(`✅ Found ${reports.length} total reports!`, true);
 
       // Save site list if requested
       if (this.searchParams.includeSiteList) {
-        await this.addJobFile(
-          "secondaryFile",
-          this.siteListHandler.getBuffer(),
-        );
+        await this.addJobFile("secondaryFile", this.siteListHandler.getBuffer());
       }
 
       return reports;
@@ -210,9 +191,7 @@ export class FishTales extends BaseApp {
       try {
         await page.load(url);
       } catch (err) {
-        this.failedDomains.push(
-          `Error navigating to ${url}:: ${err.message || err}`,
-        );
+        this.failedDomains.push(`Error navigating to ${url}:: ${err.message || err}`);
         continue;
       }
 
@@ -244,20 +223,15 @@ export class FishTales extends BaseApp {
     // Save crawl info if site list output is enabled
     if (this.searchParams.includeSiteList) {
       const visitedText = [...visited].map((site) => `\t${site}`).join("\n");
-      const toVisitText = toVisit.data
-        .map((item) => `\t${item.url}`)
-        .join("\n");
+      const toVisitText = toVisit.data.map((item) => `\t${item.url}`).join("\n");
 
       if (visited.size >= this.searchParams.crawlDepth) {
-        await this.siteListHandler.write(
-          "Reached crawl depth limit for this site.\n",
-          true,
-        );
+        await this.siteListHandler.write("Reached crawl depth limit for this site.\n", true);
       }
 
       await this.siteListHandler.write(
         `VISITED:\n${visitedText}\nTO VISIT:\n${toVisitText}\n${DIVIDER}\n`,
-        true,
+        true
       );
     }
 
@@ -278,14 +252,10 @@ export class FishTales extends BaseApp {
       const reportDate = extractDate(report);
 
       if (!reportDate) return false; // Excludes reports with no detectable date.
-      if (differenceInDays(today, reportDate) > this.searchParams.maxAge)
-        return false; // Excludes reports older than `maxAge` days.
+      if (differenceInDays(today, reportDate) > this.searchParams.maxAge) return false; // Excludes reports older than `maxAge` days.
 
       // Optionally requires mention of a river from `riverList`.
-      if (
-        this.searchParams.filterByRivers &&
-        !includesAny(report, this.searchParams.riverList)
-      )
+      if (this.searchParams.filterByRivers && !includesAny(report, this.searchParams.riverList))
         return false;
       return true;
     });
@@ -312,7 +282,7 @@ export class FishTales extends BaseApp {
           return await generateContent(
             ai,
             this.searchParams.model,
-            `${chunk}\n\n${this.searchParams.summaryPrompt}`,
+            `${chunk}\n\n${this.searchParams.summaryPrompt}`
           );
         });
 
@@ -321,10 +291,7 @@ export class FishTales extends BaseApp {
       }
 
       if (results.length === 0) {
-        await this.addJobMessage(
-          "❌ No summaries generated. Skipping final summary.",
-          true,
-        );
+        await this.addJobMessage("❌ No summaries generated. Skipping final summary.", true);
         return;
       }
 
@@ -334,7 +301,7 @@ export class FishTales extends BaseApp {
       const finalResponse = await generateContent(
         ai,
         this.searchParams.model,
-        `${this.searchParams.mergePrompt}\n\n${results.join("\n\n")}`,
+        `${this.searchParams.mergePrompt}\n\n${results.join("\n\n")}`
       );
 
       // Save the final summary to a text file and attach it's buffer as the job's primary file

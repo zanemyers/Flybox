@@ -13,12 +13,9 @@ export default function Home() {
       {/* Hero Section: Main headline and introductory text */}
       <section className="position-relative text-center py-4 mb-5">
         <div className="container position-relative text-primary">
-          <h2 className="display-6 fw-bold mb-3">
-            Discover Fly Fishing Shops & Reports
-          </h2>
+          <h2 className="display-6 fw-bold mb-3">Discover Fly Fishing Shops & Reports</h2>
           <p className="lead mb-0">
-            Access up-to-date data and insights to enhance your fly-fishing
-            adventures.
+            Access up-to-date data and insights to enhance your fly-fishing adventures.
           </p>
         </div>
       </section>
@@ -69,8 +66,8 @@ export default function Home() {
         <div className="container">
           <h3>Connect Shops & Reports Effortlessly</h3>
           <p>
-            Flybox simplifies your fly-fishing planning by combining shop
-            locations and the latest reports in one place.
+            Flybox simplifies your fly-fishing planning by combining shop locations and the latest
+            reports in one place.
           </p>
         </div>
       </section>

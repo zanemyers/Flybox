@@ -51,9 +51,7 @@ export default function ListBlock(props: Props) {
           {item.main &&
             (typeof item.main === "string" ? (
               // If it's a string, render via ReactMarkdown (inline)
-              <ReactMarkdown components={{ p: "span" }}>
-                {item.main}
-              </ReactMarkdown>
+              <ReactMarkdown components={{ p: "span" }}>{item.main}</ReactMarkdown>
             ) : (
               // Otherwise, render directly as ReactNode
               item.main
@@ -65,9 +63,7 @@ export default function ListBlock(props: Props) {
               <br />
               {item.noteLabel && <em>{item.noteLabel}: </em>}
               {typeof item.note === "string" ? (
-                <ReactMarkdown components={{ p: "span" }}>
-                  {item.note}
-                </ReactMarkdown>
+                <ReactMarkdown components={{ p: "span" }}>{item.note}</ReactMarkdown>
               ) : (
                 item.note
               )}
@@ -75,9 +71,7 @@ export default function ListBlock(props: Props) {
           )}
 
           {/* Recursively render children if nested items exist */}
-          {item.children && (
-            <ListBlock items={item.children} ordered={props.orderChild} />
-          )}
+          {item.children && <ListBlock items={item.children} ordered={props.orderChild} />}
 
           {/* Render image if provided */}
           {item.img && (

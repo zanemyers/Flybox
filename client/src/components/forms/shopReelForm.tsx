@@ -1,10 +1,6 @@
 import React from "react";
 
-import BaseForm, {
-  type BaseProps,
-  type BaseState,
-  type Payload,
-} from "./components/baseForm";
+import BaseForm, { type BaseProps, type BaseState, type Payload } from "./components/baseForm";
 import FileInput from "./components/fileInput";
 import { TextInput, FormInputGroup } from "./components/formInput";
 import MapInput from "./components/mapInput";
@@ -57,8 +53,7 @@ const formErrors: {
     longitudeError: "⚠ Please enter a longitude value between -180 and 180.",
   },
   maxResults: {
-    maxResultsError:
-      "⚠ Please set a maximum number of results between 20 and 120.",
+    maxResultsError: "⚠ Please set a maximum number of results between 20 and 120.",
   },
 };
 
@@ -135,10 +130,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
   /**
    * Check if a field value is valid
    */
-  isFieldValid(
-    fieldKey: keyof FormState,
-    value: File | string | number | null,
-  ): boolean {
+  isFieldValid(fieldKey: keyof FormState, value: File | string | number | null): boolean {
     if (typeof value === "string") return !!value; // Non-empty strings
     if (fieldKey === "file") return !!value; // File must exist
 
@@ -158,7 +150,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
   updateState<K extends keyof State[T], T extends NestedStateKeys>(
     stateKey: T,
     key: K,
-    value: State[T][K],
+    value: State[T][K]
   ) {
     this.setState((prevState) => ({
       ...prevState,
@@ -176,9 +168,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
         <Tabs
           tabs={tabs}
           activeTab={this.state.activeTab}
-          onChange={(tabId) =>
-            this.setState({ activeTab: tabId as "manual" | "file" })
-          }
+          onChange={(tabId) => this.setState({ activeTab: tabId as "manual" | "file" })}
         />
 
         {/* Tab content */}
@@ -208,10 +198,9 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
 
               <FormInputGroup
                 label="Location"
-                errors={[
-                  this.state.errors.latitudeError,
-                  this.state.errors.longitudeError,
-                ].filter(Boolean)}
+                errors={[this.state.errors.latitudeError, this.state.errors.longitudeError].filter(
+                  Boolean
+                )}
               >
                 <TextInput
                   type="number"
@@ -220,9 +209,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                   placeholder="Latitude"
                   title="Latitude in decimal degrees"
                   step="0.000001"
-                  onChange={(val) =>
-                    this.updateState("form", "latitude", parseFloat(val))
-                  }
+                  onChange={(val) => this.updateState("form", "latitude", parseFloat(val))}
                   noWrapper
                 />
                 <TextInput
@@ -232,9 +219,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                   title="Longitude in decimal degrees"
                   step="0.000001"
                   value={this.state.form.longitude}
-                  onChange={(val) =>
-                    this.updateState("form", "longitude", parseFloat(val))
-                  }
+                  onChange={(val) => this.updateState("form", "longitude", parseFloat(val))}
                   noWrapper
                 />
                 <button
@@ -242,11 +227,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                   className="input-group-text"
                   onClick={() => this.setState({ showMap: true })}
                 >
-                  <img
-                    src={Pin}
-                    alt="location pin"
-                    style={{ width: 20, height: 20 }}
-                  />
+                  <img src={Pin} alt="location pin" style={{ width: 20, height: 20 }} />
                 </button>
 
                 <MapInput
@@ -268,9 +249,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                 title="Maximum number of results"
                 step="20"
                 value={this.state.form.maxResults}
-                onChange={(val) =>
-                  this.updateState("form", "maxResults", parseInt(val, 10))
-                }
+                onChange={(val) => this.updateState("form", "maxResults", parseInt(val, 10))}
                 error={this.state.errors.maxResultsError}
               />
             </div>

@@ -37,9 +37,7 @@ class ShopReelFormApp extends BaseFormApp {
    * @returns {object|null|File} payload object
    */
   validateFormInput() {
-    const manualTabActive = document
-      .getElementById("manualInputs")
-      .classList.contains("show");
+    const manualTabActive = document.getElementById("manualInputs").classList.contains("show");
 
     if (manualTabActive) {
       // Read and sanitize manual input values
@@ -50,8 +48,7 @@ class ShopReelFormApp extends BaseFormApp {
       const maxResults = parseInt(this.elements.maxResultsEl.value, 10);
 
       // Check that all fields are valid (not empty and numbers are valid)
-      const isValid =
-        apiKey && query && !isNaN(lat) && !isNaN(lng) && !isNaN(maxResults);
+      const isValid = apiKey && query && !isNaN(lat) && !isNaN(lng) && !isNaN(maxResults);
 
       return isValid ? { apiKey, query, lat, lng, maxResults } : null;
     } else {
