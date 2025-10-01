@@ -113,10 +113,9 @@ export function TextAreaInput(props: TextAreaProps) {
       placeholder={props.placeholder}
       title={props.title}
       rows={props.rows}
+      value={props.value}
       onChange={(e) => props.onChange(e.target.value)}
-    >
-      {props.value}
-    </textarea>
+    />
   );
 
   if (props.noWrapper) return inputEl;

@@ -156,11 +156,11 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
     ][]) {
       const errorKey = Object.keys(errorObj)[0] as keyof ErrorState;
       const error = errorObj[errorKey];
-      if (this.isFieldInvalid(fieldKey, this.state.form[fieldKey])) {
+      if (this.isFieldValid(fieldKey, this.state.form[fieldKey])) {
+        this.updateState("errors", errorKey, "");
+      } else {
         hasError = true;
         this.updateState("errors", errorKey, error);
-      } else {
-        this.updateState("errors", errorKey, "");
       }
     }
 
@@ -168,16 +168,16 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
     return this.state.form;
   }
 
-  isFieldInvalid(fieldKey: keyof FormState, value: any): boolean {
-    if (typeof value === "string") return !value;
-    if (fieldKey === "file") return !value;
+  isFieldValid(fieldKey: keyof FormState, value: any): boolean {
+    if (typeof value === "string") return !!value; // valid if non-empty
+    if (fieldKey === "file") return !!value; // valid if present
 
     // Validate number inputs
     if (fieldKey === "maxAge") return value >= 10;
-    if (fieldKey === "tokenLimit") return value < 10000 || value > 100000;
-    if (fieldKey === "crawlDepth") return value < 5 || value > 25;
+    if (fieldKey === "tokenLimit") return value >= 10000 && value <= 100000;
+    if (fieldKey === "crawlDepth") return value >= 5 && value <= 25;
 
-    return false;
+    return true;
   }
 
   updateState<K extends keyof State[T], T extends NestedStateKeys>(
