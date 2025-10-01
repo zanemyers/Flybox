@@ -5,8 +5,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 // Route handlers
-import routes from "./api_routes/index.js";
-import { errorHandler } from "./api_routes/error.js";
+import routes from "./api/index.js";
+import { errorHandler } from "./api/error.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
