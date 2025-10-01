@@ -6,7 +6,13 @@ import ProgressPanel from "./progressPanel";
  * Payload type
  * Can be either a generic key-value object or a string
  */
-export type Payload = Record<string, any> | string;
+export type Payload = Record<string, unknown>;
+
+/** */
+interface PostResponse {
+  jobId: string;
+  status: string; // in case your API returns extra fields
+}
 
 /**
  * Props for BaseForm
@@ -88,12 +94,16 @@ export default abstract class BaseForm<
     if (!payload) return;
 
     const formData = new FormData();
-    Object.entries(payload).forEach(([key, value]) =>
-      formData.append(key, value),
-    );
+    Object.entries(payload).forEach(([key, value]) => {
+      if (value instanceof File) {
+        formData.append(key, value);
+      } else {
+        formData.append(key, String(value));
+      }
+    });
 
     const res = await fetch(this.postRoute, { method: "POST", body: formData });
-    const data = await res.json();
+    const data = (await res.json()) as PostResponse;
 
     localStorage.setItem(this.storageKey, data.jobId);
     this.setState({ jobId: data.jobId });
@@ -105,7 +115,7 @@ export default abstract class BaseForm<
    */
   handleClose() {
     localStorage.removeItem(this.storageKey);
-    this.setState(this.defaultState as S);
+    this.setState(this.defaultState);
   }
 
   render() {
@@ -127,7 +137,7 @@ export default abstract class BaseForm<
       <Col lg={7} className="d-flex">
         <Form
           className="p-4 border rounded bg-white shadow-sm flex-fill d-flex flex-column"
-          onSubmit={this.handleSubmit}
+          onSubmit={(e) => void this.handleSubmit(e)}
         >
           {/* Render subclass-provided form inputs */}
           {this.renderFormInput()}

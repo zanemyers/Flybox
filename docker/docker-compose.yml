@@ -6,9 +6,9 @@ services:
     working_dir: /app
     command: node --inspect=0.0.0.0:9229 server/server.js
     volumes:
-      - ..:/app                # mount entire project root
-      - /app/client            # hide client/ (replaced with empty volume inside container)
-      - ../server/db:/app/server/db   # persist SQLite db outside container
+      - ..:/app # mount entire project root
+      - /app/client # hide client/ (replaced with empty volume inside container)
+      - ../server/db:/app/server/db # persist SQLite db outside container
     env_file:
       - ../.env
     ports:

@@ -46,6 +46,7 @@ export default defineConfig([
     },
     rules: {
       "prettier/prettier": "error",
+      "react-x/no-array-index-key": "off", // Allow using array index as key
     },
   },
 ]);

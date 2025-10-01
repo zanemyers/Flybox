@@ -13,11 +13,11 @@ The **Express-based route files** ([`_index.js`](_index.js), [`_apps.js`](_apps.
 ### 🔄 Replacement
 
 - **React** now handles:
-    - Page rendering and routing (via React Router).
-    - Component-based UI for forms, progress indicators, and app views.
+  - Page rendering and routing (via React Router).
+  - Component-based UI for forms, progress indicators, and app views.
 - Express remains in use only as an **API backend** for data fetching and processing.
 
 ## 🕓 Status
 
 - These route files remain in the repository for reference during the migration.
-- New code should use **React components** for UI rendering and **API routes** for backend logic.  
+- New code should use **React components** for UI rendering and **API routes** for backend logic.

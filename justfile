@@ -28,8 +28,8 @@ setup:
 @lint:
     eslint -c config/eslint.config.js .
     eslint -c config/eslint.config.js . --fix
-    stylelint "client/src/styles/**/*.scss" -c config/.stylelintrc
-    stylelint "client/src/styles/**/*.scss" -c config/.stylelintrc --fix
+    stylelint "client/src/assets/styles/**/*.scss" -c config/.stylelintrc
+    stylelint "client/src/assets/styles/**/*.scss" -c config/.stylelintrc --fix
 
 # Format the code
 @format:
