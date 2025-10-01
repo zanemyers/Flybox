@@ -57,7 +57,7 @@ class FileHandler {
         this.fileType,
         archiveFolder,
         `${year}`,
-        `${month}`,
+        `${month}`
       );
 
       // Create the archive directory structure recursively if it doesn't exist
@@ -67,10 +67,7 @@ class FileHandler {
       const baseName = path.basename(this.filePath, `.${this.fileType}`);
 
       // Construct the full path for the archived file, including the timestamp
-      const archivedFile = path.join(
-        archiveDir,
-        `${baseName}_${timestamp}.${this.fileType}`,
-      );
+      const archivedFile = path.join(archiveDir, `${baseName}_${timestamp}.${this.fileType}`);
 
       // Rename the original file to the archived file path
       fs.renameSync(this.filePath, archivedFile);

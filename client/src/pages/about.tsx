@@ -16,10 +16,7 @@ export default function About() {
     <div className="container">
       {/* Hero / Banner: Short introductory message about Flybox */}
       <section className="text-center m-3">
-        <h4>
-          Helping you stay informed and ready for your next fly-fishing
-          adventure.
-        </h4>
+        <h4>Helping you stay informed and ready for your next fly-fishing adventure.</h4>
       </section>
 
       {/* AboutSection: Explains the origin of Flybox */}
@@ -35,9 +32,9 @@ export default function About() {
           <Link variant="external" target="https://rescueriver.com/">
             Rescue River
           </Link>
-          's founders, both to help with marketing—so they could know which
-          flies to make, what colors to use, and where to promote certain
-          flies—and as a tool for fly-fishing enthusiasts.
+          's founders, both to help with marketing—so they could know which flies to make, what
+          colors to use, and where to promote certain flies—and as a tool for fly-fishing
+          enthusiasts.
         </p>
       </AboutSection>
 
@@ -51,8 +48,8 @@ export default function About() {
         reverse={true}
       >
         <p>
-          Fly-fishing information is often scattered, incomplete, or outdated.
-          Flybox consolidates up-to-date information, helping users:
+          Fly-fishing information is often scattered, incomplete, or outdated. Flybox consolidates
+          up-to-date information, helping users:
         </p>
         <ul>
           <li>Locate shops quickly and accurately.</li>
@@ -74,11 +71,10 @@ export default function About() {
           <Link variant="external" target="https://rescueriver.com/">
             Rescue River
           </Link>
-          ’s mission to bring hope and healing to survivors of trafficking and
-          exploitation. By organizing fly-fishing data, we help them choose
-          which flies to produce, which colors to prioritize, and where to
-          promote them—while giving fly-fishing enthusiasts a single place to
-          stay informed and engaged.
+          ’s mission to bring hope and healing to survivors of trafficking and exploitation. By
+          organizing fly-fishing data, we help them choose which flies to produce, which colors to
+          prioritize, and where to promote them—while giving fly-fishing enthusiasts a single place
+          to stay informed and engaged.
         </p>
       </AboutSection>
 

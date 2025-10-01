@@ -14,12 +14,8 @@ let map, marker; // Will hold the Leaflet map instance and draggable marker
  */
 const initMap = () => {
   // Use existing input values if valid, otherwise default to Yellowstone National Park
-  const lat =
-    parseFloat(document.querySelector('input[name="latitude"]').value) ||
-    44.427963;
-  const lng =
-    parseFloat(document.querySelector('input[name="longitude"]').value) ||
-    -110.588455;
+  const lat = parseFloat(document.querySelector('input[name="latitude"]').value) || 44.427963;
+  const lng = parseFloat(document.querySelector('input[name="longitude"]').value) || -110.588455;
 
   // Create a Leaflet map centered on the coordinates with zoom level 10
   map = new L.Map("map").setView([lat, lng], 10);
@@ -36,8 +32,7 @@ const initMap = () => {
   marker.on("dragend", () => {
     const pos = marker.getLatLng();
     document.querySelector('input[name="latitude"]').value = pos.lat.toFixed(6);
-    document.querySelector('input[name="longitude"]').value =
-      pos.lng.toFixed(6);
+    document.querySelector('input[name="longitude"]').value = pos.lng.toFixed(6);
   });
 
   // When the user clicks on the map:
@@ -48,10 +43,8 @@ const initMap = () => {
     marker.setLatLng(e.latlng);
 
     // using the reference won't update the input value for some reason
-    document.querySelector('input[name="latitude"]').value =
-      e.latlng.lat.toFixed(6);
-    document.querySelector('input[name="longitude"]').value =
-      e.latlng.lng.toFixed(6);
+    document.querySelector('input[name="latitude"]').value = e.latlng.lat.toFixed(6);
+    document.querySelector('input[name="longitude"]').value = e.latlng.lng.toFixed(6);
 
     const modalInstance = bootstrap.Modal.getInstance(mapModal);
     modalInstance.hide();
@@ -66,12 +59,8 @@ mapModal.addEventListener("shown.bs.modal", () => {
   } else {
     // Map already exists: refresh the display and update marker position
     map.invalidateSize(); // Fixes display issues if map was hidden
-    const lat = parseFloat(
-      document.querySelector('input[name="latitude"]').value,
-    );
-    const lng = parseFloat(
-      document.querySelector('input[name="longitude"]').value,
-    );
+    const lat = parseFloat(document.querySelector('input[name="latitude"]').value);
+    const lng = parseFloat(document.querySelector('input[name="longitude"]').value);
     map.setView([lat, lng], 10);
     marker.setLatLng([lat, lng]);
   }

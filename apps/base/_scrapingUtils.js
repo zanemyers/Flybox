@@ -132,8 +132,7 @@ class StealthBrowser {
         timezoneId: "America/New_York",
       },
       {
-        userAgent:
-          "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:114.0) Gecko/20100101 Firefox/114.0",
+        userAgent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:114.0) Gecko/20100101 Firefox/114.0",
         locale: "de-DE",
         timezoneId: "Europe/Berlin",
       },
@@ -196,10 +195,7 @@ class StealthBrowser {
         "tiktok.com/tracker",
       ];
 
-      if (
-        blockedTypes.includes(type) ||
-        blockedUrls.some((pattern) => url.includes(pattern))
-      ) {
+      if (blockedTypes.includes(type) || blockedUrls.some((pattern) => url.includes(pattern))) {
         route.abort();
       } else {
         route.continue();
@@ -272,11 +268,7 @@ async function extendPageSelectors(page) {
    * @returns {Promise<string|null>} - The attribute value, or null if not found.
    */
   page.getAttByLabel = async function (label, attribute, filter = {}) {
-    return await page.getAttByLocator(
-      `[aria-label*="${label}"]`,
-      attribute,
-      filter,
-    );
+    return await page.getAttByLocator(`[aria-label*="${label}"]`, attribute, filter);
   };
 
   /**
@@ -287,11 +279,7 @@ async function extendPageSelectors(page) {
    * @returns {Promise<string|null>} - The element's text content, or null if not found.
    */
   page.getTextContent = async function (locator, filter = {}) {
-    return await page
-      .locator(locator, { timeout: 1000 })
-      .filter(filter)
-      .first()
-      .textContent();
+    return await page.locator(locator, { timeout: 1000 }).filter(filter).first().textContent();
   };
 
   /**
@@ -348,12 +336,8 @@ function normalizeUrl(url) {
  */
 function sameDomain(urlA, urlB) {
   try {
-    const domainA = new URL(normalizeUrl(urlA)).hostname
-      .replace(/^www\./, "")
-      .toLowerCase();
-    const domainB = new URL(normalizeUrl(urlB)).hostname
-      .replace(/^www\./, "")
-      .toLowerCase();
+    const domainA = new URL(normalizeUrl(urlA)).hostname.replace(/^www\./, "").toLowerCase();
+    const domainB = new URL(normalizeUrl(urlB)).hostname.replace(/^www\./, "").toLowerCase();
     return domainA === domainB;
   } catch {
     return false; // Treat invalid URLs as non-matching

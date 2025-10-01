@@ -54,18 +54,14 @@ export default function NavigationBar() {
               </Nav.Link>
             ) : (
               // Dropdown menu
-              <NavDropdown
-                title={link.label}
-                id={`${link.label}-dropdown`}
-                key={link.label}
-              >
+              <NavDropdown title={link.label} id={`${link.label}-dropdown`} key={link.label}>
                 {link.dropdown.map((sub) => (
                   <NavDropdown.Item as={NavLink} to={sub.href} key={sub.label}>
                     {sub.label}
                   </NavDropdown.Item>
                 ))}
               </NavDropdown>
-            ),
+            )
           )}
         </Nav>
       </Container>

@@ -75,9 +75,5 @@ interface Props extends CardProps {
  * Chooses between SlimCard and NormalCard based on the variant prop.
  */
 export default function Card({ variant = "normal", ...cardProps }: Props) {
-  return variant === "slim" ? (
-    <SlimCard {...cardProps} />
-  ) : (
-    <NormalCard {...cardProps} />
-  );
+  return variant === "slim" ? <SlimCard {...cardProps} /> : <NormalCard {...cardProps} />;
 }

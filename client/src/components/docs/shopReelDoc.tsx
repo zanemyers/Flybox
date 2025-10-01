@@ -28,11 +28,7 @@ export default function ShopReelDoc() {
   const tocItems = [
     {
       label: "Using the ShopReel Form",
-      children: [
-        { label: "Manual Input" },
-        { label: "File Import" },
-        { label: "Output Files" },
-      ],
+      children: [{ label: "Manual Input" }, { label: "File Import" }, { label: "Output Files" }],
     },
     { label: "Get Your SerpAPI Key" },
     { label: "Disclaimers" },
@@ -150,10 +146,9 @@ export default function ShopReelDoc() {
       {/* Page Overview */}
       <DocOverview title="ShopReel" icon="🎣" items={tocItems}>
         <p>
-          ShopReel gathers business information from{" "}
-          <strong>Google Maps</strong> using <strong>SerpAPI</strong> and from
-          each shop’s website, then puts everything into an easy-to-read Excel
-          file.
+          ShopReel gathers business information from <strong>Google Maps</strong> using{" "}
+          <strong>SerpAPI</strong> and from each shop’s website, then puts everything into an
+          easy-to-read Excel file.
         </p>
       </DocOverview>
 

@@ -26,15 +26,11 @@ export default function ErrorPage(props: Props) {
 
       {/* Optional descriptive message with default fallback */}
       <p className="lead">
-        {props.message ||
-          "Looks like the page you were trying to find has drifted downstream."}
+        {props.message || "Looks like the page you were trying to find has drifted downstream."}
       </p>
 
       {/* Image/gif illustration */}
-      <div
-        className="my-4 text-center"
-        style={{ maxWidth: "300px", margin: "0 auto" }}
-      >
+      <div className="my-4 text-center" style={{ maxWidth: "300px", margin: "0 auto" }}>
         <img src={calvinGif} alt="Fishing Gif" className="img-fluid rounded" />
       </div>
 

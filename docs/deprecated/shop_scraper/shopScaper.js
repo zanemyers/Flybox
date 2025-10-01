@@ -2,17 +2,10 @@ import { CSVFileWriter } from "../base/fileUtils.js";
 import { MESSAGES } from "../base/enums.js";
 import { addShopSelectors } from "./shopScrapingUtils.js";
 import { normalizeUrl } from "../base/_scrapingUtils.js";
-import {
-  progressBar,
-  startSpinner,
-  stopSpinner,
-} from "../base/terminalUtils.js";
+import { progressBar, startSpinner, stopSpinner } from "../base/terminalUtils.js";
 
 // Initialize CSV file writer
-const shopDetailCSV = new CSVFileWriter(
-  "resources/csv/shop_details.csv",
-  "shopDetails",
-);
+const shopDetailCSV = new CSVFileWriter("resources/csv/shop_details.csv", "shopDetails");
 
 /**
  * Scrapes Google Maps URLs from a given page by scrolling to the bottom and collecting all the relevant URLs.
@@ -51,9 +44,7 @@ async function scrapeGoogleShopUrl(browserContext, url) {
     while (!endOfListText) {
       // Throw an error if scrolling takes more than 30 secondes (probably hung)
       if (Date.now() - scrollStart > process.env.MAX_SCROLL_DURATION) {
-        throw new Error(
-          MESSAGES.ERROR_SCROLL_TIMEOUT(process.env.MAX_SCROLL_DURATION),
-        );
+        throw new Error(MESSAGES.ERROR_SCROLL_TIMEOUT(process.env.MAX_SCROLL_DURATION));
       }
 
       // Scroll to the bottom to load more items
@@ -67,7 +58,7 @@ async function scrapeGoogleShopUrl(browserContext, url) {
       // Check if the "end of list" message is present
       try {
         endOfListText = await page.$eval("body", (body) =>
-          body.innerText.includes("You've reached the end of the list"),
+          body.innerText.includes("You've reached the end of the list")
         );
       } catch (error) {
         endOfListText = false;
@@ -78,9 +69,7 @@ async function scrapeGoogleShopUrl(browserContext, url) {
     const rawUrls = await page.$$eval("a", (links) =>
       links
         .map((link) => link.href)
-        .filter((href) =>
-          href.startsWith("https://www.google.com/maps/place/"),
-        ),
+        .filter((href) => href.startsWith("https://www.google.com/maps/place/"))
     );
 
     // Remove duplicate URLs using a Set
@@ -183,7 +172,7 @@ async function scrapeGoogleShopDetails(browserContext, urls) {
           await page.waitForTimeout(250);
           await page.close(); // Close the browser page after scraping
         }
-      }),
+      })
     );
 
     // Process each result from the current batch

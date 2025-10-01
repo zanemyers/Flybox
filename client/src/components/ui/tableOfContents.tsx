@@ -27,8 +27,7 @@ export default function TableOfContents({ items }: Props) {
    * Generate a DOM ID from a label string.
    * Converts to lowercase and replaces spaces with hyphens.
    */
-  const generateId = (label: string) =>
-    label.toLowerCase().replace(/\s+/g, "-");
+  const generateId = (label: string) => label.toLowerCase().replace(/\s+/g, "-");
 
   /**
    * Recursively render TOC items and their children.

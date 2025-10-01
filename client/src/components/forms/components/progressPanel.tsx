@@ -42,8 +42,7 @@ export default function ProgressPanel(props: Props) {
   // Load saved file names from localStorage on first render
   useEffect(() => {
     const saved = localStorage.getItem(`${props.route}-files`);
-    if (saved)
-      setFiles((JSON.parse(saved) as string[]).map((name) => ({ name })));
+    if (saved) setFiles((JSON.parse(saved) as string[]).map((name) => ({ name })));
   }, [props.route]);
 
   // Keep localStorage in sync with file names
@@ -61,8 +60,7 @@ export default function ProgressPanel(props: Props) {
         const res = await fetch(`/api/${props.route}/${props.jobId}/updates`);
         const data = (await res.json()) as Response;
 
-        if (progressAreaRef.current)
-          progressAreaRef.current.textContent = data.message;
+        if (progressAreaRef.current) progressAreaRef.current.textContent = data.message;
 
         setStatus(data.status);
         downloadFile(data.files);
@@ -82,7 +80,7 @@ export default function ProgressPanel(props: Props) {
 
     if (!fileUrlsRef.current.has(file.name)) {
       const url = URL.createObjectURL(
-        new Blob([Uint8Array.from(atob(file.buffer), (c) => c.charCodeAt(0))]),
+        new Blob([Uint8Array.from(atob(file.buffer), (c) => c.charCodeAt(0))])
       );
       fileUrlsRef.current.set(file.name, url);
     }
@@ -149,9 +147,7 @@ export default function ProgressPanel(props: Props) {
           {/* Job status and progress */}
           <div className="mb-3">
             <Card.Title as="h5" className="mb-2">
-              {status === "IN_PROGRESS"
-                ? "🔄 Running Search..."
-                : "✅ Completed"}
+              {status === "IN_PROGRESS" ? "🔄 Running Search..." : "✅ Completed"}
             </Card.Title>
             <pre
               ref={progressAreaRef}
@@ -173,7 +169,7 @@ export default function ProgressPanel(props: Props) {
                   >
                     {file.name}
                   </a>
-                ),
+                )
             )}
           </div>
 

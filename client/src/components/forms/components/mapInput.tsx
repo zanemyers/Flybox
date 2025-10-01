@@ -1,10 +1,4 @@
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  useMapEvents,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useState, useEffect } from "react";
@@ -28,10 +22,7 @@ interface MapModalProps {
  */
 export default function MapInput(props: MapModalProps) {
   // Current position state [latitude, longitude]
-  const [position, setPosition] = useState<[number, number]>([
-    props.latitude,
-    props.longitude,
-  ]);
+  const [position, setPosition] = useState<[number, number]>([props.latitude, props.longitude]);
 
   // Update position if props change
   useEffect(() => {
@@ -79,30 +70,18 @@ export default function MapInput(props: MapModalProps) {
       {props.show && <div className="modal-backdrop fade show"></div>}
 
       {/* Modal */}
-      <div
-        className={`modal fade ${props.show ? "show d-block" : ""}`}
-        tabIndex={-1}
-        role="dialog"
-      >
+      <div className={`modal fade ${props.show ? "show d-block" : ""}`} tabIndex={-1} role="dialog">
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
             {/* Modal Header */}
             <div className="modal-header">
               <h5 className="modal-title">Select a Location</h5>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={props.onClose}
-              />
+              <button type="button" className="btn-close" onClick={props.onClose} />
             </div>
 
             {/* Modal Body */}
             <div className="modal-body overflow-hidden rounded-bottom-3 p-0">
-              <MapContainer
-                center={position}
-                zoom={10}
-                style={{ height: "500px", width: "100%" }}
-              >
+              <MapContainer center={position} zoom={10} style={{ height: "500px", width: "100%" }}>
                 {/* Map Tiles */}
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
