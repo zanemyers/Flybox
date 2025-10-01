@@ -74,9 +74,7 @@ export function DocSection(props: DocSectionProps) {
 
       {/* Optional overview rendered with Markdown */}
       {props.overview && (
-        <ReactMarkdown components={overviewComponent}>
-          {props.overview}
-        </ReactMarkdown>
+        <ReactMarkdown components={overviewComponent}>{props.overview}</ReactMarkdown>
       )}
 
       {/* Main section content */}

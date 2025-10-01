@@ -254,9 +254,8 @@ export default function FishTalesDoc() {
       {/* Overview */}
       <DocOverview title="FishTales" icon="🐟" items={tocItems}>
         <p>
-          FishTales gathers fly-fishing reports from different websites and
-          creates easy-to-read summaries using{" "}
-          <strong>Google’s Gemini API</strong>.
+          FishTales gathers fly-fishing reports from different websites and creates easy-to-read
+          summaries using <strong>Google’s Gemini API</strong>.
         </p>
       </DocOverview>
 
@@ -322,18 +321,15 @@ export default function FishTalesDoc() {
           <strong>advanced selector</strong> to target the report. For example:
         </p>
         <pre>
-          <code>
-            div.entry-content:has(p:text-matches("Fishing Report", "i"))
-          </code>
+          <code>div.entry-content:has(p:text-matches("Fishing Report", "i"))</code>
         </pre>
         <p>
-          This means: “look for a <code>div</code> with the class{" "}
-          <code>entry-content</code> that contains a paragraph mentioning
-          ‘Fishing Report’ (ignoring upper/lower case).”
+          This means: “look for a <code>div</code> with the class <code>entry-content</code> that
+          contains a paragraph mentioning ‘Fishing Report’ (ignoring upper/lower case).”
         </p>
         <p>
-          Advanced selectors can feel complicated, but don’t worry — you don’t
-          need to start from scratch. Check the{" "}
+          Advanced selectors can feel complicated, but don’t worry — you don’t need to start from
+          scratch. Check the{" "}
           <a href="/example_files/fishTales_starter_file.xlsx" download>
             example starter file
           </a>{" "}

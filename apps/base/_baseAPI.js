@@ -45,9 +45,7 @@ export class BaseAPI {
     const { id } = req.params;
 
     try {
-      await prisma.jobMessage.create({
-        data: { jobId: id, message: "❌ Cancelled" },
-      }); // Log cancellation message
+      await prisma.jobMessage.create({ data: { jobId: id, message: "❌ Cancelled" } }); // Log cancellation message
 
       // Update job status to CANCELLED
       await prisma.job.update({

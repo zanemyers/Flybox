@@ -16,13 +16,10 @@ function FormWrapper(props: WrapperProps) {
   const labelEl = <label htmlFor={props.id}>{props.label}</label>;
   return (
     <div className="form-input">
-      {props.type !== "checkbox" && labelEl}{" "}
-      {/* Label before input for non-checkbox */}
+      {props.type !== "checkbox" && labelEl} {/* Label before input for non-checkbox */}
       {props.children}
-      {props.type === "checkbox" && labelEl}{" "}
-      {/* Label after input for checkbox */}
-      {props.error && <div className="form-error">{props.error}</div>}{" "}
-      {/* Error display */}
+      {props.type === "checkbox" && labelEl} {/* Label after input for checkbox */}
+      {props.error && <div className="form-error">{props.error}</div>} {/* Error display */}
     </div>
   );
 }
@@ -69,12 +66,7 @@ export function TextInput(props: TextProps) {
 
   if (props.noWrapper) return inputEl;
   return (
-    <FormWrapper
-      type={props.type}
-      id={id}
-      label={props.label}
-      error={props.error}
-    >
+    <FormWrapper type={props.type} id={id} label={props.label} error={props.error}>
       {inputEl}
     </FormWrapper>
   );
@@ -107,12 +99,7 @@ export function CheckBoxInput(props: CheckedBoxProps) {
 
   if (props.noWrapper) return inputEl;
   return (
-    <FormWrapper
-      type="checkbox"
-      id={id}
-      label={props.label}
-      error={props.error}
-    >
+    <FormWrapper type="checkbox" id={id} label={props.label} error={props.error}>
       {inputEl}
     </FormWrapper>
   );
@@ -148,12 +135,7 @@ export function TextAreaInput(props: TextAreaProps) {
 
   if (props.noWrapper) return inputEl;
   return (
-    <FormWrapper
-      type="textarea"
-      id={id}
-      label={props.label}
-      error={props.error}
-    >
+    <FormWrapper type="textarea" id={id} label={props.label} error={props.error}>
       {inputEl}
     </FormWrapper>
   );

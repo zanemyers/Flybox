@@ -53,7 +53,7 @@ async function extractAnchors(page) {
     anchors.map((a) => ({
       href: a.href,
       text: a.textContent?.toLowerCase().trim() || "",
-    })),
+    }))
   );
 }
 
@@ -72,9 +72,7 @@ async function scrapeVisibleText(page, selector) {
   return await element.evaluate((node) => {
     const style = window.getComputedStyle(node);
     const isVisible =
-      style.display !== "none" &&
-      style.visibility !== "hidden" &&
-      node.offsetParent !== null;
+      style.display !== "none" && style.visibility !== "hidden" && node.offsetParent !== null;
 
     // If visible, return trimmed innerText with consecutive newlines replaced by single newlines
     return isVisible ? node.innerText.trim().replace(/\n{2,}/g, "\n") : null;

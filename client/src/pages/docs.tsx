@@ -28,12 +28,11 @@ const docComponents: { [key: string]: React.FC<DocProps> } = {
  */
 export default function Docs() {
   // Read initial tab from query parameter (?tab=ShopReel)
-  const queryTab =
-    new URLSearchParams(window.location.search).get("tab") || "ShopReel";
+  const queryTab = new URLSearchParams(window.location.search).get("tab") || "ShopReel";
 
   // Manage the currently active tab in state
   const [activeTab, setActiveTab] = useState(
-    sideBarItems.includes(queryTab) ? queryTab : "ShopReel",
+    sideBarItems.includes(queryTab) ? queryTab : "ShopReel"
   );
 
   // Get the component corresponding to the active tab
@@ -42,11 +41,7 @@ export default function Docs() {
   return (
     <div className="docs d-flex">
       {/* Sidebar for tab navigation */}
-      <SideBar
-        items={sideBarItems}
-        activeKey={activeTab}
-        onSelect={setActiveTab}
-      />
+      <SideBar items={sideBarItems} activeKey={activeTab} onSelect={setActiveTab} />
 
       {/* Main content area: renders the active documentation component */}
       <div className="docs-content card shadow-sm p-4 bg-light flex-grow-1">

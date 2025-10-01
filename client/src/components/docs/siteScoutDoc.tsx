@@ -52,8 +52,8 @@ export default function SiteScoutDoc(props: Props) {
       noteLabel: "Note",
       note: (
         <>
-          Only new URLs are added; the rest of your file stays the same. For
-          full instructions on how to update your starter file, see the{" "}
+          Only new URLs are added; the rest of your file stays the same. For full instructions on
+          how to update your starter file, see the{" "}
           <Link
             variant="hash"
             target="update-your-starter-file"
@@ -83,9 +83,8 @@ export default function SiteScoutDoc(props: Props) {
       {/* Page Overview */}
       <DocOverview title="SiteScout" icon="🗺" items={tocItems}>
         <p>
-          SiteScout helps keep your <strong>FishTales</strong> starter file up
-          to date. It checks the latest <strong>ShopReel</strong> results and
-          adds any new report sites automatically.
+          SiteScout helps keep your <strong>FishTales</strong> starter file up to date. It checks
+          the latest <strong>ShopReel</strong> results and adds any new report sites automatically.
         </p>
       </DocOverview>
 

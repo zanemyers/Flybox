@@ -31,8 +31,7 @@ export default function FileInput(props: Props) {
    * @returns formatted string
    */
   function formatAcceptedTypes(types: [string, ...string[]]) {
-    if (!types || types.length === 0)
-      throw new Error("You must pass at least one file type");
+    if (!types || types.length === 0) throw new Error("You must pass at least one file type");
     if (types.length === 1) return types[0];
     return types.slice(0, -1).join(", ") + " and " + types[types.length - 1];
   }
@@ -84,17 +83,13 @@ export default function FileInput(props: Props) {
         if (e.dataTransfer?.files?.length) {
           const droppedFile = e.dataTransfer.files[0];
           const isValid = props.acceptedTypes.some((type) =>
-            droppedFile.name.toLowerCase().endsWith(type.toLowerCase()),
+            droppedFile.name.toLowerCase().endsWith(type.toLowerCase())
           );
           if (isValid) {
             setFile(droppedFile);
             props.onSelect?.(droppedFile);
           } else {
-            alert(
-              `❌ Only these file types are accepted: ${props.acceptedTypes.join(
-                ", ",
-              )}`,
-            );
+            alert(`❌ Only these file types are accepted: ${props.acceptedTypes.join(", ")}`);
           }
         }
         break;
@@ -138,8 +133,7 @@ export default function FileInput(props: Props) {
 
         {/* Accepted types note */}
         <p className="text-muted small">
-          Accepted file types:{" "}
-          {formatAcceptedTypes(props.acceptedTypes as [string, ...string[]])}.
+          Accepted file types: {formatAcceptedTypes(props.acceptedTypes as [string, ...string[]])}.
         </p>
       </div>
 
@@ -155,9 +149,7 @@ export default function FileInput(props: Props) {
       />
 
       {/* Error message */}
-      <Form.Control.Feedback type="invalid">
-        {props.error}
-      </Form.Control.Feedback>
+      <Form.Control.Feedback type="invalid">{props.error}</Form.Control.Feedback>
     </Form.Group>
   );
 }

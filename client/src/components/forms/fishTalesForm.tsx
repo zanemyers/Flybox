@@ -1,16 +1,8 @@
 import React from "react";
 
-import BaseForm, {
-  type BaseProps,
-  type BaseState,
-  type Payload,
-} from "./components/baseForm";
+import BaseForm, { type BaseProps, type BaseState, type Payload } from "./components/baseForm";
 import FileInput from "./components/fileInput";
-import {
-  CheckBoxInput,
-  TextInput,
-  TextAreaInput,
-} from "./components/formInput";
+import { CheckBoxInput, TextInput, TextAreaInput } from "./components/formInput";
 
 // Prompt template for summarizing fishing reports by body of water.
 const SUMMARY_PROMPT = `
@@ -104,16 +96,14 @@ const formErrors: {
   file: { fileError: "⚠ Please upload a file." },
   includeSiteList: { includeSiteListError: "" },
   tokenLimit: {
-    tokenLimitError:
-      "⚠ Please enter a token limit between 10,000 and 100,000.",
+    tokenLimitError: "⚠ Please enter a token limit between 10,000 and 100,000.",
   },
   crawlDepth: {
     crawlDepthError: "⚠ Please enter a token limit between 5 and 25.",
   },
   model: { modelError: "⚠ Please enter a Google Gemini model." },
   summaryPrompt: {
-    summaryPromptError:
-      "⚠ Please enter a prompt for Gemini to summarize reports.",
+    summaryPromptError: "⚠ Please enter a prompt for Gemini to summarize reports.",
   },
   mergePrompt: {
     mergePromptError: "⚠ Please enter a prompt for combining the summaries.",
@@ -184,10 +174,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
   /**
    * Check if a single field is valid
    */
-  isFieldValid(
-    fieldKey: keyof FormState,
-    value: File | string | number | boolean | null,
-  ): boolean {
+  isFieldValid(fieldKey: keyof FormState, value: File | string | number | boolean | null): boolean {
     if (typeof value === "string") return !!value; // non-empty string
     if (fieldKey === "file") return !!value; // file must exist
 
@@ -206,7 +193,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
   updateState<K extends keyof State[T], T extends NestedStateKeys>(
     stateKey: T,
     key: K,
-    value: State[T][K],
+    value: State[T][K]
   ) {
     this.setState((prevState) => ({
       ...prevState,
@@ -239,9 +226,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
           title="Filter reports by maximum age in days (min: 10)"
           step="10"
           value={this.state.form.maxAge}
-          onChange={(val) =>
-            this.updateState("form", "maxAge", parseInt(val, 10))
-          }
+          onChange={(val) => this.updateState("form", "maxAge", parseInt(val, 10))}
           error={this.state.errors.maxAgeError}
         />
 
@@ -292,9 +277,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
             title="Maximum number of tokens per request (min: 10,000, max: 100,000)"
             step="1000"
             value={this.state.form.tokenLimit}
-            onChange={(val) =>
-              this.updateState("form", "tokenLimit", parseInt(val, 10))
-            }
+            onChange={(val) => this.updateState("form", "tokenLimit", parseInt(val, 10))}
             error={this.state.errors.tokenLimitError}
           />
 
@@ -305,9 +288,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
             title="Set how deep the scraper follows links (min: 5, max: 25)"
             step="5"
             value={this.state.form.crawlDepth}
-            onChange={(val) =>
-              this.updateState("form", "crawlDepth", parseInt(val, 10))
-            }
+            onChange={(val) => this.updateState("form", "crawlDepth", parseInt(val, 10))}
             error={this.state.errors.crawlDepthError}
           />
 

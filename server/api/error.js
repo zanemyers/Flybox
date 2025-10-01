@@ -18,8 +18,7 @@ export function errorHandler(err, req, res, _next) {
     },
     404: {
       heading: "Gone Fishing...",
-      message:
-        "Looks like the page you were trying to find has drifted downstream.",
+      message: "Looks like the page you were trying to find has drifted downstream.",
       title: "Page Not Found",
     },
     500: {
