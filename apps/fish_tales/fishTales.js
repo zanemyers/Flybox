@@ -4,7 +4,7 @@ import { GoogleGenAI } from "@google/genai";
 import TinyQueue from "tinyqueue";
 import { differenceInDays } from "date-fns";
 
-import { DIVIDER, ERRORS } from "../base/constants/index.js";
+import { DIVIDER, ERRORS } from "../base/constants.js";
 import {
   BaseApp,
   ExcelFileHandler,
