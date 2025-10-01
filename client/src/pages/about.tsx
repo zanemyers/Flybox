@@ -2,6 +2,7 @@ import idea from "@images/about/idea.jpg";
 import important from "@images/about/important.jpg";
 import serve from "@images/about/serve.jpg";
 import Card from "../components/ui/card";
+import Link from "../components/ui/links";
 import { AboutSection } from "../components/ui/sections";
 
 /**
@@ -31,9 +32,9 @@ export default function About() {
       >
         <p>
           Flybox started as an idea by one of{" "}
-          <a href="https://rescueriver.com/" target="_blank">
+          <Link variant="external" target="https://rescueriver.com/">
             Rescue River
-          </a>
+          </Link>
           's founders, both to help with marketing—so they could know which
           flies to make, what colors to use, and where to promote certain
           flies—and as a tool for fly-fishing enthusiasts.
@@ -70,9 +71,9 @@ export default function About() {
       >
         <p>
           First and foremost, Flybox supports{" "}
-          <a href="https://rescueriver.com/" target="_blank">
+          <Link variant="external" target="https://rescueriver.com/">
             Rescue River
-          </a>
+          </Link>
           ’s mission to bring hope and healing to survivors of trafficking and
           exploitation. By organizing fly-fishing data, we help them choose
           which flies to produce, which colors to prioritize, and where to

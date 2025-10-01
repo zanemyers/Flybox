@@ -1,16 +1,12 @@
 import ReactMarkdown, { type Components } from "react-markdown";
 
-/**
- * Represents a single step in the instruction panel
- */
+/** Represents a single step in the instruction panel */
 interface InstructionStep {
   icon: string; // emoji or icon for the step
   text: string; // step description (supports Markdown)
 }
 
-/**
- * Props for InstructionPanel component
- */
+/** Props for InstructionPanel component */
 interface InstructionPanelProps {
   app: string; // name of the tool (used for links and headings)
   description: string; // main description of what the tool does (supports Markdown)
@@ -18,12 +14,8 @@ interface InstructionPanelProps {
   defaultsDescription?: string; // optional explanation of default settings
 }
 
-/**
- * Render Markdown paragraphs inline instead of <p> tags
- */
-const stepComponent: Components = {
-  p: ({ node, ...props }) => <span {...props} />,
-};
+/** Render Markdown paragraphs inline instead of <p> tags */
+const stepComponent: Components = { p: ({ ...props }) => <span {...props} /> };
 
 /**
  * InstructionPanel Component
@@ -44,7 +36,7 @@ export default function InstructionPanel(props: InstructionPanelProps) {
         <div className="steps">
           {props.steps.map((step, i) => {
             return (
-              <div key={i}>
+              <div key={`step-${i}`}>
                 <span className="icon">{step.icon}</span>
                 <ReactMarkdown components={stepComponent}>
                   {step.text}

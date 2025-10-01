@@ -178,19 +178,24 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
     }
 
     if (hasError) return null;
-    return this.state.form;
+    return { ...this.state.form };
   }
 
   /**
    * Check if a single field is valid
    */
-  isFieldValid(fieldKey: keyof FormState, value: any): boolean {
+  isFieldValid(
+    fieldKey: keyof FormState,
+    value: File | string | number | boolean | null,
+  ): boolean {
     if (typeof value === "string") return !!value; // non-empty string
     if (fieldKey === "file") return !!value; // file must exist
 
-    if (fieldKey === "maxAge") return value >= 10;
-    if (fieldKey === "tokenLimit") return value >= 10000 && value <= 100000;
-    if (fieldKey === "crawlDepth") return value >= 5 && value <= 25;
+    if (typeof value === "number") {
+      if (fieldKey === "maxAge") return value >= 10;
+      if (fieldKey === "tokenLimit") return value >= 10000 && value <= 100000;
+      if (fieldKey === "crawlDepth") return value >= 5 && value <= 25;
+    }
 
     return true;
   }

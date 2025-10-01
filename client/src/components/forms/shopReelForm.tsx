@@ -135,14 +135,19 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
   /**
    * Check if a field value is valid
    */
-  isFieldValid(fieldKey: keyof FormState, value: any): boolean {
+  isFieldValid(
+    fieldKey: keyof FormState,
+    value: File | string | number | null,
+  ): boolean {
     if (typeof value === "string") return !!value; // Non-empty strings
     if (fieldKey === "file") return !!value; // File must exist
 
     // Validate number ranges
-    if (fieldKey === "maxResults") return value >= 20 && value <= 120;
-    if (fieldKey === "latitude") return value >= -90 && value <= 90;
-    if (fieldKey === "longitude") return value >= -180 && value <= 180;
+    if (typeof value === "number") {
+      if (fieldKey === "maxResults") return value >= 20 && value <= 120;
+      if (fieldKey === "latitude") return value >= -90 && value <= 90;
+      if (fieldKey === "longitude") return value >= -180 && value <= 180;
+    }
 
     return true;
   }
