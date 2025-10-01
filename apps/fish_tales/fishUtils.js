@@ -1,6 +1,6 @@
 import * as chrono from "chrono-node";
 
-import { DIVIDER } from "../base/constants/index.js";
+import { DIVIDER } from "../base/constants.js";
 import { normalizeUrl } from "../base/index.js";
 
 /**
