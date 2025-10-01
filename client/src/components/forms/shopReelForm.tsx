@@ -104,11 +104,11 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
       if (activeTab === "manual" && fieldKey === "file") continue;
       if (activeTab === "file" && fieldKey !== "file") continue;
 
-      if (this.isFieldInvalid(fieldKey, this.state.form[fieldKey])) {
+      if (this.isFieldValid(fieldKey, this.state.form[fieldKey])) {
+        this.updateState("errors", errorKey, "");
+      } else {
         hasError = true;
         this.updateState("errors", errorKey, error);
-      } else {
-        this.updateState("errors", errorKey, "");
       }
     }
 
@@ -118,21 +118,16 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
     return activeTab === "manual" ? fields : { file };
   }
 
-  isFieldInvalid(fieldKey: keyof FormState, value: any): boolean {
-    if (typeof value === "string") return !value;
-    if (fieldKey === "file") return !value;
+  isFieldValid(fieldKey: keyof FormState, value: any): boolean {
+    if (typeof value === "string") return !!value; // valid if non-empty
+    if (fieldKey === "file") return !!value; // valid if present
 
     // Validate number inputs
-    if (fieldKey === "maxResults") {
-      return value < 20 || value > 120;
-    }
-    if (fieldKey === "latitude") {
-      return value < -90 || value > 90;
-    }
-    if (fieldKey === "longitude") {
-      return value < -180 || value > 180;
-    }
-    return false;
+    if (fieldKey === "maxResults") return value >= 20 || value <= 120;
+    if (fieldKey === "latitude") return value >= -90 || value <= 90;
+    if (fieldKey === "longitude") return value >= -180 || value <= 180;
+
+    return true;
   }
 
   updateState<K extends keyof State[T], T extends NestedStateKeys>(
