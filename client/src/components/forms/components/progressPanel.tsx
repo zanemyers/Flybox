@@ -1,29 +1,44 @@
 import { useEffect, useRef, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 
+/**
+ * Represents a single file, optionally with a base64-encoded buffer.
+ */
 interface FileData {
-  name: string;
-  buffer?: string;
+  name: string; // filename
+  buffer?: string; // base64-encoded file content
 }
 
+/**
+ * Props for ProgressPanel component
+ */
 interface Props {
-  route: string;
-  jobId: string;
-  handleClose: () => void;
+  route: string; // API route name (used for polling and localStorage keys)
+  jobId: string; // current job ID for progress tracking
+  handleClose: () => void; // callback when panel is closed
 }
 
+/**
+ * Status of the ongoing process
+ */
 type Status = "IN_PROGRESS" | "COMPLETED" | "CANCELLED" | "FAILED";
 
+/**
+ * ProgressPanel Component
+ *
+ * Displays job progress for a background task, shows logs, auto-downloads files,
+ * and allows cancelling or closing the job.
+ */
 export default function ProgressPanel(props: Props) {
-  const [status, setStatus] = useState<Status>("IN_PROGRESS");
-  const [files, setFiles] = useState<FileData[]>([]);
-  const progressAreaRef = useRef<HTMLPreElement>(null);
+  const [status, setStatus] = useState<Status>("IN_PROGRESS"); // current job status
+  const [files, setFiles] = useState<FileData[]>([]); // list of files with optional buffers
+  const progressAreaRef = useRef<HTMLPreElement>(null); // reference to progress log
 
-  // Store blob URLs
+  // Store blob URLs for download
   const fileUrlsRef = useRef<Map<string, string>>(new Map());
   const downloadedFilesRef = useRef<Set<string>>(new Set());
 
-  // Load saved file names on first render
+  // Load saved file names from localStorage on first render
   useEffect(() => {
     const saved = localStorage.getItem(`${props.route}-files`);
     if (saved)
@@ -38,7 +53,7 @@ export default function ProgressPanel(props: Props) {
     }
   }, [files, props.route]);
 
-  // Poll server for progress updates
+  // Poll server for progress updates every second
   useEffect(() => {
     const intervalId = setInterval(async () => {
       const res = await fetch(`/api/${props.route}/${props.jobId}/updates`);
@@ -56,7 +71,9 @@ export default function ProgressPanel(props: Props) {
     return () => clearInterval(intervalId);
   }, [props.route, props.jobId]);
 
-  // Create or get object URL for a file
+  /**
+   * Generate or get an object URL for a given file buffer
+   */
   const getFileUrl = (file: FileData) => {
     if (!file.buffer) return;
 
@@ -70,6 +87,9 @@ export default function ProgressPanel(props: Props) {
     return fileUrlsRef.current.get(file.name)!;
   };
 
+  /**
+   * Updates local files state and triggers auto-download of new files
+   */
   const downloadFile = (incomingFiles: FileData[]) => {
     setFiles((currentFiles) => {
       // Update buffers for existing files
@@ -78,7 +98,7 @@ export default function ProgressPanel(props: Props) {
         return match ? { ...cf, buffer: match.buffer } : cf;
       });
 
-      // Truly new files
+      // Identify new files
       const existingNames = new Set(currentFiles.map((f) => f.name));
       const newFiles = incomingFiles.filter((f) => !existingNames.has(f.name));
 
@@ -100,25 +120,30 @@ export default function ProgressPanel(props: Props) {
     });
   };
 
+  /**
+   * Cancel the running job via API
+   */
   const handleCancel = async () => {
     await fetch(`/api/${props.route}/${props.jobId}/cancel`, {
       method: "POST",
     });
   };
 
+  /**
+   * Close the panel, revoke blob URLs, and clear storage
+   */
   const handleClose = () => {
-    // Revoke all blob URLs
     fileUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
     fileUrlsRef.current.clear();
-
-    localStorage.removeItem(`${props.route}-files`); // clear the files from local storage
-    props.handleClose(); // delegate back to parent
+    localStorage.removeItem(`${props.route}-files`);
+    props.handleClose();
   };
 
   return (
     <div className="d-flex flex-fill flex-column">
       <Card className="flex-fill shadow-sm">
         <Card.Body className="d-flex flex-column">
+          {/* Job status and progress */}
           <div className="mb-3">
             <Card.Title as="h5" className="mb-2">
               {status === "IN_PROGRESS"
@@ -132,6 +157,7 @@ export default function ProgressPanel(props: Props) {
             />
           </div>
 
+          {/* Downloadable files */}
           <div id="fileLinks" className="mt-auto mb-3">
             {files.map(
               (file) =>
@@ -148,6 +174,7 @@ export default function ProgressPanel(props: Props) {
             )}
           </div>
 
+          {/* Cancel / Close button */}
           <Button
             onClick={status === "IN_PROGRESS" ? handleCancel : handleClose}
             variant={status === "IN_PROGRESS" ? "danger" : "secondary"}

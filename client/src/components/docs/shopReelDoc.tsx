@@ -10,7 +10,21 @@ import ListBlock from "../ui/listBlock";
 import { DocOverview, DocSection } from "../ui/sections";
 import Image from "../ui/images";
 
+/**
+ * ShopReelDoc Component
+ *
+ * Renders full documentation for the ShopReel tool, including:
+ * - Overview
+ * - Instructions for using the form (Manual Input & File Import)
+ * - Output files explanation
+ * - How to get a SerpAPI key
+ * - Disclaimers
+ * - Additional notes
+ *
+ * Utilizes reusable components: DocOverview, DocSection, ListBlock, Image.
+ */
 export default function ShopReelDoc() {
+  /** Table of contents for the page */
   const tocItems = [
     {
       label: "Using the ShopReel Form",
@@ -25,6 +39,7 @@ export default function ShopReelDoc() {
     { label: "Additional Notes" },
   ];
 
+  /** Manual Input tab fields and notes */
   const manualInputListItems = [
     {
       label: "SerpAPI Key",
@@ -52,6 +67,7 @@ export default function ShopReelDoc() {
     },
   ];
 
+  /** File Import tab fields and notes */
   const fileImportListItems = [
     {
       label: "simple_shop_details.xlsx",
@@ -61,6 +77,7 @@ export default function ShopReelDoc() {
     },
   ];
 
+  /** Output files depending on search type */
   const outputListItems = [
     {
       label: "Manual Input",
@@ -90,6 +107,7 @@ export default function ShopReelDoc() {
     },
   ];
 
+  /** Steps for obtaining a SerpAPI key */
   const serpListItems = [
     {
       main: "Go to [SerpAPI](https://serpapi.com/) and create an account.",
@@ -102,12 +120,13 @@ export default function ShopReelDoc() {
       alt: "SerpAPI Subscription",
     },
     {
-      main: "Your API key is automatically generated. Copy the section called `Your Private API Key`` to use in ShopReel.",
+      main: "Your API key is automatically generated. Copy the section called `Your Private API Key` to use in ShopReel.",
       img: serpDashboard,
       alt: "Your Private API Key",
     },
   ];
 
+  /** Disclaimers about tool limitations */
   const disclaimersListItems = [
     {
       label: "Email scraping",
@@ -119,6 +138,7 @@ export default function ShopReelDoc() {
     },
   ];
 
+  /** Additional notes for users */
   const notesListItems = [
     {
       main: "Future updates may add support for other APIs and extra filtering options to refine searches.",
@@ -127,7 +147,7 @@ export default function ShopReelDoc() {
 
   return (
     <>
-      {/* Overview */}
+      {/* Page Overview */}
       <DocOverview title="ShopReel" icon="🎣" items={tocItems}>
         <p>
           ShopReel gathers business information from{" "}
@@ -139,39 +159,37 @@ export default function ShopReelDoc() {
 
       <hr />
 
-      {/*Using the form section*/}
+      {/* Using the ShopReel form section */}
       <DocSection
         title="Using the ShopReel Form"
-        p1="The ShopReel form lets you run searches in two ways: by entering your
-        search settings manually, or by uploading an Excel file to reuse data
-        from a previous search."
+        overview="The ShopReel form lets you run searches in two ways: by entering your search settings manually, or by uploading an Excel file to reuse data from a previous search."
       >
-        {/* Manual Input*/}
+        {/* Manual Input subsection */}
         <DocSection
           subSection={true}
           title="Manual Input"
-          p1="Use this tab to enter your own search settings for a custom ShopReel run. Default values are provided, but you can change them."
-          p2="After filling in the fields, click **Search**. Progress updates will appear on the page."
+          overview="Use this tab to enter your own search settings for a custom ShopReel run. Default values are provided, but you can change them."
+          conclusion="After filling in the fields, click **Search**. Progress updates will appear on the page."
         >
           <ListBlock items={manualInputListItems} />
           <Image img={manualForm} alt="ShopReel Manual Input Form" />
         </DocSection>
 
-        {/*File Import */}
+        {/* File Import subsection */}
         <DocSection
           subSection={true}
           title="File Import"
-          p2="Once you select the file, click **Search**. Progress updates will appear as ShopReel runs."
+          conclusion="Once you select the file, click **Search**. Progress updates will appear as ShopReel runs."
         >
           <ListBlock items={fileImportListItems} />
           <Image img={fileImport} alt="ShopReel File Import Form" />
         </DocSection>
 
-        {/* Output Files */}
+        {/* Output Files subsection */}
         <DocSection
           subSection={true}
           title="Output Files"
-          p1="After running a search, ShopReel creates Excel files with shop data. The files returned depend on the type of search:"
+          overview="After running a search, ShopReel creates Excel files with shop data. The files returned depend on the type of search:"
         >
           <ListBlock items={outputListItems} />
         </DocSection>
@@ -179,21 +197,21 @@ export default function ShopReelDoc() {
 
       <hr />
 
-      {/* How to get your SerpAPI api key */}
+      {/* SerpAPI Key instructions */}
       <DocSection title="Get Your SerpAPI Key">
         <ListBlock items={serpListItems} ordered={true} />
       </DocSection>
 
       <hr />
 
-      {/* Disclaimers */}
+      {/* Disclaimers section */}
       <DocSection title="Disclaimers">
         <ListBlock items={disclaimersListItems} />
       </DocSection>
 
       <hr />
 
-      {/* Additional Notes*/}
+      {/* Additional Notes section */}
       <DocSection title="Additional Notes">
         <ListBlock items={notesListItems} />
       </DocSection>

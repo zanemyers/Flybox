@@ -9,20 +9,31 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useState, useEffect } from "react";
 
+/**
+ * Props for MapInput component
+ */
 interface MapModalProps {
-  show: boolean;
-  onClose: () => void;
-  latitude: number;
-  longitude: number;
-  onChange: (lat: number, lng: number) => void;
+  show: boolean; // whether the modal is visible
+  onClose: () => void; // callback to close the modal
+  latitude: number; // initial latitude
+  longitude: number; // initial longitude
+  onChange: (lat: number, lng: number) => void; // callback when location is selected/changed
 }
 
+/**
+ * MapInput Component
+ *
+ * Renders a modal with a Leaflet map allowing the user to select a location.
+ * Supports both clicking on the map and dragging the marker.
+ */
 export default function MapInput(props: MapModalProps) {
+  // Current position state [latitude, longitude]
   const [position, setPosition] = useState<[number, number]>([
     props.latitude,
     props.longitude,
   ]);
 
+  // Update position if props change
   useEffect(() => {
     setPosition(() => {
       const lat = Number.isNaN(props.latitude) ? 44.427963 : props.latitude;
@@ -31,6 +42,9 @@ export default function MapInput(props: MapModalProps) {
     });
   }, [props.latitude, props.longitude]);
 
+  /**
+   * Component to handle map clicks for selecting location
+   */
   function LocationSelector() {
     useMapEvents({
       click(e) {
@@ -42,17 +56,20 @@ export default function MapInput(props: MapModalProps) {
     return null;
   }
 
-  // Component to fix map resizing when modal opens
+  /**
+   * Component to force map resizing when modal opens
+   * @param active - whether the modal is visible
+   */
   function ResizeOnShow({ active }: { active: boolean }) {
     const map = useMap();
     useEffect(() => {
       if (active) {
         setTimeout(() => {
-          map.invalidateSize();
-          map.setView(position); // recenter properly
+          map.invalidateSize(); // fix display size
+          map.setView(position); // recenter map
         }, 200); // small delay for modal animation
       }
-    }, [active, map]);
+    }, [active, map, position]);
     return null;
   }
 
@@ -69,6 +86,7 @@ export default function MapInput(props: MapModalProps) {
       >
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
+            {/* Modal Header */}
             <div className="modal-header">
               <h5 className="modal-title">Select a Location</h5>
               <button
@@ -77,16 +95,21 @@ export default function MapInput(props: MapModalProps) {
                 onClick={props.onClose}
               />
             </div>
+
+            {/* Modal Body */}
             <div className="modal-body overflow-hidden rounded-bottom-3 p-0">
               <MapContainer
                 center={position}
                 zoom={10}
                 style={{ height: "500px", width: "100%" }}
               >
+                {/* Map Tiles */}
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution="Map data © OpenStreetMap contributors"
                 />
+
+                {/* Draggable marker */}
                 <Marker
                   position={position}
                   draggable={true}
@@ -98,7 +121,11 @@ export default function MapInput(props: MapModalProps) {
                     },
                   }}
                 />
+
+                {/* Click handler */}
                 <LocationSelector />
+
+                {/* Resize map when modal opens */}
                 <ResizeOnShow active={props.show} />
               </MapContainer>
             </div>

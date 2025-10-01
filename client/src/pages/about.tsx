@@ -4,10 +4,16 @@ import serve from "@images/about/serve.jpg";
 import Card from "../components/ui/card";
 import { AboutSection } from "../components/ui/sections";
 
+/**
+ * About Page Component
+ *
+ * Displays information about Flybox, including its origin, importance,
+ * who it serves, and the main tools/features it offers.
+ */
 export default function About() {
   return (
     <div className="container">
-      {/* Hero / Banner */}
+      {/* Hero / Banner: Short introductory message about Flybox */}
       <section className="text-center m-3">
         <h4>
           Helping you stay informed and ready for your next fly-fishing
@@ -15,7 +21,7 @@ export default function About() {
         </h4>
       </section>
 
-      {/* The Idea */}
+      {/* AboutSection: Explains the origin of Flybox */}
       <AboutSection
         img={idea}
         alt="Idea Illustration"
@@ -30,17 +36,17 @@ export default function About() {
           </a>
           's founders, both to help with marketing—so they could know which
           flies to make, what colors to use, and where to promote certain
-          flies—and as a tool for fly-fishing enthus
+          flies—and as a tool for fly-fishing enthusiasts.
         </p>
       </AboutSection>
 
-      {/* Importance */}
+      {/* AboutSection: Highlights why Flybox matters */}
       <AboutSection
         img={important}
         alt="Important Illustration"
         url="https://www.freepik.com"
         attribution="Designed by Dooder / Freepik"
-        heading="Why It Matter"
+        heading="Why It Matters"
         reverse={true}
       >
         <p>
@@ -54,7 +60,7 @@ export default function About() {
         </ul>
       </AboutSection>
 
-      {/* Who It Serves */}
+      {/* AboutSection: Who Flybox serves */}
       <AboutSection
         img={serve}
         alt="Serve Illustration"
@@ -75,10 +81,11 @@ export default function About() {
         </p>
       </AboutSection>
 
-      {/* Overview / What Flybox Offers */}
+      {/* Overview / Features: Main Flybox tools displayed in cards */}
       <section className="mb-5 pt-5">
         <h2 className="h4 mb-5 text-center">What Flybox Offers</h2>
         <div className="row g-4 text-center">
+          {/* ShopReel: Scrapes business data from Google Maps and websites */}
           <Card
             icon="🎣"
             title="ShopReel"
@@ -86,6 +93,7 @@ export default function About() {
             link="/docs?tab=ShopReel"
             buttonText="Read More"
           />
+          {/* FishTales: Consolidates fishing reports into AI-generated summaries */}
           <Card
             icon="🐟"
             title="FishTales"
@@ -93,6 +101,7 @@ export default function About() {
             link="/docs?tab=FishTales"
             buttonText="Read More"
           />
+          {/* SiteScout: Compares ShopReel and FishTales data to find new spots */}
           <Card
             icon="🗺"
             title="SiteScout"

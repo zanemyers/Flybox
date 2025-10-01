@@ -12,6 +12,7 @@ import Tabs from "../ui/tabs";
 
 import Pin from "@images/location_pin.png";
 
+/** Form field state */
 interface FormState {
   file: File | null;
   apiKey: string;
@@ -21,6 +22,7 @@ interface FormState {
   maxResults: number;
 }
 
+/** Validation errors */
 interface ErrorState {
   fileError?: string;
   apiKeyError?: string;
@@ -30,6 +32,7 @@ interface ErrorState {
   maxResultsError?: string;
 }
 
+/** Component state */
 interface State extends BaseState {
   activeTab: "manual" | "file";
   showMap: boolean;
@@ -37,11 +40,12 @@ interface State extends BaseState {
   errors: ErrorState;
 }
 
+// Nested state keys helper
 type NestedStateKeys = "form" | "errors";
+
+// Validation messages per field
 const formErrors: {
-  [K in keyof FormState]: {
-    [E in keyof ErrorState]: string;
-  };
+  [K in keyof FormState]: { [E in keyof ErrorState]: string };
 } = {
   file: { fileError: "⚠ Please upload a file." },
   apiKey: { apiKeyError: "⚠ Please enter an API key." },
@@ -58,12 +62,19 @@ const formErrors: {
   },
 };
 
+// Tabs for switching between manual input and file import
 const tabs = [
   { id: "manual", label: "Manual Input" },
   { id: "file", label: "File Import" },
 ];
 
+/**
+ * ShopReelForm
+ *
+ * Extends BaseForm to handle either a manual shop search or file upload input
+ */
 export default class ShopReelForm extends BaseForm<BaseProps, State> {
+  /** Default component state */
   protected readonly defaultState: State = {
     jobId: null,
     activeTab: "manual",
@@ -82,14 +93,16 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
   constructor(props: BaseProps) {
     super(props);
 
-    // Preserve jobId from BaseForm
+    // Preserve jobId from BaseForm and initialize form state
     this.state = {
       ...this.defaultState,
       jobId: this.state.jobId,
     };
   }
 
-  // Validate input and return payload for API
+  /**
+   * Validate the form and return the payload for the API
+   */
   validateFormInput(): Payload | null {
     const activeTab = this.state.activeTab;
     let hasError = false;
@@ -100,7 +113,8 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
     ][]) {
       const errorKey = Object.keys(errorObj)[0] as keyof ErrorState;
       const error = errorObj[errorKey];
-      // Skip file check if in manual tab, skip other fields if in file tab
+
+      // Skip irrelevant fields based on active tab
       if (activeTab === "manual" && fieldKey === "file") continue;
       if (activeTab === "file" && fieldKey !== "file") continue;
 
@@ -114,22 +128,28 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
 
     if (hasError) return null;
 
-    const { file, ...fields } = this.state.form;
-    return activeTab === "manual" ? fields : { file };
+    const { file, ...manualFields } = this.state.form;
+    return activeTab === "manual" ? manualFields : { file };
   }
 
+  /**
+   * Check if a field value is valid
+   */
   isFieldValid(fieldKey: keyof FormState, value: any): boolean {
-    if (typeof value === "string") return !!value; // valid if non-empty
-    if (fieldKey === "file") return !!value; // valid if present
+    if (typeof value === "string") return !!value; // Non-empty strings
+    if (fieldKey === "file") return !!value; // File must exist
 
-    // Validate number inputs
-    if (fieldKey === "maxResults") return value >= 20 || value <= 120;
-    if (fieldKey === "latitude") return value >= -90 || value <= 90;
-    if (fieldKey === "longitude") return value >= -180 || value <= 180;
+    // Validate number ranges
+    if (fieldKey === "maxResults") return value >= 20 && value <= 120;
+    if (fieldKey === "latitude") return value >= -90 && value <= 90;
+    if (fieldKey === "longitude") return value >= -180 && value <= 180;
 
     return true;
   }
 
+  /**
+   *  Update nested state for 'form' or 'errors'
+   */
   updateState<K extends keyof State[T], T extends NestedStateKeys>(
     stateKey: T,
     key: K,
@@ -137,14 +157,13 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
   ) {
     this.setState((prevState) => ({
       ...prevState,
-      [stateKey]: {
-        ...prevState[stateKey],
-        [key]: value,
-      },
+      [stateKey]: { ...prevState[stateKey], [key]: value },
     }));
   }
 
-  // Render the file inputs
+  /**
+   * Render form input elements based on active tab
+   */
   renderFormInput(): React.ReactNode {
     return (
       <div className="form-body">
@@ -176,7 +195,7 @@ export default class ShopReelForm extends BaseForm<BaseProps, State> {
                 type="text"
                 label="Search Term"
                 placeholder="e.g. Fly Fishing Shops"
-                title="Specify the business or shop typ"
+                title="Specify the business or shop type"
                 value={this.state.form.searchTerm}
                 onChange={(val) => this.updateState("form", "searchTerm", val)}
                 error={this.state.errors.searchTermError}
