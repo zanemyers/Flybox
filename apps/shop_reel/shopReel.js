@@ -3,7 +3,7 @@ import { getJson } from "serpapi";
 import { PromisePool } from "@supercharge/promise-pool";
 import { JobStatus } from "@prisma/client";
 
-import { ERRORS, FALLBACK_DETAILS } from "../base/constants/index.js";
+import { ERRORS, FALLBACK_DETAILS } from "../base/constants.js";
 import {
   addShopSelectors,
   buildCacheFileRows,

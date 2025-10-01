@@ -1,5 +1,5 @@
 import { BaseApp, ExcelFileHandler, sameDomain } from "../base/index.js";
-import { ERRORS } from "../base/constants/index.js";
+import { ERRORS } from "../base/constants.js";
 import { JobStatus } from "@prisma/client";
 
 /**

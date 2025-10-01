@@ -3,7 +3,7 @@ import {
   MESSAGES,
   SHOP_KEYWORDS,
   SOCIAL_MEDIA_MAP,
-} from "../base/constants/index.js";
+} from "../base/constants.js";
 
 /**
  * Enhances a Playwright `Page` instance with custom scraping helper methods
