@@ -1,9 +1,9 @@
 import express from "express";
 import indexRoutes from "./_index.js";
-import appRoutes from "../../../server/api_routes/_apps.js";
+import appRoutes from "../../../server/api/_apps.js";
 import partialRoutes from "./_forms.js";
 import testRoutes from "./_test.js";
-import apiRoutes from "../../../server/api_routes/index.js";
+import apiRoutes from "../../../server/api/index.js";
 
 const router = express.Router();
 
