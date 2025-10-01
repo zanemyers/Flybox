@@ -1,26 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 
-/**
- * Represents a single file, optionally with a base64-encoded buffer.
- */
+/** Represents a single file, optionally with a base64-encoded buffer. */
 interface FileData {
   name: string; // filename
   buffer?: string; // base64-encoded file content
 }
 
-/**
- * Props for ProgressPanel component
- */
+/** Props for ProgressPanel component */
 interface Props {
   route: string; // API route name (used for polling and localStorage keys)
   jobId: string; // current job ID for progress tracking
   handleClose: () => void; // callback when panel is closed
 }
 
-/**
- * Status of the ongoing process
- */
+/** Type the response JSON */
+interface Response {
+  message: string;
+  status: Status;
+  files: FileData[];
+}
+
+// Status of the ongoing process
 type Status = "IN_PROGRESS" | "COMPLETED" | "CANCELLED" | "FAILED";
 
 /**
@@ -55,17 +56,19 @@ export default function ProgressPanel(props: Props) {
 
   // Poll server for progress updates every second
   useEffect(() => {
-    const intervalId = setInterval(async () => {
-      const res = await fetch(`/api/${props.route}/${props.jobId}/updates`);
-      const data = await res.json();
+    const intervalId = setInterval(() => {
+      void (async () => {
+        const res = await fetch(`/api/${props.route}/${props.jobId}/updates`);
+        const data = (await res.json()) as Response;
 
-      if (progressAreaRef.current)
-        progressAreaRef.current.textContent = data.message;
+        if (progressAreaRef.current)
+          progressAreaRef.current.textContent = data.message;
 
-      setStatus(data.status);
-      downloadFile(data.files);
+        setStatus(data.status);
+        downloadFile(data.files);
 
-      if (data.status !== "IN_PROGRESS") clearInterval(intervalId);
+        if (data.status !== "IN_PROGRESS") clearInterval(intervalId);
+      })();
     }, 1000);
 
     return () => clearInterval(intervalId);

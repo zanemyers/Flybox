@@ -38,7 +38,7 @@ export default function ListBlock(props: Props) {
   return (
     <ListTag className={props.extraClass}>
       {props.items.map((item, index) => (
-        <li key={index} className={item.img ? "mb-4" : ""}>
+        <li key={`item-${index}`} className={item.img ? "mb-4" : ""}>
           {/* Render the label in bold if it exists, followed by colon if main exists */}
           {item.label && (
             <strong>
