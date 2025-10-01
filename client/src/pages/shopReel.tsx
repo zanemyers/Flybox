@@ -1,6 +1,7 @@
 import InstructionPanel from "../components/forms/components/instructionPanel";
 import ShopReelForm from "../components/forms/shopReelForm";
 
+// Steps for the ShopReel instructions panel
 const steps = [
   { icon: "🔐", text: "Enter your **SerpAPI key**" },
   { icon: "🔎", text: "Enter a search term" },
@@ -12,11 +13,16 @@ const steps = [
   { icon: "✅", text: "Click **Search** to start" },
 ];
 
+/**
+ * ShopReel Page Component
+ *
+ * Renders the instructions panel and the ShopReel form.
+ */
 export default function ShopReel() {
   return (
     <main className="container py-3">
       <div className="row d-flex align-items-stretch">
-        {/* Instructions panel */}
+        {/* Instructions panel: step-by-step guidance and defaults */}
         <InstructionPanel
           app="ShopReel"
           description="ShopReel helps you find businesses near a location using **SerpAPI** and **Google Maps**, and puts the information into an easy-to-read Excel file."
@@ -24,7 +30,7 @@ export default function ShopReel() {
           defaultsDescription="By default, ShopReel searches for **Fly Fishing Shops** near **Yellowstone National Park** and shows the first **100** results. You can change these settings to search any location or business type."
         />
 
-        {/* Form panel */}
+        {/* Form panel for submitting ShopReel search parameters */}
         <ShopReelForm route="shop-reel" />
       </div>
     </main>

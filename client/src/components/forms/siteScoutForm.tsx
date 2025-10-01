@@ -1,5 +1,4 @@
 import React from "react";
-
 import BaseForm, {
   type BaseProps,
   type BaseState,
@@ -7,15 +6,17 @@ import BaseForm, {
 } from "./components/baseForm";
 import FileInput from "./components/fileInput";
 
+/** Component state */
 interface State extends BaseState {
-  shopReelFile: File | null;
-  fishTalesFile: File | null;
-  shopReelError?: string;
-  fishTalesError?: string;
+  shopReelFile: File | null; // The uploaded ShopReel Excel file
+  fishTalesFile: File | null; // The uploaded FishTales starter Excel file
+  shopReelError?: string; // Validation error message for ShopReel file input
+  fishTalesError?: string; // Validation error message for FishTales file input
 }
-
 export default class SiteScoutForm extends BaseForm<BaseProps, State> {
   private readonly fileTypes = [".xls", ".xlsx"];
+
+  /** Default component state */
   protected readonly defaultState: State = {
     jobId: null,
     shopReelFile: null,
@@ -26,13 +27,17 @@ export default class SiteScoutForm extends BaseForm<BaseProps, State> {
 
   constructor(props: BaseProps) {
     super(props);
+
+    // Preserve jobId from BaseForm and initialize form state
     this.state = {
       ...this.defaultState,
       jobId: this.state.jobId,
     };
   }
 
-  // Validate input and return payload for API
+  /**
+   * Validate input and return payload for API
+   */
   validateFormInput(): Payload | null {
     const { shopReelFile, fishTalesFile } = this.state;
 
@@ -46,9 +51,7 @@ export default class SiteScoutForm extends BaseForm<BaseProps, State> {
     const hasError = Object.values(errors).some((e) => e !== "");
 
     this.setState(errors);
-    if (hasError) {
-      return null;
-    }
+    if (hasError) return null;
 
     return { shopReelFile, fishTalesFile };
   }

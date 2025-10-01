@@ -1,6 +1,7 @@
 import InstructionPanel from "../components/forms/components/instructionPanel";
 import SiteScoutForm from "../components/forms/siteScoutForm";
 
+// Steps for the SiteScout instructions panel
 const steps = [
   { icon: "🎣", text: "Import your **ShopReel** results file." },
   {
@@ -10,11 +11,16 @@ const steps = [
   { icon: "✅", text: "Click **Compare** to start." },
 ];
 
+/**
+ * SiteScout Page Component
+ *
+ * Renders the instructions panel and the SiteScout form.
+ */
 export default function SiteScout() {
   return (
     <main className="container py-3">
       <div className="row d-flex align-items-stretch">
-        {/* Instructions panel */}
+        {/* Instructions panel: step-by-step guidance for using SiteScout */}
         <InstructionPanel
           app="SiteScout"
           description="SiteScout keeps your **FishTales** starter file up to date by checking it against your
@@ -22,7 +28,7 @@ export default function SiteScout() {
           steps={steps}
         />
 
-        {/* Form panel */}
+        {/* Form panel for submitting SiteScout files */}
         <SiteScoutForm route="site-scout" />
       </div>
     </main>

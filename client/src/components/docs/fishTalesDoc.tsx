@@ -16,7 +16,22 @@ import ListBlock from "../ui/listBlock";
 import { DocOverview, DocSection } from "../ui/sections";
 import Image from "../ui/images";
 
+/**
+ * FishTalesDoc Component
+ *
+ * Full documentation page for FishTales tool.
+ * Includes:
+ * - Overview
+ * - Form usage (Basic & Advanced Inputs)
+ * - Output files explanation
+ * - Gemini API key setup
+ * - Updating starter file
+ * - Advanced selectors
+ * - Disclaimers
+ * - Additional notes
+ */
 export default function FishTalesDoc() {
+  /** Table of Contents */
   const tocItems = [
     {
       label: "Using the FishTales Form",
@@ -35,6 +50,7 @@ export default function FishTalesDoc() {
     { label: "Additional Notes" },
   ];
 
+  /** Basic input fields */
   const basicInputListItems = [
     {
       label: "Gemini API Key",
@@ -64,6 +80,7 @@ export default function FishTalesDoc() {
     },
   ];
 
+  /** Advanced input fields */
   const advancedInputListItems = [
     {
       label: "Include Site List",
@@ -95,16 +112,17 @@ export default function FishTalesDoc() {
       label: "Summary Prompt",
       main: "Instructions for the AI on summarizing each report.",
       noteLabel: "Optional",
-      note: "Leave as default if unsure.",
+      note: "Leave default if unsure.",
     },
     {
       label: "Crawl Depth",
       main: "Instructions for combining multiple summaries into one final report.",
       noteLabel: "Optional",
-      note: "Leave as default if unsure.",
+      note: "Leave default if unsure.",
     },
   ];
 
+  /** Output files */
   const outputListItems = [
     {
       label: "report_summary.txt",
@@ -118,54 +136,56 @@ export default function FishTalesDoc() {
     },
   ];
 
+  /** Gemini API key setup steps */
   const geminiListItems = [
     {
       main: "Go to [ai.google.dev](https://ai.google.dev/aistudio) and sign in with your Google account.",
       img: gaiLogin,
-      alt: "Google AI Studio Login",
+      alt: "Login",
     },
     {
       main: "First-time users will see a welcome message; otherwise, click `Get API key`.",
       img: gaiHome,
-      alt: "Google AI Studio Dashboard",
+      alt: "Dashboard",
     },
     {
       main: "Accept the terms and conditions (first-time users only), then click `I accept`.",
       img: gaiTerms,
-      alt: "Google AI Studio Terms & Conditions",
+      alt: "Terms",
     },
     {
       main: "Click `+ Create API key` or select an existing key.",
       img: gaiApi,
-      alt: "Google AI Studio API Keys",
+      alt: "API Keys",
     },
     {
       main: "Copy your API key and keep it safe.",
       img: gaiKey,
-      alt: "Google AI Studio API Key",
+      alt: "API Key",
     },
   ];
 
+  /** Starter file update steps */
   const updateFileListItems = [
     {
       main: "Run **SiteScout** to see if your starter file is missing any report sites.",
       img: newSite,
-      alt: "New Report Sites",
+      alt: "New Sites",
     },
     {
       main: "Open each new site in your browser. Look for sections like *Reports*, *Blog*, or *Fishing Updates*.",
       img: arHome,
-      alt: "Arricks App Page",
+      alt: "Arricks Page",
     },
     {
       main: "Pay attention to date, keywords, junk words, and click-phrases to determine if a site is actively updated.",
       img: arReportList,
-      alt: "Arricks Report List",
+      alt: "Report List",
     },
     {
       main: "Use the browser inspector to find the HTML element containing the report:",
       img: arReport,
-      alt: "Arricks Report",
+      alt: "Report",
       children: [
         {
           main: "Right-click > Inspect (or Inspect Element)",
@@ -186,17 +206,18 @@ export default function FishTalesDoc() {
     {
       main: "Add keywords, junk-words, click-phrases, selector, and optionally last report date.",
       img: updatedFile,
-      alt: "Updated Starter File",
+      alt: "Updated File",
     },
     {
       main:
-        "Run FishTales with the updated starter file and enable **Include Site ListBlock** under advanced settings. " +
+        "Run FishTales with the updated starter file and enable **Include Site List** under advanced settings. " +
         "Then, use the generated site list to review and refine your keywords and junk-words for more accurate scraping and summaries.",
       img: siteList,
-      alt: "Site ListBlock File",
+      alt: "Site List",
     },
   ];
 
+  /** Advanced selector tips */
   const advancedSelectorTips = [
     {
       main: "Try simple selectors first. Only use advanced ones if you can’t capture the report otherwise.",
@@ -212,23 +233,19 @@ export default function FishTalesDoc() {
     },
   ];
 
+  /** Disclaimers */
   const disclaimersListItems = [
     {
       label: "Summarization accuracy",
-      main: "The summaries may not always be perfect. Results can vary depending on the AI model and instructions used.",
+      main: "Summaries may vary depending on AI model.",
     },
-    {
-      label: "Blocked pages",
-      main: " Some websites may prevent FishTales from accessing their pages.",
-    },
+    { label: "Blocked pages", main: "Some websites may block access." },
   ];
 
+  /** Additional notes */
   const notesListItems = [
     {
-      main: "Future versions will include a file listing all the websites FishTales looked at. This can help improve the starter file.",
-    },
-    {
-      main: "Future updates may add support for more AI models and extra filtering options to give you better control over results.",
+      main: "Future updates may support more AI models and filtering options.",
     },
   ];
 
@@ -245,36 +262,32 @@ export default function FishTalesDoc() {
 
       <hr />
 
-      {/* Using the form section */}
+      {/* Using the form */}
       <DocSection
         title="Using the FishTales Form"
-        p1="FishTales lets you set up how reports are collected and summarized.
+        overview="FishTales lets you set up how reports are collected and summarized.
         Default settings are provided to make it easy, but you can change them
         if you want."
       >
-        {/* Basic Inputs */}
         <DocSection subSection={true} title="Basic Inputs">
           <ListBlock items={basicInputListItems} />
-          <Image img={basicForm} alt="FishTales Basic Input Form" />
+          <Image img={basicForm} alt="Basic Input Form" />
         </DocSection>
 
-        {/* Advanced Inputs */}
         <DocSection
           subSection={true}
           title="Advanced Inputs"
-          p1="These settings are optional. You can change them to control how FishTales finds reports and summarizes them."
-          p2="Once you’ve updated the inputs you want, click **Search & Summarize** to start. Progress updates will appear as FishTales works."
+          overview="Optional settings for control over scraping and summarization."
+          conclusion="Click **Search & Summarize** to run. Progress updates will appear as FishTales works."
         >
           <ListBlock items={advancedInputListItems} />
-          <Image img={advancedForm} alt="FishTales Advanced Input Form" />
+          <Image img={advancedForm} alt="Advanced Input Form" />
         </DocSection>
 
-        {/* Output Files*/}
         <DocSection
           subSection={true}
           title="Output Files"
-          p1="When FishTales finishes, it will create a file for you to view the
-        results:"
+          overview="FishTales generates these files after running:"
         >
           <ListBlock items={outputListItems} />
         </DocSection>
@@ -282,28 +295,27 @@ export default function FishTalesDoc() {
 
       <hr />
 
-      {/* Getting your Gemini API Key */}
+      {/* Gemini API Key */}
       <DocSection title="Get Your Gemini API Key">
         <ListBlock items={geminiListItems} ordered={true} />
       </DocSection>
 
       <hr />
 
-      {/* updating your starter file*/}
+      {/* Updating Starter File */}
       <DocSection
         title="Update Your Starter File"
-        p1="Keeping the starter file accurate ensures FishTales can scrape and summarize reports correctly."
+        overview="Keep the starter file accurate to enable proper scraping and summarization."
       >
         <ListBlock items={updateFileListItems} ordered={true} />
       </DocSection>
 
-      {/* Advanced Selectors */}
       <DocSection
         subSection={true}
         title="Advanced Selectors"
-        p1="Most of the time, you can use a simple selector like `<article>` or `div.post` to capture the report content.
+        overview="Most of the time, yo=u can use a simple selector like `<article>` or `div.post` to capture the report content.
           These are easier to maintain and less likely to break if the website changes."
-        p2="Used carefully, advanced selectors let FishTales capture reports even from tricky websites."
+        conclusion="Used carefully, advanced selectors let FishTales capture reports even from tricky websites."
       >
         <p className="mt-3">
           Sometimes a site doesn’t use clear containers, and you’ll need a more{" "}
@@ -340,7 +352,7 @@ export default function FishTalesDoc() {
 
       <hr />
 
-      {/* Additional Notes*/}
+      {/* Additional Notes */}
       <DocSection title="Additional Notes">
         <ListBlock items={notesListItems} />
       </DocSection>

@@ -1,21 +1,35 @@
 import React, { useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-
 import fileInput from "@images/upload.png";
 
+/**
+ * Props for FileInput component
+ */
 interface Props {
-  label: string;
-  acceptedTypes: string[];
-  error?: string;
-  onSelect?: (file: File | null) => void; // callback to parent
+  label: string; // Label to display above the input
+  acceptedTypes: string[]; // Array of accepted file extensions (e.g., ["xlsx", "csv"])
+  error?: string; // Optional error message to display
+  onSelect?: (file: File | null) => void; // Optional callback to notify parent of selected file or null
 }
 
+/**
+ * FileInput Component
+ *
+ * Renders a file input with drag-and-drop support.
+ * Shows the selected file and allows clearing it.
+ * Accepts only specified file types and notifies parent via `onSelect`.
+ */
 export default function FileInput(props: Props) {
-  const [file, setFile] = useState<File | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState<File | null>(null); // currently selected file
+  const [isDragging, setIsDragging] = useState(false); // drag state for styling
+  const inputRef = useRef<HTMLInputElement>(null); // reference to hidden file input
 
-  // Format accepted types with "and"
+  /**
+   * Format accepted file types for display
+   * e.g., ["xlsx", "csv"] => "xlsx and csv"
+   * @param types - array of accepted file extensions
+   * @returns formatted string
+   */
   function formatAcceptedTypes(types: [string, ...string[]]) {
     if (!types || types.length === 0)
       throw new Error("You must pass at least one file type");
@@ -23,6 +37,9 @@ export default function FileInput(props: Props) {
     return types.slice(0, -1).join(", ") + " and " + types[types.length - 1];
   }
 
+  /**
+   * Handle file selection via hidden input
+   */
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const selected = event.target.files[0];
@@ -31,6 +48,9 @@ export default function FileInput(props: Props) {
     }
   };
 
+  /**
+   * Clear the selected file and reset input
+   */
   const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation(); // Prevent wrapper click
     setFile(null);
@@ -41,6 +61,10 @@ export default function FileInput(props: Props) {
     props.onSelect?.(null);
   };
 
+  /**
+   * Handle drag events and drop
+   * Supports dragenter, dragover, dragleave, and drop
+   */
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -64,7 +88,7 @@ export default function FileInput(props: Props) {
           );
           if (isValid) {
             setFile(droppedFile);
-            props.onSelect?.(droppedFile); // notify parent
+            props.onSelect?.(droppedFile);
           } else {
             alert(
               `❌ Only these file types are accepted: ${props.acceptedTypes.join(
@@ -130,6 +154,7 @@ export default function FileInput(props: Props) {
         isInvalid={!!props.error}
       />
 
+      {/* Error message */}
       <Form.Control.Feedback type="invalid">
         {props.error}
       </Form.Control.Feedback>
