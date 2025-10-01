@@ -45,11 +45,8 @@ setup:
 # Starts the server with docker (pass the '-l' flag to run locally)
 start *FLAGS:
     #!/usr/bin/env sh
-    if [[ "{{FLAGS}}" == *"-l"* ]]; then  # check for -l (local) flag
+    if [[ "{{FLAGS}}" == *"-l"* ]]; then
         vite -c config/vite.config.ts & node --inspect=0.0.0.0:9229 server/server.js
-    elif [[ "{{FLAGS}}" == *"-p"* ]]; then # check for -p (preview) flag
-        just build
-        node server/server.js
     else
         just build
         docker compose -f docker/docker-compose.yml up
