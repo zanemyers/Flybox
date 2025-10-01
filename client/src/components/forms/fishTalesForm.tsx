@@ -12,9 +12,7 @@ import {
   TextAreaInput,
 } from "./components/formInput";
 
-/**
- * Prompt template for summarizing fishing reports by body of water.
- */
+// Prompt template for summarizing fishing reports by body of water.
 const SUMMARY_PROMPT = `
   For each river or body of water mentioned, create a bulleted list that follows the template below.
   - If you cannot find information for a bullet, leave it blank.
@@ -46,27 +44,28 @@ const SUMMARY_PROMPT = `
     * Sources: www.snakeriver.com, www.snriver.gov
   `.trim();
 
-/**
- * Prompt template for merging multiple fishing report summaries into a single consolidated summary.
- */
+// Prompt template for merging multiple fishing report summaries into a single consolidated summary.
 const MERGE_PROMPT = `
-The following are summaries of fishing reports broken into sections. Please consolidate the information into a single summary using the same format, listing up to the 3 most recent dates separately for each body of water:
+The following are summaries of fishing reports broken into sections. Please consolidate the information into a single 
+summary using the same format, listing up to the 3 most recent dates separately for each body of water:
 `.trim();
 
+/** State of the form fields */
 interface FormState {
-  apiKey: string;
-  maxAge: number;
-  filterByRivers: boolean;
-  riverList: string;
-  file: File | null;
-  includeSiteList: boolean;
-  tokenLimit: number;
-  crawlDepth: number;
-  model: string;
-  summaryPrompt: string;
-  mergePrompt: string;
+  apiKey: string; // Gemini API key
+  maxAge: number; // Maximum report age in days
+  filterByRivers: boolean; // Whether to filter by rivers
+  riverList: string; // Comma-separated rivers to filter
+  file: File | null; // Uploaded starter file
+  includeSiteList: boolean; // Include site list in output
+  tokenLimit: number; // Token limit for API requests
+  crawlDepth: number; // Depth to crawl links
+  model: string; // Gemini model to use
+  summaryPrompt: string; // Prompt template for summary
+  mergePrompt: string; // Prompt template for merge
 }
 
+/** State of validation errors */
 interface ErrorState {
   apiKeyError?: string;
   maxAgeError?: string;
@@ -81,12 +80,16 @@ interface ErrorState {
   mergePromptError?: string;
 }
 
+/** Component state */
 interface State extends BaseState {
-  form: FormState;
-  errors: ErrorState;
+  form: FormState; // form field values
+  errors: ErrorState; // validation errors
 }
 
+// Keys for nested state updates
 type NestedStateKeys = "form" | "errors";
+
+// Validation error messages mapped to form fields
 const formErrors: {
   [K in keyof FormState]: {
     [E in keyof ErrorState]: string;
@@ -107,17 +110,24 @@ const formErrors: {
   crawlDepth: {
     crawlDepthError: "⚠ Please enter a token limit between 5 and 25.",
   },
-  model: { modelError: "⚠ Please enter a a Google Gemini model." },
+  model: { modelError: "⚠ Please enter a Google Gemini model." },
   summaryPrompt: {
     summaryPromptError:
-      "⚠ Please enter a prompt for Gemini to use in order to summarize the reports.",
+      "⚠ Please enter a prompt for Gemini to summarize reports.",
   },
   mergePrompt: {
     mergePromptError: "⚠ Please enter a prompt for combining the summaries.",
   },
 };
 
+/**
+ * FishTalesForm
+ *
+ * Extends BaseForm to handle uploading a starter file, filtering reports,
+ * and configuring advanced API settings for Gemini.
+ */
 export default class FishTalesForm extends BaseForm<BaseProps, State> {
+  /** Default component state */
   protected readonly defaultState: State = {
     jobId: null,
     form: {
@@ -139,14 +149,16 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
   constructor(props: BaseProps) {
     super(props);
 
-    // Preserve jobId from BaseForm
+    // Preserve jobId from BaseForm and initialize form state
     this.state = {
       ...this.defaultState,
       jobId: this.state.jobId,
     };
   }
 
-  // Validate input and return payload for API
+  /**
+   * Validate form input and return payload for API
+   */
   validateFormInput(): Payload | null {
     let hasError = false;
 
@@ -156,6 +168,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
     ][]) {
       const errorKey = Object.keys(errorObj)[0] as keyof ErrorState;
       const error = errorObj[errorKey];
+
       if (this.isFieldValid(fieldKey, this.state.form[fieldKey])) {
         this.updateState("errors", errorKey, "");
       } else {
@@ -168,11 +181,13 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
     return this.state.form;
   }
 
+  /**
+   * Check if a single field is valid
+   */
   isFieldValid(fieldKey: keyof FormState, value: any): boolean {
-    if (typeof value === "string") return !!value; // valid if non-empty
-    if (fieldKey === "file") return !!value; // valid if present
+    if (typeof value === "string") return !!value; // non-empty string
+    if (fieldKey === "file") return !!value; // file must exist
 
-    // Validate number inputs
     if (fieldKey === "maxAge") return value >= 10;
     if (fieldKey === "tokenLimit") return value >= 10000 && value <= 100000;
     if (fieldKey === "crawlDepth") return value >= 5 && value <= 25;
@@ -180,6 +195,9 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
     return true;
   }
 
+  /**
+   * Update nested state (form or errors)
+   */
   updateState<K extends keyof State[T], T extends NestedStateKeys>(
     stateKey: T,
     key: K,
@@ -187,17 +205,17 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
   ) {
     this.setState((prevState) => ({
       ...prevState,
-      [stateKey]: {
-        ...prevState[stateKey],
-        [key]: value,
-      },
+      [stateKey]: { ...prevState[stateKey], [key]: value },
     }));
   }
 
-  // Render the file inputs
+  /**
+   * Render form inputs
+   */
   renderFormInput(): React.ReactNode {
     return (
       <>
+        {/* API Key */}
         <TextInput
           type="password"
           label="Gemini API Key"
@@ -208,6 +226,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
           error={this.state.errors.apiKeyError}
         />
 
+        {/* Maximum report age */}
         <TextInput
           type="number"
           label="Max Report Age"
@@ -221,6 +240,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
           error={this.state.errors.maxAgeError}
         />
 
+        {/* Filter by rivers */}
         <CheckBoxInput
           label="Filter by Rivers"
           title="Enable filtering of reports by river names"
@@ -228,6 +248,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
           onChange={(val) => this.updateState("form", "filterByRivers", val)}
         />
 
+        {/* River list input, conditional */}
         {this.state.form.filterByRivers && (
           <TextInput
             type="text"
@@ -240,6 +261,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
           />
         )}
 
+        {/* Starter file */}
         <FileInput
           label="Import Starter File"
           acceptedTypes={[".xls", ".xlsx"]}
@@ -247,7 +269,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
           error={this.state.errors.fileError}
         />
 
-        {/* Advanced settings section (collapsible with <details>) */}
+        {/* Advanced settings */}
         <details className="form-input">
           <summary className="form-label mb-2">Advanced Settings</summary>
 
@@ -284,7 +306,6 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
             error={this.state.errors.crawlDepthError}
           />
 
-          {/* Gemini model selection */}
           <TextInput
             type="text"
             label="Gemini Model"
@@ -303,6 +324,7 @@ export default class FishTalesForm extends BaseForm<BaseProps, State> {
             value={this.state.form.summaryPrompt}
             onChange={(val) => this.updateState("form", "summaryPrompt", val)}
           />
+
           <TextAreaInput
             label="Merge Prompt"
             title="Enter the merge prompt"

@@ -6,11 +6,24 @@ import { DocOverview, DocSection } from "../ui/sections";
 import Image from "../ui/images";
 import Link from "../ui/links";
 
+/** Props for the SiteScout documentation component */
 interface Props {
-  setActiveTab: (tab: string) => void;
+  setActiveTab: (tab: string) => void; // Callback to switch active tab in parent
 }
 
+/**
+ * SiteScoutDoc Component
+ *
+ * Renders full documentation for the SiteScout tool, including:
+ * - Overview
+ * - Instructions for using the form
+ * - Input/Output file explanations
+ * - Additional notes
+ *
+ * Utilizes reusable components: DocOverview, DocSection, ListBlock, Image, and Link.
+ */
 export default function SiteScoutDoc(props: Props) {
+  /** Table of contents items for the page */
   const tocItems = [
     {
       label: "Using the SiteScout Form",
@@ -19,6 +32,7 @@ export default function SiteScoutDoc(props: Props) {
     { label: "Additional Notes" },
   ];
 
+  /** Items describing the inputs required by the form */
   const inputListItems = [
     {
       label: "ShopReel File",
@@ -30,6 +44,7 @@ export default function SiteScoutDoc(props: Props) {
     },
   ];
 
+  /** Items describing the output files generated */
   const outputListItems = [
     {
       label: "new_fishTales_starter.xlsx",
@@ -53,6 +68,7 @@ export default function SiteScoutDoc(props: Props) {
     },
   ];
 
+  /** Additional notes for the user */
   const notesListItems = [
     {
       main: "SiteScout works together with **FishTales** and **ShopReel** to keep your data up to date.",
@@ -64,7 +80,7 @@ export default function SiteScoutDoc(props: Props) {
 
   return (
     <>
-      {/*Overview */}
+      {/* Page Overview */}
       <DocOverview title="SiteScout" icon="🗺" items={tocItems}>
         <p>
           SiteScout helps keep your <strong>FishTales</strong> starter file up
@@ -75,26 +91,26 @@ export default function SiteScoutDoc(props: Props) {
 
       <hr />
 
-      {/* Using the form section */}
+      {/* Main instructions section */}
       <DocSection
         title="Using the SiteScout Form"
-        p1="Use the SiteScout form to update your FishTales starter file by importing two Excel files."
+        overview="Use the SiteScout form to update your FishTales starter file by importing two Excel files."
       >
-        {/* Inputs section */}
+        {/* Inputs subsection */}
         <DocSection
           subSection={true}
           title="Inputs"
-          p2="After selecting the files, click **Compare**. You’ll see progress updates as SiteScout runs."
+          conclusion="After selecting the files, click **Compare**. You’ll see progress updates as SiteScout runs."
         >
           <ListBlock items={inputListItems} />
           <Image img={siteScoutForm} alt="SiteScout Form" />
         </DocSection>
 
-        {/* Output files section */}
+        {/* Output files subsection */}
         <DocSection
           subSection={true}
           title="Output Files"
-          p1=" After running the comparison, SiteScout creates the following file:"
+          overview="After running the comparison, SiteScout creates the following file:"
         >
           <ListBlock items={outputListItems} />
           <Image img={newStarterFile} alt="New FishTales starter file" />
@@ -103,7 +119,7 @@ export default function SiteScoutDoc(props: Props) {
 
       <hr />
 
-      {/* Additional Notes */}
+      {/* Additional notes section */}
       <DocSection title="Additional Notes">
         <ListBlock items={notesListItems} />
       </DocSection>

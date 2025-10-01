@@ -1,9 +1,16 @@
 import Card from "../components/ui/card";
 
+/**
+ * Home Page Component
+ *
+ * Displays the Flybox homepage with a hero section, quick access
+ * to tools (ShopReel, FishTales, SiteScout), documentation, and
+ * a short description of the platform’s value.
+ */
 export default function Home() {
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section: Main headline and introductory text */}
       <section className="position-relative text-center py-4 mb-5">
         <div className="container position-relative text-primary">
           <h2 className="display-6 fw-bold mb-3">
@@ -16,10 +23,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tools Section */}
+      {/* Tools Section: Quick access cards for Flybox tools */}
       <section id="tools" className="container">
         <div className="row g-4 text-center">
-          {/* ShopReel Scraper */}
+          {/* ShopReel: Scraper for finding local fly-fishing shops */}
           <Card
             icon="🎣"
             title="ShopReel"
@@ -27,7 +34,7 @@ export default function Home() {
             link="/shopReel"
             buttonText="Cast for Details"
           />
-          {/* FishTales Scraper */}
+          {/* FishTales: Aggregates latest fly-fishing reports */}
           <Card
             icon="🐟"
             title="FishTales"
@@ -37,18 +44,18 @@ export default function Home() {
           />
         </div>
 
-        {/* Site Scout */}
+        {/* SiteScout: Discover new fly-fishing sites */}
         <Card
-          slim={true}
+          variant="slim"
           icon="🗺️"
           title="SiteScout"
           description="Discover new fly-fishing sites."
           link="/siteScout"
           buttonText="Check your sites"
         />
-        {/* Docs */}
+        {/* Docs: Access Flybox documentation */}
         <Card
-          slim={true}
+          variant="slim"
           icon="📚️"
           title="Docs"
           description="Learn how to use Flybox tools."
@@ -57,6 +64,7 @@ export default function Home() {
         />
       </section>
 
+      {/* Value Proposition Section: Explains Flybox benefits */}
       <section className="text-primary text-center mt-5 pt-5">
         <div className="container">
           <h3>Connect Shops & Reports Effortlessly</h3>
