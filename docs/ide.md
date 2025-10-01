@@ -20,16 +20,6 @@
 
 - Click the `🐞 (Debug)` button to run in debug mode
 
-### Auto-Compile SCSS
-
-1. Go to **Settings → Tools → File Watchers**
-
-2. Click the **+** icon and select **Sass/SCSS**.
-
-3. Configure the watcher:  
-   ![scss_screenshot.png](images/scss_screenshot.png)
-
-4. Save the watcher. Now, editing and saving `.scss` files will automatically compile them to `.css`.
 
 ### 🧰 Recommended Extensions
 
