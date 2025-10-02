@@ -1,83 +1,78 @@
 import { prisma } from "../../server/db.ts";
-import { JobStatus } from "@prisma/client";
+import { JobStatus, type Job } from "@prisma/client";
+import type { Request, Response } from "express";
 
 /**
  * BaseAPI provides common job-related endpoints for polling, cancellation,
  * and job creation. Subclasses should extend this class to implement
  * application-specific job creation and file handling.
  */
-export class BaseAPI {
-  /**
-   * Fetch updates for a job (status, progress messages, and any files).
-   * Expected route: GET /api/:route/:id/updates
-   *
-   * @param {import("express").Request} req - Express request object
-   * @param {import("express").Response} res - Express response object
-   * @returns {Promise<*>} JSON with job status, concatenated messages, and files
-   */
-  async getJobUpdates(req, res) {
+export abstract class BaseAPI {
+  protected primaryFileName: string = "primary.txt";
+  protected secondaryFileName: string = "secondary.txt";
+
+  /** Fetch updates for a job. */
+  async getJobUpdates(req: Request, res: Response): Promise<void> {
     try {
       const job = await prisma.job.findUnique({
         where: { id: req.params.id },
         include: { messages: { orderBy: { createdAt: "asc" } } },
       });
-      if (!job) return res.status(404).json({ error: "Job not found" });
+
+      if (!job) {
+        res.status(404).json({ error: "Job not found" });
+        return;
+      }
 
       res.json({
         status: job.status,
-        message: job.messages.map((m) => m.message).join("\n"), // Concatenate all job messages into one string
-        files: this.getFiles(job), // Delegate file retrieval to subclass
+        message: job.messages.map((m) => m.message).join("\n"),
+        files: this.getFiles(job),
       });
     } catch {
       res.status(500).json({ error: "Failed to fetch job updates" });
     }
   }
 
-  /**
-   * Cancel a job by setting its status to CANCELLED and appending a "Cancelled" message.
-   * Expected route: POST /api/:route/:id/cancel
-   *
-   * @param {import("express").Request} req - Express request object
-   * @param {import("express").Response} res - Express response object
-   * @returns {Promise<void>}
-   */
-  async cancelJob(req, res) {
+  /** Cancel a job by and update its status */
+  async cancelJob(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
 
     try {
-      await prisma.jobMessage.create({ data: { jobId: id, message: "❌ Cancelled" } }); // Log cancellation message
+      await prisma.jobMessage.create({ data: { jobId: id, message: "❌ Cancelled" } });
 
-      // Update job status to CANCELLED
       await prisma.job.update({
         where: { id },
         data: { status: JobStatus.CANCELLED },
       });
 
-      res.sendStatus(204); // No response body needed
+      res.sendStatus(204);
     } catch {
       res.status(500).json({ error: "Failed to cancel job" });
     }
   }
 
-  /**
-   * Creates and starts a new job
-   * Subclasses MUST override this with an actual implementation.
-   * Expected route: POST /api/:route
-   *
-   * @throws {Error} If not implemented by subclass
-   */
-  createJob() {
-    throw new Error("createJob must be implemented in subclass");
-  }
+  /** Must be implemented in the child class */
+  abstract createJob(req: Request, res: Response): Promise<void>;
 
-  /**
-   * Retrieve files associated with a job.
-   * Subclasses MUST override this method to return an array of file objects:
-   * e.g. [{ name: string, buffer: base64string }, ...]
-   *
-   * @throws {Error} If not implemented by subclass
-   */
-  getFiles() {
-    throw new Error("getFiles must be implemented in subclass");
+  /** Returns a list of files available for download. */
+  getFiles(job: Job): { name: string; buffer: string }[] {
+    const files = [];
+
+    if (job.primaryFile) {
+      files.push({
+        name: this.primaryFileName,
+        buffer: Buffer.from(job.primaryFile).toString("base64"),
+      });
+    }
+
+    if (job.secondaryFile) {
+      files.push({
+        name: this.secondaryFileName,
+        buffer: Buffer.from(job.secondaryFile).toString("base64"),
+      });
+    }
+
+    return files;
   }
 }

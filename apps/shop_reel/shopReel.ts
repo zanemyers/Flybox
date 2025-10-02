@@ -4,37 +4,36 @@ import { PromisePool } from "@supercharge/promise-pool";
 import { JobStatus } from "@prisma/client";
 
 import { ERRORS, FALLBACK_DETAILS } from "../base/constants.ts";
-import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils.js";
-import { BaseApp, ExcelFileHandler, normalizeUrl, StealthBrowser } from "../base/index.ts";
+import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils";
+import { BaseApp, ExcelFileHandler, normalizeUrl, StealthBrowser } from "../base";
+import type { Page } from "playwright";
+
+interface SearchParams {
+  file?: File;
+  apiKey?: string;
+  maxResults?: number;
+  query?: string;
+  lat?: number;
+  lng?: number;
+}
 
 /**
  * ShopReel class handles scraping shops from Google Maps via SerpAPI,
  * fetching additional website details, and saving results to Excel.
- *
- * Extends BaseApp to integrate with the job system (progress tracking,
- * cancellation, messages, and file attachments).
  */
 export class ShopReel extends BaseApp {
-  /**
-   * @param {string} jobId - Job ID for tracking progress and files
-   * @param {Object} searchParams - Parameters for the shop search
-   */
-  constructor(jobId, searchParams) {
-    super(jobId);
+  protected searchParams: SearchParams;
+  protected websiteCache: Map = new Map(); // Cache for previously scraped website details
+  protected shopWriter: ExcelFileHandler = new ExcelFileHandler();
+  protected browser: StealthBrowser = new StealthBrowser();
+
+  constructor(jobId: string, searchParams: object) {
+    super();
+    this.jobId = jobId;
     this.searchParams = searchParams;
-    this.shopWriter = new ExcelFileHandler(); // Excel writer for results
-    this.websiteCache = new Map(); // Cache for previously scraped website details
-    this.browser = new StealthBrowser();
   }
 
-  /**
-   * Executes the full shop scraping workflow:
-   * 1. Fetches shop results (SerpAPI or cached)
-   * 2. Scrapes website details for each shop
-   * 3. Writes the combined data to Excel
-   *
-   * Updates job messages, attaches files, and sets job status accordingly.
-   */
+  /** Executes the full shop scraping workflow: */
   async shopScraper() {
     try {
       await this.addJobMessage("Searching for shops...");
@@ -53,7 +52,7 @@ export class ShopReel extends BaseApp {
       await this.addJobFile("primaryFile", await this.shopWriter.getBuffer());
       await this.updateJobStatus(JobStatus.COMPLETED);
     } catch (err) {
-      if (err.message !== ERRORS.CANCELLED) {
+      if (err instanceof Error && err.message !== ERRORS.CANCELLED) {
         await this.addJobMessage(`❌ Error: ${err.message || err}`);
         await this.updateJobStatus(JobStatus.FAILED);
       }
@@ -62,11 +61,7 @@ export class ShopReel extends BaseApp {
     }
   }
 
-  /**
-   * Fetches shops from SerpAPI or loads them from a cached Excel file.
-   *
-   * @returns {Promise<Array<Object>>} Array of shop objects
-   */
+  /** Fetches shops from SerpAPI or loads them from a cached Excel file. */
   async fetchShops() {
     const cacheFileHandler = new ExcelFileHandler();
 
@@ -86,7 +81,7 @@ export class ShopReel extends BaseApp {
     const results = [];
 
     // Fetch in pages of 20 until maxResults
-    for (let start = 0; start < (+this.searchParams.maxResults || 100); start += 20) {
+    for (let start = 0; start < +(this.searchParams.maxResults ?? 100); start += 20) {
       await this.throwIfJobCancelled();
 
       const data = await getJson({
@@ -115,11 +110,8 @@ export class ShopReel extends BaseApp {
 
   /**
    * Scrapes website details for each shop with concurrency control.
-   *
-   * @param {Array<Object>} shops - Array of shop objects
-   * @returns {Promise<Array<Object>>} Array of shop detail objects
    */
-  async getDetails(shops) {
+  async getDetails(shops: Array<object>): Promise<Array<object>> {
     const results = new Array(shops.length);
     let completed = 0;
 
@@ -154,16 +146,8 @@ export class ShopReel extends BaseApp {
     return results;
   }
 
-  /**
-   * Scrapes a single shop's website for emails, online sales, fishing reports, and social media.
-   *
-   * Uses cached results if available to avoid redundant scraping.
-   *
-   * @param {Page} page - Playwright page instance
-   * @param {string} url - Shop website URL
-   * @returns {Promise<Object>} Scraped details or fallback values
-   */
-  async scrapeWebsite(page, url) {
+  /** Scrapes a single shop's website for emails, online sales, fishing reports, and social media. */
+  async scrapeWebsite(page: Page, url: string): Promise<object> {
     const normalizedUrl = normalizeUrl(url);
 
     if (this.websiteCache.has(normalizedUrl)) {
@@ -176,7 +160,7 @@ export class ShopReel extends BaseApp {
       const response = await page.load(normalizedUrl);
 
       const status = response?.status();
-      if ([403, 429].includes(status)) {
+      if (status != null && [403, 429].includes(status)) {
         details = FALLBACK_DETAILS.BLOCKED(status);
       } else {
         details = {

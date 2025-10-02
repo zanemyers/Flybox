@@ -5,7 +5,7 @@ schema := "./server/db"
 
 # Runs the setup script to prepare the .env file and install pacakges locally.
 setup:
-    node setup.js # Run the setup script
+    node setup.ts # Run the setup script
     npm install # Install node packages locally
     just migrate -n init # Initialize the database
 
@@ -46,7 +46,7 @@ setup:
 start *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-l"* ]]; then
-        vite -c config/vite.config.ts & node --inspect=0.0.0.0:9229 server/server.js
+        vite -c config/vite.config.ts & node --inspect=0.0.0.0:9229 server/server.ts
     else
         just build
         docker compose -f docker/docker-compose.yml up

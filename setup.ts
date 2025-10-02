@@ -6,14 +6,19 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+interface EnvKeys {
+  SERP_API_KEY?: string;
+  GEMINI_API_KEY?: string;
+  [key: string]: string | undefined; // allow indexing with arbitrary strings
+}
+
 /**
  * Parse a .env file into an object.
  */
-function parseEnvFile(content) {
+function parseEnvFile(content: string): EnvKeys {
   const keysToPreserve = ["SERP_API_KEY", "GEMINI_API_KEY"];
-  const env = {};
+  const env: EnvKeys = {};
 
-  // Split the file content into lines and iterate over each line
   content.split(/\r?\n/).forEach((line) => {
     const trimmed = line.trim(); // Remove leading/trailing whitespace from the line
 
@@ -38,7 +43,7 @@ function parseEnvFile(content) {
     const filePath = path.resolve(__dirname, ".env");
 
     // Load existing .env API key values if available
-    let preserved = {};
+    let preserved: EnvKeys = {};
     if (fs.existsSync(filePath)) {
       const existingContent = fs.readFileSync(filePath, "utf8");
       preserved = parseEnvFile(existingContent);

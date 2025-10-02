@@ -17,4 +17,4 @@ RUN npx playwright install --with-deps
 COPY . .
 
 # Default to backend
-CMD ["node", "--inspect=0.0.0.0:9229", "server/server.js"]
+CMD ["node", "--inspect=0.0.0.0:9229", "server/server.ts"]

@@ -17,11 +17,11 @@ All notable changes to this project will be documented in this file.
 #### Added
 
 - **Base utilities & API**
-  - `apps/base/_baseAPI.js`
-  - `apps/base/_baseApp.js`
-  - `apps/fish_tales/fishAPI.js`
-  - `apps/shop_reel/shopAPI.js`
-  - `apps/site_scout/siteAPI.js`
+  - `apps/base/_baseAPI.ts`
+  - `apps/base/_baseApp.ts`
+  - `apps/fish_tales/fishAPI.ts`
+  - `apps/shop_reel/shopAPI.ts`
+  - `apps/site_scout/siteAPI.ts`
 - **React client entry & routing**
   - `client/index.html`
   - `client/src/App.tsx`
@@ -69,17 +69,17 @@ All notable changes to this project will be documented in this file.
 - **Database**
   - `schema.prisma`
   - `models/job.prisma`
-  - `db.js`
+  - `db.ts`
 
 #### Changed
 
 - **Configuration**
   - Updated `.dockerignore` & `.gitignore` for logs, editor files, and `/server/db/dev.db`
 - **Renamed files**
-  - `apps/fish_tales/reportScraper.js → apps/fish_tales/fishTales.js`
-  - `apps/shop_reel/shopScraper.js → apps/shop_reel/shopReel.js`
-  - `apps/site_scout/siteDiff.js → apps/site_scout/siteScout.js`
-  - `apps/fish_tales/reportUtils.js → apps/fish_tales/fishUtils.js`
+  - `apps/fish_tales/reportScraper.js → apps/fish_tales/fishTales.ts`
+  - `apps/shop_reel/shopScraper.js → apps/shop_reel/shopReel.ts`
+  - `apps/site_scout/siteDiff.js → apps/site_scout/siteScout.ts`
+  - `apps/fish_tales/reportUtils.js → apps/fish_tales/fishUtils.ts`
 - **Theme & styles**
   - `client/src/assets/styles/_theme.scss` with Bootstrap variable overrides
   - `style.scss` updates:
@@ -96,15 +96,15 @@ All notable changes to this project will be documented in this file.
     - `public/images/tb_icon.ico`
     - `src/assets/images/*`
 - **Constants**
-  - Consolidated `apps/base/constants/_shopScraper.js`, `_messages.js`, `_prompts.js`, `_scrapers.js`, `index.js` into `apps/base/constants.js`
+  - Consolidated `apps/base/constants/_shopScraper.js`, `_messages.js`, `_prompts.js`, `_scrapers.js`, `index.ts` into `apps/base/constants.ts`
 - **Configuration files**
   - Moved into `config` directory:
     - `.stylelintrc`, `.eslint.config.js`, `global.d.ts`, `tsconfig.app.json`, `tsconfig.node.json`, `tsconfig.json`, `vite.config.json`
 - **Setup & scripts**
   - Updated `docs/setup.md` packages
   - Added/updated `Justfile` commands for setup, docker, DB, formatting, linting, and running
-  - Moved `server.js` to `server/` and configured for React (removed WebSockets)
-  - Moved error routes to `server/api/error.js` and API routes to `server/api/index.js`
+  - Moved `server.ts` to `server/` and configured for React (removed WebSockets)
+  - Moved error routes to `server/api/error.ts` and API routes to `server/api/index.ts`
   - Setup script can be rerun without overriding API keys
 
 ####  Removed
@@ -155,7 +155,7 @@ All notable changes to this project will be documented in this file.
 #### **Changed**
 
 - Renamed the **CLI & Environment** section to **Environment** in [`docs/setup.md`](./setup.md).
-- Simplified `.env` generation logic in `setup.js`.
+- Simplified `.env` generation logic in `setup.ts`.
 
 #### **Removed**
 
@@ -197,16 +197,16 @@ All notable changes to this project will be documented in this file.
 #### **Added**
 
 - **SiteScout**:
-  - WebSocket ([`/ws/site-scout`](../server/server.js)) with [`siteScoutSocket`](deprecated/sockets/_siteScoutSocket.js) for handling `shopReel` + `fishTales` files.
+  - WebSocket ([`/ws/site-scout`](../server/server.ts)) with [`siteScoutSocket`](deprecated/sockets/_siteScoutSocket.js) for handling `shopReel` + `fishTales` files.
   - Frontend: [`siteScoutFormApp.js`](deprecated/static/js/siteScoutFormApp.js), [`site_scout_form.ejs`](deprecated/views/apps/forms/site_scout_form.ejs) partial, and [`site_scout.ejs`](deprecated/views/apps/site_scout.ejs) page.
 
 #### **Changed**
 
 - **Sockets**: `reportSocket` → [`fishTalesSocket`](deprecated/sockets/_fishTalesSocket.js), `shopSocket` → [`shopReelSocket`](deprecated/sockets/_shopReelSocket.js).
 - **Routes**: `/shop-form` → [`/shop-reel-form`](../server/api/_apps.js), `/report-form` → [`/fish-tales-form`](../server/api/_apps.js).
-- **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server/server.js), [`/ws/fish-tales`](../server/server.js).
+- **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server/server.ts), [`/ws/fish-tales`](../server/server.ts).
 - [**BaseFormApp**](deprecated/static/js/baseFormApp.js): WebSocket port fixed at `3000` (was `process.env.PORT`).
-- **SiteScout logic**: [`mergeMissingUrls`](../apps/site_scout/siteScout.js) now accepts in-memory buffers, supports cancellation, returns updated starter files.
+- **SiteScout logic**: [`mergeMissingUrls`](../apps/site_scout/siteScout.ts) now accepts in-memory buffers, supports cancellation, returns updated starter files.
 - [**File input**](deprecated/static/js/fileInput.js): refactored for independent components (`.file-input-component`), simplified partials, and per-component init.
 - **Forms**: `reportFormApp.js` → [`fishTalesFormApp.js`](deprecated/static/js/fishTalesFormApp.js), `shopFormApp.js` → [`shopReelFormApp.js`](deprecated/static/js/shopReelFormApp.js).
 - [**SCSS**](../client/src/assets/styles/style.scss): restructured styles for `.file-input-component` (better drag-drop + file display).
@@ -275,7 +275,7 @@ All notable changes to this project will be documented in this file.
 
 #### **Changed**
 
-- Updated asset paths in EJS templates and `server.js` to use `/static`.
+- Updated asset paths in EJS templates and `server.ts` to use `/static`.
 - VS Code debugging and settings updated for Sass and Node attach.
 - Docker service renamed to `fly-box`.
 
@@ -297,8 +297,8 @@ All notable changes to this project will be documented in this file.
 - New dependencies: `bootstrap`, `ejs`, `express`, `express-ejs-layouts`, `tinyqueue`, `ws`
 - New dev dependencies: `sass`, `stylelint`, `stylelint-config-standard`, `stylelint-config-standard-scss`, `stylelint-scss`
 - New example and image assets in `static/` and `docs/images/`
-- `server.js` for Express web server with internal WebSocket support
-- Expanded routes (`_apps.js`, `_index.js`, `_forms.js`, `_test.js`, `error.js`)
+- `server.ts` for Express web server with internal WebSocket support
+- Expanded routes (`_apps.js`, `_index.js`, `_forms.js`, `_test.js`, `error.ts`)
 - WebSocket handlers (`_baseWebSocket.js`, `_cancellationToken.js`, `_reportSocket.js`, `_shopSocket.js`)
 - Frontend scripts (`baseFormApp.js`, `fileInput.js`, `map.js`, `navbar.js`, `reportFormApp.js`, `shopFormApp.js`, `tooltip.js`)
 - SCSS styles (`_theme.scss`, `style.scss`) and compiled CSS

@@ -1,20 +1,20 @@
-import { prisma } from "../../server/db.ts";
-import { BaseAPI } from "../base/index.js";
+import { prisma } from "../../server/db";
+import { BaseAPI } from "../base";
 import { JobType, JobStatus } from "@prisma/client";
-import { ShopReel } from "./shopReel.js";
+import { ShopReel } from "./shopReel";
+import type { Request, Response } from "express";
 
 /**
  * ShopReelAPI handles creating and tracking ShopReel scraping jobs.
  */
 export class ShopReelAPI extends BaseAPI {
+  protected primaryFileName = "shop_details.xlsx";
+  protected secondaryFileName = "simple_shop_details.xlsx";
+
   /**
    * Creates a new ShopReel scraping job.
-   *
-   * @param {import("express").Request} req - Express request object (may include files or query parameters)
-   * @param {import("express").Response} res - Express response object
-   * @returns {Promise<void>} Responds with the new job ID and status
    */
-  async createJob(req, res) {
+  async createJob(req: Request, res: Response): Promise<void> {
     try {
       // Create a new job in the database
       const job = await prisma.job.create({
@@ -22,7 +22,7 @@ export class ShopReelAPI extends BaseAPI {
       });
 
       // Determine payload: either a file upload or query parameters
-      const file = req.files?.[0];
+      const file = Array.isArray(req.files) ? req.files?.[0] : undefined;
       const payload = file
         ? { file }
         : {
@@ -35,7 +35,7 @@ export class ShopReelAPI extends BaseAPI {
 
       // Start the scraper asynchronously
       const scraper = new ShopReel(job.id, payload);
-      scraper.shopScraper().catch((err) => {
+      scraper.shopScraper().catch((err: Error) => {
         console.error(`ShopScraper failed for job ${job.id}:`, err);
       });
 
@@ -44,33 +44,5 @@ export class ShopReelAPI extends BaseAPI {
     } catch {
       res.status(500).json({ error: "Failed to create ShopReel job" });
     }
-  }
-
-  /**
-   * Returns a list of files available for download for a given ShopReel job.
-   *
-   * @param {object} job - The job object containing file buffers (primaryFile, secondaryFile, etc.)
-   * @returns {Array<{name: string, buffer: string}>} Array of downloadable files
-   */
-  getFiles(job) {
-    const files = [];
-
-    if (job) {
-      if (job.primaryFile) {
-        files.push({
-          name: "shop_details.xlsx",
-          buffer: Buffer.from(job.primaryFile).toString("base64"),
-        });
-      }
-
-      if (job.secondaryFile) {
-        files.push({
-          name: "simple_shop_details.xlsx",
-          buffer: Buffer.from(job.secondaryFile).toString("base64"),
-        });
-      }
-    }
-
-    return files;
   }
 }

@@ -5,7 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 // Route handlers
-import routes from "./api/index.js";
+import routes from "./api";
 import { errorHandler } from "./api/error.js";
 
 const app = express();
@@ -26,7 +26,7 @@ app.use("/api", routes);
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // Catch-all: serve React index.html for non-API routes
-app.get(/^(?!\/api).*/, (req, res) => {
+app.get(/^(?!\/api).*/, (_req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 

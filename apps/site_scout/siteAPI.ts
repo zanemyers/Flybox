@@ -1,58 +1,38 @@
-import { prisma } from "../../server/db.ts";
-import { BaseAPI } from "../base/_baseAPI.js";
+import { prisma } from "../../server/db";
+import { BaseAPI } from "../base";
 import { JobType, JobStatus } from "@prisma/client";
-import { SiteScout } from "./siteScout.js";
+import { SiteScout } from "./siteScout";
+import type { Request, Response } from "express";
 
 /**
  * SiteScoutAPI handles creating and tracking SiteScout jobs.
  */
 export class SiteScoutAPI extends BaseAPI {
+  protected primaryFileName = "report_summary.txt";
+
   /**
    * Creates a new SiteScout job.
-   *
-   * @param {import("express").Request} req - Express request object (may include files or query parameters)
-   * @param {import("express").Response} res - Express response object
-   * @returns {Promise<void>} Responds with the new job ID and status
    */
-  async createJob(req, res) {
+  async createJob(req: Request, res: Response): Promise<void> {
     try {
-      // Create a new job in the database
       const job = await prisma.job.create({
         data: { type: JobType.SITE_SCOUT, status: JobStatus.IN_PROGRESS },
       });
 
-      // Start the job asynchronously
+      const files = Array.isArray(req.files) ? req.files : [];
+
       const scout = new SiteScout(
-        job.id,
-        Object.fromEntries(req.files.map((f) => [f.fieldname, f.buffer])) // map the files to {name: buffer}
+        job.id || "",
+        Object.fromEntries(files.map((f: any) => [f.fieldname, f.buffer]))
       );
-      scout.mergeMissingUrls().catch((err) => {
+
+      scout.mergeMissingUrls().catch((err: Error) => {
         console.error(`SiteScout failed for job ${job.id}:`, err);
       });
 
-      // Respond with the job ID and initial status
       res.status(201).json({ jobId: job.id, status: job.status });
     } catch {
-      res.status(500).json({ error: "Failed to create ShopReel job" });
+      res.status(500).json({ error: "Failed to create SiteScout job" });
     }
-  }
-
-  /**
-   * Returns a list of files available for download for a given SiteScout job.
-   *
-   * @param {object} job - The job object containing file buffers (primaryFile, secondaryFile, etc.)
-   * @returns {Array<{name: string, buffer: string}>} Array of downloadable files
-   */
-  getFiles(job) {
-    const files = [];
-
-    if (job && job.primaryFile) {
-      files.push({
-        name: "new_fishTales_starter.xlsx",
-        buffer: Buffer.from(job.primaryFile).toString("base64"),
-      });
-    }
-
-    return files;
   }
 }

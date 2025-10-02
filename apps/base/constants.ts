@@ -1,10 +1,9 @@
+/** Custom error messages */
 export const ERRORS = {
   CANCELLED: "CANCELLED",
 };
 
-/**
- * Keywords commonly found on web pages when access is blocked or forbidden.
- */
+/** Keywords commonly found on web pages when access is blocked or forbidden. */
 export const BLOCKED_OR_FORBIDDEN = [
   "Access Denied",
   "Forbidden",
@@ -14,21 +13,13 @@ export const BLOCKED_OR_FORBIDDEN = [
   "You have been rate limited",
 ];
 
-/**
- * Regular expression pattern to match email addresses in text.
- * Matches standard email formats like "user@example.com".
- */
+/** Regular expression pattern to match email addresses in text */
 export const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/i;
 
-/**
- * Keywords commonly associated with e-commerce or online shops.
- */
+/** Keywords commonly associated with e-commerce or online shops. */
 export const SHOP_KEYWORDS = ["shop", "store", "buy", "products", "cart", "checkout"];
 
-/**
- * Mapping of known social media domains to human-readable platform names.
- * Includes domain aliases to cover multiple URL variations (e.g., wa.me → WhatsApp, x.com → X/Twitter).
- */
+/** Mapping of known social media domains to human-readable platform names. */
 export const SOCIAL_MEDIA_MAP = [
   { domain: "facebook.com", name: "Facebook" },
   { domain: "instagram.com", name: "Instagram" },
@@ -42,18 +33,12 @@ export const SOCIAL_MEDIA_MAP = [
   { domain: "youtube.com", name: "YouTube" },
 ];
 
-/**
- * Standardized messages used throughout the scraper for consistent error handling and reporting.
- *
- * - Error messages indicate failures during scraping operations, such as timeouts, blocked pages,
- *   or missing data.
- * - "Not found" messages provide default values when expected data is missing on a page.
- */
+/** Standardized messages used throughout the scraper for consistent error handling and reporting. */
 export const MESSAGES = {
   // ERROR MESSAGES
-  ERROR_SCROLL_TIMEOUT: (time) =>
+  ERROR_SCROLL_TIMEOUT: (time: number) =>
     `Scroll Timeout: Reached ${time / 1000} seconds without seeing end-of-list message.`,
-  ERROR_BLOCKED_FORBIDDEN: (status) => `Blocked or Forbidden link (HTTP ${status})`,
+  ERROR_BLOCKED_FORBIDDEN: (status: number) => `Blocked or Forbidden link (HTTP ${status})`,
   ERROR_EMAIL: "Errored while checking for an email",
   ERROR_LOAD_FAILED: "Page load failed",
   ERROR_REPORT: "Errored while checking for reports",
@@ -69,16 +54,9 @@ export const MESSAGES = {
   NO_WEB: "No Website",
 };
 
-/**
- * Standardized fallback detail objects for shops when data cannot be retrieved.
- * Categories include:
- * - BLOCKED: Site blocked or forbidden (with HTTP status), returns error messages for all fields.
- * - ERROR: General errors encountered during scraping.
- * - NONE: Explicitly empty/default values when no data is found.
- * - TIMEOUT: Page load failures.
- */
+/** Standardized fallback detail objects for shops when data cannot be retrieved */
 export const FALLBACK_DETAILS = {
-  BLOCKED: (status) => ({
+  BLOCKED: (status: number) => ({
     email: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
     sellsOnline: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
     fishingReport: MESSAGES.ERROR_BLOCKED_FORBIDDEN(status),
@@ -104,7 +82,5 @@ export const FALLBACK_DETAILS = {
   },
 };
 
-/**
- * Divider used between individual reports for improved readability.
- */
+/** Divider used between individual reports for improved readability */
 export const DIVIDER = "\n" + "-".repeat(50) + "\n";

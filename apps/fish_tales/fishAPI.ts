@@ -1,20 +1,21 @@
-import { BaseAPI } from "../base/_baseAPI.js";
+import type { Request, Response } from "express";
+
+import { BaseAPI } from "../base";
 import { prisma } from "../../server/db.ts";
 import { JobStatus, JobType } from "@prisma/client";
-import { FishTales } from "./fishTales.js";
+import { FishTales } from "./fishTales";
 
 /**
  * FishTalesAPI handles creating and tracking FishTales scraping jobs.
  */
 export class FishTalesAPI extends BaseAPI {
+  protected primaryFileName = "report_summary.txt";
+  protected secondaryFileName = "site_list.txt";
+
   /**
    * Creates a new FishTales scraping job.
-   *
-   * @param {import("express").Request} req - Express request object (may include files or query parameters)
-   * @param {import("express").Response} res - Express response object
-   * @returns {Promise<void>} Responds with the new job ID and status
    */
-  async createJob(req, res) {
+  async createJob(req: Request, res: Response): Promise<void> {
     try {
       // Create a new job in the database
       const job = await prisma.job.create({
@@ -22,12 +23,13 @@ export class FishTalesAPI extends BaseAPI {
       });
 
       // Determine payload: either a file upload or query parameters
+      const files = Array.isArray(req.files) ? req.files : [];
       const payload = {
         apiKey: req.body.apiKey,
         maxAge: parseInt(req.body.maxAge, 10),
         filterByRivers: req.body.filterByRivers === "true",
-        riverList: req.body.riverList.split(",").map((s) => s.trim()),
-        file: req.files?.[0],
+        riverList: req.body.riverList.split(",").map((s: string) => s.trim()),
+        file: files?.[0],
         includeSiteList: req.body.includeSiteList === "true",
         tokenLimit: parseInt(req.body.tokenLimit, 10),
         crawlDepth: parseInt(req.body.crawlDepth, 10),
@@ -38,7 +40,7 @@ export class FishTalesAPI extends BaseAPI {
 
       // Start the scraper asynchronously
       const scraper = new FishTales(job.id, payload);
-      scraper.reportScraper().catch((err) => {
+      scraper.reportScraper().catch((err: Error) => {
         console.error(`ShopScraper failed for job ${job.id}:`, err);
       });
 
@@ -47,33 +49,5 @@ export class FishTalesAPI extends BaseAPI {
     } catch {
       res.status(500).json({ error: "Failed to create ShopReel job" });
     }
-  }
-
-  /**
-   * Returns a list of files available for download for a given FishTales job.
-   *
-   * @param {object} job - The job object containing file buffers (primaryFile, secondaryFile, etc.)
-   * @returns {Array<{name: string, buffer: string}>} Array of downloadable files
-   */
-  getFiles(job) {
-    const files = [];
-
-    if (job) {
-      if (job.primaryFile) {
-        files.push({
-          name: "report_summary.txt",
-          buffer: Buffer.from(job.primaryFile).toString("base64"),
-        });
-      }
-
-      if (job.secondaryFile) {
-        files.push({
-          name: "site_list.txt",
-          buffer: Buffer.from(job.secondaryFile).toString("base64"),
-        });
-      }
-    }
-
-    return files;
   }
 }

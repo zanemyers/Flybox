@@ -2,7 +2,7 @@
 
 ## 🧾 Summary
 
-The **Express-based route files** ([`_index.js`](_index.js), [`_apps.js`](_apps.js), [`_forms.js`](_forms.js), [`_test.js`](_test.js), [`index.js`](index.js)) have been **deprecated**.
+The **Express-based route files** ([`_index.js`](_index.js), [`_apps.js`](_apps.js), [`_forms.js`](_forms.js), [`_test.js`](_test.js), [`index.ts`](index.js)) have been **deprecated**.
 
 ### ❌ Why This Was Deprecated
 

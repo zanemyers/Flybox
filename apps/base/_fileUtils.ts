@@ -1,124 +1,67 @@
 import ExcelJS from "exceljs";
 
-/**
- * This class provides simple methods to store, read, and retrieve
- * text data without interacting with the file system.
- *
- * Ideal for temporary file creation, downloads, or in-memory data processing.
- */
+/** This class provides simple methods to store, read, and retrieve text file data */
 class TXTFileHandler {
-  constructor() {
-    /**
-     * The current text content held in memory.
-     * @type {string}
-     */
-    this.content = "";
-  }
+  private content: string = ""; // The current text content held in memory.
 
-  /**
-   * Returns the current text content.
-   *
-   * @returns {string} The stored text.
-   */
-  read() {
+  /** Returns the current text content. */
+  read(): string {
     return this.content;
   }
 
-  /**
-   * Stores text content in memory.
-   * If `append` is true, the new data will be added to the existing content.
-   * If false, the existing content will be replaced.
-   *
-   * @param {string} data - The text to store.
-   * @param {boolean} [append=true] - Whether to append to existing content.
-   * @returns {Promise<void>} Resolves when the operation is complete.
-   */
-  async write(data, append = true) {
+  /** Stores text content in memory. Optionally appends or replaces the content */
+  async write(data: string, append: boolean = true): Promise<void> {
     this.content = append ? this.content + data : data;
   }
 
-  /**
-   * Returns the current content as a UTF-8 encoded Buffer.
-   *
-   * @returns {Buffer} The UTF-8 encoded representation of the content.
-   */
-  getBuffer() {
+  /** Returns the current content as a UTF-8 encoded Buffer. */
+  getBuffer(): Buffer {
     return Buffer.from(this.content, "utf-8");
   }
 }
 
-/**
- * This class provides simple methods to store, read/write, and retrieve/export
- * Excel files without interacting with the file system.
- */
+/** This class provides simple methods to store, read/write, and retrieve/export xlsx file data */
 class ExcelFileHandler {
-  constructor() {
-    this.initCleanFile();
-  }
+  protected workbook: ExcelJS.Workbook = new ExcelJS.Workbook();
+  protected worksheet: ExcelJS.Worksheet = this.workbook.addWorksheet("Sheet1");
 
-  /**
-   * Create a new in-memory workbook and worksheet.
-   * Clears any existing workbook and starts fresh.
-   */
-  initCleanFile() {
-    this.workbook = new ExcelJS.Workbook();
-    this.worksheet = this.workbook.addWorksheet("Sheet1");
-  }
-
-  /**
-   * Reads worksheet data into an array of objects.
-   *
-   * Behavior:
-   * - Uses the first worksheet row as headers.
-   * - Converts header names to lowercase with underscores.
-   * - Optionally splits specified columns into arrays (comma-separated values).
-   * - Applies an optional filter function to include/exclude rows.
-   * - Applies an optional transform function (`rowMap`) to each included row.
-   *
-   * @param {string[]} listCols - Headers whose string values should be split into arrays.
-   * @param {Function} filter - Function returning true to keep a row, false to skip it (default: keep all).
-   * @param {Function|null} rowMap - Optional function to transform each included row before adding to results.
-   * @returns {Promise<Object[]>} Array of parsed row objects.
-   */
-  async read(listCols = [], filter = () => true, rowMap = null) {
-    const headers = this.worksheet.getRow(1).values.slice(1); // Skip ExcelJS index offset
-    const data = [];
+  /** Reads worksheet data into an array of objects. */
+  async read<T = Record<string, any>>(
+    listCols: string[] = [],
+    filter: (row: Record<string, any>) => boolean = () => true,
+    rowMap?: (row: Record<string, any>) => any
+  ): Promise<T[]> {
+    const headers = (this.worksheet.getRow(1).values as any[]).slice(1); // Uses the first worksheet row as headers.
+    const data: T[] = [];
 
     this.worksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
-      if (rowNumber === 1) return; // Skip header row
+      if (rowNumber === 1) return; // skip header
 
-      const rowData = {};
-      headers.forEach((header, index) => {
-        const cellValue = row.getCell(index + 1).value;
-        const key = header.toLowerCase().replace(/\s+/g, "_");
+      const rowData: Record<string, any> = {};
 
-        if (typeof cellValue === "string" && listCols.includes(header)) {
-          rowData[key] = cellValue
-            .split(",")
-            .map((s) => s.trim())
-            .filter(Boolean);
-        } else {
-          rowData[key] = cellValue;
-        }
+      headers.forEach((h, i) => {
+        const header = String(h);
+        const key = header.toLowerCase().replace(/\s+/g, "_"); //Converts header names to lowercase with underscores.
+        const cellValue = row.getCell(i + 1).value ?? null;
+
+        rowData[key] =
+          typeof cellValue === "string" && listCols.includes(header)
+            ? cellValue // Optionally splits specified columns into arrays (comma-separated values).
+                .split(",")
+                .map((s) => s.trim())
+                .filter(Boolean) // Applies an optional filter function to include/exclude rows.
+            : cellValue;
       });
 
-      if (filter(rowData)) {
-        data.push(rowMap ? rowMap(rowData) : rowData);
-      }
+      // Applies an optional transform function (`rowMap`) to each included row.
+      if (filter(rowData)) data.push(rowMap ? rowMap(rowData) : rowData);
     });
 
     return data;
   }
 
-  /**
-   * Add or overwrite worksheet rows from an array of objects.
-   * - If append=false, starts with a clean file and new headers.
-   * - If append=true and file is empty, headers are added automatically.
-   *
-   * @param {Object[]} data - Row data as objects.
-   * @param {boolean} append - Whether to append to existing rows (default: true).
-   */
-  async write(data, append = true) {
+  /** Add or overwrite worksheet rows from an array of objects. */
+  async write(data: Record<string, any | number>[], append: boolean = true) {
     if (!Array.isArray(data) || data.length === 0) {
       throw new Error("Data must be a non-empty array.");
     }
@@ -129,7 +72,8 @@ class ExcelFileHandler {
     }
 
     if (!append) {
-      this.initCleanFile();
+      this.workbook = new ExcelJS.Workbook();
+      this.worksheet = this.workbook.addWorksheet("Sheet1");
       this.worksheet.addRow(headers);
     } else if (this.worksheet.rowCount === 0) {
       this.worksheet.addRow(headers);
@@ -140,25 +84,16 @@ class ExcelFileHandler {
     });
   }
 
-  /**
-   * Load an existing Excel file into memory from a buffer.
-   *
-   * @param {ArrayBuffer|Buffer} buffer - Excel file contents.
-   * @returns {Promise<this>} This handler instance.
-   */
-  async loadBuffer(buffer) {
+  /** Load an existing Excel file into memory from a buffer. */
+  async loadBuffer(buffer: ArrayBuffer | Buffer): Promise<this> {
     await this.workbook.xlsx.load(buffer);
     this.worksheet = this.workbook.worksheets[0] || this.worksheet;
     return this;
   }
 
-  /**
-   * Export the workbook as a buffer for sending or saving.
-   *
-   * @returns {Promise<Buffer>} Excel file buffer.
-   */
-  async getBuffer() {
-    return await this.workbook.xlsx.writeBuffer();
+  /** Export the workbook as a buffer for sending or saving. */
+  async getBuffer(): Promise<Buffer> {
+    return Buffer.from(await this.workbook.xlsx.writeBuffer());
   }
 }
 

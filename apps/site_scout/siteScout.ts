@@ -1,27 +1,22 @@
-import { BaseApp, ExcelFileHandler, sameDomain } from "../base/index.ts";
-import { ERRORS } from "../base/constants.js";
 import { JobStatus } from "@prisma/client";
+
+import { ERRORS } from "../base/constants.js";
+import { BaseApp, ExcelFileHandler, sameDomain } from "../base";
 
 /**
  * SiteScout class merges URLs between a ShopReel report file and a
  * FishTales starter Excel file and saves the results to a new Excel file.
- *
- * Extends BaseApp to integrate with the job system (progress tracking,
- * cancellation, messages, and file attachments).
  */
 export class SiteScout extends BaseApp {
-  /**
-   * @param {string|null} jobId - Optional Job ID for tracking progress and associated files.
-   * @param {Object} files - An object containing the two Excel files:
-   */
-  constructor(jobId, files) {
-    super(jobId);
-    this.files = files;
+  protected files: Record<string, Buffer>;
+  protected shopReelHandler: ExcelFileHandler = new ExcelFileHandler();
+  protected fishTalesHandler: ExcelFileHandler = new ExcelFileHandler();
+  protected updatedFile: ExcelFileHandler = new ExcelFileHandler();
 
-    // Excel file handlers for reading/writing
-    this.shopReelHandler = new ExcelFileHandler();
-    this.fishTalesHandler = new ExcelFileHandler();
-    this.updatedFile = new ExcelFileHandler();
+  constructor(jobId: string, files: Record<string, Buffer>) {
+    super();
+    this.jobId = jobId || "";
+    this.files = files;
   }
 
   /**
@@ -43,12 +38,12 @@ export class SiteScout extends BaseApp {
       // - Report URLs: all rows, using the "url" column
       // - Site URLs: only rows where "has_report" is true, using the "website" column
       const [rawReportUrls, rawSiteUrls] = await Promise.all([
-        this.fishTalesHandler.read(
+        this.fishTalesHandler.read<string>(
           [],
           () => true,
           (row) => row["url"]
         ),
-        this.shopReelHandler.read(
+        this.shopReelHandler.read<string>(
           [],
           (row) => row["has_report"] === true,
           (row) => row["website"]
@@ -91,7 +86,7 @@ export class SiteScout extends BaseApp {
       await this.updateJobStatus(JobStatus.COMPLETED);
     } catch (err) {
       // Handle errors (except job cancellation) and mark job as failed
-      if (err.message !== ERRORS.CANCELLED) {
+      if (err instanceof Error && err.message !== ERRORS.CANCELLED) {
         await this.addJobMessage(`❌ Error: ${err.message || err}`);
         await this.updateJobStatus(JobStatus.FAILED);
       }

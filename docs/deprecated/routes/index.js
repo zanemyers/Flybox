@@ -3,7 +3,7 @@ import indexRoutes from "./_index.js";
 import appRoutes from "../../../server/api/_apps.js";
 import partialRoutes from "./_forms.js";
 import testRoutes from "./_test.js";
-import apiRoutes from "../../../server/api/index.js";
+import apiRoutes from "../../../server/api/index.ts";
 
 const router = express.Router();
 
