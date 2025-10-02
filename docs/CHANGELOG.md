@@ -2,6 +2,117 @@
 
 All notable changes to this project will be documented in this file.
 
+### [UNRELEASED](https://github.com/zanemyers/RescueRiver/compare/v3.6..HEAD) — _2 Oct 2025_
+
+## Added
+
+- **Base utilities & API**
+  - `apps/base/_baseAPI.js`
+  - `apps/base/_baseApp.js`
+  - `apps/fish_tales/fishAPI.js`
+  - `apps/shop_reel/shopAPI.js`
+  - `apps/site_scout/siteAPI.js`
+- **React client entry & routing**
+  - `client/index.html`
+  - `client/src/App.tsx`
+  - `client/src/main.tsx`
+- **Documentation pages**
+  - `client/src/components/docs/fishTalesDoc.tsx`
+  - `client/src/components/docs/shopReelDoc.tsx`
+  - `client/src/components/docs/siteScoutDoc.tsx`
+- **React form components**
+  - `client/src/components/forms/components/baseForm.tsx`
+  - `client/src/components/forms/components/fileInput.tsx`
+  - `client/src/components/forms/components/formInput.tsx`
+  - `client/src/components/forms/components/mapInput.tsx`
+  - `client/src/components/forms/components/progressPanel.tsx`
+- **React Forms**
+  - `client/src/components/forms/fishTalesForm.tsx`
+  - `client/src/components/forms/shopReelForm.tsx`
+  - `client/src/components/forms/siteScoutForm.tsx`
+- **React Layout**
+  - `client/src/components/layout/footer.tsx`
+  - `client/src/components/layout/header.tsx`
+  - `client/src/components/layout/layout.tsx`
+  - `client/src/components/layout/navbar.tsx`
+- **React UI Components**
+  - `client/src/components/ui/card.tsx`
+  - `client/src/components/ui/images.tsx`
+  - `client/src/components/ui/links.tsx`
+  - `client/src/components/ui/listBlock.tsx`
+  - `client/src/components/ui/sections.tsx`
+  - `client/src/components/ui/sideBar.tsx`
+  - `client/src/components/ui/tableOfContents.tsx`
+  - `client/src/components/ui/tabs.tsx`
+- **Pages**
+  - `client/src/pages/about.tsx`
+  - `client/src/pages/docs.tsx`
+  - `client/src/pages/error.tsx`
+  - `client/src/pages/fishTales.tsx`
+  - `client/src/pages/home.tsx`
+  - `client/src/pages/shopReel.tsx`
+  - `client/src/pages/siteScout.tsx`
+- **React Routing**
+  - `client/src/pages/index.tsx`
+- **Packages**
+  - `leaflet`, `multer`, `react`, `react-bootstrap`, `react-dom`, `react-leaflet`, `react-markdown`, `react-router-dom`
+- **Database**
+  - `schema.prisma`
+  - `models/job.prisma`
+  - `db.js`
+
+## Changed
+
+- **Configuration**
+  - Updated `.dockerignore` & `.gitignore` for logs, editor files, and `/server/db/dev.db`
+- **Renamed files**
+  - `apps/fish_tales/reportScraper.js → apps/fish_tales/fishTales.js`
+  - `apps/shop_reel/shopScraper.js → apps/shop_reel/shopReel.js`
+  - `apps/site_scout/siteDiff.js → apps/site_scout/siteScout.js`
+  - `apps/fish_tales/reportUtils.js → apps/fish_tales/fishUtils.js`
+- **Theme & styles**
+  - `client/src/assets/styles/_theme.scss` with Bootstrap variable overrides
+  - `style.scss` updates:
+    - Responsive images & emoji alignment
+    - Form error styling
+    - `.input-group-text` hover styles
+- **Docker**
+  - `compose.yaml → docker/docker-compose.yml`
+  - Created production placeholder `docker/docker-compose.prod.yml`
+  - `Dockerfile → docker/Dockerfile` with SQLite support
+- **Example & static assets**
+  - Moved into `client` directory:
+    - `public/example_files/fishTales_starter_file.xlsx`
+    - `public/images/tb_icon.ico`
+    - `src/assets/images/*`
+- **Constants**
+  - Consolidated `apps/base/constants/_shopScraper.js`, `_messages.js`, `_prompts.js`, `_scrapers.js`, `index.js` into `apps/base/constants.js`
+- **Configuration files**
+  - Moved into `config` directory:
+    - `.stylelintrc`, `.eslint.config.js`, `global.d.ts`, `tsconfig.app.json`, `tsconfig.node.json`, `tsconfig.json`, `vite.config.json`
+- **Setup & scripts**
+  - Updated `docs/setup.md` packages
+  - Added/updated `Justfile` commands for setup, docker, DB, formatting, linting, and running
+  - Moved `server.js` to `server/` and configured for React (removed WebSockets)
+  - Moved error routes to `server/api/error.js` and API routes to `server/api/index.js`
+  - Setup script can be rerun without overriding API keys
+
+## Removed
+
+- **Old Docker & ignore rules**
+  - Old Dockerfile
+  - `.dockerignore` rules for `node_modules/`, `media/`, `.env`
+- **Legacy base utilities**
+  - `apps/base/_dateUtils.js`
+- **Deprecated routes, sockets, and static files**
+  - `docs/deprecated/routes/*`
+  - `docs/deprecated/sockets/*`
+  - `docs/deprecated/static/js/*`
+  - `docs/deprecated/views/*`
+- **Documentation**
+  - `docs/config.md`
+  - `docs/ide.md` Auto-Compile SCSS section & screenshot (`docs/images/scss_screenshot.png`)
+
 ### [v3.7](https://github.com/zanemyers/RescueRiver/compare/v3.6..v3.7) — _4 Sep 2025_
 
 #### **Added**
