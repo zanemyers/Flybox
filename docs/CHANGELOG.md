@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v4.1](https://github.com/zanemyers/RescueRiver/compare/v4.0..HEAD) — _2 Oct 2025_
+### [v4.1](https://github.com/zanemyers/RescueRiver/compare/v4.0..v4.1) — _2 Oct 2025_
 
 #### **Added**
 - `BaseForm` now automatically initializes Bootstrap tooltips on all form inputs.
