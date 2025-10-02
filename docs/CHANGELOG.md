@@ -2,9 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+### [v4.1](https://github.com/zanemyers/RescueRiver/compare/v4.0..HEAD) — _2 Oct 2025_
+
+#### **Added**
+- `BaseForm` now automatically initializes Bootstrap tooltips on all form inputs.
+    - Tooltips initialized on initial mount (`componentDidMount`) and after updates (`componentDidUpdate`).
+
+#### **Changed**
+- `README.md` logo updated to use `client/public/images/tb_icon.ico` instead of the old static image.
+
+
 ### [v4.0](https://github.com/zanemyers/RescueRiver/compare/v3.7..v4.0) — _2 Oct 2025_
 
-## Added
+#### Added
 
 - **Base utilities & API**
   - `apps/base/_baseAPI.js`
@@ -61,7 +71,7 @@ All notable changes to this project will be documented in this file.
   - `models/job.prisma`
   - `db.js`
 
-## Changed
+#### Changed
 
 - **Configuration**
   - Updated `.dockerignore` & `.gitignore` for logs, editor files, and `/server/db/dev.db`
@@ -97,7 +107,7 @@ All notable changes to this project will be documented in this file.
   - Moved error routes to `server/api/error.js` and API routes to `server/api/index.js`
   - Setup script can be rerun without overriding API keys
 
-## Removed
+####  Removed
 
 - **Old Docker & ignore rules**
   - Old Dockerfile
