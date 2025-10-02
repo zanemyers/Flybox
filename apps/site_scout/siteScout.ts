@@ -1,4 +1,4 @@
-import { BaseApp, ExcelFileHandler, sameDomain } from "../base/index.js";
+import { BaseApp, ExcelFileHandler, sameDomain } from "../base/index.ts";
 import { ERRORS } from "../base/constants.js";
 import { JobStatus } from "@prisma/client";
 

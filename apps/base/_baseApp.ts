@@ -1,6 +1,6 @@
-import { prisma } from "../../server/db.js";
+import { prisma } from "../../server/db.ts";
 import { JobStatus } from "@prisma/client";
-import { ERRORS } from "./constants.js";
+import { ERRORS } from "./constants.ts";
 
 /**
  * BaseApp provides utility methods for managing job records in the database.

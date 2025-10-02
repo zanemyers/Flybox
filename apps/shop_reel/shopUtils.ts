@@ -1,4 +1,4 @@
-import { EMAIL_REGEX, MESSAGES, SHOP_KEYWORDS, SOCIAL_MEDIA_MAP } from "../base/constants.js";
+import { EMAIL_REGEX, MESSAGES, SHOP_KEYWORDS, SOCIAL_MEDIA_MAP } from "../base/constants.ts";
 
 /**
  * Enhances a Playwright `Page` instance with custom scraping helper methods

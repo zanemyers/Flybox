@@ -1,4 +1,4 @@
-import { prisma } from "../../server/db.js";
+import { prisma } from "../../server/db.ts";
 import { BaseAPI } from "../base/_baseAPI.js";
 import { JobType, JobStatus } from "@prisma/client";
 import { SiteScout } from "./siteScout.js";

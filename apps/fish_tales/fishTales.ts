@@ -4,7 +4,7 @@ import { GoogleGenAI } from "@google/genai";
 import TinyQueue from "tinyqueue";
 import { differenceInDays } from "date-fns";
 
-import { DIVIDER, ERRORS } from "../base/constants.js";
+import { DIVIDER, ERRORS } from "../base/constants.ts";
 import {
   BaseApp,
   ExcelFileHandler,
@@ -12,7 +12,7 @@ import {
   sameDomain,
   StealthBrowser,
   TXTFileHandler,
-} from "../base/index.js";
+} from "../base/index.ts";
 
 import {
   checkDuplicateSites,
@@ -51,7 +51,7 @@ export class FishTales extends BaseApp {
     this.summaryHandler = new TXTFileHandler(); // Final summary output
 
     // Browser with stealth mode to reduce bot detection
-    this.browser = new StealthBrowser({ headless: process.env.RUN_HEADLESS !== "false" });
+    this.browser = new StealthBrowser();
 
     // Keep track of sites that failed during scraping
     this.failedDomains = [];

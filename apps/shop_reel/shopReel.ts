@@ -3,9 +3,9 @@ import { getJson } from "serpapi";
 import { PromisePool } from "@supercharge/promise-pool";
 import { JobStatus } from "@prisma/client";
 
-import { ERRORS, FALLBACK_DETAILS } from "../base/constants.js";
+import { ERRORS, FALLBACK_DETAILS } from "../base/constants.ts";
 import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils.js";
-import { BaseApp, ExcelFileHandler, normalizeUrl, StealthBrowser } from "../base/index.js";
+import { BaseApp, ExcelFileHandler, normalizeUrl, StealthBrowser } from "../base/index.ts";
 
 /**
  * ShopReel class handles scraping shops from Google Maps via SerpAPI,
@@ -24,9 +24,7 @@ export class ShopReel extends BaseApp {
     this.searchParams = searchParams;
     this.shopWriter = new ExcelFileHandler(); // Excel writer for results
     this.websiteCache = new Map(); // Cache for previously scraped website details
-    this.browser = new StealthBrowser({
-      headless: process.env.RUN_HEADLESS !== "false",
-    });
+    this.browser = new StealthBrowser();
   }
 
   /**

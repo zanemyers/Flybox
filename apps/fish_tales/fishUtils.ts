@@ -1,7 +1,7 @@
 import * as chrono from "chrono-node";
 
-import { DIVIDER } from "../base/constants.js";
-import { normalizeUrl } from "../base/index.js";
+import { DIVIDER } from "../base/constants.ts";
+import { normalizeUrl } from "../base/index.ts";
 
 /**
  * Normalize URLs for each site and remove duplicates based on the normalized URLs.
