@@ -1,4 +1,4 @@
-# <img src="static/images/tackle_box.png" alt="Flybox Logo" width="30" style="vertical-align: middle;"/> Flybox
+# <img src="client/public/images/tb_icon.ico" alt="Flybox Logo" width="30" style="vertical-align: middle;"/> Flybox
 
 This repository contains tools created for **[Rescue River](https://rescueriver.com/)**, focused on gathering and summarizing fishing-related data from online sources.
 
