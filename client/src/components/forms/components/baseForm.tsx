@@ -1,4 +1,5 @@
 import React from "react";
+import Tooltip from "bootstrap/js/dist/tooltip";
 import { Form, Button, Col } from "react-bootstrap";
 import ProgressPanel from "./progressPanel";
 
@@ -59,17 +60,22 @@ export default abstract class BaseForm<
     this.state = { jobId: localStorage.getItem(this.storageKey) } as S;
   }
 
-  // initTooltips() {
-  //   const tooltipList = document.querySelectorAll<HTMLElement>("[title]");
-  //
-  //   tooltipList.forEach((el) => {
-  //     // Clean up old tooltip instance if it exists
-  //     const existing = Tooltip.getInstance(el);
-  //     if (existing) existing.dispose();
-  //
-  //     new Tooltip(el);
-  //   });
-  // }
+  componentDidMount() {
+    this.initTooltips();
+  }
+
+  componentDidUpdate() {
+    this.initTooltips();
+  }
+
+  initTooltips() {
+    const tooltipList = document.querySelectorAll<HTMLElement>("[title]");
+    tooltipList.forEach((el) => {
+      const existing = Tooltip.getInstance(el);
+      if (existing) existing.dispose();
+      new Tooltip(el);
+    });
+  }
 
   /**
    * Subclass must implement this to provide the form JSX
