@@ -1,5 +1,5 @@
 import { BaseWebSocket } from "./_baseWebSocket.js";
-import { mergeMissingUrls } from "../../../apps/site_scout/siteScout.ts";
+import { mergeMissingUrls } from "../../../server/apps/site_scout/siteScout.ts";
 
 /**
  * WebSocket subclass specifically for handling site scout requests.

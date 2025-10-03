@@ -1,5 +1,5 @@
-import { prisma } from "../../server/db.ts";
-import { JobStatus, type Job } from "@prisma/client";
+import { prisma } from "../../db";
+import { type Job, JobStatus } from "@prisma/client";
 import type { Request, Response } from "express";
 
 /**

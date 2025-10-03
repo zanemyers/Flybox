@@ -2,7 +2,7 @@ import { chromium } from "playwright-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import type { Browser, BrowserContext, Page } from "playwright";
 
-import { BLOCKED_OR_FORBIDDEN } from "./constants.ts";
+import { BLOCKED_OR_FORBIDDEN } from "./constants";
 
 // Enable plugins
 chromium.use(StealthPlugin());

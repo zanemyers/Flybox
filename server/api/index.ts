@@ -1,7 +1,7 @@
 import express from "express";
-import { ShopReelAPI } from "../../apps/shop_reel/shopAPI.js";
-import { FishTalesAPI } from "../../apps/fish_tales/fishAPI";
-import { SiteScoutAPI } from "../../apps/site_scout/siteAPI.js";
+import { ShopReelAPI } from "../apps/shop_reel/shopAPI.js";
+import { FishTalesAPI } from "../apps/fish_tales/fishAPI";
+import { SiteScoutAPI } from "../apps/site_scout/siteAPI.js";
 
 import multer from "multer";
 

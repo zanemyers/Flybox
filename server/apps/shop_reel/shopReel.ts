@@ -3,7 +3,7 @@ import { getJson } from "serpapi";
 import { PromisePool } from "@supercharge/promise-pool";
 import { JobStatus } from "@prisma/client";
 
-import { ERRORS, FALLBACK_DETAILS } from "../base/constants.ts";
+import { ERRORS, FALLBACK_DETAILS } from "../base/constants";
 import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils";
 import { BaseApp, ExcelFileHandler, normalizeUrl, StealthBrowser } from "../base";
 import type { Page } from "playwright";
@@ -24,14 +24,14 @@ export interface Shops {
   address?: string;
   website?: string;
   rating?: number;
-  Reviews?: number;
+  reviews?: number;
 }
 
 export interface ShopDetails {
   email: string;
-  sellsOnline: boolean;
-  fishingReport: boolean;
-  socialMedia: string[];
+  sellsOnline: string | boolean;
+  fishingReport: string | boolean;
+  socialMedia: string | string[];
 }
 
 /**
@@ -44,7 +44,7 @@ export class ShopReel extends BaseApp {
   protected shopWriter: ExcelFileHandler = new ExcelFileHandler();
   protected browser: StealthBrowser = new StealthBrowser();
 
-  constructor(jobId: string, searchParams: object) {
+  constructor(jobId: string, searchParams: SearchParams) {
     super();
     this.jobId = jobId;
     this.searchParams = searchParams;
@@ -79,7 +79,7 @@ export class ShopReel extends BaseApp {
   }
 
   /** Fetches shops from SerpAPI or loads them from a cached Excel file. */
-  async fetchShops() {
+  async fetchShops(): Promise<Shops[]> {
     const cacheFileHandler = new ExcelFileHandler();
 
     // Return cached shops if buffer provided
@@ -128,7 +128,7 @@ export class ShopReel extends BaseApp {
   /**
    * Scrapes website details for each shop with concurrency control.
    */
-  async getDetails(shops: Shops[]): Promise<Array<object>> {
+  async getDetails(shops: Shops[]): Promise<ShopDetails[]> {
     const results = new Array(shops.length);
     let completed = 0;
 
@@ -136,7 +136,7 @@ export class ShopReel extends BaseApp {
     const messageTemplate = (done: number) => `Scraping shops (${done}/${shops.length})`;
     await this.addJobMessage(messageTemplate(completed));
 
-    await PromisePool.withConcurrency(parseInt(process.env.CONCURRENCY ?? "5", 10))
+    await PromisePool.withConcurrency(this.concurrency)
       .for(shops)
       .process(async (shop, index) => {
         if (!shop.website) {
@@ -170,7 +170,7 @@ export class ShopReel extends BaseApp {
     const cached = this.websiteCache.get(normalizedUrl);
     if (cached) return cached;
 
-    let details;
+    let details: ShopDetails;
     try {
       await this.throwIfJobCancelled();
       const response = await page.load(normalizedUrl);
@@ -180,10 +180,10 @@ export class ShopReel extends BaseApp {
         details = FALLBACK_DETAILS.BLOCKED(status);
       } else {
         details = {
-          email: await page.getEmail(),
-          sellsOnline: await page.hasOnlineShop(),
-          fishingReport: await page.publishesFishingReport(),
-          socialMedia: await page.getSocialMedia(),
+          email: await page.getEmail!(),
+          sellsOnline: await page.hasOnlineShop!(),
+          fishingReport: await page.publishesFishingReport!(),
+          socialMedia: await page.getSocialMedia!(),
         };
       }
     } catch {

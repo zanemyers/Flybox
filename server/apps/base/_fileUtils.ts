@@ -40,16 +40,15 @@ class ExcelFileHandler {
       const rowData: Record<string, any> = {};
 
       headers.forEach((h, i) => {
-        const header = String(h);
-        const key = header.toLowerCase().replace(/\s+/g, "_"); //Converts header names to lowercase with underscores.
         const cellValue = row.getCell(i + 1).value ?? null;
+        const key = this.toCamelCase(String(h));
 
         rowData[key] =
-          typeof cellValue === "string" && listCols.includes(header)
-            ? cellValue // Optionally splits specified columns into arrays (comma-separated values).
+          typeof cellValue === "string" && listCols.includes(key)
+            ? cellValue
                 .split(",")
                 .map((s) => s.trim())
-                .filter(Boolean) // Applies an optional filter function to include/exclude rows.
+                .filter(Boolean)
             : cellValue;
       });
 
@@ -94,6 +93,10 @@ class ExcelFileHandler {
   /** Export the workbook as a buffer for sending or saving. */
   async getBuffer(): Promise<Buffer> {
     return Buffer.from(await this.workbook.xlsx.writeBuffer());
+  }
+
+  toCamelCase(str: string): string {
+    return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
   }
 }
 

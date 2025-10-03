@@ -206,7 +206,7 @@ All notable changes to this project will be documented in this file.
 - **Routes**: `/shop-form` → [`/shop-reel-form`](../server/api/_apps.js), `/report-form` → [`/fish-tales-form`](../server/api/_apps.js).
 - **Server**: WebSocket routes moved to [`/ws/shop-reel`](../server/server.ts), [`/ws/fish-tales`](../server/server.ts).
 - [**BaseFormApp**](deprecated/static/js/baseFormApp.js): WebSocket port fixed at `3000` (was `process.env.PORT`).
-- **SiteScout logic**: [`mergeMissingUrls`](../apps/site_scout/siteScout.ts) now accepts in-memory buffers, supports cancellation, returns updated starter files.
+- **SiteScout logic**: [`mergeMissingUrls`](../server/apps/site_scout/siteScout.ts) now accepts in-memory buffers, supports cancellation, returns updated starter files.
 - [**File input**](deprecated/static/js/fileInput.js): refactored for independent components (`.file-input-component`), simplified partials, and per-component init.
 - **Forms**: `reportFormApp.js` → [`fishTalesFormApp.js`](deprecated/static/js/fishTalesFormApp.js), `shopFormApp.js` → [`shopReelFormApp.js`](deprecated/static/js/shopReelFormApp.js).
 - [**SCSS**](../client/src/assets/styles/style.scss): restructured styles for `.file-input-component` (better drag-drop + file display).

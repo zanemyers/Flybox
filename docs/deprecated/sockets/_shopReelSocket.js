@@ -1,5 +1,5 @@
 import { BaseWebSocket } from "./_baseWebSocket.js";
-import { shopScraper } from "../../../apps/shop_reel/shopReel.ts";
+import { shopScraper } from "../../../server/apps/shop_reel/shopReel.ts";
 
 /**
  * WebSocket subclass specifically for handling shop scraping requests.

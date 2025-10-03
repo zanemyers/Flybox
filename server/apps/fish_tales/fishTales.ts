@@ -4,7 +4,7 @@ import { GoogleGenAI } from "@google/genai";
 import TinyQueue from "tinyqueue";
 import { differenceInDays } from "date-fns";
 
-import { DIVIDER, ERRORS } from "../base/constants.ts";
+import { DIVIDER, ERRORS } from "../base/constants";
 import {
   BaseApp,
   ExcelFileHandler,
@@ -12,7 +12,7 @@ import {
   sameDomain,
   StealthBrowser,
   TXTFileHandler,
-} from "../base/index.ts";
+} from "../base";
 
 import {
   checkDuplicateSites,
@@ -23,11 +23,32 @@ import {
   getPriority,
   includesAny,
   scrapeVisibleText,
-} from "./fishUtils.js";
+  type Anchor,
+} from "./fishUtils";
 import { JobStatus } from "@prisma/client";
 
-// Control concurrency of async scraping tasks
-const CONCURRENCY = Math.max(1, parseInt(process.env.CONCURRENCY, 10) || 5);
+interface SearchParams {
+  apiKey: string;
+  maxAge: number;
+  filterByRivers: boolean;
+  riverList: string[];
+  file: Express.Multer.File;
+  includeSiteList: boolean;
+  tokenLimit: number;
+  crawlDepth: number;
+  model: string;
+  summaryPrompt: string;
+  mergePrompt: string;
+}
+
+export interface Site {
+  url: string;
+  selector: string;
+  lastUpdated: string;
+  keywords: string[];
+  junkWords: string[];
+  clickPhrases: string[];
+}
 
 /**
  * FishTales class handles scraping fishing reports from websites listed in a starter file,
@@ -37,39 +58,20 @@ const CONCURRENCY = Math.max(1, parseInt(process.env.CONCURRENCY, 10) || 5);
  * cancellation, messages, and file attachments).
  */
 export class FishTales extends BaseApp {
-  /**
-   * @param {string} jobId - Job ID for tracking progress and files.
-   * @param {Object} searchParams - Parameters controlling scraping and summarization.
-   */
-  constructor(jobId, searchParams) {
-    super(jobId);
+  protected searchParams: SearchParams;
+  protected starterFileHandler: ExcelFileHandler = new ExcelFileHandler();
+  protected siteListHandler: TXTFileHandler = new TXTFileHandler();
+  protected summaryHandler: TXTFileHandler = new TXTFileHandler();
+  protected browser: StealthBrowser = new StealthBrowser();
+  protected failedDomains: string[] = [];
+
+  constructor(jobId: string, searchParams: SearchParams) {
+    super();
+    this.jobId = jobId;
     this.searchParams = searchParams;
-
-    // File handlers
-    this.starterFileHandler = new ExcelFileHandler(); // Input site list (Excel)
-    this.siteListHandler = new TXTFileHandler(); // Optional site list output
-    this.summaryHandler = new TXTFileHandler(); // Final summary output
-
-    // Browser with stealth mode to reduce bot detection
-    this.browser = new StealthBrowser();
-
-    // Keep track of sites that failed during scraping
-    this.failedDomains = [];
-
-    // If the API key is set to "test" in dev mode, use GEMINI_API_KEY from env
-    this.apiKey =
-      this.searchParams.apiKey === "test" && process.env.NODE_ENV === "development"
-        ? process.env.GEMINI_API_KEY
-        : this.searchParams.apiKey;
   }
 
-  /**
-   * Orchestrates the FishTales job:
-   * 1. Read and deduplicate sites from starter file.
-   * 2. Crawl sites and scrape reports.
-   * 3. Filter reports (by recency and rivers).
-   * 4. Compile and summarize with Gemini AI.
-   */
+  /** Orchestrates the FishTales job: */
   async reportScraper() {
     try {
       // STEP 1: Read and deduplicate sites
@@ -77,7 +79,12 @@ export class FishTales extends BaseApp {
       await this.starterFileHandler.loadBuffer(this.searchParams.file.buffer);
       await this.throwIfJobCancelled();
 
-      const sites = await this.starterFileHandler.read(["keywords", "junk-words", "click-phrases"]);
+      const sites: Site[] = await this.starterFileHandler.read<Site>([
+        "keywords",
+        "junkWords",
+        "clickPhrases",
+      ]);
+
       const siteList = await checkDuplicateSites(sites);
       await this.addJobMessage(`✅ Found ${siteList.length} sites to scrape!`, true);
       await this.throwIfJobCancelled();
@@ -107,29 +114,25 @@ export class FishTales extends BaseApp {
         await this.updateJobStatus(JobStatus.COMPLETED);
       }
     } catch (err) {
-      if (err.message !== ERRORS.CANCELLED) {
+      if (err instanceof Error && err.message !== ERRORS.CANCELLED) {
         await this.addJobMessage(`❌ Error: ${err.message || err}`);
         await this.updateJobStatus(JobStatus.FAILED);
       }
     }
   }
 
-  /**
-   * Scrape reports from multiple sites concurrently.
-   *
-   * @param {Array<Object>} sites - Site objects to crawl.
-   * @returns {Promise<string[]>} Flattened list of scraped reports.
-   */
-  async scrapeReports(sites) {
+  /** Scrape reports from multiple sites concurrently. */
+  async scrapeReports(sites: Site[]): Promise<string[]> {
     let completed = 0;
-    const messageTemplate = (done) => `Scraping sites (${done}/${sites.length}) for reports...`;
+    const messageTemplate = (done: number) =>
+      `Scraping sites (${done}/${sites.length}) for reports...`;
 
     try {
       await this.browser.launch();
       await this.addJobMessage(messageTemplate(completed));
 
       // Run site scraping in parallel with controlled concurrency
-      const { results } = await PromisePool.withConcurrency(CONCURRENCY)
+      const { results } = await PromisePool.withConcurrency(this.concurrency)
         .for(sites)
         .process(async (site) => {
           await this.throwIfJobCancelled();
@@ -139,8 +142,10 @@ export class FishTales extends BaseApp {
             await this.addJobMessage(messageTemplate(++completed), true);
             return reports;
           } catch (err) {
-            if (err.isCancelled) throw err; // Bubble-up
-            this.failedDomains.push(`Error scraping ${site.url}: ${err.message || err}`);
+            if (err instanceof Error) {
+              if (err.message !== ERRORS.CANCELLED) throw err; // Bubble-up
+              this.failedDomains.push(`Error scraping ${site.url}: ${err.message || err}`);
+            }
             return [];
           }
         });
@@ -158,7 +163,7 @@ export class FishTales extends BaseApp {
 
       return reports;
     } catch (err) {
-      if (err.isCancelled) throw err; // Bubble-up
+      if (err instanceof Error && err.message !== ERRORS.CANCELLED) throw err; // Bubble-up
       await this.addJobMessage(`❌ Error: ${err}`, true);
       return [];
     } finally {
@@ -166,32 +171,31 @@ export class FishTales extends BaseApp {
     }
   }
 
-  /**
-   * Crawl a single site to extract report texts.
-   *
-   * @param {Object} site - Site object with `url` and optional `selector`.
-   * @returns {Promise<string[]>} List of extracted reports.
-   */
-  async findReports(site) {
+  /** Crawl a single site to extract report texts. */
+  async findReports(site: Site): Promise<string[]> {
     const page = await this.browser.newPage();
+    const reports: string[] = []; // Collected report texts
     const visited = new Set(); // URLs already visited
-    const toVisit = new TinyQueue([], (a, b) => a.priority - b.priority); // Priority queue for URLs to visit
-    const reports = []; // Collected report texts
+    const toVisit = new TinyQueue<{ url: string; priority: number }>( // Priority queue for URLs to visit
+      [],
+      (a, b) => a.priority - b.priority
+    );
 
     // Seed with the starting page; lower priority number means higher priority
     toVisit.push({ url: site.url, priority: -1 });
     while (toVisit.length > 0 && visited.size < this.searchParams.crawlDepth) {
       await this.throwIfJobCancelled();
 
-      const { url } = toVisit.pop(); // Get the next highest priority URL
-      if (visited.has(url)) continue;
+      const url = toVisit.pop()?.url; // Get the next highest priority URL
+      if (!url || visited.has(url)) continue;
       visited.add(url);
 
       // Navigate to the page
       try {
         await page.load(url);
       } catch (err) {
-        this.failedDomains.push(`Error navigating to ${url}:: ${err.message || err}`);
+        if (err instanceof Error)
+          this.failedDomains.push(`Error navigating to ${url}:: ${err.message || err}`);
         continue;
       }
 
@@ -205,7 +209,7 @@ export class FishTales extends BaseApp {
       }
 
       // Extract all anchor links from the page
-      const pageLinks = await extractAnchors(page);
+      const pageLinks: Anchor[] = await extractAnchors(page);
 
       for (const { href, linkText } of pageLinks) {
         if (!sameDomain(href, site.url)) continue;
@@ -239,13 +243,8 @@ export class FishTales extends BaseApp {
     return reports;
   }
 
-  /**
-   * Filter reports by recency, detected date, and optional river list.
-   *
-   * @param {string[]} reports - Raw reports.
-   * @returns {string[]} Filtered reports.
-   */
-  filterReports(reports) {
+  /** Filter reports by recency, detected date, and optional river list. */
+  filterReports(reports: string[]): string[] {
     const today = new Date();
 
     return reports.filter((report) => {
@@ -255,27 +254,28 @@ export class FishTales extends BaseApp {
       if (differenceInDays(today, reportDate) > this.searchParams.maxAge) return false; // Excludes reports older than `maxAge` days.
 
       // Optionally requires mention of a river from `riverList`.
-      if (this.searchParams.filterByRivers && !includesAny(report, this.searchParams.riverList))
-        return false;
-      return true;
+      return !(
+        this.searchParams.filterByRivers && !includesAny(report, this.searchParams.riverList)
+      );
     });
   }
 
-  /**
-   * Generate a summarized report using Gemini AI.
-   *
-   * @param {string} report - Compiled report text.
-   * @returns {Promise<void>}
-   */
-  async generateSummary(report) {
-    const ai = new GoogleGenAI({ apiKey: this.apiKey });
+  /** Generate a summarized report using Gemini AI. */
+  async generateSummary(report: string): Promise<void> {
+    // If the API key is set to "test" in dev mode, use GEMINI_API_KEY from env
+    const apiKey =
+      this.searchParams.apiKey === "test" && process.env.NODE_ENV === "development"
+        ? process.env.GEMINI_API_KEY
+        : this.searchParams.apiKey;
+
+    const ai = new GoogleGenAI({ apiKey: apiKey });
 
     try {
       // Split report into chunks respecting token limits
       const chunks = chunkReportText(report, this.searchParams.tokenLimit);
 
       // Summarize each chunk concurrently
-      const { results, errors } = await PromisePool.withConcurrency(CONCURRENCY)
+      const { results, errors } = await PromisePool.withConcurrency(this.concurrency)
         .for(chunks)
         .process(async (chunk) => {
           await this.throwIfJobCancelled();
@@ -308,7 +308,7 @@ export class FishTales extends BaseApp {
       await this.summaryHandler.write(finalResponse);
       await this.addJobFile("primaryFile", this.summaryHandler.getBuffer());
     } catch (err) {
-      if (err.isCancelled) throw err; // Bubble-up
+      if (err instanceof Error && err.message !== ERRORS.CANCELLED) throw err; // Bubble-up
       await this.addJobMessage(`❌ Error generating summary: ${err}`, true);
     }
   }

@@ -1,10 +1,11 @@
-import { prisma } from "../../server/db.ts";
+import { prisma } from "../../db";
 import { JobStatus } from "@prisma/client";
-import { ERRORS } from "./constants.ts";
+import { ERRORS } from "./constants";
 
 /** BaseApp provides utility methods for managing job records in the database. */
 export class BaseApp {
   protected jobId: string = "";
+  protected concurrency: number = Math.max(1, parseInt(process.env.CONCURRENCY ?? "5", 10));
 
   /** Checks whether the current job has been cancelled. */
   async throwIfJobCancelled() {

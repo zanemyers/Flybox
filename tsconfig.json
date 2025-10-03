@@ -1,4 +1,29 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./client/src",
+    "paths": {
+      "@images/*": ["assets/images/*"],
+      "@components/*": ["components/*"],
+      "@styles/*": ["assets/styles/*"]
+    }
+  },
+  "include": [
+    "./scripts",
+    "./server",    // include backend TS files if any
+    "./client/src",       // frontend TS/JSX code
+    "global.d.ts",        // global type augmentations
+    "vite.config.ts",     // Vite config if using TS
+  ]
 }
