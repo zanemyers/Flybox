@@ -1,13 +1,18 @@
 import { EMAIL_REGEX, MESSAGES, SHOP_KEYWORDS, SOCIAL_MEDIA_MAP } from "../base/constants.ts";
+import type { Page } from "playwright";
 
-/**
- * Enhances a Playwright `Page` instance with custom scraping helper methods
- * for extracting specific shop-related data
- *
- * @param {import('playwright').Page} page - The Playwright page instance to extend.
- * @returns {Promise<import('playwright').Page>} - The same page instance with added helper methods.
- */
-async function addShopSelectors(page) {
+export interface ShopPage extends Page {
+  publishesFishingReport(): Promise<boolean | string>;
+  getSocialMedia(): Promise<string>;
+  getContactLink(): Promise<string | null>;
+  getEmailFromHref(): Promise<string | null>;
+  getEmailFromText(): Promise<string | null>;
+  getEmail(onContactPage?: boolean): Promise<string>;
+  hasOnlineShop(): Promise<boolean | string>;
+}
+
+/** Enhances a Playwright `Page` instance with custom scraping helper methods for extracting specific shop-related data */
+async function addShopSelectors(page: Page): Promise<ShopPage> {
   /**
    * Checks if the page contains a hyperlink (`<a>`) with the keyword "report" (case-insensitive).
    *

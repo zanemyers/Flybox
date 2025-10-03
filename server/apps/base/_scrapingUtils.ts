@@ -1,20 +1,8 @@
 import { chromium } from "playwright-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
-import type { Browser, BrowserContext, Page, Response } from "playwright";
+import type { Browser, BrowserContext, Page } from "playwright";
 
 import { BLOCKED_OR_FORBIDDEN } from "./constants.ts";
-
-/** Declare custom methods on top of the default Playwright Page */
-declare module "playwright" {
-  interface Page {
-    simulateUserInteraction(): Promise<void>;
-    load(url: string, retries?: number): Promise<Response | null>;
-    getAttByLocator(locator: string, attribute: string, filter: object): Promise<string | null>;
-    getAttByLabel(label: string, attribute: string, filter: object): Promise<string | null>;
-    getTextContent(locator: string, filter: object): Promise<string | null>;
-    hasElementWithKeyword(element: string, keyword: string): Promise<boolean>;
-  }
-}
 
 // Enable plugins
 chromium.use(StealthPlugin());

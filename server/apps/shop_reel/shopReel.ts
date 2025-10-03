@@ -9,12 +9,29 @@ import { BaseApp, ExcelFileHandler, normalizeUrl, StealthBrowser } from "../base
 import type { Page } from "playwright";
 
 interface SearchParams {
-  file?: File;
+  file?: Express.Multer.File;
   apiKey?: string;
   maxResults?: number;
   query?: string;
   lat?: number;
   lng?: number;
+}
+
+export interface Shops {
+  title?: string;
+  type?: string;
+  phone?: string;
+  address?: string;
+  website?: string;
+  rating?: number;
+  Reviews?: number;
+}
+
+export interface ShopDetails {
+  email: string;
+  sellsOnline: boolean;
+  fishingReport: boolean;
+  socialMedia: string[];
 }
 
 /**
@@ -23,7 +40,7 @@ interface SearchParams {
  */
 export class ShopReel extends BaseApp {
   protected searchParams: SearchParams;
-  protected websiteCache: Map = new Map(); // Cache for previously scraped website details
+  protected websiteCache: Map<string, ShopDetails> = new Map(); // Cache for previously scraped website details
   protected shopWriter: ExcelFileHandler = new ExcelFileHandler();
   protected browser: StealthBrowser = new StealthBrowser();
 
@@ -111,15 +128,15 @@ export class ShopReel extends BaseApp {
   /**
    * Scrapes website details for each shop with concurrency control.
    */
-  async getDetails(shops: Array<object>): Promise<Array<object>> {
+  async getDetails(shops: Shops[]): Promise<Array<object>> {
     const results = new Array(shops.length);
     let completed = 0;
 
     await this.browser.launch();
-    const messageTemplate = (done) => `Scraping shops (${done}/${shops.length})`;
+    const messageTemplate = (done: number) => `Scraping shops (${done}/${shops.length})`;
     await this.addJobMessage(messageTemplate(completed));
 
-    await PromisePool.withConcurrency(parseInt(process.env.CONCURRENCY, 10) || 5)
+    await PromisePool.withConcurrency(parseInt(process.env.CONCURRENCY ?? "5", 10))
       .for(shops)
       .process(async (shop, index) => {
         if (!shop.website) {
@@ -130,7 +147,7 @@ export class ShopReel extends BaseApp {
           try {
             results[index] = await this.scrapeWebsite(page, shop.website);
           } catch (err) {
-            if (err.message !== ERRORS.CANCELLED) {
+            if (err instanceof Error && err.message !== ERRORS.CANCELLED) {
               console.warn(`⚠️ Failed to get details for ${shop.title}`, err);
               results[index] = FALLBACK_DETAILS.ERROR;
             }
@@ -147,12 +164,11 @@ export class ShopReel extends BaseApp {
   }
 
   /** Scrapes a single shop's website for emails, online sales, fishing reports, and social media. */
-  async scrapeWebsite(page: Page, url: string): Promise<object> {
+  async scrapeWebsite(page: Page, url: string): Promise<ShopDetails> {
     const normalizedUrl = normalizeUrl(url);
 
-    if (this.websiteCache.has(normalizedUrl)) {
-      return this.websiteCache.get(normalizedUrl);
-    }
+    const cached = this.websiteCache.get(normalizedUrl);
+    if (cached) return cached;
 
     let details;
     try {
