@@ -12,18 +12,19 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./client/src",
+    "baseUrl": ".",
     "paths": {
-      "@images/*": ["assets/images/*"],
-      "@components/*": ["components/*"],
-      "@styles/*": ["assets/styles/*"]
+      "@images/*": ["client/src/assets/images/*"],
+      "@components/*": ["client/src/components/*"],
+      "@styles/*": ["client/src/assets/styles/*"]
     }
   },
   "include": [
     "./scripts",
-    "./server",    // include backend TS files if any
-    "./client/src",       // frontend TS/JSX code
-    "global.d.ts",        // global type augmentations
-    "vite.config.ts",     // Vite config if using TS
+    "./server", // include backend TS files if any
+    "./client/src", // frontend TS/JSX code
+    "global.d.ts", // global type augmentations
+    "vite.config.ts", // Vite config if using TS
+    "eslint.config.ts" // ES Lint config if using TS
   ]
 }

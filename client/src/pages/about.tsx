@@ -1,9 +1,9 @@
 import idea from "@images/about/idea.jpg";
 import important from "@images/about/important.jpg";
 import serve from "@images/about/serve.jpg";
-import Card from "../components/ui/card";
-import Link from "../components/ui/links";
-import { AboutSection } from "../components/ui/sections";
+import Card from "@components/ui/card";
+import Link from "@components/ui/links";
+import { AboutSection } from "@components/ui/sections";
 
 /**
  * About Page Component

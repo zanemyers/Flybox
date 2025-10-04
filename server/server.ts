@@ -1,12 +1,12 @@
 import "dotenv/config"; // Load environment variables
-import "./db.js"; // Initialize the database
+import "./db"; // Initialize the database
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 
 // Route handlers
-import routes from "./api";
-import { errorHandler } from "./api/error.js";
+import routes from "./api/index";
+import { errorHandler } from "./api/error";
 
 const app = express();
 const port = process.env.PORT || 3000;
