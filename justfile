@@ -26,27 +26,22 @@ setup:
 
 # Lint the code
 @lint:
-    eslint -c config/eslint.config.js .
-    eslint -c config/eslint.config.js . --fix
-    stylelint "client/src/assets/styles/**/*.scss" -c config/.stylelintrc
-    stylelint "client/src/assets/styles/**/*.scss" -c config/.stylelintrc --fix
+    eslint . --fix
+    stylelint "client/src/assets/styles/**/*.scss" --fix
 
 # Format the code
 @format:
     prettier --write . --log-level silent
 
-# Build typescript
 @build:
-    tsc -p config/tsconfig.json && vite build -c config/vite.config.ts
-
-@debug:
-    node -p "process.env.SASS_QUIET_DEPS"
+    tsc # Compile TypeScript
+    vite build # Build frontend with Vite
 
 # Starts the server with docker (pass the '-l' flag to run locally)
 start *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-l"* ]]; then
-        vite -c config/vite.config.ts & node --inspect=0.0.0.0:9229 server/server.ts
+        vite & node --inspect=0.0.0.0:9229 -r ts-node/esm --watch server/server.ts
     else
         just build
         docker compose -f docker/docker-compose.yml up
