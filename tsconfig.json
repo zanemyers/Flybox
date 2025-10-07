@@ -4,6 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["node"],
     "skipLibCheck": true,
     "strict": true,
     "noUnusedLocals": true,
@@ -14,15 +15,14 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@images/*": ["client/src/assets/images/*"],
-      "@components/*": ["client/src/components/*"],
-      "@styles/*": ["client/src/assets/styles/*"]
+      "@assets/*": ["client/src/assets/*"],
+      "@components/*": ["client/src/components/*"]
     }
   },
   "include": [
-    "./scripts",
-    "./server", // include backend TS files if any
-    "./client/src", // frontend TS/JSX code
+    "scripts",
+    "server", // include backend TS files if any
+    "client/src", // frontend TS/JSX code
     "global.d.ts", // global type augmentations
     "vite.config.ts", // Vite config if using TS
     "eslint.config.ts" // ES Lint config if using TS

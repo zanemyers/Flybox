@@ -1,5 +1,5 @@
-import InstructionPanel from "../components/forms/components/instructionPanel";
-import SiteScoutForm from "../components/forms/siteScoutForm";
+import InstructionPanel from "@components/forms/components/instructionPanel";
+import SiteScoutForm from "@components/forms/siteScoutForm";
 
 // Steps for the SiteScout instructions panel
 const steps = [

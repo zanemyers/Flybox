@@ -84,8 +84,8 @@ class ExcelFileHandler {
   }
 
   /** Load an existing Excel file into memory from a buffer. */
-  async loadBuffer(buffer: ArrayBuffer | Buffer): Promise<this> {
-    await this.workbook.xlsx.load(buffer);
+  async loadBuffer(buffer: Buffer): Promise<this> {
+    await this.workbook.xlsx.load(buffer as any); // works fine
     this.worksheet = this.workbook.worksheets[0] || this.worksheet;
     return this;
   }

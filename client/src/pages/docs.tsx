@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import FishTalesDoc from "../components/docs/fishTalesDoc";
-import ShopReelDoc from "../components/docs/shopReelDoc";
-import SiteScoutDoc from "../components/docs/siteScoutDoc";
-import SideBar from "../components/ui/sideBar";
+import FishTalesDoc from "@components/docs/fishTalesDoc";
+import ShopReelDoc from "@components/docs/shopReelDoc";
+import SiteScoutDoc from "@components/docs/siteScoutDoc";
+import SideBar from "@components/ui/sideBar";
 
 interface DocProps {
   setActiveTab: (tab: string) => void;

@@ -1,10 +1,10 @@
-import newStarterFile from "@images/docs/site_scout/new_fish_tales_starter.png";
-import siteScoutForm from "@images/docs/site_scout/site_scout.png";
+import newStarterFile from "@assets/images/docs/site_scout/new_fish_tales_starter.png";
+import siteScoutForm from "@assets/images/docs/site_scout/site_scout.png";
 
-import ListBlock from "../ui/listBlock";
-import { DocOverview, DocSection } from "../ui/sections";
-import Image from "../ui/images";
-import Link from "../ui/links";
+import ListBlock from "@components//ui/listBlock";
+import { DocOverview, DocSection } from "@components//ui/sections";
+import Image from "@components//ui/images";
+import Link from "@components//ui/links";
 
 /** Props for the SiteScout documentation component */
 interface Props {

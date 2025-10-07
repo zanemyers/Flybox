@@ -1,20 +1,20 @@
-import basicForm from "@images/docs/fish_tales/fish_tales_b-form.png";
-import advancedForm from "@images/docs/fish_tales/fish_tales_a-form.png";
-import gaiApi from "@images/docs/fish_tales/gemini/gai_api.png";
-import gaiHome from "@images/docs/fish_tales/gemini/gai_home.png";
-import gaiKey from "@images/docs/fish_tales/gemini/gai_key.png";
-import gaiLogin from "@images/docs/fish_tales/gemini/gai_login.png";
-import gaiTerms from "@images/docs/fish_tales/gemini/gai_terms.png";
-import arHome from "@images/docs/fish_tales/starter_file/arricks_home.png";
-import arReport from "@images/docs/fish_tales/starter_file/arricks_report.png";
-import arReportList from "@images/docs/fish_tales/starter_file/arricks_report_list.png";
-import newSite from "@images/docs/fish_tales/starter_file/new_site.png";
-import siteList from "@images/docs/fish_tales/starter_file/site_list.png";
-import updatedFile from "@images/docs/fish_tales/starter_file/updated_starter_file.png";
+import basicForm from "@assets/images/docs/fish_tales/fish_tales_b-form.png";
+import advancedForm from "@assets/images/docs/fish_tales/fish_tales_a-form.png";
+import gaiApi from "@assets/images/docs/fish_tales/gemini/gai_api.png";
+import gaiHome from "@assets/images/docs/fish_tales/gemini/gai_home.png";
+import gaiKey from "@assets/images/docs/fish_tales/gemini/gai_key.png";
+import gaiLogin from "@assets/images/docs/fish_tales/gemini/gai_login.png";
+import gaiTerms from "@assets/images/docs/fish_tales/gemini/gai_terms.png";
+import arHome from "@assets/images/docs/fish_tales/starter_file/arricks_home.png";
+import arReport from "@assets/images/docs/fish_tales/starter_file/arricks_report.png";
+import arReportList from "@assets/images/docs/fish_tales/starter_file/arricks_report_list.png";
+import newSite from "@assets/images/docs/fish_tales/starter_file/new_site.png";
+import siteList from "@assets/images/docs/fish_tales/starter_file/site_list.png";
+import updatedFile from "@assets/images/docs/fish_tales/starter_file/updated_starter_file.png";
 
-import ListBlock from "../ui/listBlock";
-import { DocOverview, DocSection } from "../ui/sections";
-import Image from "../ui/images";
+import ListBlock from "@components/ui/listBlock";
+import { DocOverview, DocSection } from "@components//ui/sections";
+import Image from "@components/ui/images";
 
 /**
  * FishTalesDoc Component

@@ -1,6 +1,10 @@
 import React from "react";
-import BaseForm, { type BaseProps, type BaseState, type Payload } from "./components/baseForm";
-import FileInput from "./components/fileInput";
+import BaseForm, {
+  type BaseProps,
+  type BaseState,
+  type Payload,
+} from "@components/forms/components/baseForm";
+import FileInput from "@components/forms/components/fileInput";
 
 /** Component state */
 interface State extends BaseState {

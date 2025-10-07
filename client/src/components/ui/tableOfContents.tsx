@@ -1,4 +1,4 @@
-import Link from "./links";
+import Link from "@components/ui/links";
 
 /**
  * Represents a single item in the table of contents.

@@ -1,5 +1,5 @@
-import InstructionPanel from "../components/forms/components/instructionPanel";
-import ShopReelForm from "../components/forms/shopReelForm";
+import InstructionPanel from "@components/forms/components/instructionPanel";
+import ShopReelForm from "@components/forms/shopReelForm";
 
 // Steps for the ShopReel instructions panel
 const steps = [

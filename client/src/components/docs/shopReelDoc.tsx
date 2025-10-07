@@ -1,14 +1,14 @@
-import manualForm from "@images/docs/shop_reel/shop_reel_m-form.png";
-import fileImport from "@images/docs/shop_reel/shop_reel_f-form.png";
-import simpleDetails from "@images/docs/shop_reel/simple_shop_details.png";
-import details from "@images/docs/shop_reel/shop_details.png";
-import serpDashboard from "@images/docs/shop_reel/serp/serp_dashboard.png";
-import serpHome from "@images/docs/shop_reel/serp/serp_home.png";
-import serpSub from "@images/docs/shop_reel/serp/serp_sub.png";
+import manualForm from "@assets/images/docs/shop_reel/shop_reel_m-form.png";
+import fileImport from "@assets/images/docs/shop_reel/shop_reel_f-form.png";
+import simpleDetails from "@assets/images/docs/shop_reel/simple_shop_details.png";
+import details from "@assets/images/docs/shop_reel/shop_details.png";
+import serpDashboard from "@assets/images/docs/shop_reel/serp/serp_dashboard.png";
+import serpHome from "@assets/images/docs/shop_reel/serp/serp_home.png";
+import serpSub from "@assets/images/docs/shop_reel/serp/serp_sub.png";
 
-import ListBlock from "../ui/listBlock";
-import { DocOverview, DocSection } from "../ui/sections";
-import Image from "../ui/images";
+import ListBlock from "@components//ui/listBlock";
+import { DocOverview, DocSection } from "@components//ui/sections";
+import Image from "@components//ui/images";
 
 /**
  * ShopReelDoc Component

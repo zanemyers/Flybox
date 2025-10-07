@@ -1,5 +1,5 @@
-import InstructionPanel from "../components/forms/components/instructionPanel";
-import FishTalesForm from "../components/forms/fishTalesForm";
+import InstructionPanel from "@components/forms/components/instructionPanel";
+import FishTalesForm from "@components/forms/fishTalesForm";
 
 // Steps for the FishTales instructions panel
 const steps = [

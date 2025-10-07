@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import fileInput from "@images/upload.png";
+import fileInput from "@assets/images/upload.png";
 
 /**
  * Props for FileInput component

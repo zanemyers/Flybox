@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import tackleBox from "../../assets/images/tackle_box.png";
-import NavigationBar from "./navbar";
+import tackleBox from "@assets/images/tackle_box.png";
+import NavigationBar from "@components/layout/navbar";
 
 /**
  * Header component

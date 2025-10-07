@@ -1,6 +1,6 @@
-import idea from "@images/about/idea.jpg";
-import important from "@images/about/important.jpg";
-import serve from "@images/about/serve.jpg";
+import idea from "@assets/images/about/idea.jpg";
+import important from "@assets/images/about/important.jpg";
+import serve from "@assets/images/about/serve.jpg";
 import Card from "@components/ui/card";
 import Link from "@components/ui/links";
 import { AboutSection } from "@components/ui/sections";

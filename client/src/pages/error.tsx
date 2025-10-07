@@ -1,4 +1,4 @@
-import calvinGif from "@images/calvin-fishing.gif";
+import calvinGif from "@assets/images/calvin-fishing.gif";
 
 interface Props {
   statusCode: number; // HTTP status code to display (e.g., 404, 500)

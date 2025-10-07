@@ -1,8 +1,12 @@
 import React from "react";
 
-import BaseForm, { type BaseProps, type BaseState, type Payload } from "./components/baseForm";
-import FileInput from "./components/fileInput";
-import { CheckBoxInput, TextInput, TextAreaInput } from "./components/formInput";
+import BaseForm, {
+  type BaseProps,
+  type BaseState,
+  type Payload,
+} from "@components/forms/components/baseForm";
+import FileInput from "@components/forms/components/fileInput";
+import { CheckBoxInput, TextInput, TextAreaInput } from "@components/forms/components/formInput";
 
 // Prompt template for summarizing fishing reports by body of water.
 const SUMMARY_PROMPT = `

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
-import TableOfContents, { type Props as TocProps } from "../ui/tableOfContents";
-import Image, { type ImageProps } from "./images";
+import TableOfContents, { type Props as TocProps } from "@components/ui/tableOfContents";
+import Image, { type ImageProps } from "@components/ui/images";
 
 /**
  * Props for AboutSection component

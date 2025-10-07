@@ -1,12 +1,16 @@
 import React from "react";
 
-import BaseForm, { type BaseProps, type BaseState, type Payload } from "./components/baseForm";
-import FileInput from "./components/fileInput";
-import { TextInput, FormInputGroup } from "./components/formInput";
-import MapInput from "./components/mapInput";
-import Tabs from "../ui/tabs";
+import BaseForm, {
+  type BaseProps,
+  type BaseState,
+  type Payload,
+} from "@components/forms/components/baseForm";
+import FileInput from "@components/forms/components/fileInput";
+import { TextInput, FormInputGroup } from "@components/forms/components/formInput";
+import MapInput from "@components/forms/components/mapInput";
+import Tabs from "@components/ui/tabs";
 
-import Pin from "@images/location_pin.png";
+import Pin from "@assets/images/location_pin.png";
 
 /** Form field state */
 interface FormState {
