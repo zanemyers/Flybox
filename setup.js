@@ -50,7 +50,7 @@ function parseEnvFile(content) {
       "NODE_ENV=development\n" +
       "PORT=3000\n\n" +
       "# Database Config\n" +
-      "DATABASE_URL='file:./dev.db'\n\n" +
+      "DATABASE_URL=''\n" +
       "# Scraper configuration\n" +
       "RUN_HEADLESS=true\n" +
       "CONCURRENCY=5\n\n" +

@@ -48,7 +48,6 @@ start *FLAGS:
     if [[ "{{FLAGS}}" == *"-l"* ]]; then
         vite -c config/vite.config.ts & node --inspect=0.0.0.0:9229 server/server.js
     else
-        just build
         docker compose -f docker/docker-compose.yml up
     fi
 
