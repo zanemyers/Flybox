@@ -1,19 +1,29 @@
-# TODO Update placeholder values when I figure out hosting
+# prod
 services:
-  flybox:
-    container_name: node
+  flybox-prod:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    volumes:
-      - ./db:/app/db
+      args:
+        NODE_ENV: production
+    working_dir: /app
     env_file:
       - ../.env
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - DATABASE_URL="file:./db/dev.db"
-    working_dir: /app
     ports:
       - "3000:3000"
-    command: ["node", "server.js"]
+    command: ["node", "server/server.js"]
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: flybox_user
+      POSTGRES_PASSWORD: "Q4TuZeEWBez26xOTNjNaynkfTDAaDk8a"
+      POSTGRES_DB: flybox
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,12 +1,12 @@
 // Generates the Prisma Client, which is used to interact with your database in TypeScript/JavaScript.
 generator client {
-  provider = "prisma-client-js"
-  output = "../../node_modules/.prisma/client"
+  provider      = "prisma-client-js"
+  output        = "../../node_modules/.prisma/client"
   binaryTargets = ["native", "darwin-arm64", "linux-arm64-openssl-3.0.x"]
 }
 
 // Defines the database connection for Prisma to use.
 datasource db {
-  provider = "sqlite"
-  url = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }

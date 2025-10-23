@@ -1,29 +1,33 @@
 services:
-  backend:
+  flybox-dev:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      args:
+        NODE_ENV: development
     working_dir: /app
     command: node --inspect=0.0.0.0:9229 server/server.js
     volumes:
-      - ..:/app # mount entire project root
-      - /app/client # hide client/ (replaced with empty volume inside container)
-      - ../server/db:/app/server/db # persist SQLite db outside container
+      - ..:/app # mount entire project root for live dev
     env_file:
       - ../.env
     ports:
       - "${PORT:-3000}:3000" # backend API
       - "9229:9229" # Node debugger
-
-  frontend:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    working_dir: /app/client
-    command: npx vite --config ../config/vite.config.ts
-    volumes:
-      - ../client:/app/client # mount only client code
-    ports:
-      - "5173:5173" # Vite dev server
     depends_on:
-      - backend
+      - postgres
+
+  postgres:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: zane
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: flybox_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
