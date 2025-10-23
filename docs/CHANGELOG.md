@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+### [v4.2](https://github.com/zanemyers/RescueRiver/compare/v4.1..v4.2) — _2 Oct 2025_
+
+#### **Changed**
+- Updated **build** command to use `npx`
+- Updated **clean_docker** command to use `--no-cache`
+
 ### [v4.1](https://github.com/zanemyers/RescueRiver/compare/v4.0..v4.1) — _2 Oct 2025_
 
 #### **Added**
