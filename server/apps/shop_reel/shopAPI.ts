@@ -1,4 +1,4 @@
-import { prisma } from "../../db";
+import { prisma } from "../../db/client";
 import { BaseAPI } from "../base";
 import { JobType, JobStatus } from "@prisma/client";
 import { ShopReel } from "./shopReel";

@@ -1,4 +1,4 @@
-import { prisma } from "../../db";
+import { prisma } from "../../db/client";
 import { type Job, JobStatus } from "@prisma/client";
 import type { Request, Response } from "express";
 

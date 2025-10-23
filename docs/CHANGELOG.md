@@ -70,7 +70,7 @@ All notable changes to this project will be documented in this file.
 - **Database**
   - `schema.prisma`
   - `models/job.prisma`
-  - `db.ts`
+  - `client.ts`
 
 #### Changed
 

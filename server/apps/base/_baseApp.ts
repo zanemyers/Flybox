@@ -1,4 +1,4 @@
-import { prisma } from "../../db";
+import { prisma } from "../../db/client";
 import { JobStatus } from "@prisma/client";
 import { ERRORS } from "./constants";
 

@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 
 import { BaseAPI } from "../base";
-import { prisma } from "../../db";
+import { prisma } from "../../db/client";
 import { JobStatus, JobType } from "@prisma/client";
 import { FishTales } from "./fishTales";
 

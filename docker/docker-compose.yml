@@ -4,7 +4,7 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     working_dir: /app
-    command: node --inspect=0.0.0.0:9229 server/server.js
+    command: node --inspect=0.0.0.0:9229 server/server.ts
     volumes:
       - ..:/app # mount entire project root
       - /app/client # hide client/ (replaced with empty volume inside container)
@@ -20,7 +20,7 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     working_dir: /app/client
-    command: npx vite --config ../config/vite.config.ts
+    command: npx vite
     volumes:
       - ../client:/app/client # mount only client code
     ports:
