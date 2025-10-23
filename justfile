@@ -15,7 +15,7 @@ setup:
 	docker ps -q | xargs -r docker kill # Stop all running containers
 	docker ps -aq | xargs -r docker rm # Remove all containers
 	docker images -f "dangling=true" -q | xargs -r docker rmi # Remove dangling images
-	docker compose -f docker/docker-compose.yml build # Rebuild the container
+	docker compose -f docker/docker-compose.yml build --no-cache # Rebuild the container
 
 # Update node packages
 @update_dependencies:
@@ -37,7 +37,7 @@ setup:
 
 # Build typescript
 @build:
-    tsc -p config/tsconfig.json && vite build -c config/vite.config.ts
+    npx tsc -p config/tsconfig.json && npx vite build -c config/vite.config.ts
 
 @debug:
     node -p "process.env.SASS_QUIET_DEPS"
