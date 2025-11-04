@@ -52,6 +52,9 @@ start *FLAGS:
         docker compose -f docker/docker-compose.yml up
     fi
 
+sl:
+    node server/server.js
+
 # Create a new migration from schema changes and apply it
 migrate *FLAGS:
     #!/usr/bin/env sh
@@ -70,6 +73,9 @@ reset_db:
 # Regenerate the Prisma Client without touching the DB
 generate_db:
     npx prisma generate --schema={{schema}}
+
+push_db:
+    npx prisma db push --schema={{schema}}
 
 # Launch Prisma Studio (interactive DB viewer/editor)
 studio_db:
