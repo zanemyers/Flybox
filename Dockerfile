@@ -13,8 +13,14 @@ RUN npm install
 # Copy the rest
 COPY . .
 
+# Generate Prisma client
+RUN npx prisma generate --schema=./server/db/schema.prisma
+
 # Build frontend (Vite)
 RUN npx vite build -c config/vite.config.ts
 
-# Start backend
-CMD ["node", "server/server.js"]
+# Expose port for Render to detect
+EXPOSE 3000
+
+# Run migrations & Start backend
+CMD npx prisma migrate deploy --schema=./server/db/schema.prisma && node server/server.js
