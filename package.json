@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "install-playwright": "npx playwright install --with-deps",
-    "build": "npx vite build -c config/vite.config.ts",
-    "migrate": "npx prisma migrate dev --schema=./server/db",
+    "build-frontend": "npx vite build -c config/vite.config.ts",
+    "build": "npm install && npm run install-playwright && npm run build-frontend",
+    "migrate-db": "npx prisma migrate dev --schema=./server/db",
     "start": "node server/server.js"
   },
   "dependencies": {
