@@ -42,8 +42,8 @@ export class ShopReelAPI extends BaseAPI {
 
       // Respond with the job ID and initial status
       res.status(201).json({ jobId: job.id, status: job.status });
-    } catch {
-      res.status(500).json({ error: "Failed to create ShopReel job" });
+    } catch (error) {
+      res.status(500).json({ error: `Failed to create ShopReel job: ${error}` });
     }
   }
 
