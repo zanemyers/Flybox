@@ -2,20 +2,20 @@
 services:
   flybox-prod:
     build:
-      context: ..
-      dockerfile: docker/Dockerfile
+      context: ../..
+      dockerfile: Dockerfile
       args:
         NODE_ENV: production
     working_dir: /app
     env_file:
-      - ../.env
+      - ../../.env
     ports:
       - "3000:3000"
     command: ["node", "server/server.js"]
     depends_on:
-      - postgres
+      - db
 
-  postgres:
+  db:
     image: postgres:17
     restart: always
     environment:

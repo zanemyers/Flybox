@@ -1,8 +1,8 @@
 services:
   flybox-dev:
     build:
-      context: ..
-      dockerfile: docker/Dockerfile
+      context: ../..
+      dockerfile: Dockerfile
       args:
         NODE_ENV: development
     working_dir: /app
@@ -10,20 +10,20 @@ services:
     volumes:
       - ..:/app # mount entire project root for live dev
     env_file:
-      - ../.env
+      - ../../.env
     ports:
       - "${PORT:-3000}:3000" # backend API
       - "9229:9229" # Node debugger
     depends_on:
-      - postgres
+      - db
 
-  postgres:
+  db:
     image: postgres:17
     restart: always
     environment:
       POSTGRES_USER: zane
       POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: flybox_dev
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
     volumes:
