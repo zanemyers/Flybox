@@ -1,5 +1,6 @@
 import { prisma } from "../../server/db.js";
-import { JobStatus } from "@prisma/client";
+import pkg from "@prisma/client";
+const { JobStatus } = pkg;
 
 /**
  * BaseAPI provides common job-related endpoints for polling, cancellation,

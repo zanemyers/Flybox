@@ -24,7 +24,8 @@ import {
   includesAny,
   scrapeVisibleText,
 } from "./fishUtils.js";
-import { JobStatus } from "@prisma/client";
+import pkg from "@prisma/client";
+const { JobStatus } = pkg;
 
 // Control concurrency of async scraping tasks
 const CONCURRENCY = Math.max(1, parseInt(process.env.CONCURRENCY, 10) || 5);

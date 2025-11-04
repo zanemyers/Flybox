@@ -1,7 +1,8 @@
 import { BaseAPI } from "../base/_baseAPI.js";
 import { prisma } from "../../server/db.js";
-import { JobStatus, JobType } from "@prisma/client";
 import { FishTales } from "./fishTales.js";
+import pkg from "@prisma/client";
+const { JobType, JobStatus } = pkg;
 
 /**
  * FishTalesAPI handles creating and tracking FishTales scraping jobs.

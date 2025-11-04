@@ -1,6 +1,7 @@
 import { prisma } from "../../server/db.js";
-import { JobStatus } from "@prisma/client";
 import { ERRORS } from "./constants.js";
+import pkg from "@prisma/client";
+const { JobStatus } = pkg;
 
 /**
  * BaseApp provides utility methods for managing job records in the database.
