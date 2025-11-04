@@ -1,30 +1,20 @@
-FROM node:24.7.0-slim
+# Use Playwright base image with Node and browsers pre-installed
+FROM mcr.microsoft.com/playwright:v1.50.0-noble
 
+# Set working directory
 WORKDIR /app
 
-# Install system dependencies needed for Playwright and general libs
-RUN apt-get update && \
-    apt-get install -y \
-        wget gnupg ca-certificates \
-        libgtk-4-1 libgraphene-1.0-0 libgstgl-1.0-0 \
-        libgstcodecparsers-1.0-0 libenchant-2-2 libsecret-1-0 \
-        libmanette-0.2-0 libgles2-mesa \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy package.json for caching
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Install Playwright browsers
-RUN npx playwright install --with-deps
-
-# Copy the rest of the project
+# Copy the rest
 COPY . .
 
-# Build the frontend only
+# Build frontend (Vite)
 RUN npx vite build -c config/vite.config.ts
 
-# Default command
+# Start backend
 CMD ["node", "server/server.js"]
