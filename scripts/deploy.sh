@@ -5,9 +5,6 @@ set -eux  # Exit on error, print commands, treat unset variables as errors
 SCRIPT_DIR=$(dirname "$0")
 cd "$SCRIPT_DIR/.."
 
-# Debug info
-echo "Current directory: $(pwd)"
-echo "DATABASE_URL: ${DATABASE_URL:?DATABASE_URL not set!}"
 
 # Run Prisma migrations
 echo "Running database migrations..."
