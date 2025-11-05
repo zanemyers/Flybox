@@ -8,3 +8,38 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ----------------------------
+// Job related models & enums
+// ----------------------------
+enum JobType {
+  SHOP_REEL
+  FISH_TALES
+  SITE_SCOUT
+}
+
+enum JobStatus {
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+model Job {
+  id        String       @id @default(uuid())
+  type      JobType
+  status    JobStatus
+  messages  JobMessage[]
+  createdAt DateTime     @default(now())
+
+  primaryFile   Bytes?
+  secondaryFile Bytes?
+}
+
+model JobMessage {
+  id        String   @id @default(uuid())
+  job       Job      @relation(fields: [jobId], references: [id])
+  jobId     String
+  createdAt DateTime @default(now())
+  message   String
+}

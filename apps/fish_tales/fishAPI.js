@@ -18,7 +18,6 @@ export class FishTalesAPI extends BaseAPI {
   async createJob(req, res) {
     try {
       // Create a new job in the database
-
       const job = await prisma.job.create({
         data: { type: JobType.FISH_TALES, status: JobStatus.IN_PROGRESS },
       });

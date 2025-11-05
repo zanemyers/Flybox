@@ -5,18 +5,20 @@ All notable changes to this project will be documented in this file.
 ### [v4.2](https://github.com/zanemyers/RescueRiver/compare/v4.1..v4.2) — _2 Oct 2025_
 
 #### **Changed**
+
 - Updated build command to use `npx`
 - Updated clean_docker to use `--no-cache`
 
 ### [v4.1](https://github.com/zanemyers/RescueRiver/compare/v4.0..v4.1) — _2 Oct 2025_
 
 #### **Added**
+
 - `BaseForm` now automatically initializes Bootstrap tooltips on all form inputs.
-    - Tooltips initialized on initial mount (`componentDidMount`) and after updates (`componentDidUpdate`).
+  - Tooltips initialized on initial mount (`componentDidMount`) and after updates (`componentDidUpdate`).
 
 #### **Changed**
-- `README.md` logo updated to use `client/public/images/tb_icon.ico` instead of the old static image.
 
+- `README.md` logo updated to use `client/public/images/tb_icon.ico` instead of the old static image.
 
 ### [v4.0](https://github.com/zanemyers/RescueRiver/compare/v3.7..v4.0) — _2 Oct 2025_
 
@@ -113,7 +115,7 @@ All notable changes to this project will be documented in this file.
   - Moved error routes to `server/api/error.js` and API routes to `server/api/index.js`
   - Setup script can be rerun without overriding API keys
 
-####  Removed
+#### Removed
 
 - **Old Docker & ignore rules**
   - Old Dockerfile

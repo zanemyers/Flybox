@@ -5,7 +5,7 @@ schema := "./server/db"
 
 # Runs the setup script to prepare the .env file and install pacakges locally.
 setup:
-    node setup.js # Run the setup script
+    node scripts/setup.js # Run the setup script
     npm install # Install node packages locally
     just migrate -n init # Initialize the database
 
@@ -38,9 +38,6 @@ setup:
 # Build typescript
 @build:
     npx tsc -p config/tsconfig.json && npx vite build -c config/vite.config.ts
-
-@debug:
-    node -p "process.env.SASS_QUIET_DEPS"
 
 # Starts the server with docker (pass the '-l' flag to run locally)
 start *FLAGS:

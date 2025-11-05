@@ -10,11 +10,8 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the rest
+# Copy the rest of the app
 COPY . .
-
-# Generate Prisma client
-RUN npx prisma generate --schema=./server/db/schema.prisma
 
 # Build frontend (Vite)
 RUN npx vite build -c config/vite.config.ts
@@ -22,5 +19,5 @@ RUN npx vite build -c config/vite.config.ts
 # Expose port for Render to detect
 EXPOSE 3000
 
-# Run migrations & Start backend
-CMD npx prisma migrate deploy --schema=./server/db/schema.prisma && node server/server.js
+# Start the server using deploy.sh
+CMD ["sh", "./scripts/deploy.sh"]
