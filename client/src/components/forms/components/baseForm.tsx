@@ -57,8 +57,8 @@ export default abstract class BaseForm<
     this.storageKey = `${props.route}-jobId`;
 
     // Initialize jobId from localStorage if available
-    // TODO: Fix this so undefines are cleared and don't cause issues!
-    this.state = { jobId: localStorage.getItem(this.storageKey) } as S;
+    const jobId = localStorage.getItem(this.storageKey);
+    this.state = { jobId: jobId != "undefined" ? jobId : null } as S;
   }
 
   componentDidMount() {
