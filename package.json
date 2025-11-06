@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.28.0",
-    "@prisma/client": "^6.18.0",
+    "@prisma/client": "^6.19.0",
     "@supercharge/promise-pool": "^3.2.0",
     "bootstrap": "^5.3.8",
     "chrono-node": "^2.9.0",
@@ -52,7 +52,7 @@
     "eslint-plugin-react-x": "^2.3.1",
     "globals": "^16.5.0",
     "prettier": "^3.6.2",
-    "prisma": "^6.18.0",
+    "prisma": "^6.19.0",
     "sass": "^1.93.3",
     "stylelint": "^16.25.0",
     "stylelint-config-standard": "^39.0.1",

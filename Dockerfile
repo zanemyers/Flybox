@@ -19,5 +19,5 @@ RUN npx vite build -c config/vite.config.ts
 # Expose port for Render to detect
 EXPOSE 3000
 
-# Start the server using deploy.sh
-CMD ["sh", "./scripts/deploy.sh"]
+# Start the server
+CMD ["bash", "./scripts/start.sh"]

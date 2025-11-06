@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
  * Parse a .env file into an object.
  */
 function parseEnvFile(content) {
-  const keysToPreserve = ["SERP_API_KEY", "GEMINI_API_KEY"];
+  const keysToPreserve = ["DATABASE_URL", "SERP_API_KEY", "GEMINI_API_KEY"];
   const env = {};
 
   // Split the file content into lines and iterate over each line
@@ -50,7 +50,7 @@ function parseEnvFile(content) {
       "NODE_ENV=development\n" +
       "PORT=3000\n\n" +
       "# Database Config\n" +
-      "DATABASE_URL=''\n" +
+      `DATABASE_URL='${preserved.DATABASE_URL || ""}'\n` +
       "# Scraper configuration\n" +
       "RUN_HEADLESS=true\n" +
       "CONCURRENCY=5\n\n" +
