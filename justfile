@@ -7,7 +7,6 @@ schema := "./server/db"
 setup:
     node scripts/setup.js # Run the setup script
     npm install # Install node packages locally
-    just migrate -n init # Initialize the database
 
 # Clean and rebuild docker
 @clean_docker:
@@ -16,10 +15,7 @@ setup:
     docker images -aq | xargs -r docker rmi # Remove all images
     docker volume ls -q | xargs -r docker volume rm # Remove all volumes
     docker builder prune -f
-    just build_docker true
-
-@build_docker nc="false":
-    docker build {{ if nc == "true" { "--no-cache" } else { "" } }} -t flybox .
+    docker compose build --no-cache
 
 # Update node packages
 @update_dependencies:
@@ -47,12 +43,13 @@ setup:
 start *FLAGS:
     #!/usr/bin/env sh
     if [[ "{{FLAGS}}" == *"-d"* ]]; then
+      docker compose up -d db
       vite -c config/vite.config.ts & node --inspect=0.0.0.0:9229 server/server.js
     elif [[ "{{FLAGS}}" == *"-l"* ]]; then
+      docker compose up -d db
       node server/server.js
     else
-      just build_docker
-      docker run --init -it --env-file .env -p 3000:3000 flybox || true
+      docker compose up
     fi
 
 # Create a new migration from schema changes and apply it
@@ -62,6 +59,9 @@ start *FLAGS:
 # Reset the db, reapply all migrations, and regenerate the client
 reset_db:
     npx prisma migrate reset --schema={{schema}}
+
+cleanup_db:
+    node scripts/db_cleanup.js
 
 # Regenerate the Prisma Client without touching the DB
 generate_db:
