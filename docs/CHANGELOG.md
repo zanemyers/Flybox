@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+### [v4.3](https://github.com/zanemyers/RescueRiver/compare/v4.2..UNRELEASED) — _15 Nov 2025_
+
+#### **Added**
+
+- `start.sh` script to run Prisma migrate & generate before starting the server.
+- Docker Compose setup for local development (Web + Database services).
+- `db_cleanup.js` script for removing old or canceled runs.
+
+#### **Changed**
+
+- Updated `.dockerignore`, `.gitignore`, and `just` commands.
+- Fixed Prisma seed and internal imports to use correct relative paths.
+- Updated setup script for the new database configuration.
+- Moved `job.prisma` models into `schema.prisma`.
+- Switched from SQLite to PostgreSQL.
+- Updated various package dependencies.
+
+#### **Removed**
+
+- Old Docker / Compose workflow.
+- `job.prisma` file (merged into `schema.prisma`).
+
 ### [v4.2](https://github.com/zanemyers/RescueRiver/compare/v4.1..v4.2) — _2 Oct 2025_
 
 #### **Changed**
