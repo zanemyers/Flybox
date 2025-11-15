@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-### [v4.3](https://github.com/zanemyers/RescueRiver/compare/v4.2..UNRELEASED) — _15 Nov 2025_
+### [v4.3](https://github.com/zanemyers/RescueRiver/compare/v4.2..v4.3) — _15 Nov 2025_
 
 #### **Added**
 
