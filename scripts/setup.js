@@ -35,7 +35,7 @@ function parseEnvFile(content) {
  */
 (async () => {
   try {
-    const filePath = path.resolve(__dirname, ".env");
+    const filePath = path.resolve(__dirname, "../.env");
 
     // Load existing .env API key values if available
     let preserved = {};
@@ -50,7 +50,7 @@ function parseEnvFile(content) {
       "NODE_ENV=development\n" +
       "PORT=3000\n\n" +
       "# Database Config\n" +
-      "DATABASE_URL='file:./dev.db'\n\n" +
+      "DATABASE_URL='postgresql://myuser:mypassword@localhost:5432/mydb\n" +
       "# Scraper configuration\n" +
       "RUN_HEADLESS=true\n" +
       "CONCURRENCY=5\n\n" +

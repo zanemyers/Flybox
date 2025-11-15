@@ -17,12 +17,12 @@ You can use any editor, but setup instructions are included for two popular IDEs
 
 ### 🌳 Environment
 
-- Run `just setup` in the terminal to create your `.env` file, install dependencies & initialize the database.
+- Run `just setup` in the terminal to create your `.env` file and install dependencies.
   - You can edit the `.env` manually anytime to change the default values.
 
 ### 🏃‍♂️ Running
 
-- 🐳 **Docker**: Run `just start` in the terminal (build happens automatically on first run).
+- 🐳 **Docker**: Run `just start` in the terminal (RECOMMENDED).
 - 🏠 **Local**: Run `just start -l` in the terminal.
 
 ### 📦 Packages

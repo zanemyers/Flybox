@@ -2,21 +2,45 @@
 
 All notable changes to this project will be documented in this file.
 
+### [v4.3](https://github.com/zanemyers/RescueRiver/compare/v4.2..UNRELEASED) — _15 Nov 2025_
+
+#### **Added**
+
+- `start.sh` script to run Prisma migrate & generate before starting the server.
+- Docker Compose setup for local development (Web + Database services).
+- `db_cleanup.js` script for removing old or canceled runs.
+
+#### **Changed**
+
+- Updated `.dockerignore`, `.gitignore`, and `just` commands.
+- Fixed Prisma seed and internal imports to use correct relative paths.
+- Updated setup script for the new database configuration.
+- Moved `job.prisma` models into `schema.prisma`.
+- Switched from SQLite to PostgreSQL.
+- Updated various package dependencies.
+
+#### **Removed**
+
+- Old Docker / Compose workflow.
+- `job.prisma` file (merged into `schema.prisma`).
+
 ### [v4.2](https://github.com/zanemyers/RescueRiver/compare/v4.1..v4.2) — _2 Oct 2025_
 
 #### **Changed**
+
 - Updated build command to use `npx`
 - Updated clean_docker to use `--no-cache`
 
 ### [v4.1](https://github.com/zanemyers/RescueRiver/compare/v4.0..v4.1) — _2 Oct 2025_
 
 #### **Added**
+
 - `BaseForm` now automatically initializes Bootstrap tooltips on all form inputs.
-    - Tooltips initialized on initial mount (`componentDidMount`) and after updates (`componentDidUpdate`).
+  - Tooltips initialized on initial mount (`componentDidMount`) and after updates (`componentDidUpdate`).
 
 #### **Changed**
-- `README.md` logo updated to use `client/public/images/tb_icon.ico` instead of the old static image.
 
+- `README.md` logo updated to use `client/public/images/tb_icon.ico` instead of the old static image.
 
 ### [v4.0](https://github.com/zanemyers/RescueRiver/compare/v3.7..v4.0) — _2 Oct 2025_
 
@@ -113,7 +137,7 @@ All notable changes to this project will be documented in this file.
   - Moved error routes to `server/api/error.js` and API routes to `server/api/index.js`
   - Setup script can be rerun without overriding API keys
 
-####  Removed
+#### Removed
 
 - **Old Docker & ignore rules**
   - Old Dockerfile
@@ -258,7 +282,7 @@ All notable changes to this project will be documented in this file.
   - `views/partials/report_form.ejs` → `views/partials/fish_tales_form.ejs`
   - `views/partials/shop_form.ejs` → `views/partials/shop_reel_form.ejs`
 - Docs refreshed for new names and clearer known issues ([README](../README.md), [Overview](./overview.md), [Setup](./setup.md)).
-- [**Compose**](../docker/docker-compose.yml):
+- [**Compose**](../config/docker/docker-compose.yml):
   - service `fly-box` → `flybox`
   - added `PORT` env var
   - switched port mapping to `"${PORT}:3000"`

@@ -1,6 +1,7 @@
 import { BaseApp, ExcelFileHandler, sameDomain } from "../base/index.js";
 import { ERRORS } from "../base/constants.js";
-import { JobStatus } from "@prisma/client";
+import pkg from "@prisma/client";
+const { JobStatus } = pkg;
 
 /**
  * SiteScout class merges URLs between a ShopReel report file and a

@@ -35,5 +35,7 @@ app.use(errorHandler);
 
 // Start server
 app.listen(port, () => {
-  console.log(`🌐 Server running at http://localhost:${port}`);
+  if (process.env.NODE_ENV === "development") {
+    console.log(`🌐 Server running at http://localhost:${port}`);
+  }
 });

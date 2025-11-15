@@ -1,7 +1,8 @@
 import { prisma } from "../../server/db.js";
 import { BaseAPI } from "../base/index.js";
-import { JobType, JobStatus } from "@prisma/client";
 import { ShopReel } from "./shopReel.js";
+import pkg from "@prisma/client";
+const { JobType, JobStatus } = pkg;
 
 /**
  * ShopReelAPI handles creating and tracking ShopReel scraping jobs.
@@ -41,8 +42,8 @@ export class ShopReelAPI extends BaseAPI {
 
       // Respond with the job ID and initial status
       res.status(201).json({ jobId: job.id, status: job.status });
-    } catch {
-      res.status(500).json({ error: "Failed to create ShopReel job" });
+    } catch (error) {
+      res.status(500).json({ error: `Failed to create ShopReel job: ${error}` });
     }
   }
 

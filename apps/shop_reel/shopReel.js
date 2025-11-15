@@ -1,7 +1,8 @@
 import "dotenv/config";
 import { getJson } from "serpapi";
 import { PromisePool } from "@supercharge/promise-pool";
-import { JobStatus } from "@prisma/client";
+import pkg from "@prisma/client";
+const { JobStatus } = pkg;
 
 import { ERRORS, FALLBACK_DETAILS } from "../base/constants.js";
 import { addShopSelectors, buildCacheFileRows, buildShopRows } from "./shopUtils.js";

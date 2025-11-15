@@ -1,7 +1,8 @@
 import { prisma } from "../../server/db.js";
 import { BaseAPI } from "../base/_baseAPI.js";
-import { JobType, JobStatus } from "@prisma/client";
 import { SiteScout } from "./siteScout.js";
+import pkg from "@prisma/client";
+const { JobType, JobStatus } = pkg;
 
 /**
  * SiteScoutAPI handles creating and tracking SiteScout jobs.

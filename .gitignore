@@ -7,9 +7,6 @@ media/
 # Environment files (already passed via `env_file`)
 .env
 
-# Database file
-/server/db/dev.db
-
 # Logs
 logs
 *.log
