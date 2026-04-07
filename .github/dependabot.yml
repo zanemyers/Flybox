@@ -1,0 +1,43 @@
+version: 2
+updates:
+  # Root npm packages (React frontend + Express server + Prisma + Playwright, etc.)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      react:
+        patterns:
+          - "react"
+          - "react-*"
+          - "@types/react*"
+      eslint:
+        patterns:
+          - "eslint*"
+          - "@eslint/*"
+          - "typescript-eslint"
+      playwright:
+        patterns:
+          - "playwright*"
+          - "playwright-extra*"
+          - "puppeteer-extra-plugin-stealth"
+      prisma:
+        patterns:
+          - "prisma"
+          - "@prisma/*"
+      typescript:
+        patterns:
+          - "typescript"
+          - "@types/*"
+
+  # Docker base image
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # GitHub Actions (if you add any workflows later)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
