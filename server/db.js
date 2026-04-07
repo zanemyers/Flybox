@@ -1,20 +1,12 @@
-import pkg from "@prisma/client";
-const { PrismaClient } = pkg;
+import "dotenv/config";
+import { PrismaClient } from "./db/generated/prisma/index.js";
+import { PrismaNeon } from "@prisma/adapter-neon";
 
 /**
  * Ensures a single PrismaClient instance is used throughout the app.
  */
-const globalForPrisma = globalThis;
+const adapter = new PrismaNeon({
+  connectionString: process.env.DATABASE_URL,
+});
 
-/**
- * The main Prisma client instance for database access.
- * @type {PrismaClient}
- */
-export const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    log: ["info", "error", "warn"],
-  });
-
-// Cache the Prisma instance globally during development
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+export const prisma = new PrismaClient({ adapter });

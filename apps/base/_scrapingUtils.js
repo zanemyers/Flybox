@@ -109,7 +109,7 @@ class StealthBrowser {
           return response;
         } catch (err) {
           if (retries === 0 || /HTTP (401|403|429)/.test(err.message)) {
-            throw new Error(`Failed to load ${url}: ${err.message}`);
+            throw new Error(`Failed to load ${url}: ${err.message}`, { cause: err });
           }
           await new Promise((res) => setTimeout(res, 1000));
         }

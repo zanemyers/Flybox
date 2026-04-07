@@ -14,6 +14,45 @@ interface MapModalProps {
   onChange: (lat: number, lng: number) => void; // callback when location is selected/changed
 }
 
+interface LocationSelectorProps {
+  onSelect: (lat: number, lng: number) => void;
+  onClose: () => void;
+}
+
+interface ResizeOnShowProps {
+  active: boolean;
+  position: [number, number];
+}
+
+/**
+ * Component to handle map clicks for selecting location
+ */
+function LocationSelector({ onSelect, onClose }: LocationSelectorProps) {
+  useMapEvents({
+    click(e) {
+      onSelect(e.latlng.lat, e.latlng.lng);
+      onClose(); // auto-close modal after picking
+    },
+  });
+  return null;
+}
+
+/**
+ * Component to force map resizing when modal opens
+ */
+function ResizeOnShow({ active, position }: ResizeOnShowProps) {
+  const map = useMap();
+  useEffect(() => {
+    if (active) {
+      setTimeout(() => {
+        map.invalidateSize(); // fix display size
+        map.setView(position); // recenter map
+      }, 200); // small delay for modal animation
+    }
+  }, [active, map, position]);
+  return null;
+}
+
 /**
  * MapInput Component
  *
@@ -32,37 +71,6 @@ export default function MapInput(props: MapModalProps) {
       return [lat, lng];
     });
   }, [props.latitude, props.longitude]);
-
-  /**
-   * Component to handle map clicks for selecting location
-   */
-  function LocationSelector() {
-    useMapEvents({
-      click(e) {
-        setPosition([e.latlng.lat, e.latlng.lng]);
-        props.onChange(e.latlng.lat, e.latlng.lng);
-        props.onClose(); // auto-close modal after picking
-      },
-    });
-    return null;
-  }
-
-  /**
-   * Component to force map resizing when modal opens
-   * @param active - whether the modal is visible
-   */
-  function ResizeOnShow({ active }: { active: boolean }) {
-    const map = useMap();
-    useEffect(() => {
-      if (active) {
-        setTimeout(() => {
-          map.invalidateSize(); // fix display size
-          map.setView(position); // recenter map
-        }, 200); // small delay for modal animation
-      }
-    }, [active, map, position]);
-    return null;
-  }
 
   return (
     <>
@@ -102,10 +110,16 @@ export default function MapInput(props: MapModalProps) {
                 />
 
                 {/* Click handler */}
-                <LocationSelector />
+                <LocationSelector
+                  onSelect={(lat, lng) => {
+                    setPosition([lat, lng]);
+                    props.onChange(lat, lng);
+                  }}
+                  onClose={props.onClose}
+                />
 
                 {/* Resize map when modal opens */}
-                <ResizeOnShow active={props.show} />
+                <ResizeOnShow active={props.show} position={position} />
               </MapContainer>
             </div>
           </div>

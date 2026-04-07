@@ -1,7 +1,7 @@
 #!/usr/bin/env just --justfile
 
 # Define schema path
-schema := "./server/db"
+schema := "./server/db/schema.prisma"
 
 # Runs the setup script to prepare the .env file and install pacakges locally.
 setup:

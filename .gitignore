@@ -21,5 +21,8 @@ dist
 dist-ssr
 *.local
 
+# Prisma generated client
+server/db/generated/
+
 # Editor files
 .DS_Store

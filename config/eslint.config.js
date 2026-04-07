@@ -8,7 +8,7 @@ import reactDom from "eslint-plugin-react-dom";
 
 export default defineConfig([
   {
-    ignores: ["**/deprecated/", "node_modules/", "dist/"],
+    ignores: ["**/deprecated/", "node_modules/", "dist/", "server/db/generated/"],
   },
   // --- JS / Server / scripts / config (everything except client) ---
   {
