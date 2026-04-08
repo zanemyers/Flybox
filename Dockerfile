@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Copy package files and npm config
+COPY package*.json .npmrc ./
 
 # Install dependencies and Chromium only
 RUN npm install && npx playwright install chromium
