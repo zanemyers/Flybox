@@ -236,7 +236,7 @@ export class FishTales extends BaseApp {
       );
     }
 
-    page.close();
+    await page.close();
     return reports;
   }
 

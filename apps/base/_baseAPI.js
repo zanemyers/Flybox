@@ -18,16 +18,30 @@ export class BaseAPI {
    */
   async getJobUpdates(req, res) {
     try {
+      // Fetch status and messages without loading binary file blobs on every poll
       const job = await prisma.job.findUnique({
         where: { id: req.params.id },
-        include: { messages: { orderBy: { createdAt: "asc" } } },
+        select: {
+          status: true,
+          messages: { orderBy: { createdAt: "asc" }, select: { message: true } },
+        },
       });
       if (!job) return res.status(404).json({ error: "Job not found" });
 
+      // Only fetch file blobs once the job is done
+      let files = [];
+      if (job.status === JobStatus.COMPLETED) {
+        const jobWithFiles = await prisma.job.findUnique({
+          where: { id: req.params.id },
+          select: { primaryFile: true, secondaryFile: true },
+        });
+        files = this.getFiles(jobWithFiles);
+      }
+
       res.json({
         status: job.status,
-        message: job.messages.map((m) => m.message).join("\n"), // Concatenate all job messages into one string
-        files: this.getFiles(job), // Delegate file retrieval to subclass
+        message: job.messages.map((m) => m.message).join("\n"),
+        files,
       });
     } catch {
       res.status(500).json({ error: "Failed to fetch job updates" });

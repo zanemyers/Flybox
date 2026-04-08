@@ -23,3 +23,6 @@ dist-ssr
 
 # Editor files
 .DS_Store
+
+# DB generations
+server/db/generated
