@@ -5,8 +5,8 @@ set -eux  # Exit on error, print commands, treat unset variables as errors
 SCRIPT_DIR=$(dirname "$0")
 cd "$SCRIPT_DIR/.."
 
-# Run Prisma migrations
-npx prisma migrate deploy --schema=./server/db/schema.prisma
+# Sync schema to database
+npx prisma db push --schema=./server/db/schema.prisma
 
 # Generate Prisma client
 npx prisma generate --schema=./server/db/schema.prisma
