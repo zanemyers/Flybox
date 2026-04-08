@@ -32,7 +32,12 @@ class StealthBrowser {
    */
   constructor(options = {}) {
     this.headless = options.headless ?? true;
-    this.args = options.args ?? ["--start-maximized", "--no-sandbox"];
+    this.args = options.args ?? [
+      "--start-maximized",
+      "--no-sandbox",
+      "--disable-dev-shm-usage",
+      "--disk-cache-size=0",
+    ];
 
     const agentProfile = this._getAgentProfile();
     this.userAgent = options.userAgent ?? agentProfile.userAgent;
