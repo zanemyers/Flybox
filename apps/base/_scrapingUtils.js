@@ -45,7 +45,6 @@ class StealthBrowser {
     this.timezoneId = options.timezoneId ?? agentProfile.timezoneId;
 
     this.browser = null;
-    this.context = null;
   }
 
   /**
@@ -58,13 +57,6 @@ class StealthBrowser {
     this.browser = await chromium.launch({
       headless: this.headless,
       args: this.args,
-    });
-
-    this.context = await this.browser.newContext({
-      viewport: this._getViewport(),
-      userAgent: this.userAgent,
-      locale: this.locale,
-      timezoneId: this.timezoneId,
     });
 
     return this;
@@ -209,12 +201,24 @@ class StealthBrowser {
   }
 
   /**
-   * Creates a new page in the browser context and applies custom helper methods.
+   * Creates a new page in a fresh browser context and applies custom helper methods.
+   * Each page gets its own context so memory is fully freed on page.close().
    *
    * @returns {Promise<import('playwright').Page>} New page with stealth helpers.
    */
   async newPage() {
-    const page = await this.context.newPage();
+    const context = await this.browser.newContext({
+      viewport: this._getViewport(),
+      userAgent: this.userAgent,
+      locale: this.locale,
+      timezoneId: this.timezoneId,
+    });
+    const page = await context.newPage();
+    const originalClose = page.close.bind(page);
+    page.close = async () => {
+      await originalClose();
+      await context.close();
+    };
     await this._enhancePageLoad(page);
     await extendPageSelectors(page);
     await this._setupRequestInterception(page);
