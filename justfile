@@ -8,6 +8,7 @@ setup:
     node scripts/setup.js # Run the setup script
     npm install # Install node packages locally
 
+
 # Clean and rebuild docker
 @clean_docker:
     docker ps -q | xargs -r docker kill # Stop all running containers
